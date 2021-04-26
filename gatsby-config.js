@@ -6,7 +6,7 @@ module.exports = {
     description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
     author: `@gatsbyjs`,
     eventName: 'Eurofurence',
-    registrationLaunch: '2021-04-21T12:30:23+02:00'
+    registrationLaunch: '2022-01-21T12:30:23+02:00'
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
