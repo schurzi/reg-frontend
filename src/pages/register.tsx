@@ -47,27 +47,27 @@ const Personal = (_: RouteComponentProps) => {
 
 	return <Form>
 		<Localized id="register-form-nickname" attrs={{ label: true, placeholder: true }}>
-			<TextField name="nickname" label="Nickname" placeholder="Johnny_The_Sergal" ref={register}/>
+			<TextField label="Nickname" placeholder="Johnny_The_Sergal" {...register('nickname')}/>
 		</Localized>
 		<Localized id="register-form-first-name" attrs={{ label: true, placeholder: true }}>
-			<TextField name="firstName" label="First name" placeholder="John" gridSpan={5} ref={register}/>
+			<TextField label="First name" placeholder="John" gridSpan={5} {...register('firstName')}/>
 		</Localized>
 		<Localized id="register-form-last-name" attrs={{ label: true, placeholder: true }}>
-			<TextField name="lastName" label="Last name" placeholder="Doe" gridSpan={5} ref={register}/>
+			<TextField label="Last name" placeholder="Doe" gridSpan={5} {...register('lastName')}/>
 		</Localized>
 		<Localized id="register-form-full-name-permission" attrs={{ label: true }}>
-			<Checkbox name="fullNamePermission" label="I grant permission to use my full name in Eurofurence related media." ref={register}/>
+			<Checkbox label="I grant permission to use my full name in Eurofurence related media." {...register('fullNamePermission')}/>
 		</Localized>
 		<Localized id="register-form-name-on-badge" attrs={{ legend: true }}>
 			<RadioSet name="nameOnBadge" legend="Name on badge">
 				<Localized id="register-form-name-on-badge-real-name" attrs={{ label: true }}>
-					<RadioItem label="Real name" value="real-name" ref={register}/>
+					<RadioItem label="Real name" value="real-name" {...register('nameOnBadge')}/>
 				</Localized>
 				<Localized id="register-form-name-on-badge-nickname" attrs={{ label: true }}>
-					<RadioItem label="Nickname" value="nickname" ref={register}/>
+					<RadioItem label="Nickname" value="nickname" {...register('nameOnBadge')}/>
 				</Localized>
 				<Localized id="register-form-name-on-badge-real-name-and-nickname" attrs={{ label: true }}>
-					<RadioItem label="Real name + nickname" value="real-name-and-nickname" ref={register}/>
+					<RadioItem label="Real name + nickname" value="real-name-and-nickname" {...register('nameOnBadge')}/>
 				</Localized>
 			</RadioSet>
 		</Localized>
@@ -77,23 +77,23 @@ const Personal = (_: RouteComponentProps) => {
 		<Localized id="register-form-gender" attrs={{ legend: true }}>
 			<RadioSet name="gender" legend="Gender">
 				<Localized id="register-form-gender-male" attrs={{ label: true }}>
-					<RadioItem label="Male" value="male" ref={register}/>
+					<RadioItem label="Male" value="male" {...register('gender')}/>
 				</Localized>
 				<Localized id="register-form-gender-female" attrs={{ label: true }}>
-					<RadioItem label="Female" value="female" ref={register}/>
+					<RadioItem label="Female" value="female" {...register('gender')}/>
 				</Localized>
 				<Localized id="register-form-gender-non-binary" attrs={{ label: true }}>
-					<RadioItem label="Non-binary" value="non-binary" ref={register}/>
+					<RadioItem label="Non-binary" value="non-binary" {...register('gender')}/>
 				</Localized>
 				<Localized id="register-form-gender-prefer-not-to-say" attrs={{ label: true }}>
-					<RadioItem label="I prefer not to say" value="prefer-not-to-say" defaultChecked ref={register}/>
+					<RadioItem label="I prefer not to say" value="prefer-not-to-say" defaultChecked {...register('gender')}/>
 				</Localized>
 			</RadioSet>
 		</Localized>
 		<Localized id="register-form-accessibility" attrs={{ legend: true }}>
 			<FieldSet legend="Accessibility">
 				<Localized id="register-form-accessibility-wheelchair" attrs={{ label: true }}>
-					<Checkbox name="wheelchair" label="Please accomodate my wheelchair (and me)." ref={register}/>
+					<Checkbox label="Please accomodate my wheelchair (and me)." {...register('wheelchair')}/>
 				</Localized>
 			</FieldSet>
 		</Localized>
@@ -105,25 +105,25 @@ const Contact = (_: RouteComponentProps) => {
 
 	return <Form>
 		<Localized id="register-form-email" attrs={{ label: true, placeholder: true }}>
-			<TextField name="email" label="Email address" placeholder="john.smith@email.com" gridSpan={7} ref={register}/>
+			<TextField label="Email address" placeholder="john.smith@email.com" gridSpan={7} {...register('email')}/>
 		</Localized>
 		<Localized id="register-form-phone-number" attrs={{ label: true, placeholder: true }}>
-			<TextField name="phoneNumber" label="Phone number" placeholder="+32 0 000 00 00" gridSpan={3} ref={register}/>
+			<TextField label="Phone number" placeholder="+32 0 000 00 00" gridSpan={3} {...register('phoneNumber')}/>
 		</Localized>
 		<Localized id="register-form-street" attrs={{ label: true, placeholder: true }}>
-			<TextField name="street" label="Street" placeholder="Pennylane 40" ref={register}/>
+			<TextField label="Street" placeholder="Pennylane 40" {...register('street')}/>
 		</Localized>
 		<Localized id="register-form-city" attrs={{ label: true, placeholder: true }}>
-			<TextField name="city" label="City" placeholder="Zootopia" gridSpan={7} ref={register}/>
+			<TextField label="City" placeholder="Zootopia" gridSpan={7} {...register('city')}/>
 		</Localized>
 		<Localized id="register-form-postal-code" attrs={{ label: true, placeholder: true }}>
-			<TextField name="postalCode" label="Postal code (ZIP)" placeholder="8888" gridSpan={3} ref={register}/>
+			<TextField label="Postal code (ZIP)" placeholder="8888" gridSpan={3} {...register('postalCode')}/>
 		</Localized>
 		<Localized id="register-form-state-or-province" attrs={{ label: true, placeholder: true }}>
-			<TextField name="stateOrProvince" label="State / Province" placeholder="Fur Valley" gridSpan={5} ref={register}/>
+			<TextField label="State / Province" placeholder="Fur Valley" gridSpan={5} {...register('stateOrProvince')}/>
 		</Localized>
 		<Localized id="register-form-country" attrs={{ label: true, placeholder: true }}>
-			<TextField name="country" label="Country" placeholder="Germany" gridSpan={5} ref={register}/>
+			<TextField label="Country" placeholder="Germany" gridSpan={5} {...register('country')}/>
 		</Localized>
 	</Form>
 }
@@ -135,21 +135,21 @@ const Optional = (_: RouteComponentProps) => {
 		<Localized id="register-form-notifications" attrs={{ legend: true }}>
 			<FieldSet legend="I would like to receive event information and announcements about">
 				<Localized id="register-form-notifications-art" attrs={{ label: true }}>
-					<Checkbox name="notificatons-art" label="Art" ref={register}/>
+					<Checkbox label="Art" {...register('notificatons.art')}/>
 				</Localized>
 				<Localized id="register-form-accessibility-animation" attrs={{ label: true }}>
-					<Checkbox name="notificatons-animation" label="Animation" ref={register}/>
+					<Checkbox label="Animation" {...register('notificatons.animation')}/>
 				</Localized>
 				<Localized id="register-form-accessibility-music" attrs={{ label: true }}>
-					<Checkbox name="notificatons-music" label="Music" ref={register}/>
+					<Checkbox label="Music" {...register('notificatons.music')}/>
 				</Localized>
 				<Localized id="register-form-accessibility-fursuiting" attrs={{ label: true }}>
-					<Checkbox name="notificatons-fursuiting" label="Fursuiting" ref={register}/>
+					<Checkbox label="Fursuiting" {...register('notificatons.fursuiting')}/>
 				</Localized>
 			</FieldSet>
 		</Localized>
 		<Localized id="register-form-comments" attrs={{ label: true, placeholder: true }}>
-			<TextArea name="comments" label="Comments" placeholder={'I would like to know more about ...'} ref={register}/>
+			<TextArea label="Comments" placeholder={'I would like to know more about ...'} {...register('comments')}/>
 		</Localized>
 	</Form>
 }
