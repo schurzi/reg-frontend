@@ -44,7 +44,7 @@ const Header = () => {
 	return <NavBar>
 		<section id="title" css={css`
 			flex: 1;
-			font-family: Rubik;
+			font-family: Manrope;
 			font-size: 3.6rem;
 		`}>
 			<img src={brandImg} css={css`

@@ -2,15 +2,20 @@
 
 import { css } from '@emotion/react'
 import { Localized } from '@fluent/react'
-import { Router, RouteComponentProps, useMatch } from '@reach/router'
+import { Router, RouteComponentProps, useMatch, navigate } from '@reach/router'
 import { useForm } from 'react-hook-form'
 import Layout from '../components/layout'
 import SEO from '../components/seo'
-import { Form, TextField, Checkbox, RadioSet, RadioItem, FieldSet, Page, Paper, WizardProgressBar, Select, Button, TextArea } from '@eurofurence/reg-component-library'
+import { Form, TextField, Checkbox, RadioSet, RadioItem, FieldSet, RadioGroup, RadioCard, WizardProgressBar, Select, Button, TextArea } from '@eurofurence/reg-component-library'
 import langMap from 'langmap'
-import { Link } from 'gatsby'
+import { graphql, Link, useStaticQuery } from 'gatsby'
+import { useCurrentLangKey } from '../localization'
+import { until, last } from 'ramda'
+import { DateTime } from 'luxon'
+import { ReactNode } from 'react'
 
 const steps = [
+	'ticket',
 	'personal-info',
 	'contact-info',
 	'optional-info',
@@ -19,6 +24,25 @@ const steps = [
 const languageOptions = [...Object.entries(langMap)]
 	.filter(([key]) => !key.includes('-'))
 	.map(([value, names]) => ({ label: names.nativeName, value }))
+
+const datesBetween = (start: DateTime, end: DateTime) =>
+	until<DateTime[], DateTime[]>(days => last(days)!.equals(end), days => [...days, last(days)!.plus({ day: 1 })], [start])
+
+const Header = () => {
+	const match = useMatch('/register/:step')
+	const stepIdx = match == null ? 0 : steps.indexOf(match.step)
+
+	return <header>
+		<Localized id="register-header-title"><h1>Welcome to Eurofurence 2022!</h1></Localized>
+		<Localized id="register-header-description">
+			<p>
+				We&apos;re very excited that you&apos;ve decided to join us for this confurence.
+				Get ready for a fun couple of days with likeminded people and enjoy all the activities and events that we&apos;ve got lined up for you this year.
+			</p>
+		</Localized>
+		<WizardProgressBar steps={['Order', 'Personal information', 'Contact information', 'Optional information', 'Checkout']} currentStep={1+stepIdx}/>
+	</header>
+}
 
 const Footer = () => {
 	const match = useMatch('/register/:step')
@@ -35,11 +59,102 @@ const Footer = () => {
 			align-items: center;
 			column-gap: 22px;
 		`}>
-			{stepIdx !== 0 ? <Link to={`/register/${steps[stepIdx - 1]}`}>Go back</Link> : null}
+			{stepIdx !== 0 ? <a onClick={() => navigate(-1)}>Go back</a> : null}
 			{stepIdx !== steps.length - 1 ? <Button as={Link} to={`/register/${steps[stepIdx + 1]}`}>Continue</Button> : null}
 		</nav>
 		<p>Your information was last saved on Friday, August 5th 2022 at 16:31.</p>
 	</footer>
+}
+
+const TicketType = (_: RouteComponentProps) => {
+	const { register } = useForm()
+
+	return <form>
+		<RadioGroup name="ticketType">
+			<div css={css`
+				display: flex;
+				gap: 20px;
+
+				> * {
+					flex: 1;
+				}
+			`}>
+				<Localized id="register-ticket-type-day-label" attrs={{ label: true }}>
+					<RadioCard label="Day ticket" value="day" height="346px" {...register('ticketType')}/>
+				</Localized>
+				<Localized id="register-ticket-type-full-label" attrs={{ label: true }}>
+					<RadioCard label="Full convention" value="full" height="346px" {...register('ticketType')}/>
+				</Localized>
+			</div>
+		</RadioGroup>
+	</form>
+}
+
+const TicketDay = (_: RouteComponentProps) => {
+	const { site: { siteMetadata: { eventStartDate, eventEndDate } } } = useStaticQuery(graphql`
+		query SiteDateQuery {
+			site {
+				siteMetadata {
+					eventStartDate
+					eventEndDate
+				}
+			}
+		}
+	`)
+	const langKey = useCurrentLangKey()
+	const { register } = useForm()
+
+	return <form>
+		<RadioGroup name="ticketDay">
+			<div css={css`
+				display: grid;
+				gap: 20px;
+				grid: auto-flow 1fr / repeat(3, 1fr);
+			`}>
+				{datesBetween(DateTime.fromISO(eventStartDate), DateTime.fromISO(eventEndDate)).map(date =>
+					<RadioCard key={date.toISODate()} label={date.setLocale(langKey).toLocaleString(DateTime.DATE_FULL)} value={date.toISODate()} {...register('ticketDay')}/>
+				)}
+			</div>
+		</RadioGroup>
+	</form>
+}
+
+const Ticket = ({ children }: RouteComponentProps<{ readonly children: ReactNode }>) => {
+	return <>
+		{children}
+	</>
+}
+
+const TicketLevel = (_: RouteComponentProps) => {
+	const { register } = useForm()
+
+	return <form css={css`
+		display: grid;
+		gap: 20px;
+		grid: auto-flow 1fr / repeat(3, 1fr);
+	`}>
+		<RadioGroup name="ticketLevel">
+			<Localized id="register-ticket-level-standard-label" attrs={{ label: true }}>
+				<RadioCard label="Standard" value="standard" {...register('ticketLevel')}>
+					<p>Bla bla</p>
+					<footer>
+						<span>Bla</span>
+						<span css={css`
+							label[data-checked] & {
+								color: var(--color-semantic-info);
+							}
+						`}>35</span>
+					</footer>
+				</RadioCard>
+			</Localized>
+			<Localized id="register-ticket-level-sponsor-label" attrs={{ label: true }}>
+				<RadioCard label="Sponsor" value="sponsor" {...register('ticketLevel')}/>
+			</Localized>
+			<Localized id="register-ticket-level-super-sponsor-label" attrs={{ label: true }}>
+				<RadioCard label="Super Sponsor" value="super-sponsor" {...register('ticketLevel')}/>
+			</Localized>
+		</RadioGroup>
+	</form>
 }
 
 const Personal = (_: RouteComponentProps) => {
@@ -156,24 +271,18 @@ const Optional = (_: RouteComponentProps) => {
 
 const RegisterPage = () => <Layout>
 	<SEO title="Register" />
-	<Page>
-		<Localized id="register-header-title"><h1>Welcome to Eurofurence 2022!</h1></Localized>
-		<Localized id="register-header-description">
-			<p>
-				We&apos;re very excited that you&apos;ve decided to join us for this confurence.
-				Get ready for a fun couple of days with likeminded people and enjoy all the activities and events that we&apos;ve got lined up for you this year.
-			</p>
-		</Localized>
-		<WizardProgressBar steps={['Order', 'Personal information', 'Contact information', 'Optional information', 'Checkout']} currentStep={1}/>
-		<Paper>
-			<Router basepath="/register">
-				<Personal path="personal-info"/>
-				<Contact path="contact-info"/>
-				<Optional path="optional-info"/>
-			</Router>
-			<Footer />
-		</Paper>
-	</Page>
+	<Header/>
+	<Router basepath="/register">
+		<Ticket path="ticket">
+			<TicketType path="type"/>
+			<TicketDay path="day"/>
+			<TicketLevel path="level"/>
+		</Ticket>
+		<Personal path="personal-info"/>
+		<Contact path="contact-info"/>
+		<Optional path="optional-info"/>
+	</Router>
+	<Footer/>
 </Layout>
 
 export default RegisterPage
