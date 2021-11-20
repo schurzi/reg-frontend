@@ -1,5 +1,7 @@
 import { ReactLocalization } from '@fluent/react'
 import { FluentBundle, FluentResource } from '@fluent/bundle'
+import { useLocation } from '@reach/router'
+import { getCurrentLangKey } from 'ptz-i18n'
 import axios from 'axios'
 
 export type LanguageKey = 'en' | 'de'
@@ -16,4 +18,10 @@ export const loadLanguage = async (langKey: LanguageKey): Promise<ReactLocalizat
 	bundle.addResource(resource)
 
 	return new ReactLocalization([bundle])
+}
+
+export const useCurrentLangKey = () => {
+	const location = useLocation()
+
+	return getCurrentLangKey<LanguageKey>(['en', 'de'], 'en', location.pathname)
 }

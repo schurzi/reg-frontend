@@ -1,13 +1,14 @@
 /** @jsxImportSource @emotion/react */
 
 import { css } from '@emotion/react'
-import { useStaticQuery, graphql } from 'gatsby'
+import { Localized } from '@fluent/react'
 import { interval } from 'rxjs'
 import * as O from 'rxjs/operators'
 import { useObservableState, useObservable } from 'observable-hooks'
 import { DateTime, Duration } from 'luxon'
 import brandImg from '../images/brand.svg'
-import { NavBar, Display } from '@eurofurence/reg-component-library'
+import { NavBar, Display, Dropdown } from '@eurofurence/reg-component-library'
+import { useSiteMetadata } from '../queries/site-metadata'
 
 const CLOCK_UPDATE_DELAY = 1000
 
@@ -26,16 +27,7 @@ const Clock = ({ timeRemaining }: { timeRemaining: Duration }) => <section id="c
 </section>
 
 const Header = () => {
-	const { site: { siteMetadata: { eventName, registrationLaunch } } } = useStaticQuery(graphql`
-		query SiteEventNameQuery {
-			site {
-				siteMetadata {
-					eventName
-					registrationLaunch
-				}
-			}
-		}
-	`)
+	const { eventName, registrationLaunch } = useSiteMetadata()
 	const getTimeRemaining = () => DateTime.fromISO(registrationLaunch).diffNow(['months', 'days', 'hours', 'minutes', 'seconds'])
 
 	const tick$ = useObservable(() => interval(CLOCK_UPDATE_DELAY).pipe(O.map(getTimeRemaining)), [])
@@ -44,7 +36,7 @@ const Header = () => {
 	return <NavBar>
 		<section id="title" css={css`
 			flex: 1;
-			font-family: Rubik;
+			font-family: Manrope;
 			font-size: 3.6rem;
 		`}>
 			<img src={brandImg} css={css`
@@ -54,6 +46,8 @@ const Header = () => {
 			{eventName}
 		</section>
 		<Clock timeRemaining={timeRemaining} />
+		<Dropdown><Localized id="header-dropdown-my-account">My account</Localized></Dropdown>
+		<Dropdown><Localized id="header-dropdown-language">Language</Localized></Dropdown>
 	</NavBar>
 }
 
