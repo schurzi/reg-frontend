@@ -9,6 +9,20 @@ module.exports = {
     registrationLaunch: '2022-01-21T12:30:23+02:00',
 		eventStartDate: '2022-08-24',
 		eventEndDate: '2022-08-28',
+		ticketLevels: [
+			{
+				id: 'standard',
+				price: 90,
+			},
+			{
+				id: 'sponsor',
+				price: 155,
+			},
+			{
+				id: 'supersponsor',
+				price: 250,
+			},
+		],
   },
   plugins: [
     `gatsby-plugin-react-helmet`,

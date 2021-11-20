@@ -2,17 +2,17 @@
 
 import { css } from '@emotion/react'
 import { Localized } from '@fluent/react'
-import { Router, RouteComponentProps, useMatch, navigate } from '@reach/router'
+import { Router, RouteComponentProps, Link, useMatch, navigate } from '@reach/router'
 import { useForm } from 'react-hook-form'
 import Layout from '../components/layout'
 import SEO from '../components/seo'
 import { Form, TextField, Checkbox, RadioSet, RadioItem, FieldSet, RadioGroup, RadioCard, WizardProgressBar, Select, Button, TextArea } from '@eurofurence/reg-component-library'
 import langMap from 'langmap'
-import { graphql, Link, useStaticQuery } from 'gatsby'
 import { useCurrentLangKey } from '../localization'
 import { until, last } from 'ramda'
 import { DateTime } from 'luxon'
 import { ReactNode } from 'react'
+import { useSiteMetadata } from '../queries/site-metadata'
 
 const steps = [
 	'ticket',
@@ -91,16 +91,7 @@ const TicketType = (_: RouteComponentProps) => {
 }
 
 const TicketDay = (_: RouteComponentProps) => {
-	const { site: { siteMetadata: { eventStartDate, eventEndDate } } } = useStaticQuery(graphql`
-		query SiteDateQuery {
-			site {
-				siteMetadata {
-					eventStartDate
-					eventEndDate
-				}
-			}
-		}
-	`)
+	const { eventStartDate, eventEndDate } = useSiteMetadata()
 	const langKey = useCurrentLangKey()
 	const { register } = useForm()
 
@@ -127,6 +118,7 @@ const Ticket = ({ children }: RouteComponentProps<{ readonly children: ReactNode
 
 const TicketLevel = (_: RouteComponentProps) => {
 	const { register } = useForm()
+	const { ticketLevels } = useSiteMetadata()
 
 	return <form css={css`
 		display: grid;
@@ -134,25 +126,21 @@ const TicketLevel = (_: RouteComponentProps) => {
 		grid: auto-flow 1fr / repeat(3, 1fr);
 	`}>
 		<RadioGroup name="ticketLevel">
-			<Localized id="register-ticket-level-standard-label" attrs={{ label: true }}>
-				<RadioCard label="Standard" value="standard" {...register('ticketLevel')}>
-					<p>Bla bla</p>
-					<footer>
-						<span>Bla</span>
-						<span css={css`
-							label[data-checked] & {
-								color: var(--color-semantic-info);
-							}
-						`}>35</span>
-					</footer>
-				</RadioCard>
-			</Localized>
-			<Localized id="register-ticket-level-sponsor-label" attrs={{ label: true }}>
-				<RadioCard label="Sponsor" value="sponsor" {...register('ticketLevel')}/>
-			</Localized>
-			<Localized id="register-ticket-level-super-sponsor-label" attrs={{ label: true }}>
-				<RadioCard label="Super Sponsor" value="super-sponsor" {...register('ticketLevel')}/>
-			</Localized>
+			{ticketLevels.map(({ id, price }) =>
+				<Localized id={`register-ticket-level-${id}`} attrs={{ label: true }}>
+					<RadioCard label="A ticket level" value={id} {...register('ticketLevel')}>
+						<Localized id={`register-ticket-level-${id}.description`}><p>A ticket level</p></Localized>
+						<footer>
+							<span>Bla</span>
+							<span css={css`
+								label[data-checked] & {
+									color: var(--color-semantic-info);
+								}
+							`}>{price}</span>
+						</footer>
+					</RadioCard>
+				</Localized>
+			)}
 		</RadioGroup>
 	</form>
 }

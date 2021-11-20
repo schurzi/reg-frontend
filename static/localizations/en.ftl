@@ -1,5 +1,16 @@
 hello = Hello world!
 
+register-ticket-level-standard =
+	.label = Standard
+	.description =
+		This Standard Convention ticket grants you access to the convention from Wednesday to Sunday.
+
+		<ul>
+			<li>Standard convention badge</li>
+			<li>program book</li>
+			<li>participation in all scheduled events</li>
+		</ul>
+
 register-form-nickname =
 	.label = Nickname
 	.placeholder = Johnny_The_Sergal
