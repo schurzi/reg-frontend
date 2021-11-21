@@ -6,6 +6,7 @@ export interface SiteMetadata {
 	readonly author: string
 	readonly eventName: string
 	readonly registrationLaunch: string
+	readonly registrationExpirationDate: string
 	readonly eventStartDate: string
 	readonly eventEndDate: string
 	readonly ticketLevels: {
@@ -24,6 +25,7 @@ export const useSiteMetadata = () => {
 					author
 					eventName
 					registrationLaunch
+					registrationExpirationDate
 					eventStartDate
 					eventEndDate
 					ticketLevels {

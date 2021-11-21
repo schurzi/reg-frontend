@@ -7,6 +7,7 @@ module.exports = {
     author: `@gatsbyjs`,
     eventName: 'Eurofurence',
     registrationLaunch: '2022-01-21T12:30:23+02:00',
+		registrationExpirationDate: '2022-01-31',
 		eventStartDate: '2022-08-24',
 		eventEndDate: '2022-08-28',
 		ticketLevels: [
@@ -19,7 +20,7 @@ module.exports = {
 				price: 155,
 			},
 			{
-				id: 'supersponsor',
+				id: 'super-sponsor',
 				price: 250,
 			},
 		],

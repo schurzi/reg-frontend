@@ -6,6 +6,7 @@ import { Router, RouteComponentProps, Link, useMatch, navigate } from '@reach/ro
 import { useForm } from 'react-hook-form'
 import Layout from '../components/layout'
 import SEO from '../components/seo'
+import TicketLevelCard from '../components/register/ticket-level-card'
 import { Form, TextField, Checkbox, RadioSet, RadioItem, FieldSet, RadioGroup, RadioCard, WizardProgressBar, Select, Button, TextArea } from '@eurofurence/reg-component-library'
 import langMap from 'langmap'
 import { useCurrentLangKey } from '../localization'
@@ -118,7 +119,9 @@ const Ticket = ({ children }: RouteComponentProps<{ readonly children: ReactNode
 
 const TicketLevel = (_: RouteComponentProps) => {
 	const { register } = useForm()
-	const { ticketLevels } = useSiteMetadata()
+	const { ticketLevels, registrationExpirationDate } = useSiteMetadata()
+
+	const expirationDate = DateTime.fromISO(registrationExpirationDate)
 
 	return <form css={css`
 		display: grid;
@@ -127,18 +130,8 @@ const TicketLevel = (_: RouteComponentProps) => {
 	`}>
 		<RadioGroup name="ticketLevel">
 			{ticketLevels.map(({ id, price }) =>
-				<Localized id={`register-ticket-level-${id}`} attrs={{ label: true }}>
-					<RadioCard label="A ticket level" value={id} {...register('ticketLevel')}>
-						<Localized id={`register-ticket-level-${id}.description`}><p>A ticket level</p></Localized>
-						<footer>
-							<span>Bla</span>
-							<span css={css`
-								label[data-checked] & {
-									color: var(--color-semantic-info);
-								}
-							`}>{price}</span>
-						</footer>
-					</RadioCard>
+				<Localized key={id} id={`register-ticket-level-card-${id}`} attrs={{ label: true, description: true, priceLabel: true }}>
+					<TicketLevelCard id={id} price={price} expirationDate={expirationDate} label="Ticket level" priceLabel="A ticket" {...register('ticketLevel')}>A ticket level</TicketLevelCard>
 				</Localized>
 			)}
 		</RadioGroup>
