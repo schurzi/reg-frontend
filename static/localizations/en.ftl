@@ -39,6 +39,18 @@ register-ticket-level-expiration-notice = Register before {DATETIME($expirationD
 
 register-ticket-level-price = {$price} €
 
+register-ticket-level-addons-title = Select add-ons
+
+register-ticket-level-addons-item-stage-pass =
+  The Stage pass will grant you access to the stage events from **Wednesday** to **Saturday**.
+
+  .label = Stage pass
+
+register-ticket-level-addons-item-tshirt =
+  100% cotton, high-quality T-shirts. You can also purchase these at the event, but purchasing it now will guarantee the availability of your size.
+
+  .label = Eurofurence T-shirt
+
 register-form-nickname =
   .label = Nickname
   .placeholder = Johnny_The_Sergal

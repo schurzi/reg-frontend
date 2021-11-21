@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form'
 import Layout from '../components/layout'
 import SEO from '../components/seo'
 import TicketLevelCard from '../components/register/ticket-level-card'
+import TicketLevelAddon from '../components/register/ticket-level-addon'
 import { Form, TextField, Checkbox, RadioSet, RadioItem, FieldSet, RadioGroup, RadioCard, WizardProgressBar, Select, Button, TextArea } from '@eurofurence/reg-component-library'
 import langMap from 'langmap'
 import { useCurrentLangKey } from '../localization'
@@ -123,18 +124,41 @@ const TicketLevel = (_: RouteComponentProps) => {
 
 	const expirationDate = DateTime.fromISO(registrationExpirationDate)
 
-	return <form css={css`
-		display: grid;
-		gap: 20px;
-		grid: auto-flow 1fr / repeat(3, 1fr);
-	`}>
-		<RadioGroup name="ticketLevel">
-			{ticketLevels.map(({ id, price }) =>
-				<Localized key={id} id={`register-ticket-level-card-${id}`} attrs={{ label: true, description: true, priceLabel: true }}>
-					<TicketLevelCard id={id} price={price} expirationDate={expirationDate} label="Ticket level" priceLabel="A ticket" {...register('ticketLevel')}>A ticket level</TicketLevelCard>
+	return <form>
+		<section css={css`
+			margin-top: 1.5em;
+		`}>
+			<Localized id="register-ticket-level-title"><h3>Select your ticket</h3></Localized>
+			<div css={css`
+				display: grid;
+				gap: 20px;
+				grid: auto-flow 1fr / repeat(3, 1fr);
+				margin-top: 2em;
+			`}>
+				<RadioGroup name="ticketLevel">
+					{ticketLevels.map(({ id, price }) =>
+						<Localized key={id} id={`register-ticket-level-card-${id}`} attrs={{ label: true, description: true, priceLabel: true }}>
+							<TicketLevelCard id={id} price={price} expirationDate={expirationDate} label="Ticket level" priceLabel="A ticket" {...register('ticketLevel')}>A ticket level</TicketLevelCard>
+						</Localized>
+					)}
+				</RadioGroup>
+			</div>
+		</section>
+		<section css={css`
+			margin-top: 4.5em;
+		`}>
+			<Localized id="register-ticket-level-addons-title"><h3>Select add-ons</h3></Localized>
+			<div css={css`
+				margin-top: 2.5em;
+			`}>
+				<Localized id="register-ticket-level-addons-item-stage-pass" attrs={{ label: true, price: true }}>
+					<TicketLevelAddon label="Stage pass" price={5} {...register('addonStagePass')}>A stage pass</TicketLevelAddon>
 				</Localized>
-			)}
-		</RadioGroup>
+				<Localized id="register-ticket-level-addons-item-tshirt" attrs={{ label: true, price: true }}>
+					<TicketLevelAddon label="T-Shirt" price={20} {...register('addonTShirt')}>A t-shirt</TicketLevelAddon>
+				</Localized>
+			</div>
+		</section>
 	</form>
 }
 
