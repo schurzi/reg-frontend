@@ -1,22 +1,19 @@
 /** @jsxImportSource @emotion/react */
 
 import styled from '@emotion/styled'
-import { ChangeEventHandler, forwardRef, FocusEventHandler } from 'react'
+import { forwardRef, ForwardedRef } from 'react'
 import { Localized } from '@fluent/react'
-import { RadioCard } from '@eurofurence/reg-component-library'
+import { RadioCard, RadioCardProps } from '@eurofurence/reg-component-library'
 import { DateTime } from 'luxon'
 import ReactMarkdown from 'react-markdown'
+import Price from './price'
 
-export interface TicketLevelCardProps {
+export interface TicketLevelCardProps extends Omit<RadioCardProps, 'value'> {
 	readonly id: string
-	readonly name: string
-	readonly label: string
 	readonly price: number
 	readonly priceLabel: string
 	readonly expirationDate: DateTime
 	readonly children: string
-	readonly onChange?: ChangeEventHandler
-	readonly onBlur?: FocusEventHandler
 }
 
 const Footer = styled.footer`
@@ -37,18 +34,8 @@ const ExpirationNotice = styled.aside`
 	color: var(--color-grays-400);
 `
 
-const Price = styled.section`
-	font-family: Roboto;
-	font-weight: 700;
-	font-size: 2.4rem;
-
-	label[data-checked] & {
-		color: var(--color-semantic-info);
-	}
-`
-
-const TicketLevelCard = forwardRef(({ id, label, price, priceLabel, expirationDate, children, onChange, onBlur }: TicketLevelCardProps) =>
-	<RadioCard label={label} value={id} onChange={onChange} onBlur={onBlur}>
+const TicketLevelCard = forwardRef(({ id, price, priceLabel, expirationDate, children, ...rest }: TicketLevelCardProps, ref: ForwardedRef<HTMLInputElement>) =>
+	<RadioCard value={id} ref={ref} {...rest}>
 		<div><ReactMarkdown>{children}</ReactMarkdown></div>
 		<Footer>
 			<PriceLabelContainer>
@@ -57,7 +44,7 @@ const TicketLevelCard = forwardRef(({ id, label, price, priceLabel, expirationDa
 					<ExpirationNotice>Register before {expirationDate.toString()}</ExpirationNotice>
 				</Localized>
 			</PriceLabelContainer>
-			<Localized id="register-ticket-level-price" vars={{ price }}><Price>{price} €</Price></Localized>
+			<Price price={price}/>
 		</Footer>
 	</RadioCard>
 )
