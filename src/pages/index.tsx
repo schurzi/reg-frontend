@@ -1,13 +1,6 @@
-/** @jsxImportSource @emotion/react */
+import { EFRouter } from "../navigation/router";
 
-import { Localized } from '@fluent/react'
-import Layout from '../components/layout'
-import SEO from '../components/seo'
+export default EFRouter;
 
-const IndexPage = () =>
-	<Layout>
-		<SEO title="Home" />
-		<Localized id="hello"><h1>Hello world!</h1></Localized>
-	</Layout>
-
-export default IndexPage
+export * as register from "./register";
+export * as four_0_four from "./404";
