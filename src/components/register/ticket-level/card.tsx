@@ -6,6 +6,7 @@ import { Localized } from '@fluent/react'
 import { RadioCard, RadioCardProps } from '@eurofurence/reg-component-library'
 import { DateTime } from 'luxon'
 import ReactMarkdown from 'react-markdown'
+import Price from './price'
 
 export interface TicketLevelCardProps extends Omit<RadioCardProps, 'value'> {
 	readonly id: string
@@ -33,16 +34,6 @@ const ExpirationNotice = styled.aside`
 	color: var(--color-grays-400);
 `
 
-const Price = styled.section`
-	font-family: Roboto;
-	font-weight: 700;
-	font-size: 2.4rem;
-
-	label[data-checked] & {
-		color: var(--color-semantic-info);
-	}
-`
-
 const TicketLevelCard = forwardRef(({ id, price, priceLabel, expirationDate, children, ...rest }: TicketLevelCardProps, ref: ForwardedRef<HTMLInputElement>) =>
 	<RadioCard value={id} ref={ref} {...rest}>
 		<div><ReactMarkdown>{children}</ReactMarkdown></div>
@@ -53,7 +44,7 @@ const TicketLevelCard = forwardRef(({ id, price, priceLabel, expirationDate, chi
 					<ExpirationNotice>Register before {expirationDate.toString()}</ExpirationNotice>
 				</Localized>
 			</PriceLabelContainer>
-			<Localized id="register-ticket-level-price" vars={{ price }}><Price>{price} €</Price></Localized>
+			<Price price={price}/>
 		</Footer>
 	</RadioCard>
 )
