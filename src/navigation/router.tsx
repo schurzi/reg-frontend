@@ -8,8 +8,8 @@ import * as ROUTES from './routes'
 export const EFRouter = () => (
   <Router>
     <NotFoundPage default />
-		<IndexPage path={ROUTES.HOME} />
-		<RegisterPage path={ROUTES.REGISTER} />
+	<IndexPage path={ROUTES.HOME} />
+	<RegisterPage path={ROUTES.REGISTER} />
   </Router>
 )
 
