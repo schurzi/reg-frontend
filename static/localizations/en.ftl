@@ -1,5 +1,12 @@
 hello = Hello world!
 
+register-navigation-back = Go back
+
+register-navigation-next = Continue
+
+register-ticket-day-card =
+  .label = {DATETIME($date, day: "numeric", month: "long", year: "numeric")}
+
 register-ticket-level-card-standard =
   This Standard Convention ticket grants you access to the convention from Wednesday to Sunday.
 
