@@ -1,7 +1,7 @@
 import { Router } from '@reach/router'
-import NotFoundPage from '../pages/404';
-import { IndexPage } from '../pages/home';
-import RegisterPage from '../pages/register';
+import NotFoundPage from '../pages/404'
+import { IndexPage } from '../pages/home'
+import RegisterPage from '../pages/register'
 import Ticket from '../components/register/steps/ticket'
 import TicketType from '../components/register/steps/ticket/type'
 import TicketDay from '../components/register/steps/ticket/day'
@@ -31,4 +31,4 @@ export const RegisterRouter = () => (
 		<Contact path={ROUTES.REGISTER_CONTACT} />
 		<Optional path={ROUTES.REGISTER_OPTIONAL} />
 	</Router>
-);
+)
