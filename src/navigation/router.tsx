@@ -13,11 +13,11 @@ import Optional from '../components/register/steps/optional'
 import * as ROUTES from './routes'
 
 export const EFRouter = () => (
-  <Router>
-    <NotFoundPage default />
-	<IndexPage path={ROUTES.HOME} />
-	<RegisterPage path={ROUTES.REGISTER} />
-  </Router>
+	<Router>
+		<NotFoundPage default />
+		<IndexPage path={ROUTES.HOME} />
+		<RegisterPage path={ROUTES.REGISTER} />
+	</Router>
 )
 
 export const RegisterRouter = () => (
