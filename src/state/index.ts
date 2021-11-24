@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import { createEpicMiddleware } from 'redux-observable'
+import { AnyAppAction, GetAction } from './actions'
 import reducer from './reducers'
 import epic from './epics'
 
@@ -7,7 +8,7 @@ export const configureStore = () => {
 	// eslint-disable-next-line no-underscore-dangle
 	const composeEnhancers = global.window && ((window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ as typeof compose) || compose
 
-	const epicMiddleware = createEpicMiddleware()
+	const epicMiddleware = createEpicMiddleware<GetAction<AnyAppAction>, GetAction<AnyAppAction>, AppState>()
 
 	const store = createStore(
 		reducer,
@@ -20,3 +21,6 @@ export const configureStore = () => {
 
 	return store
 }
+
+export type AppState = ReturnType<typeof reducer>
+export type AppDispatch = ReturnType<typeof configureStore>['dispatch']
