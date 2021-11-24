@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-
 import { LocalizationProvider, ReactLocalization } from '@fluent/react'
 import { useObservable, useObservableState } from 'observable-hooks'
 

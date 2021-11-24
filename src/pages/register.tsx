@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-
 import { css } from '@emotion/react'
 import { Localized } from '@fluent/react'
 import { Router, RouteComponentProps, Link, useMatch, navigate } from '@reach/router'

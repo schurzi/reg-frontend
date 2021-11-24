@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-
 import styled from '@emotion/styled'
 import { ChangeEventHandler, forwardRef, FocusEventHandler } from 'react'
 import { Localized } from '@fluent/react'

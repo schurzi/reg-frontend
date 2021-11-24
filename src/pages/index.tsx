@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-
 import { Localized } from '@fluent/react'
 import Layout from '../components/layout'
 import SEO from '../components/seo'
