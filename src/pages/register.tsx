@@ -2,7 +2,7 @@
 
 import { css } from '@emotion/react'
 import { Localized } from '@fluent/react'
-import { Router, RouteComponentProps, Link, useMatch, navigate } from '@reach/router'
+import { RouteComponentProps, Link, useMatch, navigate } from '@reach/router'
 import { useForm } from 'react-hook-form'
 import Layout from '../components/layout'
 import SEO from '../components/seo'
@@ -16,6 +16,7 @@ import { until, last } from 'ramda'
 import { DateTime } from 'luxon'
 import { ReactNode } from 'react'
 import { useSiteMetadata } from '../queries/site-metadata'
+import { RegisterRouter } from '../navigation/router'
 
 const steps = [
 	'ticket',
@@ -69,7 +70,7 @@ const Footer = () => {
 	</footer>
 }
 
-const TicketType = (_: RouteComponentProps) => {
+export const TicketType = (_: RouteComponentProps) => {
 	const { register } = useForm()
 
 	return <form>
@@ -93,7 +94,7 @@ const TicketType = (_: RouteComponentProps) => {
 	</form>
 }
 
-const TicketDay = (_: RouteComponentProps) => {
+export const TicketDay = (_: RouteComponentProps) => {
 	const { eventStartDate, eventEndDate } = useSiteMetadata()
 	const langKey = useCurrentLangKey()
 	const { register } = useForm()
@@ -113,13 +114,13 @@ const TicketDay = (_: RouteComponentProps) => {
 	</form>
 }
 
-const Ticket = ({ children }: RouteComponentProps<{ readonly children: ReactNode }>) => {
+export const Ticket = ({ children }: RouteComponentProps<{ readonly children: ReactNode }>) => {
 	return <>
 		{children}
 	</>
 }
 
-const TicketLevel = (_: RouteComponentProps) => {
+export const TicketLevel = (_: RouteComponentProps) => {
 	const { register } = useForm()
 	const { ticketLevels, registrationExpirationDate } = useSiteMetadata()
 
@@ -184,7 +185,7 @@ const WithInvoice = ({ children }: { readonly children: ReactNode }) => {
 	</div>
 }
 
-const Personal = (_: RouteComponentProps) => {
+export const Personal = (_: RouteComponentProps) => {
 	const { register } = useForm()
 
 	return <WithInvoice>
@@ -244,7 +245,7 @@ const Personal = (_: RouteComponentProps) => {
 	</WithInvoice>
 }
 
-const Contact = (_: RouteComponentProps) => {
+export const Contact = (_: RouteComponentProps) => {
 	const { register } = useForm()
 
 	return <WithInvoice>
@@ -274,7 +275,7 @@ const Contact = (_: RouteComponentProps) => {
 	</WithInvoice>
 }
 
-const Optional = (_: RouteComponentProps) => {
+export const Optional = (_: RouteComponentProps) => {
 	const { register } = useForm()
 
 	return <WithInvoice>
@@ -302,20 +303,13 @@ const Optional = (_: RouteComponentProps) => {
 	</WithInvoice>
 }
 
-const RegisterPage = () => <Layout>
-	<SEO title="Register" />
-	<Header/>
-	<Router basepath="/register">
-		<Ticket path="ticket">
-			<TicketType path="type"/>
-			<TicketDay path="day"/>
-			<TicketLevel path="level"/>
-		</Ticket>
-		<Personal path="personal-info"/>
-		<Contact path="contact-info"/>
-		<Optional path="optional-info"/>
-	</Router>
-	<Footer/>
-</Layout>
+const RegisterPage = (_: RouteComponentProps) => (
+	<Layout>
+		<SEO title="Register" />
+		<Header/>
+		{RegisterRouter()}
+		<Footer/>
+	</Layout>
+)
 
 export default RegisterPage
