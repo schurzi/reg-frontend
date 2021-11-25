@@ -1,6 +1,7 @@
 import { ContactInfo, OptionalInfo, PersonalInfo, TicketLevel, TicketType } from '../models/register'
 import { AnyAppAction, GetAction } from '../actions'
 import { SubmitTicketType, SubmitTicketDay, ChangeTicketLevel, ChangeContactInfo, ChangeOptionalInfo, ChangePersonalInfo } from '../actions/register'
+import { LoadAutosaveData } from '../actions/autosave'
 
 export interface RegisterState {
 	readonly ticketType?: TicketType
@@ -24,6 +25,8 @@ export default (state: RegisterState = {}, action: GetAction<AnyAppAction>): Reg
 			return { ...state, optionalInfo: action.payload }
 		case ChangePersonalInfo.type:
 			return { ...state, personalInfo: action.payload }
+		case LoadAutosaveData.type:
+			return action.payload.register
 		default:
 			return state
 	}
