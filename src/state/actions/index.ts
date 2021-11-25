@@ -1,4 +1,6 @@
 import { RegisterAction } from './register'
 
-export type AppAction
+export type { GetAction } from './create-action'
+
+export type AnyAppAction
 	= RegisterAction
