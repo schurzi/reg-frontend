@@ -2,16 +2,16 @@
 
 import { Localized } from '@fluent/react'
 import { RouteComponentProps } from '@reach/router'
-import { useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { Checkbox, FieldSet, TextArea } from '@eurofurence/reg-component-library'
 import WithInvoiceRegisterLayout from '../layout/with-invoice'
 import { OptionalInfo } from '../../../state/models/register'
 import { SubmitOptionalInfo } from '../../../state/actions/register'
+import { useAppDispatch } from '../../../hooks/redux'
 
 const Optional = (_: RouteComponentProps) => {
 	const { register, handleSubmit } = useForm<OptionalInfo>()
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 
 	return <WithInvoiceRegisterLayout onSubmit={handleSubmit(data => dispatch(SubmitOptionalInfo.create(data)))}>
 		<Localized id="register-form-notifications" attrs={{ legend: true }}>

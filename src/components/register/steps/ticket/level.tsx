@@ -11,8 +11,8 @@ import TicketLevelCard from './level/card'
 import TicketLevelAddon from './level/addon'
 import FullWidthRegisterLayout from '../../layout/full-width'
 import { SubmitTicketLevel } from '../../../../state/actions/register'
-import { useDispatch } from 'react-redux'
 import { TicketLevel as TicketLevelModel } from '../../../../state/models/register'
+import { useAppDispatch } from '../../../../hooks/redux'
 
 const TicketLevelSection = styled.section`
 	margin-top: 1.5em;
@@ -36,7 +36,7 @@ const AddonsContainer = styled.section`
 const TicketLevel = (_: RouteComponentProps) => {
 	const { register, handleSubmit } = useForm<TicketLevelModel>()
 	const { ticketLevels, registrationExpirationDate } = useSiteMetadata()
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 
 	const expirationDate = DateTime.fromISO(registrationExpirationDate)
 

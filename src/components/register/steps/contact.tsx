@@ -2,16 +2,16 @@
 
 import { Localized } from '@fluent/react'
 import { RouteComponentProps } from '@reach/router'
-import { useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { TextField } from '@eurofurence/reg-component-library'
 import WithInvoiceRegisterLayout from '../layout/with-invoice'
 import { SubmitContactInfo } from '../../../state/actions/register'
 import { ContactInfo } from '../../../state/models/register'
+import { useAppDispatch } from '../../../hooks/redux'
 
 const Contact = (_: RouteComponentProps) => {
 	const { register, handleSubmit } = useForm<ContactInfo>()
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 
 	return <WithInvoiceRegisterLayout onSubmit={handleSubmit(data => dispatch(SubmitContactInfo.create(data)))}>
 		<Localized id="register-form-email" attrs={{ label: true, placeholder: true }}>

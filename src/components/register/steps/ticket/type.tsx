@@ -6,9 +6,9 @@ import { RouteComponentProps } from '@reach/router'
 import { useForm } from 'react-hook-form'
 import { RadioGroup, RadioCard } from '@eurofurence/reg-component-library'
 import FullWidthRegisterLayout from '../../layout/full-width'
-import { useDispatch } from 'react-redux'
 import { TicketType as TicketTypeModel } from '../../../../state/models/register'
 import { SubmitTicketType } from '../../../../state/actions/register'
+import { useAppDispatch } from '../../../../hooks/redux'
 
 const TicketTypeGrid = styled.div`
 	display: flex;
@@ -21,7 +21,7 @@ const TicketTypeGrid = styled.div`
 
 const TicketType = (_: RouteComponentProps) => {
 	const { register, handleSubmit } = useForm<{ type: TicketTypeModel['type'] }>()
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 
 	return <FullWidthRegisterLayout onSubmit={handleSubmit(data => dispatch(SubmitTicketType.create(data.type)))}>
 		<RadioGroup name="type">

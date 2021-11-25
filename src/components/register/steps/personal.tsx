@@ -2,13 +2,13 @@
 
 import { Localized } from '@fluent/react'
 import { RouteComponentProps } from '@reach/router'
-import { useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { Checkbox, FieldSet, TextField, RadioSet, RadioItem, Select } from '@eurofurence/reg-component-library'
 import WithInvoiceRegisterLayout from '../layout/with-invoice'
 import { PersonalInfo } from '../../../state/models/register'
 import langMap from 'langmap'
 import { SubmitPersonalInfo } from '../../../state/actions/register'
+import { useAppDispatch } from '../../../hooks/redux'
 
 const languageOptions = [...Object.entries(langMap)]
 	.filter(([key]) => !key.includes('-'))
@@ -17,7 +17,7 @@ const languageOptions = [...Object.entries(langMap)]
 
 const Personal = (_: RouteComponentProps) => {
 	const { register, handleSubmit } = useForm<PersonalInfo>()
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 
 	return <WithInvoiceRegisterLayout onSubmit={handleSubmit(data => dispatch(SubmitPersonalInfo.create(data)))}>
 		<Localized id="register-form-nickname" attrs={{ label: true, placeholder: true }}>
