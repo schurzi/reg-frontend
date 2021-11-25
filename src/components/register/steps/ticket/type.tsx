@@ -27,7 +27,7 @@ const TicketType = (_: RouteComponentProps) => {
 	useEffect(() => {
 		const subscription = watch(data => dispatch(ChangeTicketType.create(data.type)))
 
-		return () => subscription.unsubscribe()
+		return subscription.unsubscribe
 	})
 
 	return <FullWidthRegisterLayout onSubmit={handleSubmit(data => dispatch(SubmitTicketType.create(data.type)))}>

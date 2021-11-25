@@ -23,7 +23,7 @@ const Personal = (_: RouteComponentProps) => {
 	useEffect(() => {
 		const subscription = watch(data => dispatch(ChangePersonalInfo.create(data)))
 
-		return () => subscription.unsubscribe()
+		return subscription.unsubscribe
 	})
 
 	return <WithInvoiceRegisterLayout onSubmit={handleSubmit(data => dispatch(SubmitPersonalInfo.create(data)))}>

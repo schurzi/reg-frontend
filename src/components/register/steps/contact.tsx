@@ -17,7 +17,7 @@ const Contact = (_: RouteComponentProps) => {
 	useEffect(() => {
 		const subscription = watch(data => dispatch(ChangeContactInfo.create(data)))
 
-		return () => subscription.unsubscribe()
+		return subscription.unsubscribe
 	})
 
 	return <WithInvoiceRegisterLayout onSubmit={handleSubmit(data => dispatch(SubmitContactInfo.create(data)))}>
