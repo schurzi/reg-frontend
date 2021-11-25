@@ -1,5 +1,12 @@
 hello = Hello world!
 
+register-navigation-back = Go back
+
+register-navigation-next = Continue
+
+register-ticket-day-card =
+  .label = {DATETIME($date, day: "numeric", month: "long", year: "numeric")}
+
 register-ticket-level-card-standard =
   This Standard Convention ticket grants you access to the convention from Wednesday to Sunday.
 
@@ -37,7 +44,15 @@ register-ticket-level-card-super-sponsor =
 
 register-ticket-level-expiration-notice = Register before {DATETIME($expirationDate, day: "numeric", month: "long")}
 
-register-ticket-level-price = {$price} €
+register-ticket-level-addons-title = Select add-ons
+
+register-ticket-level-addons-item-stage-pass =
+  .label = Stage pass
+  .description = The Stage pass will grant you access to the stage events from **Wednesday** to **Saturday**.
+
+register-ticket-level-addons-item-tshirt =
+  .label = Eurofurence T-shirt
+  .description = 100% cotton, high-quality T-shirts. You can also purchase these at the event, but purchasing it now will guarantee the availability of your size.
 
 register-form-nickname =
   .label = Nickname
@@ -86,3 +101,10 @@ register-form-accessibility =
 
 register-form-accessibility-wheelchair =
   .label = Please accomodate my wheelchair (and me).
+
+register-price = {$price ->
+   [0]     Free
+  *[other] {$price} €
+}
+
+register-invoice-title = Your registration

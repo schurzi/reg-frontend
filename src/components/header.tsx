@@ -6,7 +6,7 @@ import { useObservableState, useObservable } from 'observable-hooks'
 import { DateTime, Duration } from 'luxon'
 import brandImg from '../images/brand.svg'
 import { NavBar, Display, Dropdown } from '@eurofurence/reg-component-library'
-import { useSiteMetadata } from '../queries/site-metadata'
+import { useSiteMetadata } from '../hooks/queries/site-metadata'
 
 const CLOCK_UPDATE_DELAY = 1000
 
