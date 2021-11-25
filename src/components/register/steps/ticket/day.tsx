@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import styled from '@emotion/styled'
+import { useEffect } from 'react'
 import { Localized } from '@fluent/react'
 import { RouteComponentProps } from '@reach/router'
 import { useForm } from 'react-hook-form'
@@ -9,7 +10,7 @@ import { until, last } from 'ramda'
 import { RadioGroup, RadioCard } from '@eurofurence/reg-component-library'
 import { useSiteMetadata } from '../../../../hooks/queries/site-metadata'
 import FullWidthRegisterLayout from '../../layout/full-width'
-import { SubmitTicketDay } from '../../../../state/actions/register'
+import { ChangeTicketDay, SubmitTicketDay } from '../../../../state/actions/register'
 import { useAppDispatch } from '../../../../hooks/redux'
 
 const datesBetween = (start: DateTime, end: DateTime) =>
@@ -23,8 +24,14 @@ const Grid = styled.div`
 
 const TicketDay = (_: RouteComponentProps) => {
 	const { eventStartDate, eventEndDate } = useSiteMetadata()
-	const { register, handleSubmit } = useForm<{ day: string }>()
+	const { register, watch, handleSubmit } = useForm<{ day: string }>()
 	const dispatch = useAppDispatch()
+
+	useEffect(() => {
+		const subscription = watch(data => dispatch(ChangeTicketDay.create(data.day)))
+
+		return () => subscription.unsubscribe()
+	})
 
 	return <FullWidthRegisterLayout onSubmit={handleSubmit(data => dispatch(SubmitTicketDay.create(data.day)))}>
 		<RadioGroup name="day">

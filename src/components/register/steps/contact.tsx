@@ -1,17 +1,24 @@
 /** @jsxImportSource @emotion/react */
 
 import { Localized } from '@fluent/react'
+import { useEffect } from 'react'
 import { RouteComponentProps } from '@reach/router'
 import { useForm } from 'react-hook-form'
 import { TextField } from '@eurofurence/reg-component-library'
 import WithInvoiceRegisterLayout from '../layout/with-invoice'
-import { SubmitContactInfo } from '../../../state/actions/register'
+import { ChangeContactInfo, SubmitContactInfo } from '../../../state/actions/register'
 import { ContactInfo } from '../../../state/models/register'
 import { useAppDispatch } from '../../../hooks/redux'
 
 const Contact = (_: RouteComponentProps) => {
-	const { register, handleSubmit } = useForm<ContactInfo>()
+	const { register, watch, handleSubmit } = useForm<ContactInfo>()
 	const dispatch = useAppDispatch()
+
+	useEffect(() => {
+		const subscription = watch(data => dispatch(ChangeContactInfo.create(data)))
+
+		return () => subscription.unsubscribe()
+	})
 
 	return <WithInvoiceRegisterLayout onSubmit={handleSubmit(data => dispatch(SubmitContactInfo.create(data)))}>
 		<Localized id="register-form-email" attrs={{ label: true, placeholder: true }}>

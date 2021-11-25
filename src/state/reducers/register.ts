@@ -1,6 +1,6 @@
 import { ContactInfo, OptionalInfo, PersonalInfo, TicketLevel, TicketType } from '../models/register'
 import { AnyAppAction, GetAction } from '../actions'
-import { SubmitTicketType, SubmitTicketDay, SubmitTicketLevel, SubmitContactInfo, SubmitOptionalInfo, SubmitPersonalInfo } from '../actions/register'
+import { SubmitTicketType, SubmitTicketDay, ChangeTicketLevel, ChangeContactInfo, ChangeOptionalInfo, ChangePersonalInfo } from '../actions/register'
 
 export interface RegisterState {
 	readonly ticketType?: TicketType
@@ -16,13 +16,13 @@ export default (state: RegisterState = {}, action: GetAction<AnyAppAction>): Reg
 			return action.payload === 'day' ? state : { ...state, ticketType: { type: action.payload } }
 		case SubmitTicketDay.type:
 			return { ...state, ticketType: { type: 'day', day: action.payload } }
-		case SubmitTicketLevel.type:
+		case ChangeTicketLevel.type:
 			return { ...state, ticketLevel: action.payload }
-		case SubmitContactInfo.type:
+		case ChangeContactInfo.type:
 			return { ...state, contactInfo: action.payload }
-		case SubmitOptionalInfo.type:
+		case ChangeOptionalInfo.type:
 			return { ...state, optionalInfo: action.payload }
-		case SubmitPersonalInfo.type:
+		case ChangePersonalInfo.type:
 			return { ...state, personalInfo: action.payload }
 		default:
 			return state

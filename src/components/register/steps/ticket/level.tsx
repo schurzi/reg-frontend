@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import styled from '@emotion/styled'
+import { useEffect } from 'react'
 import { Localized } from '@fluent/react'
 import { RouteComponentProps } from '@reach/router'
 import { useForm } from 'react-hook-form'
@@ -10,7 +11,7 @@ import { useSiteMetadata } from '../../../../hooks/queries/site-metadata'
 import TicketLevelCard from './level/card'
 import TicketLevelAddon from './level/addon'
 import FullWidthRegisterLayout from '../../layout/full-width'
-import { SubmitTicketLevel } from '../../../../state/actions/register'
+import { ChangeTicketLevel, SubmitTicketLevel } from '../../../../state/actions/register'
 import { TicketLevel as TicketLevelModel } from '../../../../state/models/register'
 import { useAppDispatch } from '../../../../hooks/redux'
 
@@ -34,11 +35,17 @@ const AddonsContainer = styled.section`
 `
 
 const TicketLevel = (_: RouteComponentProps) => {
-	const { register, handleSubmit } = useForm<TicketLevelModel>()
+	const { register, watch, handleSubmit } = useForm<TicketLevelModel>()
 	const { ticketLevels, registrationExpirationDate } = useSiteMetadata()
 	const dispatch = useAppDispatch()
 
 	const expirationDate = DateTime.fromISO(registrationExpirationDate)
+
+	useEffect(() => {
+		const subscription = watch(data => dispatch(ChangeTicketLevel.create(data)))
+
+		return () => subscription.unsubscribe()
+	})
 
 	return <FullWidthRegisterLayout onSubmit={handleSubmit(data => dispatch(SubmitTicketLevel.create(data)))}>
 		<TicketLevelSection>

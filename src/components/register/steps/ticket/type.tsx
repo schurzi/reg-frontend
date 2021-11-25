@@ -1,13 +1,14 @@
 /** @jsxImportSource @emotion/react */
 
 import styled from '@emotion/styled'
+import { useEffect } from 'react'
 import { Localized } from '@fluent/react'
 import { RouteComponentProps } from '@reach/router'
 import { useForm } from 'react-hook-form'
 import { RadioGroup, RadioCard } from '@eurofurence/reg-component-library'
 import FullWidthRegisterLayout from '../../layout/full-width'
 import { TicketType as TicketTypeModel } from '../../../../state/models/register'
-import { SubmitTicketType } from '../../../../state/actions/register'
+import { ChangeTicketType, SubmitTicketType } from '../../../../state/actions/register'
 import { useAppDispatch } from '../../../../hooks/redux'
 
 const TicketTypeGrid = styled.div`
@@ -20,8 +21,14 @@ const TicketTypeGrid = styled.div`
 `
 
 const TicketType = (_: RouteComponentProps) => {
-	const { register, handleSubmit } = useForm<{ type: TicketTypeModel['type'] }>()
+	const { register, watch, handleSubmit } = useForm<{ type: TicketTypeModel['type'] }>()
 	const dispatch = useAppDispatch()
+
+	useEffect(() => {
+		const subscription = watch(data => dispatch(ChangeTicketType.create(data.type)))
+
+		return () => subscription.unsubscribe()
+	})
 
 	return <FullWidthRegisterLayout onSubmit={handleSubmit(data => dispatch(SubmitTicketType.create(data.type)))}>
 		<RadioGroup name="type">
