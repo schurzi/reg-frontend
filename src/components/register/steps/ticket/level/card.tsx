@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-
 import styled from '@emotion/styled'
 import { forwardRef, ForwardedRef } from 'react'
 import { Localized } from '@fluent/react'

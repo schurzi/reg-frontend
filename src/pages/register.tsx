@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-
 import { RouteComponentProps } from '@reach/router'
 import { RegisterRouter } from '../navigation/router'
 import Layout from '../components/layout'
