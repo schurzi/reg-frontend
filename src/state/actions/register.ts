@@ -1,4 +1,4 @@
-import { TicketType, TicketLevel, ContactInfo, OptionalInfo, PersonalInfo } from '../models/register'
+import { TicketType, TicketLevel, ContactInfo, OptionalInfo, PersonalInfo } from '~/state/models/register'
 import { createAction } from './create-action'
 
 export const ChangeTicketType = createAction<TicketType['type'], '[Register] Change ticket type'>('[Register] Change ticket type')

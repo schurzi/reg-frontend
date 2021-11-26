@@ -6,10 +6,10 @@ import { Localized } from '@fluent/react'
 import { RouteComponentProps } from '@reach/router'
 import { useForm } from 'react-hook-form'
 import { RadioGroup, RadioCard } from '@eurofurence/reg-component-library'
-import FullWidthRegisterLayout from '../../layout/full-width'
-import { TicketType as TicketTypeModel } from '../../../../state/models/register'
-import { ChangeTicketType, SubmitTicketType } from '../../../../state/actions/register'
-import { useAppDispatch } from '../../../../hooks/redux'
+import FullWidthRegisterLayout from '~/components/register/layout/full-width'
+import { TicketType as TicketTypeModel } from '~/state/models/register'
+import { ChangeTicketType, SubmitTicketType } from '~/state/actions/register'
+import { useAppDispatch } from '~/hooks/redux'
 
 const TicketTypeGrid = styled.div`
 	display: flex;

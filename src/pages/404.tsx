@@ -1,6 +1,6 @@
 import { RouteComponentProps } from '@reach/router'
-import Layout from '../components/layout'
-import SEO from '../components/seo'
+import Layout from '~/components/layout'
+import SEO from '~/components/seo'
 
 const NotFoundPage = (_: RouteComponentProps) => (
 	<Layout>

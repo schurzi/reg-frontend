@@ -7,13 +7,13 @@ import { RouteComponentProps } from '@reach/router'
 import { useForm } from 'react-hook-form'
 import { DateTime } from 'luxon'
 import { RadioGroup, Select } from '@eurofurence/reg-component-library'
-import { useSiteMetadata } from '../../../../hooks/queries/site-metadata'
+import { useSiteMetadata } from '~/hooks/queries/site-metadata'
 import TicketLevelCard from './level/card'
 import TicketLevelAddon from './level/addon'
-import FullWidthRegisterLayout from '../../layout/full-width'
-import { ChangeTicketLevel, SubmitTicketLevel } from '../../../../state/actions/register'
-import { TicketLevel as TicketLevelModel } from '../../../../state/models/register'
-import { useAppDispatch } from '../../../../hooks/redux'
+import FullWidthRegisterLayout from '~/components/register/layout/full-width'
+import { ChangeTicketLevel, SubmitTicketLevel } from '~/state/actions/register'
+import { TicketLevel as TicketLevelModel } from '~/state/models/register'
+import { useAppDispatch } from '~/hooks/redux'
 
 const TicketLevelSection = styled.section`
 	margin-top: 1.5em;

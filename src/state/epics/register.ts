@@ -1,10 +1,10 @@
 import { ActionsObservable, combineEpics, ofType } from 'redux-observable'
 import { navigate } from '@reach/router'
-import { SubmitContactInfo, SubmitPersonalInfo, SubmitTicketDay, SubmitTicketLevel, SubmitTicketType } from '../actions/register'
+import { SubmitContactInfo, SubmitPersonalInfo, SubmitTicketDay, SubmitTicketLevel, SubmitTicketType } from '~/state/actions/register'
 import { ignoreElements, tap } from 'rxjs/operators'
-import { AnyAppAction, GetAction } from '../actions'
+import { AnyAppAction, GetAction } from '~/state/actions'
 import { always } from 'ramda'
-import { AppState } from '..'
+import { AppState } from '~/state'
 
 const nextPage = <T extends AnyAppAction>(action: T, pathProvider: (action: GetAction<T>) => string) =>
 	(action$: ActionsObservable<GetAction<AnyAppAction>>) => action$.pipe(

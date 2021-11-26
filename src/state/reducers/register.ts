@@ -1,7 +1,7 @@
-import { ContactInfo, OptionalInfo, PersonalInfo, TicketLevel, TicketType } from '../models/register'
-import { AnyAppAction, GetAction } from '../actions'
-import { SubmitTicketType, SubmitTicketDay, ChangeTicketLevel, ChangeContactInfo, ChangeOptionalInfo, ChangePersonalInfo } from '../actions/register'
-import { LoadAutosaveData } from '../actions/autosave'
+import { ContactInfo, OptionalInfo, PersonalInfo, TicketLevel, TicketType } from '~/state/models/register'
+import { AnyAppAction, GetAction } from '~/state/actions'
+import { SubmitTicketType, SubmitTicketDay, ChangeTicketLevel, ChangeContactInfo, ChangeOptionalInfo, ChangePersonalInfo } from '~/state/actions/register'
+import { LoadAutosaveData } from '~/state/actions/autosave'
 
 export interface RegisterState {
 	readonly ticketType?: TicketType

@@ -5,10 +5,10 @@ import { useEffect } from 'react'
 import { RouteComponentProps } from '@reach/router'
 import { useForm } from 'react-hook-form'
 import { Checkbox, FieldSet, TextArea } from '@eurofurence/reg-component-library'
-import WithInvoiceRegisterLayout from '../layout/with-invoice'
-import { OptionalInfo } from '../../../state/models/register'
-import { ChangeOptionalInfo, SubmitOptionalInfo } from '../../../state/actions/register'
-import { useAppDispatch } from '../../../hooks/redux'
+import WithInvoiceRegisterLayout from '~/components/register/layout/with-invoice'
+import { OptionalInfo } from '~/state/models/register'
+import { ChangeOptionalInfo, SubmitOptionalInfo } from '~/state/actions/register'
+import { useAppDispatch } from '~/hooks/redux'
 
 const Optional = (_: RouteComponentProps) => {
 	const { register, watch, handleSubmit } = useForm<OptionalInfo>()
