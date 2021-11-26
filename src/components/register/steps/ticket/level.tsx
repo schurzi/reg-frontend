@@ -44,7 +44,7 @@ const TicketLevel = (_: RouteComponentProps) => {
 	useEffect(() => {
 		const subscription = watch(data => dispatch(ChangeTicketLevel.create(data)))
 
-		return subscription.unsubscribe
+		return () => subscription.unsubscribe()
 	})
 
 	return <FullWidthRegisterLayout onSubmit={handleSubmit(data => dispatch(SubmitTicketLevel.create(data)))}>
