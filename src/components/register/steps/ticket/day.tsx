@@ -30,7 +30,7 @@ const TicketDay = (_: RouteComponentProps) => {
 	useEffect(() => {
 		const subscription = watch(data => dispatch(ChangeTicketDay.create(data.day)))
 
-		return subscription.unsubscribe
+		return () => subscription.unsubscribe()
 	})
 
 	return <FullWidthRegisterLayout onSubmit={handleSubmit(data => dispatch(SubmitTicketDay.create(data.day)))}>

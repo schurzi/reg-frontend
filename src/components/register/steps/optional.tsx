@@ -17,7 +17,7 @@ const Optional = (_: RouteComponentProps) => {
 	useEffect(() => {
 		const subscription = watch(data => dispatch(ChangeOptionalInfo.create(data)))
 
-		return subscription.unsubscribe
+		return () => subscription.unsubscribe()
 	})
 
 	return <WithInvoiceRegisterLayout onSubmit={handleSubmit(data => dispatch(SubmitOptionalInfo.create(data)))}>
