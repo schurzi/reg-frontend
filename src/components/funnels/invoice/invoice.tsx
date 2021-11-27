@@ -1,32 +1,41 @@
 /** @jsxImportSource @emotion/react */
 
 import styled from '@emotion/styled'
-import { Localized } from '@fluent/react'
 import { Card } from '@eurofurence/reg-component-library'
-import InvoiceItem from './item'
+import InvoiceItemComponent from './item'
 import Footer from './footer'
+import { sum } from 'ramda'
 
 const InvoiceCard = styled(Card)`
 	grid-column: 10 / span 3;
 	align-self: start;
 `
 
-const Invoice = () => {
-	// todo: load data from state
+export interface InvoiceItem {
+	name: string
+	amount: number
+	unitPrice: number
+	extra?: string
+}
 
-	return <InvoiceCard inverted={true}>
+export interface InvoiceProps {
+	title: string
+	items: InvoiceItem[]
+}
+
+const Invoice = ({ title, items }: InvoiceProps) =>
+	<InvoiceCard inverted={true}>
 		<header>
-			<Localized id="register-invoice-title"><h1>Your registration</h1></Localized>
+			<h1>{title}</h1>
 		</header>
 		<div>
 			<ul>
-				<InvoiceItem label="1 x Full conv." price={155} extra="August 11 - 15"/>
-				<InvoiceItem label="1 x Stage pass" price={5}/>
-				<InvoiceItem label="1 x T-shirt" price={0} extra="XXL"/>
+				{items.map(({ amount, unitPrice, name, extra }) =>
+					<InvoiceItemComponent label={`${amount} x ${name}`} price={amount * unitPrice} extra={extra}/>
+				)}
 			</ul>
 		</div>
-		<Footer totalPrice={90}/>
+		<Footer totalPrice={sum(items.map(({ amount, unitPrice }) => amount * unitPrice))}/>
 	</InvoiceCard>
-}
 
 export default Invoice
