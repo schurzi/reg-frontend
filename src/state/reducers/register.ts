@@ -15,9 +15,9 @@ export interface RegisterState {
 export default (state: RegisterState = {}, action: GetAction<AnyAppAction>): RegisterState => {
 	switch (action.type) {
 		case SubmitTicketType.type:
-			return action.payload === 'day' ? state : { ...state, ticketType: { type: action.payload } }
+			return action.payload.type === 'day' ? state : { ...state, ticketType: action.payload }
 		case SubmitTicketDay.type:
-			return { ...state, ticketType: { type: 'day', day: action.payload } }
+			return { ...state, ticketType: { type: 'day', day: action.payload.day } }
 		case ChangeTicketLevel.type:
 			return { ...state, ticketLevel: action.payload }
 		case ChangeContactInfo.type:

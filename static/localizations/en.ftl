@@ -112,6 +112,8 @@ register-price = {$price ->
 
 register-invoice-title = Your registration
 
+register-step-counter = Step {$step}
+
 footer-links-privacy-policy = Privacy policy
 
 footer-links-cookie-statement = Cookie statement
