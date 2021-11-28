@@ -25,6 +25,12 @@ module.exports = {
 				price: 250,
 			},
 		],
+		rooms: [
+			{ id: 'standard', price: 140 },
+			{ id: 'deluxe', price: 160 },
+			{ id: 'junior-suite', price: 198 },
+			{ id: 'deluxe-suite', price: 228 },
+		],
   },
   plugins: [
     `gatsby-plugin-react-helmet`,

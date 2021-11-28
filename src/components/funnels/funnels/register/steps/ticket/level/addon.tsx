@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { forwardRef, ForwardedRef, ReactNode } from 'react'
 import { Checkbox, CheckboxProps } from '@eurofurence/reg-component-library'
 import ReactMarkdown from 'react-markdown'
-import Price from './price'
+import Price from '~/components/funnels/price'
 
 export interface TicketLevelAddonProps extends CheckboxProps {
 	readonly label: string

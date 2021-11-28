@@ -7,6 +7,11 @@ exports.onCreatePage = async ({ page, actions }) => {
 		page.matchPath = "/register/*"
 		createPage(page)
 	}
+
+	if (page.path.match(/^\/hotel-booking/)) {
+		page.matchPath = "/hotel-booking/*"
+		createPage(page)
+	}
 }
 
 exports.onCreateWebpackConfig = ({ actions }) => {

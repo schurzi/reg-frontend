@@ -10,5 +10,9 @@ export const REGISTER_PERSONAL = "personal-info"
 export const REGISTER_CONTACT = "contact-info"
 export const REGISTER_OPTIONAL = "optional-info"
 
+// Hotel booking flow
+export const HOTEL_BOOKING = "hotel-booking"
+export const HOTEL_BOOKING_ROOM = "room"
+
 // Error Pages
 export const FOUR_0_FOUR = "404"
