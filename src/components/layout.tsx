@@ -5,7 +5,7 @@ import Header from './header'
 import Footer from './footer'
 import { Page } from '@eurofurence/reg-component-library'
 import '@eurofurence/reg-component-library/dist/index.css'
-import { loadLanguage, useCurrentLangKey } from '../localization'
+import { loadLanguage, useCurrentLangKey } from '~/localization'
 import { from } from 'rxjs'
 import { concatMap } from 'rxjs/operators'
 

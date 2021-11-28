@@ -5,11 +5,11 @@ import { useEffect } from 'react'
 import { RouteComponentProps } from '@reach/router'
 import { useForm } from 'react-hook-form'
 import { Checkbox, FieldSet, TextField, RadioSet, RadioItem, Select } from '@eurofurence/reg-component-library'
-import WithInvoiceRegisterLayout from '../layout/with-invoice'
-import { PersonalInfo } from '../../../state/models/register'
+import WithInvoiceRegisterLayout from '~/components/register/layout/with-invoice'
+import { PersonalInfo } from '~/state/models/register'
 import langMap from 'langmap'
-import { ChangePersonalInfo, SubmitPersonalInfo } from '../../../state/actions/register'
-import { useAppDispatch } from '../../../hooks/redux'
+import { ChangePersonalInfo, SubmitPersonalInfo } from '~/state/actions/register'
+import { useAppDispatch } from '~/hooks/redux'
 
 const languageOptions = [...Object.entries(langMap)]
 	.filter(([key]) => !key.includes('-'))

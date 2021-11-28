@@ -22,6 +22,9 @@ parserOptions:
 settings:
   react:
     version: '17'
+  import/resolver:
+    alias:
+      '~': 'src'
 overrides:
   - files: src/**/*.test.{ts,tsx}
     env:

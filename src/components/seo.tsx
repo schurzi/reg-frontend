@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet'
 import { useStaticQuery, graphql } from 'gatsby'
-import { LanguageKey } from '../localization'
+import { LanguageKey } from '~/localization'
 
 const SEO = ({ description = '', lang = 'en', meta = [], title }: { description?: string, lang?: LanguageKey, meta?: JSX.IntrinsicElements['meta'][], title: string }) => {
 	const { site } = useStaticQuery(

@@ -1,14 +1,15 @@
-import { ContactInfo, OptionalInfo, PersonalInfo, TicketLevel, TicketType } from '../models/register'
-import { AnyAppAction, GetAction } from '../actions'
-import { SubmitTicketType, SubmitTicketDay, ChangeTicketLevel, ChangeContactInfo, ChangeOptionalInfo, ChangePersonalInfo } from '../actions/register'
-import { LoadAutosaveData } from '../actions/autosave'
+import { ContactInfo, OptionalInfo, PersonalInfo, TicketLevel, TicketType } from '~/state/models/register'
+import { AnyAppAction, GetAction } from '~/state/actions'
+import { SubmitTicketType, SubmitTicketDay, ChangeTicketLevel, ChangeContactInfo, ChangeOptionalInfo, ChangePersonalInfo } from '~/state/actions/register'
+import { LoadAutosaveData } from '~/state/actions/autosave'
+import type { DeepPartial } from 'ts-essentials'
 
 export interface RegisterState {
-	readonly ticketType?: TicketType
-	readonly ticketLevel?: TicketLevel
-	readonly contactInfo?: ContactInfo
-	readonly optionalInfo?: OptionalInfo
-	readonly personalInfo?: PersonalInfo
+	readonly ticketType?: DeepPartial<TicketType>
+	readonly ticketLevel?: DeepPartial<TicketLevel>
+	readonly contactInfo?: DeepPartial<ContactInfo>
+	readonly optionalInfo?: DeepPartial<OptionalInfo>
+	readonly personalInfo?: DeepPartial<PersonalInfo>
 }
 
 export default (state: RegisterState = {}, action: GetAction<AnyAppAction>): RegisterState => {

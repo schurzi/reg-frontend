@@ -8,10 +8,10 @@ import { useForm } from 'react-hook-form'
 import { DateTime } from 'luxon'
 import { until, last } from 'ramda'
 import { RadioGroup, RadioCard } from '@eurofurence/reg-component-library'
-import { useSiteMetadata } from '../../../../hooks/queries/site-metadata'
-import FullWidthRegisterLayout from '../../layout/full-width'
-import { ChangeTicketDay, SubmitTicketDay } from '../../../../state/actions/register'
-import { useAppDispatch } from '../../../../hooks/redux'
+import { useSiteMetadata } from '~/hooks/queries/site-metadata'
+import FullWidthRegisterLayout from '~/components/register/layout/full-width'
+import { ChangeTicketDay, SubmitTicketDay } from '~/state/actions/register'
+import { useAppDispatch } from '~/hooks/redux'
 
 const datesBetween = (start: DateTime, end: DateTime) =>
 	until<DateTime[], DateTime[]>(days => last(days)!.equals(end), days => [...days, last(days)!.plus({ day: 1 })], [start])

@@ -2,9 +2,9 @@ import { combineEpics } from 'redux-observable'
 import { pick, equals } from 'ramda'
 import { debounceTime, distinctUntilChanged, filter, map, tap } from 'rxjs/operators'
 import { DateTime } from 'luxon'
-import { AnyAppAction, GetAction } from '../actions'
-import { UpdateLastSavedTime, LoadAutosaveData } from '../actions/autosave'
-import { AppState } from '..'
+import { AnyAppAction, GetAction } from '~/state/actions'
+import { UpdateLastSavedTime, LoadAutosaveData } from '~/state/actions/autosave'
+import { AppState } from '~/state'
 import { fromEvent } from 'rxjs'
 
 export default combineEpics<GetAction<AnyAppAction>, GetAction<AnyAppAction>, AppState>(
