@@ -5,10 +5,10 @@ import { useEffect } from 'react'
 import { RouteComponentProps } from '@reach/router'
 import { useForm } from 'react-hook-form'
 import { TextField } from '@eurofurence/reg-component-library'
-import WithInvoiceRegisterLayout from '../layout/with-invoice'
-import { ChangeContactInfo, SubmitContactInfo } from '../../../state/actions/register'
-import { ContactInfo } from '../../../state/models/register'
-import { useAppDispatch } from '../../../hooks/redux'
+import WithInvoiceRegisterLayout from '~/components/register/layout/with-invoice'
+import { ChangeContactInfo, SubmitContactInfo } from '~/state/actions/register'
+import { ContactInfo } from '~/state/models/register'
+import { useAppDispatch } from '~/hooks/redux'
 
 const Contact = (_: RouteComponentProps) => {
 	const { register, watch, handleSubmit } = useForm<ContactInfo>()
@@ -17,7 +17,7 @@ const Contact = (_: RouteComponentProps) => {
 	useEffect(() => {
 		const subscription = watch(data => dispatch(ChangeContactInfo.create(data)))
 
-		return subscription.unsubscribe
+		return () => subscription.unsubscribe()
 	})
 
 	return <WithInvoiceRegisterLayout onSubmit={handleSubmit(data => dispatch(SubmitContactInfo.create(data)))}>

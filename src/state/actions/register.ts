@@ -1,12 +1,13 @@
-import { TicketType, TicketLevel, ContactInfo, OptionalInfo, PersonalInfo } from '../models/register'
+import type { DeepPartial } from 'ts-essentials'
+import { TicketType, TicketLevel, ContactInfo, OptionalInfo, PersonalInfo } from '~/state/models/register'
 import { createAction } from './create-action'
 
-export const ChangeTicketType = createAction<TicketType['type'], '[Register] Change ticket type'>('[Register] Change ticket type')
-export const ChangeTicketDay = createAction<string, '[Register] Change ticket day'>('[Register] Change ticket day')
-export const ChangeTicketLevel = createAction<TicketLevel, '[Register] Change ticket level'>('[Register] Change ticket level')
-export const ChangeContactInfo = createAction<ContactInfo, '[Register] Change contact info'>('[Register] Change contact info')
-export const ChangeOptionalInfo = createAction<OptionalInfo, '[Register] Change optional info'>('[Register] Change optional info')
-export const ChangePersonalInfo = createAction<PersonalInfo, '[Register] Change personal info'>('[Register] Change personal info')
+export const ChangeTicketType = createAction<DeepPartial<TicketType['type']>, '[Register] Change ticket type'>('[Register] Change ticket type')
+export const ChangeTicketDay = createAction<DeepPartial<string>, '[Register] Change ticket day'>('[Register] Change ticket day')
+export const ChangeTicketLevel = createAction<DeepPartial<TicketLevel>, '[Register] Change ticket level'>('[Register] Change ticket level')
+export const ChangeContactInfo = createAction<DeepPartial<ContactInfo>, '[Register] Change contact info'>('[Register] Change contact info')
+export const ChangeOptionalInfo = createAction<DeepPartial<OptionalInfo>, '[Register] Change optional info'>('[Register] Change optional info')
+export const ChangePersonalInfo = createAction<DeepPartial<PersonalInfo>, '[Register] Change personal info'>('[Register] Change personal info')
 export const SubmitTicketType = createAction<TicketType['type'], '[Register] Submit ticket type'>('[Register] Submit ticket type')
 export const SubmitTicketDay = createAction<string, '[Register] Submit ticket day'>('[Register] Submit ticket day')
 export const SubmitTicketLevel = createAction<TicketLevel, '[Register] Submit ticket level'>('[Register] Submit ticket level')

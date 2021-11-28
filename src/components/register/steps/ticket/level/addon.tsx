@@ -7,6 +7,7 @@ import ReactMarkdown from 'react-markdown'
 import Price from './price'
 
 export interface TicketLevelAddonProps extends CheckboxProps {
+	readonly label: string
 	readonly description: string
 	readonly children?: ReactNode
 	readonly price: number

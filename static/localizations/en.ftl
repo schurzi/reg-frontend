@@ -111,3 +111,11 @@ register-price = {$price ->
 }
 
 register-invoice-title = Your registration
+
+footer-links-privacy-policy = Privacy policy
+
+footer-links-cookie-statement = Cookie statement
+
+footer-links-contact = Contact Eurofurence
+
+footer-last-saved = Your information was last saved on {DATETIME($lastSaved, weekday: "long", month: "long", day: "numeric", year: "numeric")} at {DATETIME($lastSaved, hour: "numeric", minute: "numeric")}.

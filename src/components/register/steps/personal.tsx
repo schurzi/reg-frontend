@@ -4,12 +4,12 @@ import { Localized } from '@fluent/react'
 import { useEffect } from 'react'
 import { RouteComponentProps } from '@reach/router'
 import { Controller, useForm } from 'react-hook-form'
-import { Checkbox, FieldSet, TextField, RadioSet, RadioItem, Select, SelectProps } from '@eurofurence/reg-component-library'
-import WithInvoiceRegisterLayout from '../layout/with-invoice'
-import { PersonalInfo } from '../../../state/models/register'
+import { Checkbox, FieldSet, TextField, RadioSet, RadioItem, Select } from '@eurofurence/reg-component-library'
+import WithInvoiceRegisterLayout from '~/components/register/layout/with-invoice'
+import { PersonalInfo } from '~/state/models/register'
 import langMap from 'langmap'
-import { ChangePersonalInfo, SubmitPersonalInfo } from '../../../state/actions/register'
-import { useAppDispatch } from '../../../hooks/redux'
+import { ChangePersonalInfo, SubmitPersonalInfo } from '~/state/actions/register'
+import { useAppDispatch } from '~/hooks/redux'
 import { pluck } from 'ramda'
 
 const languageOptions = [...Object.entries(langMap)]
@@ -26,7 +26,7 @@ const Personal = (_: RouteComponentProps) => {
 	useEffect(() => {
 		const subscription = watch(data => dispatch(ChangePersonalInfo.create(data)))
 
-		return subscription.unsubscribe
+		return () => subscription.unsubscribe()
 	})
 
 	return <WithInvoiceRegisterLayout onSubmit={handleSubmit(data => dispatch(SubmitPersonalInfo.create(data)))}>

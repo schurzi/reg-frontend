@@ -29,7 +29,6 @@ const Footer = ({ canBack, onNext }: RegisterFooterProps) =>
 			<Localized id="register-navigation-next"><Button onClick={onNext}>Continue</Button></Localized>
 			{canBack ? <Localized id="register-navigation-back"><a onClick={() => navigate(-1)}>Go back</a></Localized> : null}
 		</Nav>
-		<p>Your information was last saved on Friday, August 5th 2022 at 16:31.</p>
 	</Container>
 
 export default Footer

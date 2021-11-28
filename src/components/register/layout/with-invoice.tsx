@@ -3,7 +3,7 @@
 import styled from '@emotion/styled'
 import { ReactNode } from 'react'
 import { Form } from '@eurofurence/reg-component-library'
-import Invoice from '../invoice/invoice'
+import Invoice from '~/components/register/invoice/invoice'
 import CommonRegisterLayout from './common'
 
 export interface WithInvoiceRegisterLayoutProps {

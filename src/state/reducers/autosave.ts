@@ -1,5 +1,5 @@
-import { AnyAppAction, GetAction } from '../actions'
-import { UpdateLastSavedTime } from '../actions/autosave'
+import { AnyAppAction, GetAction } from '~/state/actions'
+import { UpdateLastSavedTime } from '~/state/actions/autosave'
 import { DateTime } from 'luxon'
 
 export interface AutosaveState {
