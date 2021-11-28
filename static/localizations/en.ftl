@@ -54,6 +54,9 @@ register-ticket-level-addons-item-tshirt =
   .label = Eurofurence T-shirt
   .description = 100% cotton, high-quality T-shirts. You can also purchase these at the event, but purchasing it now will guarantee the availability of your size.
 
+register-ticket-level-addons-item-tshirt-option-size =
+  .label = T-shirt size
+
 register-form-nickname =
   .label = Nickname
   .placeholder = Johnny_The_Sergal

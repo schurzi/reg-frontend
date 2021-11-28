@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 import { useEffect } from 'react'
 import { Localized } from '@fluent/react'
 import { RouteComponentProps } from '@reach/router'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { DateTime } from 'luxon'
 import { RadioGroup, Select } from '@eurofurence/reg-component-library'
 import { useSiteMetadata } from '~/hooks/queries/site-metadata'
@@ -14,6 +14,16 @@ import FullWidthRegisterLayout from '~/components/register/layout/full-width'
 import { ChangeTicketLevel, SubmitTicketLevel } from '~/state/actions/register'
 import { TicketLevel as TicketLevelModel } from '~/state/models/register'
 import { useAppDispatch } from '~/hooks/redux'
+
+const sizes = [
+	{ value: 'S', label: 'S' },
+	{ value: 'M', label: 'M' },
+	{ value: 'L', label: 'L' },
+	{ value: 'XL', label: 'XL' },
+	{ value: 'XXL', label: 'XXL' },
+]
+
+const sizesByValue = new Map(sizes.map(size => [size.value, size]))
 
 const TicketLevelSection = styled.section`
 	margin-top: 1.5em;
@@ -35,7 +45,7 @@ const AddonsContainer = styled.section`
 `
 
 const TicketLevel = (_: RouteComponentProps) => {
-	const { register, watch, handleSubmit } = useForm<TicketLevelModel>()
+	const { register, watch, control, handleSubmit } = useForm<TicketLevelModel>()
 	const { ticketLevels, registrationExpirationDate } = useSiteMetadata()
 	const dispatch = useAppDispatch()
 
@@ -68,13 +78,18 @@ const TicketLevel = (_: RouteComponentProps) => {
 				</Localized>
 				<Localized id="register-ticket-level-addons-item-tshirt" attrs={{ label: true, description: true, price: true }}>
 					<TicketLevelAddon label="T-Shirt" description="A t-shirt" price={20} {...register('addons.tshirt.selected')}>
-						<Select name="size" label="T-shirt size" options={[
-							{ value: 'S', label: 'S' },
-							{ value: 'M', label: 'M' },
-							{ value: 'L', label: 'L' },
-							{ value: 'XL', label: 'XL' },
-							{ value: 'XXL', label: 'XXL' },
-						]}/>
+						<Controller name="addons.tshirt.size" control={control} render={({ field: { onChange, value, ref, ...field }}) =>
+							<Localized id="register-ticket-level-addons-item-tshirt-option-size" attrs={{ label: true }}>
+								<Select
+									label="T-shirt size"
+									isSearchable={false}
+									options={sizes}
+									onChange={size => size?.value}
+									value={sizesByValue.get(value)}
+									{...field}
+								/>
+							</Localized>
+						}/>
 					</TicketLevelAddon>
 				</Localized>
 			</AddonsContainer>

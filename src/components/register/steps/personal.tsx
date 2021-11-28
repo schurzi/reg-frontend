@@ -3,21 +3,24 @@
 import { Localized } from '@fluent/react'
 import { useEffect } from 'react'
 import { RouteComponentProps } from '@reach/router'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { Checkbox, FieldSet, TextField, RadioSet, RadioItem, Select } from '@eurofurence/reg-component-library'
 import WithInvoiceRegisterLayout from '~/components/register/layout/with-invoice'
 import { PersonalInfo } from '~/state/models/register'
 import langMap from 'langmap'
 import { ChangePersonalInfo, SubmitPersonalInfo } from '~/state/actions/register'
 import { useAppDispatch } from '~/hooks/redux'
+import { pluck } from 'ramda'
 
 const languageOptions = [...Object.entries(langMap)]
 	.filter(([key]) => !key.includes('-'))
 	.map(([value, names]) => ({ label: names.nativeName, value }))
 
+// Don't understand why react-select makes me do this manually but ok
+const languageOptionsByValue = new Map(languageOptions.map(l => [l.value, l]))
 
 const Personal = (_: RouteComponentProps) => {
-	const { register, watch, handleSubmit } = useForm<PersonalInfo>()
+	const { register, watch, handleSubmit, control } = useForm<PersonalInfo>()
 	const dispatch = useAppDispatch()
 
 	useEffect(() => {
@@ -52,9 +55,18 @@ const Personal = (_: RouteComponentProps) => {
 				</Localized>
 			</RadioSet>
 		</Localized>
-		<Localized id="register-form-spoken-languages" attrs={{ label: true }}>
-			<Select name="spoken-languages" label="Spoken languages" isMulti options={languageOptions}/>
-		</Localized>
+		<Controller control={control} name="spokenLanguages" render={({ field: { onChange, value, ref, ...field } }) =>
+			<Localized id="register-form-spoken-languages" attrs={{ label: true }}>
+				<Select
+					label="Spoken languages"
+					isMulti={true}
+					options={languageOptions}
+					onChange={langs => onChange(pluck('value', langs))}
+					value={value === undefined ? [] : value.map(lang => languageOptionsByValue.get(lang)!)}
+					{...field}
+				/>
+			</Localized>
+		}/>
 		<Localized id="register-form-gender" attrs={{ legend: true }}>
 			<RadioSet name="gender" legend="Gender">
 				<Localized id="register-form-gender-male" attrs={{ label: true }}>
