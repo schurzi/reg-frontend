@@ -110,7 +110,10 @@ register-price = {$price ->
   *[other] {$price} €
 }
 
-register-invoice-title = Your registration
+register-invoice-layout =
+  .invoiceTitle = Your registration
+
+register-step-counter = Step {$step}
 
 footer-links-privacy-policy = Privacy policy
 

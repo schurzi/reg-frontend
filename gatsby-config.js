@@ -10,6 +10,7 @@ module.exports = {
 		registrationExpirationDate: '2022-01-31',
 		eventStartDate: '2022-08-24',
 		eventEndDate: '2022-08-28',
+		tshirtSizes: ['S', 'M', 'L', 'XL', 'XXL'],
 		ticketLevels: [
 			{
 				id: 'standard',

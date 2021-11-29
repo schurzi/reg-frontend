@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-
 import styled from '@emotion/styled'
 import { forwardRef, ForwardedRef, ReactNode } from 'react'
 import { Checkbox, CheckboxProps } from '@eurofurence/reg-component-library'

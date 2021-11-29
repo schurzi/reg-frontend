@@ -1,15 +1,16 @@
-/** @jsxImportSource @emotion/react */
-
 import { WizardProgressBar } from '@eurofurence/reg-component-library'
-import { Localized } from '@fluent/react'
+import { Localized, useLocalization } from '@fluent/react'
+import { range } from 'ramda'
 
 interface RegisterHeaderProps {
-	readonly showWelcome: boolean
+	readonly currentStep: number
 }
 
-const Header = ({ showWelcome = false }: RegisterHeaderProps) =>
-	<header>
-		{!showWelcome ? null : <>
+const RegisterHeader = ({ currentStep }: RegisterHeaderProps) => {
+	const { l10n } = useLocalization()
+
+	return <>
+		{currentStep !== 0 ? null : <>
 			<Localized id="register-header-title"><h1>Welcome to Eurofurence 2022!</h1></Localized>
 			<Localized id="register-header-description">
 				<p>
@@ -18,7 +19,8 @@ const Header = ({ showWelcome = false }: RegisterHeaderProps) =>
 				</p>
 			</Localized>
 		</>}
-		<WizardProgressBar steps={['Order', 'Personal information', 'Contact information', 'Optional information', 'Checkout']} currentStep={1}/>
-	</header>
+		<WizardProgressBar steps={range(1, 6).map(step => l10n.getString('register-step-counter', { step }, `Step ${step}`))} currentStep={currentStep}/>
+	</>
+}
 
-export default Header
+export default RegisterHeader
