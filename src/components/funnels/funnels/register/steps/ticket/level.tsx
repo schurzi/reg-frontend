@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { useMemo } from 'react'
 import { Localized } from '@fluent/react'
 import { RouteComponentProps } from '@reach/router'
 import { Controller } from 'react-hook-form'
@@ -11,16 +12,6 @@ import FullWidthRegisterFunnelLayout from '~/components/funnels/funnels/register
 import { ChangeTicketLevel, SubmitTicketLevel } from '~/state/actions/register'
 import { TicketLevel as TicketLevelModel } from '~/state/models/register'
 import { useFunnelForm } from '~/hooks/funnels/form'
-
-const sizes = [
-	{ value: 'S', label: 'S' },
-	{ value: 'M', label: 'M' },
-	{ value: 'L', label: 'L' },
-	{ value: 'XL', label: 'XL' },
-	{ value: 'XXL', label: 'XXL' },
-]
-
-const sizesByValue = new Map(sizes.map(size => [size.value, size]))
 
 const TicketLevelSection = styled.section`
 	margin-top: 1.5em;
@@ -43,7 +34,13 @@ const AddonsContainer = styled.section`
 
 const TicketLevel = (_: RouteComponentProps) => {
 	const { register, control, handleSubmit } = useFunnelForm<TicketLevelModel>(ChangeTicketLevel, SubmitTicketLevel)
-	const { ticketLevels, registrationExpirationDate } = useSiteMetadata()
+	const { ticketLevels, tshirtSizes, registrationExpirationDate } = useSiteMetadata()
+
+	const { sizes, sizesByValue } = useMemo(() => {
+		const sizes = tshirtSizes.map(size => ({ value: size, label: size }))
+
+		return { sizes, sizesByValue: new Map(sizes.map(size => [size.value, size])) }
+	}, [])
 
 	const expirationDate = DateTime.fromISO(registrationExpirationDate)
 
