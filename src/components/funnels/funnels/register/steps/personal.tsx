@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-
 import { Localized } from '@fluent/react'
 import { RouteComponentProps } from '@reach/router'
 import { Controller } from 'react-hook-form'

@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-
 import styled from '@emotion/styled'
 import { Button } from '@eurofurence/reg-component-library'
 import { Localized } from '@fluent/react'

@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-
 import { ReactNode } from 'react'
 import Footer from './footer'
 

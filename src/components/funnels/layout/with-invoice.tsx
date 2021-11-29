@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-
 import styled from '@emotion/styled'
 import { ReactNode } from 'react'
 import Invoice, { InvoiceItem } from '~/components/funnels/invoice/invoice'
