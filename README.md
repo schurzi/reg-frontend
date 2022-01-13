@@ -1,3 +1,36 @@
+# reg-frontend
+
+## development
+
+This assumes a local clone of [eurofurence/reg-component-library](https://github.com/eurofurence/reg-component-library)
+in `../reg-component-library`.
+
+Note: On Windows, both projects need to be checked out with, `git config core.autocrlf input` or they won't build correctly.
+
+### first time
+
+```
+npm install -g gatsby-cli
+gatsby telemetry --disable
+
+cd ../reg-component-library
+npm install
+
+cd ../reg-frontend
+npm install
+npm install ../reg-component-library
+```
+
+### run locally
+
+```
+npm run develop
+```
+
+Then point your browser to http://localhost:8000/register/ticket/type
+
+## info about gatsby
+
 <!-- AUTO-GENERATED-CONTENT:START (STARTER) -->
 <p align="center">
   <a href="https://www.gatsbyjs.com">
