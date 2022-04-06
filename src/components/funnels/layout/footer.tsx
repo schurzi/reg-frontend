@@ -1,3 +1,10 @@
+/*
+ * The footer for all funnel layouts.
+ * Features a navigation area with a "Continue" and a "Go back" button.
+ *
+ * Clicking "Continue" will raise the `onNext` event. Clicking "Go back" will just navigate to the previous page.
+ */
+
 import styled from '@emotion/styled'
 import { Button } from '@eurofurence/reg-component-library'
 import { Localized } from '@fluent/react'
