@@ -10,7 +10,9 @@ import TicketLevel from '~/components/funnels/funnels/register/steps/ticket/leve
 import Personal from '~/components/funnels/funnels/register/steps/personal'
 import Contact from '~/components/funnels/funnels/register/steps/contact'
 import Optional from '~/components/funnels/funnels/register/steps/optional'
-import RoomInfo from '~/components/funnels/funnels/hotel-booking/steps/room'
+import Room from '~/components/funnels/funnels/hotel-booking/steps/room'
+import Guests from '~/components/funnels/funnels/hotel-booking/steps/guests'
+import AdditionalInfo from '~/components/funnels/funnels/hotel-booking/steps/additional-info'
 
 import * as ROUTES from './routes'
 
@@ -38,6 +40,8 @@ export const RegisterRouter = () => (
 
 export const HotelBookingRouter = () => (
 	<Router basepath="/hotel-booking">
-		<RoomInfo path={ROUTES.HOTEL_BOOKING_ROOM} />
+		<Room path={ROUTES.HOTEL_BOOKING_ROOM} />
+		<Guests path={ROUTES.HOTEL_BOOKING_GUESTS} />
+		<AdditionalInfo path={ROUTES.HOTEL_BOOKING_ADDITIONAL_INFO} />
 	</Router>
 )

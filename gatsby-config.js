@@ -26,10 +26,10 @@ module.exports = {
 			},
 		],
 		rooms: [
-			{ id: 'standard', price: 140 },
-			{ id: 'deluxe', price: 160 },
-			{ id: 'junior-suite', price: 198 },
-			{ id: 'deluxe-suite', price: 228 },
+			{ id: 'standard', price: 140, image: 'standard_room.svg' },
+			{ id: 'deluxe', price: 160, image: 'deluxe_room.svg' },
+			{ id: 'junior-suite', price: 198, image: 'junior_suite.svg' },
+			{ id: 'deluxe-suite', price: 228, image: 'suite_deluxe.svg' },
 		],
   },
   plugins: [

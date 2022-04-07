@@ -17,6 +17,7 @@ export interface SiteMetadata {
 	readonly rooms: {
 		readonly id: string
 		readonly price: number
+		readonly image: string
 	}[]
 }
 
@@ -41,6 +42,7 @@ export const useSiteMetadata = () => {
 					rooms {
 						id
 						price
+						image
 					}
 				}
 			}

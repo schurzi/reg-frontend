@@ -13,6 +13,8 @@ export const REGISTER_OPTIONAL = "optional-info"
 // Hotel booking flow
 export const HOTEL_BOOKING = "hotel-booking"
 export const HOTEL_BOOKING_ROOM = "room"
+export const HOTEL_BOOKING_GUESTS = "guests"
+export const HOTEL_BOOKING_ADDITIONAL_INFO = "additional-info"
 
 // Error Pages
 export const FOUR_0_FOUR = "404"

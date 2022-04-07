@@ -135,7 +135,7 @@ hotel-booking-room-card-junior-suite =
 
 hotel-booking-room-card-deluxe-suite =
   Elegantly liveable and fully equipped, the executive suites with their 90 sqm of living space leave nothing to be desired.
-  A separate living area with sofas and armchairs, a small bar area and second TV screen in the bathroom create a upscale,
+  A separate living area with sofas and armchairs, a small bar area and a second TV screen in the bathroom create an upscale,
   welcoming atmosphere almost like home.
 
   .title = Deluxe suite
