@@ -14,7 +14,9 @@ export interface GuestInfo {
 	readonly country: string
 }
 
-export type GuestsInfo = readonly GuestInfo[]
+export type GuestsInfo = {
+	readonly guests: readonly GuestInfo[]
+}
 
 export interface AdditionalInfo {
 	readonly comments: string

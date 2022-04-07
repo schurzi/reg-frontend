@@ -18,7 +18,7 @@ export default combineEpics<GetAction<AnyAppAction>, GetAction<AnyAppAction>, Ap
 		map(data => LoadAutosaveData.create(data)),
 	),
 	(action$, state$) => state$.pipe(
-		map(pick(['register'])),
+		map(pick(['register', 'hotelBooking'])),
 		distinctUntilChanged(equals),
 		debounceTime(2000),
 		tap(data => localStorage.setItem('autosave', JSON.stringify(data))),

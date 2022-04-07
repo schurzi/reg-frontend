@@ -13,6 +13,7 @@ import Optional from '~/components/funnels/funnels/register/steps/optional'
 import Room from '~/components/funnels/funnels/hotel-booking/steps/room'
 import Guests from '~/components/funnels/funnels/hotel-booking/steps/guests'
 import AdditionalInfo from '~/components/funnels/funnels/hotel-booking/steps/additional-info'
+import Email from '~/components/funnels/funnels/hotel-booking/steps/email'
 
 import * as ROUTES from './routes'
 
@@ -43,5 +44,6 @@ export const HotelBookingRouter = () => (
 		<Room path={ROUTES.HOTEL_BOOKING_ROOM} />
 		<Guests path={ROUTES.HOTEL_BOOKING_GUESTS} />
 		<AdditionalInfo path={ROUTES.HOTEL_BOOKING_ADDITIONAL_INFO} />
+		<Email path={ROUTES.HOTEL_BOOKING_EMAIL} />
 	</Router>
 )
