@@ -115,6 +115,9 @@ register-invoice-layout =
 
 register-step-counter = Step {$step}
 
+register-change-ticket-type =
+  .label = Change ticket type
+
 footer-links-privacy-policy = Privacy policy
 
 footer-links-cookie-statement = Cookie statement

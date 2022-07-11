@@ -10,17 +10,12 @@ import Optional from '~/components/funnels/funnels/register/steps/optional'
 import * as ROUTES from './routes'
 
 export const EFRouter = () =>
-	<Router>
-		<IndexPage path={ROUTES.HOME} />
-		<Redirect from={ROUTES.REGISTER} to={ROUTES.REGISTER_TICKET_TYPE}/>
-		{/* <RegisterPage path={`${ROUTES.REGISTER}/*`} /> */}
-		<NotFoundPage default />
-	</Router>
+	<IndexPage />
 
 export const RegisterRouter = () =>
 	<Router basepath="/register">
-		<Ticket default path={`${ROUTES.REGISTER_TICKET}/*`} />
-		<Personal path={ROUTES.REGISTER_PERSONAL} />
-		<Contact path={ROUTES.REGISTER_CONTACT} />
-		<Optional path={ROUTES.REGISTER_OPTIONAL} />
+		<Ticket default path={`/${ROUTES.REGISTER_TICKET}/*`} />
+		<Personal path={`/${ROUTES.REGISTER_PERSONAL}`} />
+		<Contact path={`/${ROUTES.REGISTER_CONTACT}`} />
+		<Optional path={`/${ROUTES.REGISTER_OPTIONAL}`} />
 	</Router>

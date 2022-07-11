@@ -7,13 +7,11 @@ import * as ROUTES from '~/navigation/routes'
 
 const Ticket = (_: RouteComponentProps) => {
 	return (
-		<>
-			<Router>
-				<TicketType default path={ROUTES.REGISTER_TICKET_TYPE} />
-				<TicketDay path={ROUTES.REGISTER_TICKET_DAY} />
-				<TicketLevel path={ROUTES.REGISTER_TICKET_LEVEL} />
+			<Router basepath="/register/ticket">
+				<TicketType default path={`/${ROUTES.REGISTER_TICKET_TYPE}`} />
+				<TicketDay path={`/${ROUTES.REGISTER_TICKET_DAY}`} />
+				<TicketLevel path={`/${ROUTES.REGISTER_TICKET_LEVEL}`} />
 			</Router>
-		</>
 	);
 };
 
