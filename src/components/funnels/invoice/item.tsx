@@ -1,3 +1,8 @@
+/*
+ * An item on the invoice.
+ * The `extra` property can be used to add additional information below the item's name.
+ */
+
 import styled from '@emotion/styled'
 import { Localized } from '@fluent/react'
 

@@ -16,6 +16,11 @@ export interface SiteMetadata {
 	}[]
 }
 
+/*
+ * Loads some config information.
+ *
+ * TODO: Coerce dates to the right types here, instead of in the components.
+ */
 export const useSiteMetadata = () => {
 	const { site: { siteMetadata } } = useStaticQuery<{ site: { siteMetadata: SiteMetadata } }>(graphql`
 		query {

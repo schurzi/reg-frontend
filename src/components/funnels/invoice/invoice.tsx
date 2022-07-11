@@ -1,3 +1,8 @@
+/*
+ * Implements the blue invoice on the right side of most funnel pages.
+ * Automatically calculates total price figure.
+ */
+
 import styled from '@emotion/styled'
 import { Card } from '@eurofurence/reg-component-library'
 import InvoiceItemComponent from './item'

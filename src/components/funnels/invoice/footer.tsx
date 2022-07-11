@@ -1,3 +1,7 @@
+/*
+ * The footer for the invoice.
+ */
+
 import styled from '@emotion/styled'
 import { Localized } from '@fluent/react'
 
