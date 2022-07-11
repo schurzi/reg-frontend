@@ -1,3 +1,9 @@
+/*
+ * A layout that's common to all funnel pages.
+ * Features a header that can be passed as the `headerContent` prop and a footer showing navigation buttons,
+ * of which the "back" button will be invisible if `isFirstPage` is true.
+ */
+
 import { ReactNode } from 'react'
 import Footer from './footer'
 

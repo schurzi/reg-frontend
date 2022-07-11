@@ -1,3 +1,7 @@
+/*
+ * Layout for registration funnel pages that has a blue invoice on the right side.
+ */
+
 import { Localized } from '@fluent/react'
 import { ReactNode } from 'react'
 import WithInvoiceFunnelLayout from '~/components/funnels/layout/with-invoice'

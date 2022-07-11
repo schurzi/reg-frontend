@@ -1,3 +1,7 @@
+/*
+ * Layout for funnel pages that has a blue invoice on the right side.
+ */
+
 import styled from '@emotion/styled'
 import { ReactNode } from 'react'
 import Invoice, { InvoiceItem } from '~/components/funnels/invoice/invoice'

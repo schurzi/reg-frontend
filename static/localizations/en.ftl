@@ -115,6 +115,9 @@ register-invoice-layout =
 
 register-step-counter = Step {$step}
 
+register-change-ticket-type =
+  .label = Change ticket type
+
 hotel-booking-room-card-standard =
   The 27 sqm standard rooms offer luxurious living comfort.
   The rooms are additionally equipped with modern furnishings and spacious working & storage areas so as to best meet guests' needs.

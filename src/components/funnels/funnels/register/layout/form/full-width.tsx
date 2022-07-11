@@ -1,3 +1,7 @@
+/*
+ * Layout for registration funnel pages that spans the full width of the page.
+ */
+
 import { ReactNode } from 'react'
 import FullWidthFunnelLayout from '~/components/funnels/layout/full-width'
 import RegisterHeader from '../header'

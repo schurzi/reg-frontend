@@ -1,3 +1,9 @@
+/*
+ * Funnel layout header for registration pages.
+ *
+ * It displays a progress bar and shows a welcome text on the first page of the funnel.
+ */
+
 import { WizardProgressBar } from '@eurofurence/reg-component-library'
 import { Localized, useLocalization } from '@fluent/react'
 import { range } from 'ramda'

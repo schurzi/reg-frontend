@@ -6,7 +6,7 @@ import { AppState } from '~/state'
 import { nextPage } from './generators/next-page'
 
 export default combineEpics<GetAction<AnyAppAction>, GetAction<AnyAppAction>, AppState>(
-	nextPage(SubmitTicketType, ({ payload }) => `/register/ticket/${payload === 'full' ? 'level' : 'day'}`),
+	nextPage(SubmitTicketType, ({ payload }) => `/register/ticket/${payload.type === 'full' ? 'level' : 'day'}`),
 	nextPage(SubmitTicketDay, always('/register/ticket/level')),
 	nextPage(SubmitTicketLevel, always('/register/personal-info')),
 	nextPage(SubmitPersonalInfo, always('/register/contact-info')),
