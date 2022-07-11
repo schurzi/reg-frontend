@@ -14,6 +14,11 @@ export interface SiteMetadata {
 		readonly id: string
 		readonly price: number
 	}[]
+	readonly rooms: {
+		readonly id: string
+		readonly price: number
+		readonly image: string
+	}[]
 }
 
 /*
@@ -38,6 +43,11 @@ export const useSiteMetadata = () => {
 					ticketLevels {
 						id
 						price
+					}
+					rooms {
+						id
+						price
+						image
 					}
 				}
 			}

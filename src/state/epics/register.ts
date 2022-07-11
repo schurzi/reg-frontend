@@ -1,18 +1,9 @@
-import { combineEpics, ofType } from 'redux-observable'
-import { navigate } from '@reach/router'
+import { combineEpics } from 'redux-observable'
 import { SubmitContactInfo, SubmitPersonalInfo, SubmitTicketDay, SubmitTicketLevel, SubmitTicketType } from '~/state/actions/register'
-import { ignoreElements, tap } from 'rxjs/operators'
 import { AnyAppAction, GetAction } from '~/state/actions'
 import { always } from 'ramda'
 import { AppState } from '~/state'
-import { Observable } from 'rxjs'
-
-const nextPage = <T extends AnyAppAction>(action: T, pathProvider: (action: GetAction<T>) => string) =>
-	(action$: Observable<GetAction<AnyAppAction>>) => action$.pipe(
-		ofType<GetAction<AnyAppAction>, T['type'], GetAction<T>>(action.type),
-		tap(action => navigate(pathProvider(action))),
-		ignoreElements(),
-	)
+import { nextPage } from './generators/next-page'
 
 export default combineEpics<GetAction<AnyAppAction>, GetAction<AnyAppAction>, AppState>(
 	nextPage(SubmitTicketType, ({ payload }) => `/register/ticket/${payload.type === 'full' ? 'level' : 'day'}`),

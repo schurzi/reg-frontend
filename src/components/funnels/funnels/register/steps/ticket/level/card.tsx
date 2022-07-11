@@ -4,7 +4,7 @@ import { Localized } from '@fluent/react'
 import { RadioCard, RadioCardProps } from '@eurofurence/reg-component-library'
 import { DateTime } from 'luxon'
 import ReactMarkdown from 'react-markdown'
-import Price from './price'
+import Price from '~/components/funnels/price'
 
 export interface TicketLevelCardProps extends Omit<RadioCardProps, 'value'> {
 	readonly id: string
