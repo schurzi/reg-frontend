@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { Localized } from '@fluent/react'
-import { RouteComponentProps } from '@reach/router'
+import {navigate, RouteComponentProps} from '@reach/router'
 import { DateTime } from 'luxon'
 import { until, last } from 'ramda'
 import { RadioGroup, RadioCard } from '@eurofurence/reg-component-library'
@@ -33,6 +33,8 @@ const TicketDay = (_: RouteComponentProps) => {
 					)}
 				</Grid>
 			</RadioGroup>
+			<br/>
+			<Localized id="register-change-ticket-type"><a onClick={() => navigate(-1)}>Change ticket type</a></Localized>
 		</form>
 	</FullWidthRegisterFunnelLayout>
 }

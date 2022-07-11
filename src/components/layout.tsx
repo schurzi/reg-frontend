@@ -17,7 +17,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 	return <LocalizationProvider l10n={localization}>
 		<>
 			<Header/>
-			<Page>{children}</Page>
+			<Page>
+				{children}
+			</Page>
 			<Footer/>
 		</>
 	</LocalizationProvider>
