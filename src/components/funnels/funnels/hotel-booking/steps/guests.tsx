@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
+import { Fragment } from 'react'
 import { Localized } from '@fluent/react'
 import { RouteComponentProps } from '@reach/router'
 import { TextField, Form } from '@eurofurence/reg-component-library'
@@ -17,7 +18,7 @@ const Guests = (_: RouteComponentProps) => {
 			<h3>Guest information</h3>
 		</Localized>
 		<Form onSubmit={handleSubmit}>
-			{range(0, 2).map(i => <>
+			{range(0, 2).map(i => <Fragment key={i}>
 				<Localized id="hotel-booking-form-guest-title" vars={{ guestNr: i + 1 }}>
 					<h2>Guest #{i + 1}</h2>
 				</Localized>
@@ -48,7 +49,7 @@ const Guests = (_: RouteComponentProps) => {
 				<Localized id="hotel-booking-form-country" attrs={{ label: true, placeholder: true }}>
 					<TextField label="Country" placeholder="Germany" gridSpan={5} {...register(`guests.${i}.country`)}/>
 				</Localized>
-			</>)}
+			</Fragment>)}
 		</Form>
 	</WithInvoiceHotelBookingFunnelLayout>
 }

@@ -9,7 +9,7 @@ import FullWidthHotelBookingFunnelLayout from '~/components/funnels/funnels/hote
 import { GuestInfo } from '~/state/models/hotel-booking'
 import { useAppSelector } from '~/hooks/redux'
 
-const EmailContent = styled.div`
+const EmailContent = styled.dl`
 	display: grid;
 	grid-template-columns: min-content auto;
 	grid-column-gap: 1em;
@@ -28,6 +28,13 @@ const EmailContent = styled.div`
 	> dd {
 		grid-column: 2;
 	}
+`
+
+// I actually want to wrap the headers and body dt/dd's in thematic divs, but that would break the grid,
+// and require `subgrid` to solve, which is currently only available on Firefox. So an empty 'spacer' div it is.
+const Spacer = styled.div`
+	grid-column: 1 / 2;
+	height: 1.5em;
 `
 
 const guestsEmailText = (guests: GuestInfo[]) => guests.map((guest, i) => `Guest #${i + 1}
@@ -77,7 +84,8 @@ const Email = (_: RouteComponentProps) => {
 				<dt>To</dt>
 				<dd>reservierung@estrel.com</dd>
 				<dt>Subject</dt>
-				<dd>Room Inquiry Eurofurence 2022 - Privateer</dd>
+				<dd>Room Inquiry Eurofurence 2022 - &#x25cf;&#x25cf;&#x25cf;&#x25cf;&#x25cf;&#x25cf;&#x25cf;&#x25cf;&#x25cf;&#x25cf;</dd>
+				<Spacer/>
 				<dt>Message</dt>
 				<dd>
 					<pre>{emailText('Eurofurence 2022', 'Privateer', guests)}</pre>

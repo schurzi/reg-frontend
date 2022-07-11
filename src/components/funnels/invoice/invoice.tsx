@@ -28,8 +28,8 @@ const Invoice = ({ title, items }: InvoiceProps) =>
 		</header>
 		<div>
 			<ul>
-				{items.map(({ amount, unitPrice, name, extra }) =>
-					<InvoiceItemComponent label={`${amount} x ${name}`} price={amount * unitPrice} extra={extra}/>
+				{items.map(({ amount, unitPrice, name, extra }, i) =>
+					<InvoiceItemComponent key={i} label={`${amount} x ${name}`} price={amount * unitPrice} extra={extra}/>
 				)}
 			</ul>
 		</div>

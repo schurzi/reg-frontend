@@ -37,7 +37,7 @@ const Room = (_: RouteComponentProps) => {
 
 
 			<RoomSection>
-				<Localized id="hotel-booking-room-title"><h3>RoomInfo types</h3></Localized>
+				<Localized id="hotel-booking-room-title"><h3>Room types</h3></Localized>
 				<RoomGrid>
 					<RadioGroup name="level">
 						{rooms.map(({ id, price, image }) =>
