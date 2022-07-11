@@ -6,7 +6,7 @@ import { RouteComponentProps } from '@reach/router'
 import { Card } from '@eurofurence/reg-component-library'
 import { useSiteMetadata } from '~/hooks/queries/site-metadata'
 import FullWidthHotelBookingFunnelLayout from '~/components/funnels/funnels/hotel-booking/layout/form/full-width'
-import { GuestInfo } from '~/state/models/hotel-booking'
+import { GuestInfo, GuestsInfo } from '~/state/models/hotel-booking'
 import { useAppSelector } from '~/hooks/redux'
 
 const EmailContent = styled.dl`
@@ -37,7 +37,7 @@ const Spacer = styled.div`
 	height: 1.5em;
 `
 
-const guestsEmailText = (guests: GuestInfo[]) => guests.map((guest, i) => `Guest #${i + 1}
+const guestsEmailText = (guests: readonly GuestInfo[]) => guests.map((guest, i) => `Guest #${i + 1}
 ${guest.firstName} ${guest.lastName}
 ${guest.email}
 ${guest.phoneNumber}
@@ -47,7 +47,7 @@ ${guest.country}
 `).join(`
 `)
 
-const emailText = (keyword: string, codeword: string, guests: GuestInfo[]) => `To Whom It May Concern,
+const emailText = (keyword: string, codeword: string, guests: readonly GuestInfo[]) => `To Whom It May Concern,
 
 Keyword: ${keyword}
 Codeword: ${codeword}
