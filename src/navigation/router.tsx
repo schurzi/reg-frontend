@@ -1,5 +1,5 @@
 import { Router } from '@reach/router'
-import { IndexPage } from '~/pages/home'
+import IndexPage from '~/pages/home'
 import Ticket from '~/components/funnels/funnels/register/steps/ticket'
 import Personal from '~/components/funnels/funnels/register/steps/personal'
 import Contact from '~/components/funnels/funnels/register/steps/contact'
