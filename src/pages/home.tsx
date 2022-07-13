@@ -3,9 +3,11 @@ import Layout from '~/components/layout'
 import SEO from '~/components/seo'
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 
-export const IndexPage = (_: ReadonlyRouteComponentProps) => <Layout>
+const IndexPage = (_: ReadonlyRouteComponentProps) => <Layout>
 	<SEO title="Home" />
 	<Localized id="hello">
 		<h1>Hello world!</h1>
 	</Localized>
 </Layout>
+
+export default IndexPage
