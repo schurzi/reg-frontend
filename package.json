@@ -7,6 +7,7 @@
   "dependencies": {
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
+    "@eurofurence/reg-component-library": "^0.0.1",
     "@fluent/bundle": "^0.17.0",
     "@fluent/react": "^0.14.0",
     "axios": "^0.24.0",
