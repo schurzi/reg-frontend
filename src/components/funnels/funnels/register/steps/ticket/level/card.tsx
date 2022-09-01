@@ -2,7 +2,6 @@ import styled from '@emotion/styled'
 import { forwardRef, ForwardedRef } from 'react'
 import { Localized } from '@fluent/react'
 import { RadioCard, RadioCardProps } from '@eurofurence/reg-component-library'
-import { DateTime } from 'luxon'
 import ReactMarkdown from 'react-markdown'
 import Price from '~/components/funnels/price'
 import type { DeepReadonly } from 'ts-essentials'
@@ -11,7 +10,7 @@ export interface TicketLevelCardProps extends Omit<RadioCardProps, 'value'> {
 	readonly id: string
 	readonly price: number
 	readonly priceLabel: string
-	readonly expirationDate: DeepReadonly<DateTime>
+	readonly expirationDate: DeepReadonly<Date>
 	readonly children: string
 }
 
@@ -40,7 +39,7 @@ const TicketLevelCard = forwardRef(({ id, price, priceLabel, expirationDate, chi
 		<Footer>
 			<PriceLabelContainer>
 				<PriceLabel>{priceLabel}</PriceLabel>
-				<Localized id="register-ticket-level-expiration-notice" vars={{ expirationDate: expirationDate.toJSDate() }}>
+				<Localized id="register-ticket-level-expiration-notice" vars={{ expirationDate }}>
 					<ExpirationNotice>Register before {expirationDate.toString()}</ExpirationNotice>
 				</Localized>
 			</PriceLabelContainer>

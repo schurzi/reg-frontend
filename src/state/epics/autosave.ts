@@ -1,7 +1,6 @@
 import { combineEpics } from 'redux-observable'
 import { pick, equals } from 'ramda'
 import { debounceTime, distinctUntilChanged, filter, map, tap } from 'rxjs/operators'
-import { DateTime } from 'luxon'
 import { AnyAppAction, GetAction } from '~/state/actions'
 import { UpdateLastSavedTime, LoadAutosaveData } from '~/state/actions/autosave'
 import { AppState } from '~/state'
@@ -25,6 +24,6 @@ export default combineEpics<GetAction<AnyAppAction>, GetAction<AnyAppAction>, Ap
 		distinctUntilChanged(equals),
 		debounceTime(TIME_BEFORE_SAVING),
 		tap(autosaveData => localStorage.setItem('autosave', JSON.stringify(autosaveData))),
-		map(() => UpdateLastSavedTime.create(DateTime.now())),
+		map(() => UpdateLastSavedTime.create(new Date())),
 	),
 )

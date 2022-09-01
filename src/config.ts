@@ -1,9 +1,9 @@
 export default {
 	eventName: 'Eurofurence',
-	registrationLaunch: '2022-01-21T12:30:23+02:00',
-	registrationExpirationDate: '2022-01-31',
-	eventStartDate: '2022-08-24',
-	eventEndDate: '2022-08-28',
+	registrationLaunch: new Date('2022-01-21T12:30:23+02:00'),
+	registrationExpirationDate: new Date('2022-01-31'),
+	eventStartDate: new Date('2022-08-24'),
+	eventEndDate: new Date('2022-08-28'),
 	stagePassPrice: 5,
 	tshirtPrice: 20,
 	tshirtSizes: ['S', 'M', 'L', 'XL', 'XXL'],

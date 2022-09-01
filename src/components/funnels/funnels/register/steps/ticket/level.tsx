@@ -2,7 +2,6 @@ import styled from '@emotion/styled'
 import { useMemo } from 'react'
 import { Localized } from '@fluent/react'
 import { Controller } from 'react-hook-form'
-import { DateTime } from 'luxon'
 import { RadioGroup, Select } from '@eurofurence/reg-component-library'
 import config from '~/config'
 import TicketLevelCard from './level/card'
@@ -44,7 +43,7 @@ const TicketLevel = (_: ReadonlyRouteComponentProps) => {
 		return { sizes, sizesByValue: new Map(sizes.map(size => [size.value, size])) }
 	}, [])
 
-	const expirationDate = DateTime.fromISO(config.registrationExpirationDate)
+	const expirationDate = config.registrationExpirationDate
 
 	return <FullWidthRegisterFunnelLayout onNext={handleSubmit} currentStep={1}>
 		<form onSubmit={handleSubmit}>
