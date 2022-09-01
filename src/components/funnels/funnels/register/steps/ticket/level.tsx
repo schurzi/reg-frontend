@@ -4,7 +4,7 @@ import { Localized } from '@fluent/react'
 import { Controller } from 'react-hook-form'
 import { DateTime } from 'luxon'
 import { RadioGroup, Select } from '@eurofurence/reg-component-library'
-import { useSiteMetadata } from '~/hooks/queries/site-metadata'
+import config from '~/config'
 import TicketLevelCard from './level/card'
 import TicketLevelAddon from './level/addon'
 import FullWidthRegisterFunnelLayout from '~/components/funnels/funnels/register/layout/form/full-width'
@@ -12,6 +12,8 @@ import { ChangeTicketLevel, SubmitTicketLevel } from '~/state/actions/register'
 import { TicketLevel as TicketLevelModel } from '~/state/models/register'
 import { useFunnelForm } from '~/hooks/funnels/form'
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
+import { useAppSelector } from '~/hooks/redux'
+import { getTicketType } from '~/state/selectors/register'
 
 const TicketLevelSection = styled.section`
 	margin-top: 1.5em;
@@ -33,16 +35,16 @@ const AddonsContainer = styled.section`
 `
 
 const TicketLevel = (_: ReadonlyRouteComponentProps) => {
+	const ticketType = useAppSelector(getTicketType())!
 	const { register, control, handleSubmit } = useFunnelForm<TicketLevelModel>(ChangeTicketLevel, SubmitTicketLevel)
-	const { ticketLevels, tshirtSizes, registrationExpirationDate } = useSiteMetadata()
 
 	const { sizes, sizesByValue } = useMemo(() => {
-		const sizes = tshirtSizes.map(size => ({ value: size, label: size }))
+		const sizes = config.tshirtSizes.map(size => ({ value: size, label: size }))
 
 		return { sizes, sizesByValue: new Map(sizes.map(size => [size.value, size])) }
 	}, [])
 
-	const expirationDate = DateTime.fromISO(registrationExpirationDate)
+	const expirationDate = DateTime.fromISO(config.registrationExpirationDate)
 
 	return <FullWidthRegisterFunnelLayout onNext={handleSubmit} currentStep={1}>
 		<form onSubmit={handleSubmit}>
@@ -50,9 +52,9 @@ const TicketLevel = (_: ReadonlyRouteComponentProps) => {
 				<Localized id="register-ticket-level-title"><h3>Select your ticket</h3></Localized>
 				<TicketLevelGrid>
 					<RadioGroup name="level">
-						{ticketLevels.map(({ id, price }) =>
+						{config.ticketLevels.map(({ id, prices }) =>
 							<Localized key={id} id={`register-ticket-level-card-${id}`} attrs={{ label: true, priceLabel: true }}>
-								<TicketLevelCard id={id} price={price} expirationDate={expirationDate} label="Ticket level" priceLabel="A ticket" {...register('level')}>
+								<TicketLevelCard id={id} price={prices[ticketType.type]} expirationDate={expirationDate} label="Ticket level" priceLabel="A ticket" {...register('level')}>
 									A ticket level
 								</TicketLevelCard>
 							</Localized>,

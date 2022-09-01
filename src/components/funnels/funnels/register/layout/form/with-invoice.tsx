@@ -4,7 +4,7 @@
 
 import { Localized, useLocalization } from '@fluent/react'
 import WithInvoiceFunnelLayout from '~/components/funnels/layout/with-invoice'
-import { useSiteMetadata } from '~/hooks/queries/site-metadata'
+import config from '~/config'
 import { useAppSelector } from '~/hooks/redux'
 import { useCurrentLangKey } from '~/localization'
 import { getTicketLevel, getTicketType } from '~/state/selectors/register'
@@ -19,7 +19,6 @@ export interface WithInvoiceRegisterFunnelLayoutProps {
 
 
 const WithInvoiceRegisterFunnelLayout = ({ children, currentStep, onNext }: WithInvoiceRegisterFunnelLayoutProps) => {
-	const { ticketLevels, stagePassPrice, tshirtPrice, eventStartDate, eventEndDate } = useSiteMetadata()
 	const langKey = useCurrentLangKey()
 	const { l10n } = useLocalization()
 
@@ -38,21 +37,21 @@ const WithInvoiceRegisterFunnelLayout = ({ children, currentStep, onNext }: With
 				amount: 1,
 				name: l10n.getString('register-invoice-ticket-type-day', undefined, 'Day ticket'),
 				extra: dateFormatter.format(new Date(ticketType.day)),
-				unitPrice: ticketLevels.find(l => l.id === ticketLevel.level)!.prices.find(p => p.ticketType === 'day')!.price,
+				unitPrice: config.ticketLevels.find(l => l.id === ticketLevel.level)!.prices.day,
 			}
 			: {
 				amount: 1,
 				name: l10n.getString('register-invoice-ticket-type-full', undefined, 'Full conv.'),
-				extra: dateFormatter.formatRange(new Date(eventStartDate), new Date(eventEndDate)),
-				unitPrice: ticketLevels.find(l => l.id === ticketLevel.level)!.prices.find(p => p.ticketType === 'full')!.price,
+				extra: dateFormatter.formatRange(new Date(config.eventStartDate), new Date(config.eventEndDate)),
+				unitPrice: config.ticketLevels.find(l => l.id === ticketLevel.level)!.prices.full,
 			}
 
 		const stagePassLine = ticketLevel.addons.stagePass.selected
-			? [{ amount: 1, name: l10n.getString('register-invoice-addons-stage-pass', undefined, 'Stage pass'), unitPrice: stagePassPrice }]
+			? [{ amount: 1, name: l10n.getString('register-invoice-addons-stage-pass', undefined, 'Stage pass'), unitPrice: config.stagePassPrice }]
 			: []
 
 		const tshirtLine = ticketLevel.addons.tshirt.selected
-			? [{ amount: 1, name: l10n.getString('register-invoice-addons-tshirt', undefined, 'T-shirt'), unitPrice: tshirtPrice }]
+			? [{ amount: 1, name: l10n.getString('register-invoice-addons-tshirt', undefined, 'T-shirt'), unitPrice: config.tshirtPrice }]
 			: []
 
 		return [ticketLine, ...stagePassLine, ...tshirtLine]

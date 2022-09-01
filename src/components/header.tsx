@@ -6,7 +6,7 @@ import { useObservableState, useObservable } from 'observable-hooks'
 import { DateTime, Duration } from 'luxon'
 import brandImg from '~/images/brand.svg'
 import { NavBar, Display, Dropdown } from '@eurofurence/reg-component-library'
-import { useSiteMetadata } from '~/hooks/queries/site-metadata'
+import config from '~/config'
 import type { DeepReadonly } from 'ts-essentials'
 
 const CLOCK_UPDATE_DELAY = 1000
@@ -26,8 +26,7 @@ const Clock = ({ timeRemaining }: { readonly timeRemaining: DeepReadonly<Duratio
 </section>
 
 const Header = () => {
-	const { eventName, registrationLaunch } = useSiteMetadata()
-	const getTimeRemaining = () => DateTime.fromISO(registrationLaunch).diffNow(['months', 'days', 'hours', 'minutes', 'seconds'])
+	const getTimeRemaining = () => DateTime.fromISO(config.registrationLaunch).diffNow(['months', 'days', 'hours', 'minutes', 'seconds'])
 
 	const tick$ = useObservable(() => interval(CLOCK_UPDATE_DELAY).pipe(O.map(getTimeRemaining)), [])
 	const timeRemaining = useObservableState(tick$, getTimeRemaining())
@@ -42,7 +41,7 @@ const Header = () => {
 				height: 1.1ch;
 				margin-right: 1.6rem;
 			`}/>
-			{eventName}
+			{config.eventName}
 		</section>
 		<Clock timeRemaining={timeRemaining} />
 		<Dropdown><Localized id="header-dropdown-my-account">My account</Localized></Dropdown>

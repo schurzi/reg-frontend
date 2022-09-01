@@ -4,7 +4,7 @@ import { navigate } from '@reach/router'
 import { DateTime } from 'luxon'
 import { until, last } from 'ramda'
 import { RadioGroup, RadioCard } from '@eurofurence/reg-component-library'
-import { useSiteMetadata } from '~/hooks/queries/site-metadata'
+import config from '~/config'
 import { ChangeTicketDay, SubmitTicketDay } from '~/state/actions/register'
 import { useFunnelForm } from '~/hooks/funnels/form'
 import FullWidthRegisterFunnelLayout from '~/components/funnels/funnels/register/layout/form/full-width'
@@ -21,14 +21,13 @@ const Grid = styled.div`
 `
 
 const TicketDay = (_: ReadonlyRouteComponentProps) => {
-	const { eventStartDate, eventEndDate } = useSiteMetadata()
 	const { register, handleSubmit } = useFunnelForm<{ day: string }>(ChangeTicketDay, SubmitTicketDay)
 
 	return <FullWidthRegisterFunnelLayout onNext={handleSubmit} currentStep={0}>
 		<form onSubmit={handleSubmit}>
 			<RadioGroup name="day">
 				<Grid>
-					{datesBetween(DateTime.fromISO(eventStartDate), DateTime.fromISO(eventEndDate)).map(date =>
+					{datesBetween(DateTime.fromISO(config.eventStartDate), DateTime.fromISO(config.eventEndDate)).map(date =>
 						<Localized id="register-ticket-day-card" key={date.toISODate()} attrs={{ label: true }} vars={{ date: date.toJSDate() }}>
 							<RadioCard label={date.toString()} value={date.toISODate()} {...register('day')}/>
 						</Localized>,
