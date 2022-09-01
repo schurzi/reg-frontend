@@ -38,7 +38,6 @@ const Room = (_: ReadonlyRouteComponentProps) => {
 				Selectors go here.
 			</section>
 
-
 			<RoomSection>
 				<Localized id="hotel-booking-room-title"><h3>Room types</h3></Localized>
 				<RoomGrid>

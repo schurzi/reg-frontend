@@ -10,19 +10,30 @@ module.exports = {
 		registrationExpirationDate: '2022-01-31',
 		eventStartDate: '2022-08-24',
 		eventEndDate: '2022-08-28',
+		stagePassPrice: 5,
+		tshirtPrice: 20,
 		tshirtSizes: ['S', 'M', 'L', 'XL', 'XXL'],
 		ticketLevels: [
 			{
 				id: 'standard',
-				price: 90,
+				prices: [
+					{ ticketType: 'full', price: 90 },
+					{ ticketType: 'day', price: 25 },
+				]
 			},
 			{
 				id: 'sponsor',
-				price: 155,
+				prices: [
+					{ ticketType: 'full', price: 155 },
+					{ ticketType: 'day', price: 45 },
+				]
 			},
 			{
 				id: 'super-sponsor',
-				price: 250,
+				prices: [
+					{ ticketType: 'full', price: 250 },
+					{ ticketType: 'day', price: 125 },
+				]
 			},
 		],
 		rooms: [

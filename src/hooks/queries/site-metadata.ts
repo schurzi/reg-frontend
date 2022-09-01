@@ -9,10 +9,15 @@ export interface SiteMetadata {
 	readonly registrationExpirationDate: string
 	readonly eventStartDate: string
 	readonly eventEndDate: string
+	readonly stagePassPrice: number
+	readonly tshirtPrice: number
 	readonly tshirtSizes: string[]
 	readonly ticketLevels: {
 		readonly id: string
-		readonly price: number
+		readonly prices: {
+			readonly ticketType: 'full' | 'day'
+			readonly price: number
+		}[]
 	}[]
 	readonly rooms: {
 		readonly id: string
@@ -39,10 +44,15 @@ export const useSiteMetadata = () => {
 					registrationExpirationDate
 					eventStartDate
 					eventEndDate
+					stagePassPrice
+					tshirtPrice
 					tshirtSizes
 					ticketLevels {
 						id
-						price
+						prices {
+							ticketType
+							price
+						}
 					}
 					rooms {
 						id
