@@ -4,13 +4,13 @@ import { Localized } from '@fluent/react'
 import { RadioCard, RadioCardProps } from '@eurofurence/reg-component-library'
 import ReactMarkdown from 'react-markdown'
 import Price from '~/components/funnels/price'
-import type { DeepReadonly } from 'ts-essentials'
+import { ReadonlyDate } from '~/util/readonly-types'
 
 export interface TicketLevelCardProps extends Omit<RadioCardProps, 'value'> {
 	readonly id: string
 	readonly price: number
 	readonly priceLabel: string
-	readonly expirationDate: DeepReadonly<Date>
+	readonly expirationDate: ReadonlyDate
 	readonly children: string
 }
 

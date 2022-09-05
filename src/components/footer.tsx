@@ -25,7 +25,7 @@ const Footer = () => {
 				<Localized id="footer-links-contact"><a>Contact Eurofurence</a></Localized>
 			</Links>
 			<section>
-				{lastSaved === undefined ? undefined : <Localized id="footer-last-saved" vars={{ lastSaved: lastSaved.toJSDate() }}>
+				{lastSaved === undefined ? undefined : <Localized id="footer-last-saved" vars={{ lastSaved }}>
 					<p>Your information was last saved on {lastSaved.toString()}.</p>
 				</Localized>}
 			</section>

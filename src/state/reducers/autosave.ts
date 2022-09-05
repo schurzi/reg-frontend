@@ -1,10 +1,9 @@
 import { AnyAppAction, GetAction } from '~/state/actions'
 import { UpdateLastSavedTime } from '~/state/actions/autosave'
-import { DateTime } from 'luxon'
-import type { DeepReadonly } from 'ts-essentials'
+import { ReadonlyDate } from '~/util/readonly-types'
 
 export interface AutosaveState {
-	readonly lastSaved?: DeepReadonly<DateTime>
+	readonly lastSaved?: ReadonlyDate
 }
 
 export default (state: AutosaveState = {}, action: GetAction<AnyAppAction>): AutosaveState => {
