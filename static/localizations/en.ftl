@@ -105,11 +105,6 @@ register-form-accessibility =
 register-form-accessibility-wheelchair =
   .label = Please accomodate my wheelchair (and me).
 
-register-price = {$price ->
-   [0]     Free
-  *[other] {$price} €
-}
-
 register-invoice-layout =
   .invoiceTitle = Your registration
 
@@ -143,18 +138,28 @@ hotel-booking-room-card-deluxe-suite =
 
   .title = Deluxe suite
 
-invoice-item-register-ticket-type-day =
+price = {$price ->
+   [0]     Free
+  *[other] {NUMBER($price, maximumFractionDigits: 0)}
+}
+
+invoice-total-label = Total
+invoice-total-taxesnotice = Taxes included
+
+invoice-item-label = {$amount} x {$name}
+
+invoice-item-definition-register-ticket-type-day =
   .name = Day ticket
   .extra = {DATETIME($day, month: "long", day: "numeric")}
 
-invoice-item-register-ticket-type-full =
+invoice-item-definition-register-ticket-type-full =
   .name = Full conv.
   .extra = {DATETIME_RANGE($start, $end, month: "long", day: "numeric")}
 
-invoice-item-register-ticket-addons-stage-pass =
+invoice-item-definition-register-ticket-addons-stage-pass =
   .name = Stage pass
 
-invoice-item-register-ticket-addons-tshirt =
+invoice-item-definition-register-ticket-addons-tshirt =
   .name = T-shirt
   .extra = {$size}
 

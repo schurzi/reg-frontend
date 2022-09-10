@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { FluentNumber } from '@fluent/bundle'
 import { Localized } from '@fluent/react'
 
 const Container = styled.section`
@@ -17,7 +18,7 @@ interface PriceProps {
 	readonly price: number
 }
 
-const Price = ({ price }: PriceProps) => <Localized id="register-price" vars={{ price }}>
+const Price = ({ price }: PriceProps) => <Localized id="price" vars={{ price: new FluentNumber(price, { style: 'currency', currency: 'EUR' }) }}>
 	<Container>{price} €</Container>
 </Localized>
 

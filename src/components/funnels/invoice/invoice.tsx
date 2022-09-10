@@ -28,7 +28,7 @@ const Invoice = ({ title, invoice }: InvoiceProps) =>
 		<div>
 			<ul>
 				{invoice.items.map(({ id, options, amount, totalPrice }) =>
-					<Localized key={id} id={`invoice-item-${id}`} attrs={{ name: true, extra: true }} vars={options}>
+					<Localized key={id} id={`invoice-item-definition-${id}`} attrs={{ name: true, extra: true }} vars={options}>
 						<InvoiceItemComponent amount={amount} name={id} price={totalPrice}/>
 					</Localized>,
 				)}
