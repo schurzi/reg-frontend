@@ -8,6 +8,9 @@ import { Card } from '@eurofurence/reg-component-library'
 import InvoiceItemComponent from './item'
 import Footer from './footer'
 import { sum } from 'ramda'
+import { Localized } from '@fluent/react'
+import { FluentVariable } from '@fluent/bundle'
+import { DeepReadonly } from 'utility-types'
 
 const InvoiceCard = styled(Card)`
 	grid-column: 10 / span 3;
@@ -15,10 +18,12 @@ const InvoiceCard = styled(Card)`
 `
 
 export interface InvoiceItem {
-	readonly name: string
+	readonly message: {
+		readonly id: string
+		readonly vars?: DeepReadonly<Record<string, FluentVariable>>
+	}
 	readonly amount: number
 	readonly unitPrice: number
-	readonly extra?: string
 }
 
 export interface InvoiceProps {
@@ -33,8 +38,10 @@ const Invoice = ({ title, items }: InvoiceProps) =>
 		</header>
 		<div>
 			<ul>
-				{items.map(({ amount, unitPrice, name, extra }) =>
-					<InvoiceItemComponent key={`${name}__${String(extra)}`} label={`${amount} x ${name}`} price={amount * unitPrice} extra={extra}/>,
+				{items.map(({ message: { id, vars }, amount, unitPrice }) =>
+					<Localized key={id} id={`invoice-item-${id}`} attrs={{ name: true, extra: true }} vars={vars}>
+						<InvoiceItemComponent amount={amount} name={id} price={amount * unitPrice}/>
+					</Localized>,
 				)}
 			</ul>
 		</div>

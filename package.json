@@ -12,6 +12,7 @@
     "@fluent/react": "^0.14.0",
     "axios": "^0.24.0",
     "date-fns": "^2.29.2",
+    "fluent-ranges": "^0.0.2",
     "gatsby": "^4.2.0",
     "gatsby-alias-imports": "^1.0.6",
     "gatsby-image": "^3.11.0",

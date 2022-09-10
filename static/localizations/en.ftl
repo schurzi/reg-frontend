@@ -148,6 +148,20 @@ hotel-booking-room-card-deluxe-suite =
 
   .title = Deluxe suite
 
+invoice-item-register-ticket-type-day =
+  .name = Day ticket
+  .extra = {DATETIME($day, month: "long", day: "numeric")}
+
+invoice-item-register-ticket-type-full =
+  .name = Full conv.
+  .extra = {DATETIME_RANGE($start, $end, month: "long", day: "numeric")}
+
+invoice-item-register-ticket-addons-stage-pass =
+  .name = Stage pass
+
+invoice-item-register-ticket-addons-tshirt =
+  .name = T-shirt
+
 footer-links-privacy-policy = Privacy policy
 
 footer-links-cookie-statement = Cookie statement

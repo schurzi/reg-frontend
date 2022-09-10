@@ -39,13 +39,14 @@ const Extra = styled.div`
 `
 
 export interface InvoiceItemProps {
-	readonly label: string
+	readonly amount: number
+	readonly name: string
 	readonly price: number
 	readonly extra?: string
 }
 
-const InvoiceItem = ({ label, price, extra }: InvoiceItemProps) => <Container>
-	<Label>{label}</Label>
+const InvoiceItem = ({ amount, name, price, extra }: InvoiceItemProps) => <Container>
+	<Label>{amount} x {name}</Label>
 	<Localized id="register-price" vars={{ price }}><Price>{price} €</Price></Localized>
 	{extra === undefined ? undefined : <Extra>{extra}</Extra>}
 </Container>

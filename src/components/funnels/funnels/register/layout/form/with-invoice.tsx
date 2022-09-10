@@ -2,11 +2,10 @@
  * Layout for registration funnel pages that has a blue invoice on the right side.
  */
 
-import { Localized, useLocalization } from '@fluent/react'
+import { Localized } from '@fluent/react'
 import WithInvoiceFunnelLayout from '~/components/funnels/layout/with-invoice'
 import config from '~/config'
 import { useAppSelector } from '~/hooks/redux'
-import { useCurrentLangKey } from '~/localization'
 import { getTicketLevel, getTicketType } from '~/state/selectors/register'
 import type { ReadonlyReactNode } from '~/util/readonly-types'
 import RegisterHeader from '../header'
@@ -19,11 +18,6 @@ export interface WithInvoiceRegisterFunnelLayoutProps {
 
 
 const WithInvoiceRegisterFunnelLayout = ({ children, currentStep, onNext }: WithInvoiceRegisterFunnelLayoutProps) => {
-	const langKey = useCurrentLangKey()
-	const { l10n } = useLocalization()
-
-	const dateFormatter = new Intl.DateTimeFormat([langKey, 'en'], { month: 'long', day: 'numeric' })
-
 	const invoiceItems = useAppSelector(state => {
 		const ticketLevel = getTicketLevel()(state)
 		const ticketType = getTicketType()(state)
@@ -35,23 +29,27 @@ const WithInvoiceRegisterFunnelLayout = ({ children, currentStep, onNext }: With
 		const ticketLine = ticketType.type === 'day'
 			? {
 				amount: 1,
-				name: l10n.getString('register-invoice-ticket-type-day', undefined, 'Day ticket'),
-				extra: dateFormatter.format(new Date(ticketType.day)),
+				message: {
+					id: 'register-ticket-type-day',
+					vars: { day: new Date(ticketType.day) },
+				},
 				unitPrice: config.ticketLevels.find(l => l.id === ticketLevel.level)!.prices.day,
 			}
 			: {
 				amount: 1,
-				name: l10n.getString('register-invoice-ticket-type-full', undefined, 'Full conv.'),
-				extra: dateFormatter.formatRange(new Date(config.eventStartDate), new Date(config.eventEndDate)),
+				message: {
+					id: 'register-ticket-type-full',
+					vars: { start: new Date(config.eventStartDate), end: new Date(config.eventEndDate) },
+				},
 				unitPrice: config.ticketLevels.find(l => l.id === ticketLevel.level)!.prices.full,
 			}
 
 		const stagePassLine = ticketLevel.addons.stagePass.selected
-			? [{ amount: 1, name: l10n.getString('register-invoice-addons-stage-pass', undefined, 'Stage pass'), unitPrice: config.stagePassPrice }]
+			? [{ amount: 1, message: { id: 'register-ticket-addons-stage-pass' }, unitPrice: config.stagePassPrice }]
 			: []
 
 		const tshirtLine = ticketLevel.addons.tshirt.selected
-			? [{ amount: 1, name: l10n.getString('register-invoice-addons-tshirt', undefined, 'T-shirt'), unitPrice: config.tshirtPrice }]
+			? [{ amount: 1, message: { id: 'register-ticket-addons-tshirt' }, unitPrice: config.tshirtPrice }]
 			: []
 
 		return [ticketLine, ...stagePassLine, ...tshirtLine]
