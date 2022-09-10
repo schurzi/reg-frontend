@@ -3,6 +3,7 @@
  */
 
 import { Localized } from '@fluent/react'
+import { InvoiceItem } from '~/components/funnels/invoice/invoice'
 import WithInvoiceFunnelLayout from '~/components/funnels/layout/with-invoice'
 import config from '~/config'
 import { useAppSelector } from '~/hooks/redux'
@@ -26,7 +27,7 @@ const WithInvoiceRegisterFunnelLayout = ({ children, currentStep, onNext }: With
 			return []
 		}
 
-		const ticketLine = ticketType.type === 'day'
+		const ticketLine: InvoiceItem = ticketType.type === 'day'
 			? {
 				amount: 1,
 				message: {
