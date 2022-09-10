@@ -1,5 +1,9 @@
 hello = Hello world!
 
+header-dropdown-my-account = My account
+
+header-dropdown-language = Language
+
 register-navigation-back = Go back
 
 register-navigation-next = Continue
