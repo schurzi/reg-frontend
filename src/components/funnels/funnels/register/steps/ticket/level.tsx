@@ -75,7 +75,7 @@ const TicketLevel = (_: ReadonlyRouteComponentProps) => {
 										label="T-shirt size"
 										isSearchable={false}
 										options={sizes}
-										onChange={size => size?.value}
+										onChange={size => onChange(size?.value)}
 										value={sizesByValue.get(value)}
 										{...field}
 									/>
