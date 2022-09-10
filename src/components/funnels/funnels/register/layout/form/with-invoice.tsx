@@ -50,7 +50,7 @@ const WithInvoiceRegisterFunnelLayout = ({ children, currentStep, onNext }: With
 			: []
 
 		const tshirtLine = ticketLevel.addons.tshirt.selected
-			? [{ amount: 1, message: { id: 'register-ticket-addons-tshirt' }, unitPrice: config.tshirtPrice }]
+			? [{ amount: 1, message: { id: 'register-ticket-addons-tshirt', vars: { size: ticketLevel.addons.tshirt.size } }, unitPrice: config.tshirtPrice }]
 			: []
 
 		return [ticketLine, ...stagePassLine, ...tshirtLine]

@@ -118,11 +118,6 @@ register-step-counter = Step {$step}
 register-change-ticket-type =
   .label = Change ticket type
 
-register-invoice-ticket-type-full = Full conv.
-register-invoice-ticket-type-day = Day ticket
-register-invoice-addons-stage-pass = Stage pass
-register-invoice-addons-tshirt = T-shirt
-
 hotel-booking-room-card-standard =
   The 27 sqm standard rooms offer luxurious living comfort.
   The rooms are additionally equipped with modern furnishings and spacious working & storage areas so as to best meet guests' needs.
@@ -161,6 +156,7 @@ invoice-item-register-ticket-addons-stage-pass =
 
 invoice-item-register-ticket-addons-tshirt =
   .name = T-shirt
+  .extra = {$size}
 
 footer-links-privacy-policy = Privacy policy
 
