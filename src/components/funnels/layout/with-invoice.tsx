@@ -3,7 +3,8 @@
  */
 
 import styled from '@emotion/styled'
-import Invoice, { InvoiceItem } from '~/components/funnels/invoice/invoice'
+import InvoiceComponent from '~/components/funnels/invoice/invoice'
+import { Invoice } from '~/state/models/invoice'
 import type { ReadonlyReactNode } from '~/util/readonly-types'
 import CommonFunnelLayout from './common'
 
@@ -12,7 +13,7 @@ export interface WithInvoiceFunnelLayoutProps {
 	readonly children: ReadonlyReactNode
 	readonly isFirstPage?: boolean
 	readonly invoiceTitle: string
-	readonly invoiceItems: readonly InvoiceItem[]
+	readonly invoice: Invoice
 	readonly onNext: () => void
 }
 
@@ -26,13 +27,13 @@ const GridConformer = styled.div`
 	grid-column: span 8;
 `
 
-const WithInvoiceFunnelLayout = ({ children, onNext, invoiceTitle, invoiceItems, ...passthroughProps }: WithInvoiceFunnelLayoutProps) =>
+const WithInvoiceFunnelLayout = ({ children, onNext, invoiceTitle, invoice, ...passthroughProps }: WithInvoiceFunnelLayoutProps) =>
 	<CommonFunnelLayout {...passthroughProps} onNext={onNext}>
 		<Grid>
 			<GridConformer>
 				{children}
 			</GridConformer>
-			<Invoice title={invoiceTitle} items={invoiceItems}/>
+			<InvoiceComponent title={invoiceTitle} invoice={invoice}/>
 		</Grid>
 	</CommonFunnelLayout>
 

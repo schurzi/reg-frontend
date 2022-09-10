@@ -2,6 +2,7 @@ import { Localized } from '@fluent/react'
 import type { ReadonlyReactNode } from '~/util/readonly-types'
 import WithInvoiceFunnelLayout from '~/components/funnels/layout/with-invoice'
 import HotelBookingHeader from '../header'
+import { buildInvoice } from '~/state/models/invoice'
 
 export interface WithInvoiceHotelBookingFunnelLayoutProps {
 	readonly children: ReadonlyReactNode
@@ -10,7 +11,7 @@ export interface WithInvoiceHotelBookingFunnelLayoutProps {
 }
 
 const WithInvoiceHotelBookingFunnelLayout = ({ children, isFirstPage, onNext }: WithInvoiceHotelBookingFunnelLayoutProps) => {
-	// todo: calculate invoiceItems from state
+	// todo: calculate invoice from state
 
 	return <Localized id="hotel-booking-invoice-layout" attrs={{ invoiceTitle: true }}>
 		<WithInvoiceFunnelLayout
@@ -18,9 +19,9 @@ const WithInvoiceHotelBookingFunnelLayout = ({ children, isFirstPage, onNext }: 
 			isFirstPage={isFirstPage}
 			onNext={onNext}
 			invoiceTitle="Your hotel room"
-			invoiceItems={[
-				{ amount: 5, name: 'Standard', unitPrice: 140, extra: 'August 11 - 15' },
-			]}
+			invoice={buildInvoice([
+				{ amount: 5, id: 'hotel-booking-room-type-standard', unitPrice: 140 },
+			])}
 		>
 			{children}
 		</WithInvoiceFunnelLayout>

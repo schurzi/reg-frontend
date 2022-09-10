@@ -3,11 +3,10 @@
  */
 
 import { Localized } from '@fluent/react'
-import { InvoiceItem } from '~/components/funnels/invoice/invoice'
 import WithInvoiceFunnelLayout from '~/components/funnels/layout/with-invoice'
-import config from '~/config'
 import { useAppSelector } from '~/hooks/redux'
-import { getTicketLevel, getTicketType } from '~/state/selectors/register'
+import { buildInvoice } from '~/state/models/invoice'
+import { getInvoice } from '~/state/selectors/register'
 import type { ReadonlyReactNode } from '~/util/readonly-types'
 import RegisterHeader from '../header'
 
@@ -19,42 +18,7 @@ export interface WithInvoiceRegisterFunnelLayoutProps {
 
 
 const WithInvoiceRegisterFunnelLayout = ({ children, currentStep, onNext }: WithInvoiceRegisterFunnelLayoutProps) => {
-	const invoiceItems = useAppSelector(state => {
-		const ticketLevel = getTicketLevel()(state)
-		const ticketType = getTicketType()(state)
-
-		if (ticketLevel === undefined || ticketType === undefined) {
-			return []
-		}
-
-		const ticketLine: InvoiceItem = ticketType.type === 'day'
-			? {
-				amount: 1,
-				message: {
-					id: 'register-ticket-type-day',
-					vars: { day: new Date(ticketType.day) },
-				},
-				unitPrice: config.ticketLevels.find(l => l.id === ticketLevel.level)!.prices.day,
-			}
-			: {
-				amount: 1,
-				message: {
-					id: 'register-ticket-type-full',
-					vars: { start: new Date(config.eventStartDate), end: new Date(config.eventEndDate) },
-				},
-				unitPrice: config.ticketLevels.find(l => l.id === ticketLevel.level)!.prices.full,
-			}
-
-		const stagePassLine = ticketLevel.addons.stagePass.selected
-			? [{ amount: 1, message: { id: 'register-ticket-addons-stage-pass' }, unitPrice: config.stagePassPrice }]
-			: []
-
-		const tshirtLine = ticketLevel.addons.tshirt.selected
-			? [{ amount: 1, message: { id: 'register-ticket-addons-tshirt', vars: { size: ticketLevel.addons.tshirt.size } }, unitPrice: config.tshirtPrice }]
-			: []
-
-		return [ticketLine, ...stagePassLine, ...tshirtLine]
-	})
+	const invoice = useAppSelector(getInvoice)
 
 	return <Localized id="register-invoice-layout" attrs={{ invoiceTitle: true }}>
 		<WithInvoiceFunnelLayout
@@ -62,7 +26,7 @@ const WithInvoiceRegisterFunnelLayout = ({ children, currentStep, onNext }: With
 			isFirstPage={currentStep === 0}
 			onNext={onNext}
 			invoiceTitle="Your registration"
-			invoiceItems={invoiceItems}
+			invoice={invoice ?? buildInvoice([])}
 		>
 			{children}
 		</WithInvoiceFunnelLayout>
