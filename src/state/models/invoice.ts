@@ -1,9 +1,9 @@
-import { DeepReadonly } from 'utility-types'
 import { sum, pluck } from 'ramda'
+import { ReadonlyDate } from '~/util/readonly-types'
 
 export interface UncalculatedInvoiceItem {
 	readonly id: string
-	readonly options?: DeepReadonly<Record<string, string | number | Date>>
+	readonly options?: Readonly<Record<string, string | number | ReadonlyDate>>
 	readonly amount: number
 	readonly unitPrice: number
 }
