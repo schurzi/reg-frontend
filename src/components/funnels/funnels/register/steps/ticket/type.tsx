@@ -6,6 +6,8 @@ import { TicketType as TicketTypeModel } from '~/state/models/register'
 import { ChangeTicketType, SubmitTicketType } from '~/state/actions/register'
 import { useFunnelForm } from '~/hooks/funnels/form'
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
+import conCatDay from '~/images/con-cats/ticket-types/day.png'
+import conCatFull from '~/images/con-cats/ticket-types/full.png'
 
 const TicketTypeGrid = styled.div`
 	display: flex;
@@ -24,10 +26,10 @@ const TicketType = (_: ReadonlyRouteComponentProps) => {
 			<RadioGroup name="type">
 				<TicketTypeGrid>
 					<Localized id="register-ticket-type-day-label" attrs={{ label: true }}>
-						<RadioCard label="Day ticket" value="day" height="346px" {...register('type')}/>
+						<RadioCard label="Day ticket" value="day" height="346px" image={conCatDay} {...register('type')}/>
 					</Localized>
 					<Localized id="register-ticket-type-full-label" attrs={{ label: true }}>
-						<RadioCard label="Full convention" value="full" height="346px" {...register('type')}/>
+						<RadioCard label="Full convention" value="full" height="346px" image={conCatFull} {...register('type')}/>
 					</Localized>
 				</TicketTypeGrid>
 			</RadioGroup>
