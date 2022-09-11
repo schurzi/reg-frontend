@@ -40,7 +40,7 @@ export const getInvoice = createSelector(getTicketType(), getTicketLevel(), (tic
 		: []
 
 	const tshirtLine = ticketLevel.addons.tshirt.selected
-		? [{ id: 'register-ticket-addons-tshirt', amount: 1, options: { size: ticketLevel.addons.tshirt.size }, unitPrice: config.tshirtPrice }]
+		? [{ id: 'register-ticket-addons-tshirt', amount: 1, options: { size: ticketLevel.addons.tshirt.size }, unitPrice: ticketLevel.level === 'standard' ? config.tshirtPrice : 0 }]
 		: []
 
 	return buildInvoice([ticketLine, ...stagePassLine, ...tshirtLine])

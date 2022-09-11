@@ -35,7 +35,8 @@ const AddonsContainer = styled.section`
 
 const TicketLevel = (_: ReadonlyRouteComponentProps) => {
 	const ticketType = useAppSelector(getTicketType())!
-	const { register, control, handleSubmit } = useFunnelForm<TicketLevelModel>(ChangeTicketLevel, SubmitTicketLevel)
+	const { register, control, handleSubmit, watch } = useFunnelForm<TicketLevelModel>(ChangeTicketLevel, SubmitTicketLevel)
+	const level = watch('level', 'standard')
 
 	const { sizes, sizesByValue } = useMemo(() => {
 		const sizes = config.tshirtSizes.map(size => ({ value: size, label: size }))
@@ -65,10 +66,10 @@ const TicketLevel = (_: ReadonlyRouteComponentProps) => {
 				<Localized id="register-ticket-level-addons-title"><h3>Select add-ons</h3></Localized>
 				<AddonsContainer>
 					<Localized id="register-ticket-level-addons-item-stage-pass" attrs={{ label: true, description: true, price: true }}>
-						<TicketLevelAddon label="Stage pass" description="A stage pass" price={5} {...register('addons.stagePass.selected')}/>
+						<TicketLevelAddon label="Stage pass" description="A stage pass" price={config.stagePassPrice} {...register('addons.stagePass.selected')}/>
 					</Localized>
 					<Localized id="register-ticket-level-addons-item-tshirt" attrs={{ label: true, description: true, price: true }}>
-						<TicketLevelAddon label="T-Shirt" description="A t-shirt" price={20} {...register('addons.tshirt.selected')}>
+						<TicketLevelAddon label="T-Shirt" description="A t-shirt" price={level === 'standard' ? config.tshirtPrice : 0} {...register('addons.tshirt.selected')}>
 							<Controller name="addons.tshirt.size" control={control} render={({ field: { onChange, value, ref, ...field } }) =>
 								<Localized id="register-ticket-level-addons-item-tshirt-option-size" attrs={{ label: true }}>
 									<Select
