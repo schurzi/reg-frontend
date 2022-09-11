@@ -3,6 +3,8 @@ import type { ReadonlyReactNode } from '~/util/readonly-types'
 import WithInvoiceFunnelLayout from '~/components/funnels/layout/with-invoice'
 import HotelBookingHeader from '../header'
 import { buildInvoice } from '~/state/models/invoice'
+import { useAppSelector } from '~/hooks/redux'
+import { getInvoice } from '~/state/selectors/hotel-booking'
 
 export interface WithInvoiceHotelBookingFunnelLayoutProps {
 	readonly children: ReadonlyReactNode
@@ -11,7 +13,7 @@ export interface WithInvoiceHotelBookingFunnelLayoutProps {
 }
 
 const WithInvoiceHotelBookingFunnelLayout = ({ children, isFirstPage, onNext }: WithInvoiceHotelBookingFunnelLayoutProps) => {
-	// todo: calculate invoice from state
+	const invoice = useAppSelector(getInvoice)
 
 	return <Localized id="hotel-booking-invoice-layout" attrs={{ invoiceTitle: true }}>
 		<WithInvoiceFunnelLayout
@@ -19,9 +21,7 @@ const WithInvoiceHotelBookingFunnelLayout = ({ children, isFirstPage, onNext }: 
 			isFirstPage={isFirstPage}
 			onNext={onNext}
 			invoiceTitle="Your hotel room"
-			invoice={buildInvoice([
-				{ amount: 5, id: 'hotel-booking-room-type-standard', unitPrice: 140 },
-			])}
+			invoice={invoice ?? buildInvoice([])}
 		>
 			{children}
 		</WithInvoiceFunnelLayout>
