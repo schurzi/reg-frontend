@@ -7,8 +7,7 @@ import { ChangeTicketDay, SubmitTicketDay } from '~/state/actions/register'
 import { useFunnelForm } from '~/hooks/funnels/form'
 import FullWidthRegisterFunnelLayout from '~/components/funnels/funnels/register/layout/form/full-width'
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
-import { formatISOWithOptions } from 'date-fns/fp'
-import { eachDayOfInterval } from 'date-fns/esm'
+import { formatISOWithOptions, eachDayOfInterval } from 'date-fns/fp'
 
 const Grid = styled.div`
 	display: grid;
