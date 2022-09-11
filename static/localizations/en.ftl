@@ -144,7 +144,7 @@ hotel-booking-room-card-deluxe-suite =
 
 price = {$price ->
    [0]     Free
-  *[other] {NUMBER($price, maximumFractionDigits: 0)}
+  *[other] {NUMBER($price, minimumFractionDigits: 0)}
 }
 
 invoice-total-label = Total
