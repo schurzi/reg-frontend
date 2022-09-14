@@ -1,5 +1,9 @@
 hello = Hello world!
 
+header-dropdown-my-account = My account
+
+header-dropdown-language = Language
+
 register-navigation-back = Go back
 
 register-navigation-next = Continue
@@ -105,11 +109,6 @@ register-form-accessibility =
 register-form-accessibility-wheelchair =
   .label = Please accomodate my wheelchair (and me).
 
-register-price = {$price ->
-   [0]     Free
-  *[other] {$price} €
-}
-
 register-invoice-layout =
   .invoiceTitle = Your registration
 
@@ -142,6 +141,31 @@ hotel-booking-room-card-deluxe-suite =
   welcoming atmosphere almost like home.
 
   .label = Deluxe suite
+
+price = {$price ->
+   [0]     Free
+  *[other] {NUMBER($price, minimumFractionDigits: 0)}
+}
+
+invoice-total-label = Total
+invoice-total-taxesnotice = Taxes included
+
+invoice-item-label = {$amount} x {$name}
+
+invoice-item-definition-register-ticket-type-day =
+  .name = Day ticket
+  .extra = {DATETIME($day, month: "long", day: "numeric")}
+
+invoice-item-definition-register-ticket-type-full =
+  .name = Full conv.
+  .extra = {DATETIME_RANGE($start, $end, month: "long", day: "numeric")}
+
+invoice-item-definition-register-ticket-addons-stage-pass =
+  .name = Stage pass
+
+invoice-item-definition-register-ticket-addons-tshirt =
+  .name = T-shirt
+  .extra = {$size}
 
 footer-links-privacy-policy = Privacy policy
 

@@ -1,18 +1,13 @@
 import styled from '@emotion/styled'
 import { Localized } from '@fluent/react'
 import { navigate } from '@reach/router'
-import { DateTime } from 'luxon'
-import { until, last } from 'ramda'
 import { RadioGroup, RadioCard } from '@eurofurence/reg-component-library'
-import { useSiteMetadata } from '~/hooks/queries/site-metadata'
+import config from '~/config'
 import { ChangeTicketDay, SubmitTicketDay } from '~/state/actions/register'
 import { useFunnelForm } from '~/hooks/funnels/form'
 import FullWidthRegisterFunnelLayout from '~/components/funnels/funnels/register/layout/form/full-width'
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
-import type { DeepReadonly } from 'ts-essentials'
-
-const datesBetween = (start: DeepReadonly<DateTime>, end: DeepReadonly<DateTime>) =>
-	until<DateTime[], DateTime[]>(days => last(days)!.equals(end), days => [...days, last(days)!.plus({ day: 1 })], [start])
+import { formatISOWithOptions, eachDayOfInterval } from 'date-fns/fp'
 
 const Grid = styled.div`
 	display: grid;
@@ -21,16 +16,15 @@ const Grid = styled.div`
 `
 
 const TicketDay = (_: ReadonlyRouteComponentProps) => {
-	const { eventStartDate, eventEndDate } = useSiteMetadata()
 	const { register, handleSubmit } = useFunnelForm<{ day: string }>(ChangeTicketDay, SubmitTicketDay)
 
 	return <FullWidthRegisterFunnelLayout onNext={handleSubmit} currentStep={0}>
 		<form onSubmit={handleSubmit}>
 			<RadioGroup name="day">
 				<Grid>
-					{datesBetween(DateTime.fromISO(eventStartDate), DateTime.fromISO(eventEndDate)).map(date =>
-						<Localized id="register-ticket-day-card" key={date.toISODate()} attrs={{ label: true }} vars={{ date: date.toJSDate() }}>
-							<RadioCard label={date.toString()} value={date.toISODate()} {...register('day')}/>
+					{eachDayOfInterval({ start: config.eventStartDate, end: config.eventEndDate }).map(date =>
+						<Localized id="register-ticket-day-card" key={formatISOWithOptions({ representation: 'date' }, date)} attrs={{ label: true }} vars={{ date }}>
+							<RadioCard label={date.toString()} value={formatISOWithOptions({ representation: 'date' }, date)} {...register('day')}/>
 						</Localized>,
 					)}
 				</Grid>

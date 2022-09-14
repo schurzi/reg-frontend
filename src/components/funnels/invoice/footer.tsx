@@ -3,6 +3,7 @@
  */
 
 import styled from '@emotion/styled'
+import { FluentNumber } from '@fluent/bundle'
 import { Localized } from '@fluent/react'
 
 const Container = styled.footer`
@@ -41,9 +42,9 @@ export interface FooterProps {
 }
 
 const Footer = ({ totalPrice }: FooterProps) => <Container>
-	<Localized id="register-invoice-total-label"><Label>Total</Label></Localized>
-	<Localized id="register-price" vars={{ price: totalPrice }}><TotalPrice>{totalPrice} €</TotalPrice></Localized>
-	<Localized id="register-invoice-total-taxesnotice"><TaxesNotice>Taxes included</TaxesNotice></Localized>
+	<Localized id="invoice-total-label"><Label>Total</Label></Localized>
+	<Localized id="price" vars={{ price: new FluentNumber(totalPrice, { style: 'currency', currency: 'EUR' }) }}><TotalPrice>{totalPrice} €</TotalPrice></Localized>
+	<Localized id="invoice-total-taxesnotice"><TaxesNotice>Taxes included</TaxesNotice></Localized>
 </Container>
 
 export default Footer

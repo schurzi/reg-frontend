@@ -4,6 +4,9 @@
 
 import { Localized } from '@fluent/react'
 import WithInvoiceFunnelLayout from '~/components/funnels/layout/with-invoice'
+import { useAppSelector } from '~/hooks/redux'
+import { buildInvoice } from '~/state/models/invoice'
+import { getInvoice } from '~/state/selectors/register'
 import type { ReadonlyReactNode } from '~/util/readonly-types'
 import RegisterHeader from '../header'
 
@@ -13,8 +16,9 @@ export interface WithInvoiceRegisterFunnelLayoutProps {
 	readonly onNext: () => void
 }
 
+
 const WithInvoiceRegisterFunnelLayout = ({ children, currentStep, onNext }: WithInvoiceRegisterFunnelLayoutProps) => {
-	// todo: calculate invoiceItems from state
+	const invoice = useAppSelector(getInvoice)
 
 	return <Localized id="register-invoice-layout" attrs={{ invoiceTitle: true }}>
 		<WithInvoiceFunnelLayout
@@ -22,11 +26,7 @@ const WithInvoiceRegisterFunnelLayout = ({ children, currentStep, onNext }: With
 			isFirstPage={currentStep === 0}
 			onNext={onNext}
 			invoiceTitle="Your registration"
-			invoiceItems={[
-				{ amount: 1, name: 'Full conv.', unitPrice: 155, extra: 'August 11 - 15' },
-				{ amount: 1, name: 'Stage pass', unitPrice: 5 },
-				{ amount: 1, name: 'T-shirt', unitPrice: 0, extra: 'XXL' },
-			]}
+			invoice={invoice ?? buildInvoice([])}
 		>
 			{children}
 		</WithInvoiceFunnelLayout>

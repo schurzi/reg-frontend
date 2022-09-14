@@ -4,6 +4,7 @@
  */
 
 import styled from '@emotion/styled'
+import { FluentNumber } from '@fluent/bundle'
 import { Localized } from '@fluent/react'
 
 const Container = styled.li`
@@ -39,14 +40,15 @@ const Extra = styled.div`
 `
 
 export interface InvoiceItemProps {
-	readonly label: string
+	readonly amount: number
+	readonly name: string
 	readonly price: number
 	readonly extra?: string
 }
 
-const InvoiceItem = ({ label, price, extra }: InvoiceItemProps) => <Container>
-	<Label>{label}</Label>
-	<Localized id="register-price" vars={{ price }}><Price>{price} €</Price></Localized>
+const InvoiceItem = ({ amount, name, price, extra }: InvoiceItemProps) => <Container>
+	<Localized id="invoice-item-label" vars={{ amount, name }}><Label>{amount} x {name}</Label></Localized>
+	<Localized id="price" vars={{ price: new FluentNumber(price, { style: 'currency', currency: 'EUR' }) }}><Price>{price} €</Price></Localized>
 	{extra === undefined ? undefined : <Extra>{extra}</Extra>}
 </Container>
 

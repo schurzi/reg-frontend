@@ -2,35 +2,9 @@ const path = require('path')
 
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
-    eventName: 'Eurofurence',
-    registrationLaunch: '2022-01-21T12:30:23+02:00',
-		registrationExpirationDate: '2022-01-31',
-		eventStartDate: '2022-08-24',
-		eventEndDate: '2022-08-28',
-		tshirtSizes: ['S', 'M', 'L', 'XL', 'XXL'],
-		ticketLevels: [
-			{
-				id: 'standard',
-				price: 90,
-			},
-			{
-				id: 'sponsor',
-				price: 155,
-			},
-			{
-				id: 'super-sponsor',
-				price: 250,
-			},
-		],
-		rooms: [
-			{ id: 'standard', price: 140, image: 'standard_room.svg' },
-			{ id: 'deluxe', price: 160, image: 'deluxe_room.svg' },
-			{ id: 'junior-suite', price: 198, image: 'junior_suite.svg' },
-			{ id: 'deluxe-suite', price: 228, image: 'suite_deluxe.svg' },
-		],
+    title: `Eurofurence Reg`,
+    description: `Eurofurence registration site.`,
+    author: `Eurofurence`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
