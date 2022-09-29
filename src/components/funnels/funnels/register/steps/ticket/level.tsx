@@ -35,8 +35,9 @@ const AddonsContainer = styled.section`
 
 const TicketLevel = (_: ReadonlyRouteComponentProps) => {
 	const ticketType = useAppSelector(getTicketType())!
-	const { register, control, handleSubmit, watch } = useFunnelForm<TicketLevelModel>(ChangeTicketLevel, SubmitTicketLevel)
+	const { register, control, handleSubmit, watch } = useFunnelForm<TicketLevelModel>('register-ticket-level', ChangeTicketLevel, SubmitTicketLevel)
 	const level = watch('level', 'standard')
+	const tshirtSelected = watch('addons.tshirt.selected')
 
 	const { sizes, sizesByValue } = useMemo(() => {
 		const sizes = config.tshirtSizes.map(size => ({ value: size, label: size }))
@@ -54,7 +55,14 @@ const TicketLevel = (_: ReadonlyRouteComponentProps) => {
 					<RadioGroup name="level">
 						{config.ticketLevels.map(({ id, prices }) =>
 							<Localized key={id} id={`register-ticket-level-card-${id}`} attrs={{ label: true, priceLabel: true }}>
-								<TicketLevelCard id={id} price={prices[ticketType.type]} expirationDate={expirationDate} label="Ticket level" priceLabel="A ticket" {...register('level')}>
+								<TicketLevelCard
+									id={id}
+									price={prices[ticketType.type]}
+									expirationDate={expirationDate}
+									label="Ticket level"
+									priceLabel="A ticket"
+									{...register('level', { required: true })}
+								>
 									A ticket level
 								</TicketLevelCard>
 							</Localized>,
@@ -70,7 +78,7 @@ const TicketLevel = (_: ReadonlyRouteComponentProps) => {
 					</Localized>
 					<Localized id="register-ticket-level-addons-item-tshirt" attrs={{ label: true, description: true, price: true }}>
 						<TicketLevelAddon label="T-Shirt" description="A t-shirt" price={level === 'standard' ? config.tshirtPrice : 0} {...register('addons.tshirt.selected')}>
-							<Controller name="addons.tshirt.size" control={control} render={({ field: { onChange, value, ref, ...field } }) =>
+							<Controller name="addons.tshirt.size" control={control} rules={{ required: tshirtSelected }} render={({ field: { onChange, value, ref, ...field } }) =>
 								<Localized id="register-ticket-level-addons-item-tshirt-option-size" attrs={{ label: true }}>
 									<Select
 										label="T-shirt size"

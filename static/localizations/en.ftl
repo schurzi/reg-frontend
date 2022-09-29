@@ -8,8 +8,12 @@ register-navigation-back = Go back
 
 register-navigation-next = Continue
 
+register-ticket-type-validation-errors-type-required = Please select a ticket type.
+
 register-ticket-day-card =
   .label = {DATETIME($date, day: "numeric", month: "long", year: "numeric")}
+
+register-ticket-day-validation-errors-day-required = Please select a day.
 
 register-ticket-level-card-standard =
   This Standard Convention ticket grants you access to the convention from Wednesday to Sunday.
@@ -61,6 +65,10 @@ register-ticket-level-addons-item-tshirt =
 register-ticket-level-addons-item-tshirt-option-size =
   .label = T-shirt size
 
+register-ticket-level-validation-errors-level-required = Please select a ticket level.
+
+register-ticket-level-validation-errors-addons-tshirt-size-required = Please select a T-shirt size.
+
 register-form-nickname =
   .label = Nickname
   .placeholder = Johnny_The_Sergal
@@ -109,6 +117,40 @@ register-form-accessibility =
 register-form-accessibility-wheelchair =
   .label = Please accomodate my wheelchair (and me).
 
+register-personal-validation-errors-nickname-required = Please provide a nickname.
+
+register-personal-validation-errors-nickname-pattern = Please avoid special characters.
+
+register-personal-validation-errors-nickname-min-length = Your nickname must be at least 1 character long.
+
+register-personal-validation-errors-nickname-max-length = Your nickname must be at most 80 characters long.
+
+register-personal-validation-errors-nickname-validate-no-leading-or-trailing-whitespace = Please avoid leading or trailing whitespace.
+
+register-personal-validation-errors-first-name-required = Please provide a first name.
+
+register-personal-validation-errors-last-name-required = Please provide a last name.
+
+register-personal-validation-errors-name-on-badge-required = Please select which name you would like to have on your badge.
+
+register-personal-validation-errors-spoken-languages-required = Please select your spoken languages.
+
+register-personal-validation-errors-gender-required = Please select your gender, or select "I prefer not to say" if you would rather not provide this information.
+
+register-contact-validation-errors-email-required = Please provide an email address.
+
+register-contact-validation-errors-phone-number-required = Please provide a phone number.
+
+register-contact-validation-errors-street-required = Please provide a street.
+
+register-contact-validation-errors-city-required = Please provide a city.
+
+register-contact-validation-errors-postal-code-required = Please provide a postal code.
+
+register-contact-validation-errors-state-or-province-required = Please provide a state or province.
+
+register-contact-validation-errors-country-required = Please provide a country.
+
 register-invoice-layout =
   .invoiceTitle = Your registration
 
@@ -141,6 +183,26 @@ hotel-booking-room-card-deluxe-suite =
   welcoming atmosphere almost like home.
 
   .label = Deluxe suite
+
+hotel-booking-room-validation-errors-type-required = Please select a room type.
+
+hotel-booking-guests-validation-errors-guests-firstName-required = Please provide a first name.
+
+hotel-booking-guests-validation-errors-guests-lastName-required = Please provide a last name.
+
+hotel-booking-guests-validation-errors-guests-email-required = Please provide an email address.
+
+hotel-booking-guests-validation-errors-guests-phoneNumber-required = Please provide a phone number.
+
+hotel-booking-guests-validation-errors-guests-street-required = Please provide a street.
+
+hotel-booking-guests-validation-errors-guests-city-required = Please provide a city.
+
+hotel-booking-guests-validation-errors-guests-postalCode-required = Please provide a postal code.
+
+hotel-booking-guests-validation-errors-guests-stateOrProvince-required = Please provide a state or province.
+
+hotel-booking-guests-validation-errors-guests-country-required = Please provide a country.
 
 price = {$price ->
    [0]     Free

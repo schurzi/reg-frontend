@@ -23,7 +23,7 @@ const RoomGrid = styled.section`
 `
 
 const Room = (_: ReadonlyRouteComponentProps) => {
-	const { register, handleSubmit } = useFunnelForm<RoomInfo>(ChangeRoomInfo, SubmitRoomInfo)
+	const { register, handleSubmit } = useFunnelForm<RoomInfo>('hotel-booking-room', ChangeRoomInfo, SubmitRoomInfo)
 
 	return <FullWidthHotelBookingFunnelLayout onNext={handleSubmit} isFirstPage>
 		<form onSubmit={handleSubmit}>

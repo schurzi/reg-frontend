@@ -11,7 +11,7 @@ import { range } from 'ramda'
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 
 const Guests = (_: ReadonlyRouteComponentProps) => {
-	const { register, handleSubmit } = useFunnelForm<GuestsInfo>(ChangeGuestsInfo, SubmitGuestsInfo)
+	const { register, handleSubmit } = useFunnelForm<GuestsInfo>('hotel-booking-guests', ChangeGuestsInfo, SubmitGuestsInfo)
 
 	return <WithInvoiceHotelBookingFunnelLayout onNext={handleSubmit}>
 		<Localized id="hotel-booking-guests-title">
@@ -23,31 +23,31 @@ const Guests = (_: ReadonlyRouteComponentProps) => {
 					<h2>Guest #{i + 1}</h2>
 				</Localized>
 				<Localized id="hotel-booking-form-first-name" attrs={{ label: true, placeholder: true }}>
-					<TextField label="First name" placeholder="John" gridSpan={5} {...register(`guests.${i}.firstName`)}/>
+					<TextField label="First name" placeholder="John" gridSpan={5} {...register(`guests.${i}.firstName`, { required: true })}/>
 				</Localized>
 				<Localized id="hotel-booking-form-last-name" attrs={{ label: true, placeholder: true }}>
-					<TextField label="Last name" placeholder="Doe" gridSpan={5} {...register(`guests.${i}.lastName`)}/>
+					<TextField label="Last name" placeholder="Doe" gridSpan={5} {...register(`guests.${i}.lastName`, { required: true })}/>
 				</Localized>
 				<Localized id="hotel-booking-form-email" attrs={{ label: true, placeholder: true }}>
-					<TextField label="Email address" placeholder="john.smith@email.com" gridSpan={7} {...register(`guests.${i}.email`)}/>
+					<TextField label="Email address" placeholder="john.smith@email.com" gridSpan={7} {...register(`guests.${i}.email`, { required: true })}/>
 				</Localized>
 				<Localized id="hotel-booking-form-phone-number" attrs={{ label: true, placeholder: true }}>
-					<TextField label="Phone number" placeholder="+32 0 000 00 00" gridSpan={3} {...register(`guests.${i}.phoneNumber`)}/>
+					<TextField label="Phone number" placeholder="+32 0 000 00 00" gridSpan={3} {...register(`guests.${i}.phoneNumber`, { required: true })}/>
 				</Localized>
 				<Localized id="hotel-booking-form-street" attrs={{ label: true, placeholder: true }}>
-					<TextField label="Street" placeholder="Pennylane 40" {...register(`guests.${i}.street`)}/>
+					<TextField label="Street" placeholder="Pennylane 40" {...register(`guests.${i}.street`, { required: true })}/>
 				</Localized>
 				<Localized id="hotel-booking-form-city" attrs={{ label: true, placeholder: true }}>
-					<TextField label="City" placeholder="Zootopia" gridSpan={7} {...register(`guests.${i}.city`)}/>
+					<TextField label="City" placeholder="Zootopia" gridSpan={7} {...register(`guests.${i}.city`, { required: true })}/>
 				</Localized>
 				<Localized id="hotel-booking-form-postal-code" attrs={{ label: true, placeholder: true }}>
-					<TextField label="Postal code (ZIP)" placeholder="8888" gridSpan={3} {...register(`guests.${i}.postalCode`)}/>
+					<TextField label="Postal code (ZIP)" placeholder="8888" gridSpan={3} {...register(`guests.${i}.postalCode`, { required: true })}/>
 				</Localized>
 				<Localized id="hotel-booking-form-state-or-province" attrs={{ label: true, placeholder: true }}>
-					<TextField label="State / Province" placeholder="Fur Valley" gridSpan={5} {...register(`guests.${i}.stateOrProvince`)}/>
+					<TextField label="State / Province" placeholder="Fur Valley" gridSpan={5} {...register(`guests.${i}.stateOrProvince`, { required: true })}/>
 				</Localized>
 				<Localized id="hotel-booking-form-country" attrs={{ label: true, placeholder: true }}>
-					<TextField label="Country" placeholder="Germany" gridSpan={5} {...register(`guests.${i}.country`)}/>
+					<TextField label="Country" placeholder="Germany" gridSpan={5} {...register(`guests.${i}.country`, { required: true })}/>
 				</Localized>
 			</Fragment>)}
 		</Form>
