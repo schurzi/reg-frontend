@@ -79,7 +79,6 @@ const getBadgeName = (personalInfo: PersonalInfo) => {
 		case 'nickname': return personalInfo.nickname
 		case 'legal-name': return `${personalInfo.firstName} ${personalInfo.lastName}`
 		case 'legal-name-and-nickname': return `${personalInfo.firstName} "${personalInfo.nickname}" ${personalInfo.lastName}`
-		default: return 'huh?'
 	}
 }
 
@@ -105,7 +104,7 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 			{ id: 'wheelchair-accomodation', value: l10n.getString('register-summary-section-personal-property-wheelchair-accomodation-value', { value: personalInfo.wheelchair.toString() }) },
 			{ id: 'badge-name', wide: true, value: getBadgeName(personalInfo) },
 			{ id: 'spoken-languages', wide: true, value: personalInfo.spokenLanguages.map(langKey => langmap[langKey].nativeName).join(', ') },
-		]} />
+		]}/>
 		<Section id="contact" properties={[
 			{ id: 'email', value: contactInfo.email },
 			{ id: 'phone-number', value: contactInfo.phoneNumber },
@@ -114,11 +113,11 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 			{ id: 'postal-code', value: contactInfo.postalCode },
 			{ id: 'state-or-province', value: contactInfo.stateOrProvince },
 			{ id: 'country', value: contactInfo.country },
-		]} />
+		]}/>
 		<Section id="optional" properties={[
 			{ id: 'notifications', wide: true, value: notificationNames },
 			{ id: 'comments', wide: true, value: optionalInfo.comments },
-		]} />
+		]}/>
 	</WithInvoiceRegisterFunnelLayout>
 }
 
