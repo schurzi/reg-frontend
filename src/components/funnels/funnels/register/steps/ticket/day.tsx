@@ -16,11 +16,10 @@ const Grid = styled.div`
 `
 
 const TicketDay = (_: ReadonlyRouteComponentProps) => {
-	const { register, handleSubmit, formState: { errors } } = useFunnelForm<{ day: string }>('register-ticket-day', ChangeTicketDay, SubmitTicketDay)
+	const { register, handleSubmit } = useFunnelForm<{ day: string }>('register-ticket-day', ChangeTicketDay, SubmitTicketDay)
 
 	return <FullWidthRegisterFunnelLayout onNext={handleSubmit} currentStep={0}>
 		<form onSubmit={handleSubmit}>
-			<p>{errors.day?.message}</p>
 			<RadioGroup name="day">
 				<Grid>
 					{eachDayOfInterval({ start: config.eventStartDate, end: config.eventEndDate }).map(date =>
