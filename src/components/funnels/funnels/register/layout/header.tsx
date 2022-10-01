@@ -7,12 +7,11 @@
 import { WizardProgressBar } from '@eurofurence/reg-component-library'
 import { Localized, useLocalization } from '@fluent/react'
 import { range } from 'ramda'
+import { TOTAL_STEPS } from './constants'
 
 interface RegisterHeaderProps {
 	readonly currentStep: number
 }
-
-const TOTAL_STEPS = 6
 
 const RegisterHeader = ({ currentStep }: RegisterHeaderProps) => {
 	const { l10n } = useLocalization()
@@ -27,7 +26,7 @@ const RegisterHeader = ({ currentStep }: RegisterHeaderProps) => {
 				</p>
 			</Localized>
 		</>}
-		<WizardProgressBar steps={range(1, TOTAL_STEPS).map(step => l10n.getString('register-step-counter', { step }, `Step ${step}`))} currentStep={currentStep}/>
+		<WizardProgressBar steps={range(1, TOTAL_STEPS + 1).map(step => l10n.getString('register-step-counter', { step }, `Step ${step}`))} currentStep={currentStep}/>
 	</>
 }
 

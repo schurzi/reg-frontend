@@ -1,5 +1,3 @@
-hello = Hello world!
-
 header-dropdown-my-account = My account
 
 header-dropdown-language = Language
@@ -7,6 +5,8 @@ header-dropdown-language = Language
 register-navigation-back = Go back
 
 register-navigation-next = Continue
+
+register-navigation-finish = Finish
 
 register-ticket-day-card =
   .label = {DATETIME($date, day: "numeric", month: "long", year: "numeric")}
@@ -79,35 +79,64 @@ register-form-full-name-permission =
 register-form-name-on-badge =
   .legend = Name on badge
 
-register-form-name-on-badge-real-name =
-  .label = Real name
+register-form-name-on-badge-legal-name =
+  .label = Legal name
 
 register-form-name-on-badge-nickname =
   .label = Nickname
 
-register-form-name-on-badge-real-name-and-nickname =
-  .label = Real name + nickname
+register-form-name-on-badge-legal-name-and-nickname =
+  .label = Legal name + nickname
 
 register-form-gender =
   .legend = Gender
 
 register-form-gender-male =
-  .label = Male
+  .label = { -gender(gender: "male") }
 
 register-form-gender-female =
-  .label = Female
+  .label = { -gender(gender: "female") }
 
 register-form-gender-non-binary =
-  .label = Non-binary
+  .label = { -gender(gender: "non-binary") }
 
 register-form-gender-prefer-not-to-say =
-  .label = I prefer not to say
+  .label = { -gender(gender: "prefer-not-to-say") }
 
 register-form-accessibility =
   .legend = Accessibility
 
 register-form-accessibility-wheelchair =
   .label = Please accomodate my wheelchair (and me).
+
+register-summary-section-personal-title = Personal information
+
+register-summary-section-personal-property-nickname-name = Nickname
+register-summary-section-personal-property-full-name-name = Full name
+register-summary-section-personal-property-gender-name = Gender
+register-summary-section-personal-property-badge-name-name = You will be known as
+register-summary-section-personal-property-spoken-languages-name = Spoken language(s)
+register-summary-section-personal-property-wheelchair-accomodation-name = Wheelchair accomodation
+register-summary-section-contact-property-email-name = E-mail address
+register-summary-section-contact-property-phone-number-name = Phone number
+register-summary-section-contact-property-street-name = Street
+register-summary-section-contact-property-city-name = City
+register-summary-section-contact-property-postal-code-name = Postal code
+register-summary-section-contact-property-state-or-province-name = State / Province
+register-summary-section-contact-property-country-name = Country
+register-summary-section-optional-property-notifications-name = I would like to receive event information and announcements about
+register-summary-section-optional-property-comments-name = Comments
+
+register-summary-section-personal-property-wheelchair-accomodation-value = { $value ->
+  [true] Yes
+ *[false] No
+}
+
+register-summary-section-contact-title = Contact information
+
+register-summary-section-optional-title = Optional information
+
+register-summary-edit = Edit information
 
 register-invoice-layout =
   .invoiceTitle = Your registration
@@ -145,6 +174,27 @@ hotel-booking-room-card-deluxe-suite =
 price = {$price ->
    [0]     Free
   *[other] {NUMBER($price, minimumFractionDigits: 0)}
+}
+
+-gender = { $gender ->
+  [male]              Male
+  [female]            Female
+  [non-binary]        Non-binary
+ *[prefer-not-to-say] I prefer not to say
+}
+
+gender = { $gender ->
+  [male] { -gender(gender: "male") }
+  [female] { -gender(gender: "female") }
+  [non-binary] { -gender(gender: "non-binary") }
+ *[prefer-not-to-say] { -gender(gender: "prefer-not-to-say") }
+}
+
+notification-type = { $type ->
+  [art]        Art
+  [animation]  Animation
+  [music]      Music
+ *[fursuiting] Fursuiting
 }
 
 invoice-total-label = Total
