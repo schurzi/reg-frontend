@@ -4,6 +4,7 @@ import Ticket from '~/components/funnels/funnels/register/steps/ticket'
 import Personal from '~/components/funnels/funnels/register/steps/personal'
 import Contact from '~/components/funnels/funnels/register/steps/contact'
 import Optional from '~/components/funnels/funnels/register/steps/optional'
+import Summary from '~/components/funnels/funnels/register/steps/summary'
 import Room from '~/components/funnels/funnels/hotel-booking/steps/room'
 import Guests from '~/components/funnels/funnels/hotel-booking/steps/guests'
 import AdditionalInfo from '~/components/funnels/funnels/hotel-booking/steps/additional-info'
@@ -20,6 +21,7 @@ export const RegisterRouter = () =>
 		<Personal path={`/${ROUTES.REGISTER_PERSONAL}`} />
 		<Contact path={`/${ROUTES.REGISTER_CONTACT}`} />
 		<Optional path={`/${ROUTES.REGISTER_OPTIONAL}`} />
+		<Summary path={`/${ROUTES.REGISTER_SUMMARY}`} />
 	</Router>
 
 export const HotelBookingRouter = () =>

@@ -4,6 +4,7 @@
 
 import FullWidthFunnelLayout from '~/components/funnels/layout/full-width'
 import type { ReadonlyReactNode } from '~/util/readonly-types'
+import { TOTAL_STEPS } from '../constants'
 import RegisterHeader from '../header'
 
 export interface FullWidthRegisterFunnelLayoutProps {
@@ -16,6 +17,7 @@ const FullWidthRegisterFunnelLayout = ({ children, currentStep, onNext }: FullWi
 	<FullWidthFunnelLayout
 		header={<RegisterHeader currentStep={currentStep}/>}
 		isFirstPage={currentStep === 0}
+		isLastPage={currentStep === TOTAL_STEPS - 1}
 		onNext={onNext}
 	>
 		{children}
