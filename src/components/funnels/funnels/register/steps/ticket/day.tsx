@@ -20,6 +20,14 @@ const Grid = styled.div`
 	grid: auto-flow 1fr / repeat(3, 1fr);
 `
 
+const ConCat = styled.figure`
+	position: relative;
+`
+
+const ConCatImage = styled.img`
+	width: 100%;
+`
+
 const conCats = [conCatSunday, null, null, conCatWednesday, conCatThursday, conCatFriday, conCatSaturday]
 
 const TicketDay = (_: ReadonlyRouteComponentProps) => {
@@ -31,7 +39,9 @@ const TicketDay = (_: ReadonlyRouteComponentProps) => {
 				<Grid>
 					{eachDayOfInterval({ start: config.eventStartDate, end: config.eventEndDate }).map(date =>
 						<Localized id="register-ticket-day-card" key={formatISOWithOptions({ representation: 'date' }, date)} attrs={{ label: true }} vars={{ date }}>
-							<RadioCard label={date.toString()} value={formatISOWithOptions({ representation: 'date' }, date)} height="346px" image={conCats[getDay(date)]!} {...register('day')}/>
+							<RadioCard label={date.toString()} value={formatISOWithOptions({ representation: 'date' }, date)} {...register('day')}>
+								<ConCat><ConCatImage src={conCats[getDay(date)]!}/></ConCat>
+							</RadioCard>
 						</Localized>,
 					)}
 				</Grid>
