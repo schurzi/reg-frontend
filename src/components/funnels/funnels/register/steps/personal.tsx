@@ -47,14 +47,14 @@ const Personal = (_: ReadonlyRouteComponentProps) => {
 			</Localized>
 			<Localized id="register-form-name-on-badge" attrs={{ legend: true }}>
 				<RadioSet name="nameOnBadge" legend="Name on badge">
-					<Localized id="register-form-name-on-badge-real-name" attrs={{ label: true }}>
-						<RadioItem label="Real name" value="real-name" {...register('nameOnBadge', { required: true })}/>
+					<Localized id="register-form-name-on-badge-legal-name" attrs={{ label: true }}>
+						<RadioItem label="Real name" value="legal-name" {...register('nameOnBadge', { required: true })}/>
 					</Localized>
 					<Localized id="register-form-name-on-badge-nickname" attrs={{ label: true }}>
 						<RadioItem label="Nickname" value="nickname" {...register('nameOnBadge', { required: true })}/>
 					</Localized>
-					<Localized id="register-form-name-on-badge-real-name-and-nickname" attrs={{ label: true }}>
-						<RadioItem label="Real name + nickname" value="real-name-and-nickname" {...register('nameOnBadge', { required: true })}/>
+					<Localized id="register-form-name-on-badge-legal-name-and-nickname" attrs={{ label: true }}>
+						<RadioItem label="Real name + nickname" value="legal-name-and-nickname" {...register('nameOnBadge', { required: true })}/>
 					</Localized>
 				</RadioSet>
 			</Localized>

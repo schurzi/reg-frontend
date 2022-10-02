@@ -1,5 +1,5 @@
 import { combineEpics } from 'redux-observable'
-import { SubmitContactInfo, SubmitPersonalInfo, SubmitTicketDay, SubmitTicketLevel, SubmitTicketType } from '~/state/actions/register'
+import { SubmitContactInfo, SubmitOptionalInfo, SubmitPersonalInfo, SubmitTicketDay, SubmitTicketLevel, SubmitTicketType } from '~/state/actions/register'
 import { AnyAppAction, GetAction } from '~/state/actions'
 import { always } from 'ramda'
 import { AppState } from '~/state'
@@ -11,4 +11,5 @@ export default combineEpics<GetAction<AnyAppAction>, GetAction<AnyAppAction>, Ap
 	nextPage(SubmitTicketLevel, always('/register/personal-info')),
 	nextPage(SubmitPersonalInfo, always('/register/contact-info')),
 	nextPage(SubmitContactInfo, always('/register/optional-info')),
+	nextPage(SubmitOptionalInfo, always('/register/summary')),
 )
