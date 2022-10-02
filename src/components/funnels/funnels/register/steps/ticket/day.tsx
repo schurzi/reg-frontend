@@ -16,7 +16,7 @@ const Grid = styled.div`
 `
 
 const TicketDay = (_: ReadonlyRouteComponentProps) => {
-	const { register, handleSubmit } = useFunnelForm<{ day: string }>(ChangeTicketDay, SubmitTicketDay)
+	const { register, handleSubmit } = useFunnelForm<{ day: string }>('register-ticket-day', ChangeTicketDay, SubmitTicketDay)
 
 	return <FullWidthRegisterFunnelLayout onNext={handleSubmit} currentStep={0}>
 		<form onSubmit={handleSubmit}>
@@ -24,7 +24,7 @@ const TicketDay = (_: ReadonlyRouteComponentProps) => {
 				<Grid>
 					{eachDayOfInterval({ start: config.eventStartDate, end: config.eventEndDate }).map(date =>
 						<Localized id="register-ticket-day-card" key={formatISOWithOptions({ representation: 'date' }, date)} attrs={{ label: true }} vars={{ date }}>
-							<RadioCard label={date.toString()} value={formatISOWithOptions({ representation: 'date' }, date)} {...register('day')}/>
+							<RadioCard label={date.toString()} value={formatISOWithOptions({ representation: 'date' }, date)} {...register('day', { required: true })}/>
 						</Localized>,
 					)}
 				</Grid>
