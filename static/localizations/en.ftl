@@ -2,6 +2,17 @@ header-dropdown-my-account = My account
 
 header-dropdown-language = Language
 
+header-clock-component-months =
+  .caption = Months
+header-clock-component-days =
+  .caption = Days
+header-clock-component-hours =
+  .caption = Hours
+header-clock-component-minutes =
+  .caption = Minutes
+header-clock-component-seconds =
+  .caption = Seconds
+
 register-navigation-back = Go back
 
 register-navigation-next = Continue
