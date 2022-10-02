@@ -6,6 +6,8 @@ import { useAppSelector } from '~/hooks/redux'
 import { PersonalInfo } from '~/state/models/register'
 import { getContactInfo, getOptionalInfo, getPersonalInfo } from '~/state/selectors/register'
 import langmap from 'langmap'
+import { Link } from 'gatsby'
+import { css } from '@emotion/react'
 
 interface PropertyDefinition {
 	readonly id: string
@@ -15,6 +17,7 @@ interface PropertyDefinition {
 
 interface SectionProps {
 	readonly id: string
+	readonly editLink: string
 	readonly properties: readonly PropertyDefinition[]
 }
 
@@ -36,7 +39,7 @@ const SectionTitle = styled.h4`
 	grid-area: title;
 `
 
-const EditButton = styled.a`
+const editButtonStyle = css`
 	grid-area: edit;
 `
 
@@ -63,9 +66,9 @@ const PropertyName = styled.dt`
 const PropertyDescription = styled.dd`
 `
 
-const Section = ({ id: sectionId, properties }: SectionProps) => <SectionContainer>
+const Section = ({ id: sectionId, editLink, properties }: SectionProps) => <SectionContainer>
 	<Localized id={`register-summary-section-${sectionId}-title`}><SectionTitle>{sectionId}</SectionTitle></Localized>
-	<Localized id="register-summary-edit"><EditButton>Edit information</EditButton></Localized>
+	<Localized id="register-summary-edit"><Link css={editButtonStyle} to={editLink}>Edit information</Link></Localized>
 	<PropertyList>
 		{properties.map(({ id, value, wide = false }) => <Property key={id} wide={wide}>
 			<Localized id={`register-summary-section-${sectionId}-property-${id}-name`}><PropertyName>{id}</PropertyName></Localized>
@@ -97,7 +100,7 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 	return <WithInvoiceRegisterFunnelLayout onNext={() => {}} currentStep={5}>
 		<Localized id="register-summary-title"><h3>Registration</h3></Localized>
 
-		<Section id="personal" properties={[
+		<Section id="personal" editLink="/register/personal-info" properties={[
 			{ id: 'nickname', value: personalInfo.nickname },
 			{ id: 'full-name', value: `${personalInfo.firstName} ${personalInfo.lastName}` },
 			{ id: 'gender', value: l10n.getString('gender', { gender: personalInfo.gender }, personalInfo.gender) },
@@ -105,7 +108,7 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 			{ id: 'badge-name', wide: true, value: getBadgeName(personalInfo) },
 			{ id: 'spoken-languages', wide: true, value: personalInfo.spokenLanguages.map(langKey => langmap[langKey].nativeName).join(', ') },
 		]}/>
-		<Section id="contact" properties={[
+		<Section id="contact" editLink="/register/contact-info" properties={[
 			{ id: 'email', value: contactInfo.email },
 			{ id: 'phone-number', value: contactInfo.phoneNumber },
 			{ id: 'street', wide: true, value: contactInfo.street },
@@ -114,7 +117,7 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 			{ id: 'state-or-province', value: contactInfo.stateOrProvince },
 			{ id: 'country', value: contactInfo.country },
 		]}/>
-		<Section id="optional" properties={[
+		<Section id="optional" editLink="/register/optional-info" properties={[
 			{ id: 'notifications', wide: true, value: notificationNames },
 			{ id: 'comments', wide: true, value: optionalInfo.comments },
 		]}/>
