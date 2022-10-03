@@ -9,10 +9,10 @@ import { useFunnelForm } from '~/hooks/funnels/form'
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 
 const AdditionalInfo = (_: ReadonlyRouteComponentProps) => {
-	const { register, handleSubmit } = useFunnelForm<AdditionalInfoModel>(ChangeAdditionalInfo, SubmitAdditionalInfo)
+	const { register, handleSubmit } = useFunnelForm<AdditionalInfoModel>('hotel-booking-additional-info', ChangeAdditionalInfo, SubmitAdditionalInfo)
 
 	return <WithInvoiceHotelBookingFunnelLayout onNext={handleSubmit}>
-		<Localized id="hotel-booking-guests-title">
+		<Localized id="hotel-booking-additional-info-title">
 			<h3>Additional information</h3>
 		</Localized>
 		<Form onSubmit={handleSubmit}>

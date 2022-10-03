@@ -5,10 +5,11 @@ import DeluxeSuiteImage from '~/images/rooms/suite_deluxe.inline.svg'
 
 export default {
 	eventName: 'Eurofurence',
-	registrationLaunch: new Date('2022-01-21T12:30:23+02:00'),
-	registrationExpirationDate: new Date('2022-01-31'),
-	eventStartDate: new Date('2022-08-24'),
-	eventEndDate: new Date('2022-08-28'),
+	registrationLaunch: new Date('2023-01-21T12:30:23+02:00'),
+	registrationExpirationDate: new Date('2023-01-31'),
+	hotelBookingLaunch: new Date('2023-01-28T12:30:23+02:00'),
+	eventStartDate: new Date('2023-08-02'),
+	eventEndDate: new Date('2023-08-06'),
 	stagePassPrice: 5,
 	tshirtPrice: 20,
 	tshirtSizes: ['S', 'M', 'L', 'XL', 'XXL'],

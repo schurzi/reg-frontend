@@ -12,6 +12,7 @@ export interface WithInvoiceFunnelLayoutProps {
 	readonly header?: ReadonlyReactNode
 	readonly children: ReadonlyReactNode
 	readonly isFirstPage?: boolean
+	readonly isLastPage?: boolean
 	readonly invoiceTitle: string
 	readonly invoice: Invoice
 	readonly onNext: () => void

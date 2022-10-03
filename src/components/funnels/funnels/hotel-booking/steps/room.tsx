@@ -23,7 +23,7 @@ const RoomGrid = styled.section`
 `
 
 const Room = (_: ReadonlyRouteComponentProps) => {
-	const { register, handleSubmit } = useFunnelForm<RoomInfo>(ChangeRoomInfo, SubmitRoomInfo)
+	const { register, handleSubmit } = useFunnelForm<RoomInfo>('hotel-booking-room', ChangeRoomInfo, SubmitRoomInfo)
 
 	return <FullWidthHotelBookingFunnelLayout onNext={handleSubmit} isFirstPage>
 		<form onSubmit={handleSubmit}>
@@ -40,7 +40,7 @@ const Room = (_: ReadonlyRouteComponentProps) => {
 			<RoomSection>
 				<Localized id="hotel-booking-room-title"><h3>Room types</h3></Localized>
 				<RoomGrid>
-					<RadioGroup name="level">
+					<RadioGroup name="type">
 						{config.rooms.map(({ id, price, image }) =>
 							<Localized key={id} id={`hotel-booking-room-card-${id}`} attrs={{ label: true, priceLabel: true }}>
 								<RoomCard id={id} price={price} image={image} label="Room type" {...register('type')}>A room type</RoomCard>
