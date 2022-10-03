@@ -1,3 +1,8 @@
+import StandardRoomImage from '~/images/rooms/standard_room.inline.svg'
+import DeluxeRoomImage from '~/images/rooms/deluxe_room.inline.svg'
+import JuniorSuiteImage from '~/images/rooms/junior_suite.inline.svg'
+import DeluxeSuiteImage from '~/images/rooms/suite_deluxe.inline.svg'
+
 export default {
 	eventName: 'Eurofurence',
 	registrationLaunch: new Date('2023-01-21T12:30:23+02:00'),
@@ -32,9 +37,9 @@ export default {
 		},
 	],
 	rooms: [
-		{ id: 'standard', price: 140, image: 'standard_room.svg' },
-		{ id: 'deluxe', price: 160, image: 'deluxe_room.svg' },
-		{ id: 'junior-suite', price: 198, image: 'junior_suite.svg' },
-		{ id: 'deluxe-suite', price: 228, image: 'suite_deluxe.svg' },
+		{ id: 'standard', price: 140, image: StandardRoomImage },
+		{ id: 'deluxe', price: 160, image: DeluxeRoomImage },
+		{ id: 'junior-suite', price: 198, image: JuniorSuiteImage },
+		{ id: 'deluxe-suite', price: 228, image: DeluxeSuiteImage },
 	],
 } as const

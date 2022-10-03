@@ -7,7 +7,7 @@
   "dependencies": {
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
-    "@eurofurence/reg-component-library": "^0.0.1",
+    "@eurofurence/reg-component-library": "^0.0.4",
     "@fluent/bundle": "^0.17.0",
     "@fluent/react": "^0.14.0",
     "axios": "^0.24.0",
@@ -50,6 +50,7 @@
     "babel-preset-gatsby": "^2.2.0",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-promise": "^6.0.0",
+    "gatsby-plugin-react-svg": "^3.1.0",
     "ts-essentials": "^9.0.0",
     "typescript": "^4.5.2",
     "utility-types": "^3.10.0"

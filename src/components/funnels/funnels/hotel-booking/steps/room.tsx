@@ -43,7 +43,7 @@ const Room = (_: ReadonlyRouteComponentProps) => {
 					<RadioGroup name="type">
 						{config.rooms.map(({ id, price, image }) =>
 							<Localized key={id} id={`hotel-booking-room-card-${id}`} attrs={{ label: true, priceLabel: true }}>
-								<RoomCard id={id} price={price} image={`/images/rooms/${image}`} label="Room type" {...register('type')}>A room type</RoomCard>
+								<RoomCard id={id} price={price} image={image} label="Room type" {...register('type')}>A room type</RoomCard>
 							</Localized>,
 						)}
 					</RadioGroup>
