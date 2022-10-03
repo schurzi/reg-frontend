@@ -18,6 +18,14 @@ const TicketTypeGrid = styled.div`
 	}
 `
 
+const ConCat = styled.figure`
+	position: relative;
+`
+
+const ConCatImage = styled.img`
+	width: 100%;
+`
+
 const TicketType = (_: ReadonlyRouteComponentProps) => {
 	const { register, handleSubmit } = useFunnelForm<{ type: TicketTypeModel['type'] }>(ChangeTicketType, SubmitTicketType)
 
@@ -26,10 +34,14 @@ const TicketType = (_: ReadonlyRouteComponentProps) => {
 			<RadioGroup name="type">
 				<TicketTypeGrid>
 					<Localized id="register-ticket-type-day-label" attrs={{ label: true }}>
-						<RadioCard label="Day ticket" value="day" height="346px" image={conCatDay} {...register('type')}/>
+						<RadioCard label="Day ticket" value="day" {...register('type')}>
+							<ConCat><ConCatImage src={conCatDay}/></ConCat>
+						</RadioCard>
 					</Localized>
 					<Localized id="register-ticket-type-full-label" attrs={{ label: true }}>
-						<RadioCard label="Full convention" value="full" height="346px" image={conCatFull} {...register('type')}/>
+						<RadioCard label="Full convention" value="full" {...register('type')}>
+							<ConCat><ConCatImage src={conCatFull}/></ConCat>
+						</RadioCard>
 					</Localized>
 				</TicketTypeGrid>
 			</RadioGroup>
