@@ -3,7 +3,6 @@ import { Localized } from '@fluent/react'
 import { navigate } from '@reach/router'
 import { RadioGroup, RadioCard } from '@eurofurence/reg-component-library'
 import config from '~/config'
-import { ChangeTicketDay, SubmitTicketDay } from '~/state/actions/register'
 import { useFunnelForm } from '~/hooks/funnels/form'
 import FullWidthRegisterFunnelLayout from '~/components/funnels/funnels/register/layout/form/full-width'
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
@@ -31,7 +30,7 @@ const ConCatImage = styled.img`
 const conCats = [conCatSunday, null, null, conCatWednesday, conCatThursday, conCatFriday, conCatSaturday]
 
 const TicketDay = (_: ReadonlyRouteComponentProps) => {
-	const { register, handleSubmit } = useFunnelForm<{ day: string }>('register-ticket-day', ChangeTicketDay, SubmitTicketDay)
+	const { register, handleSubmit } = useFunnelForm('register-ticket-day')
 
 	return <FullWidthRegisterFunnelLayout onNext={handleSubmit} currentStep={0}>
 		<form onSubmit={handleSubmit}>

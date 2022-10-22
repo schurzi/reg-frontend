@@ -7,8 +7,6 @@ import config from '~/config'
 import TicketLevelCard from './level/card'
 import TicketLevelAddon from './level/addon'
 import FullWidthRegisterFunnelLayout from '~/components/funnels/funnels/register/layout/form/full-width'
-import { ChangeTicketLevel, SubmitTicketLevel } from '~/state/actions/register'
-import { TicketLevel as TicketLevelModel } from '~/state/models/register'
 import { useFunnelForm } from '~/hooks/funnels/form'
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 import { useAppSelector } from '~/hooks/redux'
@@ -35,7 +33,7 @@ const AddonsContainer = styled.section`
 
 const TicketLevel = (_: ReadonlyRouteComponentProps) => {
 	const ticketType = useAppSelector(getTicketType())!
-	const { register, control, handleSubmit, watch } = useFunnelForm<TicketLevelModel>('register-ticket-level', ChangeTicketLevel, SubmitTicketLevel)
+	const { register, control, handleSubmit, watch } = useFunnelForm('register-ticket-level')
 	const level = watch('level', 'standard')
 	const tshirtSelected = watch('addons.tshirt.selected')
 
@@ -85,7 +83,7 @@ const TicketLevel = (_: ReadonlyRouteComponentProps) => {
 										isSearchable={false}
 										options={sizes}
 										onChange={size => onChange(size?.value)}
-										value={sizesByValue.get(value)}
+										value={value === null ? null : sizesByValue.get(value)}
 										{...field}
 									/>
 								</Localized>

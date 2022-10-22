@@ -6,8 +6,6 @@ import { RadioGroup } from '@eurofurence/reg-component-library'
 import config from '~/config'
 import RoomCard from './room/card'
 import FullWidthHotelBookingFunnelLayout from '~/components/funnels/funnels/hotel-booking/layout/form/full-width'
-import { ChangeRoomInfo, SubmitRoomInfo } from '~/state/actions/hotel-booking'
-import { RoomInfo } from '~/state/models/hotel-booking'
 import { useFunnelForm } from '~/hooks/funnels/form'
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 
@@ -23,7 +21,7 @@ const RoomGrid = styled.section`
 `
 
 const Room = (_: ReadonlyRouteComponentProps) => {
-	const { register, handleSubmit } = useFunnelForm<RoomInfo>('hotel-booking-room', ChangeRoomInfo, SubmitRoomInfo)
+	const { register, handleSubmit } = useFunnelForm('hotel-booking-room')
 
 	return <FullWidthHotelBookingFunnelLayout onNext={handleSubmit} isFirstPage>
 		<form onSubmit={handleSubmit}>

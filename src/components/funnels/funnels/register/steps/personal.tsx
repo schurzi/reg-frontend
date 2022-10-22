@@ -2,9 +2,7 @@ import { Localized } from '@fluent/react'
 import { Controller } from 'react-hook-form'
 import { Checkbox, FieldSet, TextField, RadioSet, RadioItem, Select, Form } from '@eurofurence/reg-component-library'
 import WithInvoiceRegisterFunnelLayout from '~/components/funnels/funnels/register/layout/form/with-invoice'
-import { PersonalInfo } from '~/state/models/register'
 import langMap from 'langmap'
-import { ChangePersonalInfo, SubmitPersonalInfo } from '~/state/actions/register'
 import { pluck } from 'ramda'
 import { useFunnelForm } from '~/hooks/funnels/form'
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
@@ -17,7 +15,7 @@ const languageOptions = [...Object.entries(langMap)]
 const languageOptionsByValue = new Map(languageOptions.map(l => [l.value, l]))
 
 const Personal = (_: ReadonlyRouteComponentProps) => {
-	const { register, handleSubmit, control } = useFunnelForm<PersonalInfo>('register-personal', ChangePersonalInfo, SubmitPersonalInfo)
+	const { register, handleSubmit, control } = useFunnelForm('register-personal-info')
 
 	return <WithInvoiceRegisterFunnelLayout onNext={handleSubmit} currentStep={2}>
 		<Form onSubmit={handleSubmit}>
@@ -31,7 +29,7 @@ const Personal = (_: ReadonlyRouteComponentProps) => {
 						minLength: 1,
 						maxLength: 80,
 						validate: {
-							noLeadingOrTrailingWhitespace: v => v.trim() === v,
+							noLeadingOrTrailingWhitespace: v => v!.trim() === v,
 						},
 					})}
 				/>

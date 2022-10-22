@@ -2,8 +2,6 @@ import styled from '@emotion/styled'
 import { Localized } from '@fluent/react'
 import { RadioGroup, RadioCard } from '@eurofurence/reg-component-library'
 import FullWidthRegisterFunnelLayout from '~/components/funnels/funnels/register/layout/form/full-width'
-import { TicketType as TicketTypeModel } from '~/state/models/register'
-import { ChangeTicketType, SubmitTicketType } from '~/state/actions/register'
 import { useFunnelForm } from '~/hooks/funnels/form'
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 import conCatDay from '~/images/con-cats/ticket-types/day.png'
@@ -27,7 +25,7 @@ const ConCatImage = styled.img`
 `
 
 const TicketType = (_: ReadonlyRouteComponentProps) => {
-	const { register, handleSubmit } = useFunnelForm<{ type: TicketTypeModel['type'] }>('register-ticket-type', ChangeTicketType, SubmitTicketType)
+	const { register, handleSubmit } = useFunnelForm('register-ticket-type')
 
 	return <FullWidthRegisterFunnelLayout onNext={handleSubmit} currentStep={0}>
 		<form onSubmit={handleSubmit}>

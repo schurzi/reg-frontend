@@ -3,13 +3,11 @@
 import { Localized } from '@fluent/react'
 import { TextArea, Form } from '@eurofurence/reg-component-library'
 import WithInvoiceHotelBookingFunnelLayout from '~/components/funnels/funnels/hotel-booking/layout/form/with-invoice'
-import { ChangeAdditionalInfo, SubmitAdditionalInfo } from '~/state/actions/hotel-booking'
-import { AdditionalInfo as AdditionalInfoModel } from '~/state/models/hotel-booking'
 import { useFunnelForm } from '~/hooks/funnels/form'
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 
 const AdditionalInfo = (_: ReadonlyRouteComponentProps) => {
-	const { register, handleSubmit } = useFunnelForm<AdditionalInfoModel>('hotel-booking-additional-info', ChangeAdditionalInfo, SubmitAdditionalInfo)
+	const { register, handleSubmit } = useFunnelForm('hotel-booking-additional-info')
 
 	return <WithInvoiceHotelBookingFunnelLayout onNext={handleSubmit}>
 		<Localized id="hotel-booking-additional-info-title">

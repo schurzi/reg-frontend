@@ -1,13 +1,11 @@
 import { Localized } from '@fluent/react'
 import { Form, TextField } from '@eurofurence/reg-component-library'
 import WithInvoiceRegisterFunnelLayout from '~/components/funnels/funnels/register/layout/form/with-invoice'
-import { ChangeContactInfo, SubmitContactInfo } from '~/state/actions/register'
-import { ContactInfo } from '~/state/models/register'
 import { useFunnelForm } from '~/hooks/funnels/form'
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 
 const Contact = (_: ReadonlyRouteComponentProps) => {
-	const { register, handleSubmit } = useFunnelForm<ContactInfo>('register-contact', ChangeContactInfo, SubmitContactInfo)
+	const { register, handleSubmit } = useFunnelForm('register-contact-info')
 
 	return <WithInvoiceRegisterFunnelLayout onNext={handleSubmit} currentStep={3}>
 		<Form onSubmit={handleSubmit}>
