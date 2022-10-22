@@ -19,7 +19,7 @@ const Personal = (_: ReadonlyRouteComponentProps) => {
 
 	return <WithInvoiceRegisterFunnelLayout onNext={handleSubmit} currentStep={2}>
 		<Form onSubmit={handleSubmit}>
-			<Localized id="register-form-nickname" attrs={{ label: true, placeholder: true }}>
+			<Localized id="register-personal-info-nickname" attrs={{ label: true, placeholder: true }}>
 				<TextField
 					label="Nickname"
 					placeholder="Johnny_The_Sergal"
@@ -34,30 +34,30 @@ const Personal = (_: ReadonlyRouteComponentProps) => {
 					})}
 				/>
 			</Localized>
-			<Localized id="register-form-first-name" attrs={{ label: true, placeholder: true }}>
+			<Localized id="register-personal-info-first-name" attrs={{ label: true, placeholder: true }}>
 				<TextField label="First name" placeholder="John" gridSpan={5} {...register('firstName', { required: true })}/>
 			</Localized>
-			<Localized id="register-form-last-name" attrs={{ label: true, placeholder: true }}>
+			<Localized id="register-personal-info-last-name" attrs={{ label: true, placeholder: true }}>
 				<TextField label="Last name" placeholder="Doe" gridSpan={5} {...register('lastName', { required: true })}/>
 			</Localized>
-			<Localized id="register-form-full-name-permission" attrs={{ label: true }}>
+			<Localized id="register-personal-info-full-name-permission" attrs={{ label: true }}>
 				<Checkbox label="I grant permission to use my full name in Eurofurence related media." {...register('fullNamePermission')}/>
 			</Localized>
-			<Localized id="register-form-name-on-badge" attrs={{ legend: true }}>
+			<Localized id="register-personal-info-name-on-badge" attrs={{ legend: true }}>
 				<RadioSet name="nameOnBadge" legend="Name on badge">
-					<Localized id="register-form-name-on-badge-legal-name" attrs={{ label: true }}>
+					<Localized id="register-personal-info-name-on-badge-legal-name" attrs={{ label: true }}>
 						<RadioItem label="Real name" value="legal-name" {...register('nameOnBadge', { required: true })}/>
 					</Localized>
-					<Localized id="register-form-name-on-badge-nickname" attrs={{ label: true }}>
+					<Localized id="register-personal-info-name-on-badge-nickname" attrs={{ label: true }}>
 						<RadioItem label="Nickname" value="nickname" {...register('nameOnBadge', { required: true })}/>
 					</Localized>
-					<Localized id="register-form-name-on-badge-legal-name-and-nickname" attrs={{ label: true }}>
+					<Localized id="register-personal-info-name-on-badge-legal-name-and-nickname" attrs={{ label: true }}>
 						<RadioItem label="Real name + nickname" value="legal-name-and-nickname" {...register('nameOnBadge', { required: true })}/>
 					</Localized>
 				</RadioSet>
 			</Localized>
 			<Controller control={control} name="spokenLanguages" defaultValue={[]} rules={{ required: true }} render={({ field: { onChange, value, ref, ...field } }) =>
-				<Localized id="register-form-spoken-languages" attrs={{ label: true }}>
+				<Localized id="register-personal-info-spoken-languages" attrs={{ label: true }}>
 					<Select
 						label="Spoken languages"
 						isMulti={true}
@@ -68,25 +68,25 @@ const Personal = (_: ReadonlyRouteComponentProps) => {
 					/>
 				</Localized>
 			}/>
-			<Localized id="register-form-gender" attrs={{ legend: true }}>
+			<Localized id="register-personal-info-gender" attrs={{ legend: true }}>
 				<RadioSet name="gender" legend="Gender">
-					<Localized id="register-form-gender-male" attrs={{ label: true }}>
+					<Localized id="register-personal-info-gender-male" attrs={{ label: true }}>
 						<RadioItem label="Male" value="male" {...register('gender', { required: true })}/>
 					</Localized>
-					<Localized id="register-form-gender-female" attrs={{ label: true }}>
+					<Localized id="register-personal-info-gender-female" attrs={{ label: true }}>
 						<RadioItem label="Female" value="female" {...register('gender', { required: true })}/>
 					</Localized>
-					<Localized id="register-form-gender-non-binary" attrs={{ label: true }}>
+					<Localized id="register-personal-info-gender-non-binary" attrs={{ label: true }}>
 						<RadioItem label="Non-binary" value="non-binary" {...register('gender', { required: true })}/>
 					</Localized>
-					<Localized id="register-form-gender-prefer-not-to-say" attrs={{ label: true }}>
+					<Localized id="register-personal-info-gender-prefer-not-to-say" attrs={{ label: true }}>
 						<RadioItem label="I prefer not to say" value="prefer-not-to-say" defaultChecked {...register('gender', { required: true })}/>
 					</Localized>
 				</RadioSet>
 			</Localized>
-			<Localized id="register-form-accessibility" attrs={{ legend: true }}>
+			<Localized id="register-personal-info-accessibility" attrs={{ legend: true }}>
 				<FieldSet legend="Accessibility">
-					<Localized id="register-form-accessibility-wheelchair" attrs={{ label: true }}>
+					<Localized id="register-personal-info-accessibility-wheelchair" attrs={{ label: true }}>
 						<Checkbox label="Please accomodate my wheelchair (and me)." {...register('wheelchair')}/>
 					</Localized>
 				</FieldSet>

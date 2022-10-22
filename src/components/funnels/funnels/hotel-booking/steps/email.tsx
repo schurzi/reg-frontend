@@ -7,6 +7,7 @@ import FullWidthHotelBookingFunnelLayout from '~/components/funnels/funnels/hote
 import { GuestInfo } from '~/state/models/hotel-booking'
 import { useAppSelector } from '~/hooks/redux'
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
+import ReactMarkdown from 'react-markdown'
 
 const EmailContent = styled.dl`
 	display: grid;
@@ -71,11 +72,13 @@ const Email = (_: ReadonlyRouteComponentProps) => {
 			<h3>Copy your generated email</h3>
 		</Localized>
 		<Localized id="hotel-booking-email-description">
-			<>
-				<p>Once booking starts, the secret code in the message below will be revealed. <span className="important">You need this code for the hotel to accept your booking.</span></p>
-				<p>If you want, you can already copy the text below in a draft message in your email client so you only need to enter the secret code once it has been revealed.</p>
-				<p>The secret code will also be sent out on our <a>Twitter</a> and <a>Telegram</a> accounts.</p>
-			</>
+			<ReactMarkdown>
+				Once booking starts, the secret code in the message below will be revealed. You need this code for the hotel to accept your booking.
+
+				If you want, you can already copy the text below in a draft message in your email client so you only need to enter the secret code once it has been revealed.
+
+				The secret code will also be sent out on our [https://twitter.com/eurofurence](Twitter) and Telegram accounts.
+			</ReactMarkdown>
 		</Localized>
 		<Card>
 			<EmailContent>

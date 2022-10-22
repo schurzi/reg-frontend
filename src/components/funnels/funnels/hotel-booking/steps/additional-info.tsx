@@ -14,8 +14,8 @@ const AdditionalInfo = (_: ReadonlyRouteComponentProps) => {
 			<h3>Additional information</h3>
 		</Localized>
 		<Form onSubmit={handleSubmit}>
-			<Localized id="register-form-comments" attrs={{ label: true, placeholder: true }}>
-				<TextArea label="Comments" placeholder={'I would like to know more about ...'} {...register('comments')}/>
+			<Localized id="hotel-booking-additional-info-comments" attrs={{ label: true, placeholder: true }}>
+				<TextArea label="Comments" placeholder={'I would like to know more about...'} {...register('comments')}/>
 			</Localized>
 		</Form>
 	</WithInvoiceHotelBookingFunnelLayout>

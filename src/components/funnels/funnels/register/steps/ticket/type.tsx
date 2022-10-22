@@ -31,12 +31,12 @@ const TicketType = (_: ReadonlyRouteComponentProps) => {
 		<form onSubmit={handleSubmit}>
 			<RadioGroup name="type">
 				<TicketTypeGrid>
-					<Localized id="register-ticket-type-day-label" attrs={{ label: true }}>
+					<Localized id="register-ticket-type-day" attrs={{ label: true }}>
 						<RadioCard label="Day ticket" value="day" {...register('type', { required: true })}>
 							<ConCat><ConCatImage src={conCatDay}/></ConCat>
 						</RadioCard>
 					</Localized>
-					<Localized id="register-ticket-type-full-label" attrs={{ label: true }}>
+					<Localized id="register-ticket-type-full" attrs={{ label: true }}>
 						<RadioCard label="Full convention" value="full" {...register('type', { required: true })}>
 							<ConCat><ConCatImage src={conCatFull}/></ConCat>
 						</RadioCard>
