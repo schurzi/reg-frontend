@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 import { Localized } from '@fluent/react'
 import { Card } from '@eurofurence/reg-component-library'
 import FullWidthHotelBookingFunnelLayout from '~/components/funnels/funnels/hotel-booking/layout/form/full-width'
-import { GuestInfo, GuestsInfo } from '~/state/models/hotel-booking'
+import { GuestInfo } from '~/state/models/hotel-booking'
 import { useAppSelector } from '~/hooks/redux'
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 
@@ -64,7 +64,7 @@ Kind regards,
 ${guests[0].firstName} ${guests[0].lastName}`
 
 const Email = (_: ReadonlyRouteComponentProps) => {
-	const { guests } = useAppSelector(({ hotelBooking: { guestsInfo } }) => guestsInfo as GuestsInfo)
+	const { guests } = useAppSelector(({ hotelBooking: { guestsInfo } }) => guestsInfo)!
 
 	return <FullWidthHotelBookingFunnelLayout onNext={() => {}}>
 		<Localized id="hotel-booking-email-title">
