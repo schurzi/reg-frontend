@@ -1,12 +1,13 @@
 import { ReactLocalization, useLocalization } from '@fluent/react'
 import { useEffect } from 'react'
-import { DeepPartial, useForm, FieldValues, RegisterOptions, FieldPath, FieldPathValue } from 'react-hook-form'
+import { useForm, FieldValues, RegisterOptions, FieldPath, FieldPathValue } from 'react-hook-form'
 import { DeepReadonly } from 'ts-essentials'
 import { mapObjIndexed } from 'ramda'
 import { paramCase } from 'change-case'
-import { useAppDispatch } from '~/hooks/redux'
-import { AnyAppAction } from '~/state/actions'
-import { AppActionBundle } from '~/state/actions/create-action'
+import { useAppDispatch, useAppSelector } from '~/hooks/redux'
+import { ChangeForm, SubmitForm } from '~/state/actions/forms'
+import { FormIds, FormValuesType } from '~/state/forms'
+import { getFormValues } from '~/state/selectors/forms'
 
 type LocalizedValidate<TFieldValue> = (value: TFieldValue) => boolean | Promise<boolean>
 
@@ -53,26 +54,27 @@ const localizeValidations = <TFieldValues extends FieldValues, TFieldName extend
  * when an input changes and `SubmitAction`s when the form is submitted to, so that this
  * boilerplate doesn't need to be repeated in every funnel page component.
  */
-export const useFunnelForm = <
-	T extends FieldValues,
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
->(l10nPrefix: string, ChangeAction: Extract<AnyAppAction, AppActionBundle<any, DeepPartial<T>>>, SubmitAction: Extract<AnyAppAction, AppActionBundle<any, T>>) => {
-	const { watch, handleSubmit, register, ...methods } = useForm<T>()
+export const useFunnelForm = <F extends FormIds>(id: F) => {
+	const formValues = useAppSelector(getFormValues(id))
+	const { watch, handleSubmit, register, ...methods } = useForm<FormValuesType<F>>({ defaultValues: formValues as never })
 	const dispatch = useAppDispatch()
 	const { l10n } = useLocalization()
 
 	useEffect(() => {
-		const subscription = watch(formData => dispatch(ChangeAction.create(formData)))
+		const subscription = watch(formData => dispatch(ChangeForm(id).create(formData as never)))
 
 		return () => subscription.unsubscribe()
 	})
 
+	const newRegister = <
+		TFieldName extends FieldPath<FormValuesType<F>> = FieldPath<FormValuesType<F>>
 	// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
-	const newRegister = <TFieldName extends FieldPath<T> = FieldPath<T>>(name: TFieldName, options?: LocalizedRegisterOptions<T, TFieldName>) =>
-		register(name, localizeValidations(l10n, l10nPrefix, name, options))
+	>(name: TFieldName, options?: LocalizedRegisterOptions<FormValuesType<F>, TFieldName>) =>
+		register(name, localizeValidations(l10n, id, name, options))
 
 	return {
-		handleSubmit: handleSubmit(formData => dispatch(SubmitAction.create(formData))),
+		handleSubmit: handleSubmit(formData => dispatch(SubmitForm(id).create(formData as never))),
 		watch,
 		register: newRegister,
 		...methods,

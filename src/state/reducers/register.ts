@@ -1,33 +1,31 @@
 import { ContactInfo, OptionalInfo, PersonalInfo, TicketLevel, TicketType } from '~/state/models/register'
 import { AnyAppAction, GetAction } from '~/state/actions'
-import { SubmitTicketType, SubmitTicketDay, ChangeTicketLevel, ChangeContactInfo, ChangeOptionalInfo, ChangePersonalInfo } from '~/state/actions/register'
-import { LoadAutosaveData } from '~/state/actions/autosave'
-import type { DeepPartial } from 'ts-essentials'
+import type { DeepNonNullable } from 'ts-essentials'
+import { SubmitForm } from '../actions/forms'
+import autosaveData from '~/state/autosave'
 
 export interface RegisterState {
-	readonly ticketType?: DeepPartial<TicketType>
-	readonly ticketLevel?: DeepPartial<TicketLevel>
-	readonly contactInfo?: DeepPartial<ContactInfo>
-	readonly optionalInfo?: DeepPartial<OptionalInfo>
-	readonly personalInfo?: DeepPartial<PersonalInfo>
+	readonly ticketType?: TicketType
+	readonly ticketLevel?: TicketLevel
+	readonly contactInfo?: ContactInfo
+	readonly optionalInfo?: OptionalInfo
+	readonly personalInfo?: PersonalInfo
 }
 
-export default (state: RegisterState = {}, action: GetAction<AnyAppAction>): RegisterState => {
+export default (state: RegisterState = autosaveData?.register ?? {}, action: GetAction<AnyAppAction>): RegisterState => {
 	switch (action.type) {
-		case SubmitTicketType.type:
-			return action.payload.type === 'day' ? state : { ...state, ticketType: action.payload }
-		case SubmitTicketDay.type:
-			return { ...state, ticketType: { type: 'day', day: action.payload.day } }
-		case ChangeTicketLevel.type:
-			return { ...state, ticketLevel: action.payload }
-		case ChangeContactInfo.type:
-			return { ...state, contactInfo: action.payload }
-		case ChangeOptionalInfo.type:
-			return { ...state, optionalInfo: action.payload }
-		case ChangePersonalInfo.type:
-			return { ...state, personalInfo: action.payload }
-		case LoadAutosaveData.type:
-			return action.payload.register
+		case SubmitForm('register-ticket-type').type:
+			return action.payload.type === 'day' ? state : { ...state, ticketType: { type: action.payload.type! } }
+		case SubmitForm('register-ticket-day').type:
+			return { ...state, ticketType: { type: 'day', day: action.payload.day! } }
+		case SubmitForm('register-ticket-level').type:
+			return { ...state, ticketLevel: action.payload as DeepNonNullable<typeof action.payload> }
+		case SubmitForm('register-contact-info').type:
+			return { ...state, contactInfo: action.payload as DeepNonNullable<typeof action.payload> }
+		case SubmitForm('register-optional-info').type:
+			return { ...state, optionalInfo: action.payload as DeepNonNullable<typeof action.payload> }
+		case SubmitForm('register-personal-info').type:
+			return { ...state, personalInfo: action.payload as DeepNonNullable<typeof action.payload> }
 		default:
 			return state
 	}

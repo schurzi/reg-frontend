@@ -2,13 +2,12 @@ import { createSelector } from 'reselect'
 import config from '~/config'
 import { AppState } from '..'
 import { buildInvoice, UncalculatedInvoiceItem } from '../models/invoice'
-import { TicketType, TicketLevel, PersonalInfo, ContactInfo, OptionalInfo } from '../models/register'
 
-export const getTicketType = () => (s: AppState) => s.register.ticketType as TicketType | undefined
-export const getTicketLevel = () => (s: AppState) => s.register.ticketLevel as TicketLevel | undefined
-export const getPersonalInfo = () => (s: AppState) => s.register.personalInfo as PersonalInfo | undefined
-export const getContactInfo = () => (s: AppState) => s.register.contactInfo as ContactInfo | undefined
-export const getOptionalInfo = () => (s: AppState) => s.register.optionalInfo as OptionalInfo | undefined
+export const getTicketType = () => (s: AppState) => s.register.ticketType
+export const getTicketLevel = () => (s: AppState) => s.register.ticketLevel
+export const getPersonalInfo = () => (s: AppState) => s.register.personalInfo
+export const getContactInfo = () => (s: AppState) => s.register.contactInfo
+export const getOptionalInfo = () => (s: AppState) => s.register.optionalInfo
 
 export const getInvoice = createSelector(getTicketType(), getTicketLevel(), (ticketType, ticketLevel) => {
 	if (ticketLevel === undefined || ticketType === undefined) {

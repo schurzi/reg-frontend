@@ -1,10 +1,8 @@
 import { AutosaveAction } from './autosave'
-import { HotelBookingAction } from './hotel-booking'
-import { RegisterAction } from './register'
+import { FormAction } from './forms'
 
 export type { GetAction } from './create-action'
 
-export type AnyAppAction
-	= AutosaveAction
-	| HotelBookingAction
-	| RegisterAction
+export type AnyAppAction =
+	| AutosaveAction
+	| FormAction
