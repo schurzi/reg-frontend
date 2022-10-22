@@ -128,39 +128,39 @@ register-form-accessibility =
 register-form-accessibility-wheelchair =
   .label = Please accomodate my wheelchair (and me).
 
-register-personal-validation-errors-nickname-required = Please provide a nickname.
+register-personal-info-validation-errors-nickname-required = Please provide a nickname.
 
-register-personal-validation-errors-nickname-pattern = Please avoid special characters.
+register-personal-info-validation-errors-nickname-pattern = Please avoid special characters.
 
-register-personal-validation-errors-nickname-min-length = Your nickname must be at least 1 character long.
+register-personal-info-validation-errors-nickname-min-length = Your nickname must be at least 1 character long.
 
-register-personal-validation-errors-nickname-max-length = Your nickname must be at most 80 characters long.
+register-personal-info-validation-errors-nickname-max-length = Your nickname must be at most 80 characters long.
 
-register-personal-validation-errors-nickname-validate-no-leading-or-trailing-whitespace = Please avoid leading or trailing whitespace.
+register-personal-info-validation-errors-nickname-validate-no-leading-or-trailing-whitespace = Please avoid leading or trailing whitespace.
 
-register-personal-validation-errors-first-name-required = Please provide a first name.
+register-personal-info-validation-errors-first-name-required = Please provide a first name.
 
-register-personal-validation-errors-last-name-required = Please provide a last name.
+register-personal-info-validation-errors-last-name-required = Please provide a last name.
 
-register-personal-validation-errors-name-on-badge-required = Please select which name you would like to have on your badge.
+register-personal-info-validation-errors-name-on-badge-required = Please select which name you would like to have on your badge.
 
-register-personal-validation-errors-spoken-languages-required = Please select your spoken languages.
+register-personal-info-validation-errors-spoken-languages-required = Please select your spoken languages.
 
-register-personal-validation-errors-gender-required = Please select your gender, or select "I prefer not to say" if you would rather not provide this information.
+register-personal-info-validation-errors-gender-required = Please select your gender, or select "I prefer not to say" if you would rather not provide this information.
 
-register-contact-validation-errors-email-required = Please provide an email address.
+register-contact-info-validation-errors-email-required = Please provide an email address.
 
-register-contact-validation-errors-phone-number-required = Please provide a phone number.
+register-contact-info-validation-errors-phone-number-required = Please provide a phone number.
 
-register-contact-validation-errors-street-required = Please provide a street.
+register-contact-info-validation-errors-street-required = Please provide a street.
 
-register-contact-validation-errors-city-required = Please provide a city.
+register-contact-info-validation-errors-city-required = Please provide a city.
 
-register-contact-validation-errors-postal-code-required = Please provide a postal code.
+register-contact-info-validation-errors-postal-code-required = Please provide a postal code.
 
-register-contact-validation-errors-state-or-province-required = Please provide a state or province.
+register-contact-info-validation-errors-state-or-province-required = Please provide a state or province.
 
-register-contact-validation-errors-country-required = Please provide a country.
+register-contact-info-validation-errors-country-required = Please provide a country.
 
 register-summary-section-personal-title = Personal information
 
