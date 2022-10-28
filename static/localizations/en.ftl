@@ -304,6 +304,16 @@ register-summary-section-personal-property-wheelchair-accomodation-value = { $va
 
 
 
+# Register thank you page
+register-thank-you-title = Thank you for your registration
+register-thank-you-subtitle = Next steps
+register-thank-you-content =
+  We'll review your registration and send you a response within a week or two.
+  You'll receive a confirmation after we've processed and approved your registration.
+
+
+
+
 
 # Common hotel booking messages
 hotel-booking-header-title = Welcome to Eurofurence 2022!

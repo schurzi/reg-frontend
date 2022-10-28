@@ -3,6 +3,7 @@ import config from '~/config'
 import { AppState } from '..'
 import { buildInvoice, UncalculatedInvoiceItem } from '../models/invoice'
 
+export const getRegistrationInfo = () => (s: AppState) => s.register
 export const getTicketType = () => (s: AppState) => s.register.ticketType
 export const getTicketLevel = () => (s: AppState) => s.register.ticketLevel
 export const getPersonalInfo = () => (s: AppState) => s.register.personalInfo

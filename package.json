@@ -7,7 +7,7 @@
   "dependencies": {
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
-    "@eurofurence/reg-component-library": "^0.0.4",
+    "@eurofurence/reg-component-library": "^0.0.5",
     "@fluent/bundle": "^0.17.0",
     "@fluent/react": "^0.14.0",
     "axios": "^0.24.0",
@@ -24,6 +24,7 @@
     "gatsby-plugin-sharp": "^4.2.0",
     "gatsby-source-filesystem": "^4.2.0",
     "gatsby-transformer-sharp": "^4.2.0",
+    "http-status-codes": "^2.2.0",
     "langmap": "0.0.16",
     "observable-hooks": "^4.1.2",
     "partial.lenses": "^14.17.0",

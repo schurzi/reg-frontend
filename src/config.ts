@@ -42,4 +42,12 @@ export default {
 		{ id: 'junior-suite', price: 198, image: JuniorSuiteImage },
 		{ id: 'deluxe-suite', price: 228, image: DeluxeSuiteImage },
 	],
+	apis: {
+		authsrv: {
+			url: 'https://regtest.eurofurence.org/test-a56k-dev/authsrv/v1',
+		},
+		attsrv: {
+			url: 'https://regtest.eurofurence.org/test-a56k-dev/attsrv/api/rest/v1',
+		},
+	},
 } as const

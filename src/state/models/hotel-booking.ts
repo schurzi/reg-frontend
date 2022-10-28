@@ -21,3 +21,9 @@ export type GuestsInfo = {
 export interface AdditionalInfo {
 	readonly comments: string
 }
+
+export interface HotelBookingInfo {
+	readonly roomInfo: RoomInfo
+	readonly guestsInfo: GuestsInfo
+	readonly additionalInfo: AdditionalInfo
+}

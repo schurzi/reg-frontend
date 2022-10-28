@@ -5,7 +5,7 @@
  */
 
 import styled from '@emotion/styled'
-import { Button } from '@eurofurence/reg-component-library'
+import { Button, Page } from '@eurofurence/reg-component-library'
 import { Localized } from '@fluent/react'
 import { navigate } from '@reach/router'
 import type { ReadonlyReactNode } from '~/util/readonly-types'
@@ -35,7 +35,9 @@ const CommonFunnelLayout = ({ children, header: headerContent, isFirstPage = fal
 	<header>
 		{headerContent}
 	</header>
-	{children}
+	<Page>
+		{children}
+	</Page>
 	<Footer>
 		<Nav>
 			<Localized id={isLastPage ? 'register-navigation-finish' : 'register-navigation-next'}><Button onClick={onNext}>Continue</Button></Localized>

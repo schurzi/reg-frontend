@@ -45,3 +45,11 @@ export interface PersonalInfo {
 	readonly gender: 'male' | 'female' | 'non-binary' | 'prefer-not-to-say'
 	readonly wheelchair: boolean
 }
+
+export interface RegistrationInfo {
+	readonly ticketType: TicketType
+	readonly ticketLevel: TicketLevel
+	readonly contactInfo: ContactInfo
+	readonly optionalInfo: OptionalInfo
+	readonly personalInfo: PersonalInfo
+}

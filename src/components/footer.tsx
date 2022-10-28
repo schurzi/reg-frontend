@@ -1,8 +1,8 @@
 import styled from '@emotion/styled'
 import { Localized } from '@fluent/react'
 import { Footer as CLFooter } from '@eurofurence/reg-component-library'
-import { useAppSelector } from '../hooks/redux'
-import { getLastSaved } from '../state/selectors/autosave'
+import { useAppSelector } from '~/hooks/redux'
+import { getLastSaved } from '~/state/selectors/autosave'
 
 const Links = styled.nav`
 	display: flex;
