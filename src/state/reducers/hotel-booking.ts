@@ -1,14 +1,10 @@
-import { RoomInfo, GuestsInfo, AdditionalInfo } from '~/state/models/hotel-booking'
+import { HotelBookingInfo } from '~/state/models/hotel-booking'
 import { AnyAppAction, GetAction } from '~/state/actions'
 import type { DeepNonNullable } from 'ts-essentials'
 import { SubmitForm } from '../actions/forms'
 import autosaveData from '~/state/autosave'
 
-export interface HotelBookingState {
-	readonly roomInfo?: RoomInfo
-	readonly guestsInfo?: GuestsInfo
-	readonly additionalInfo?: AdditionalInfo
-}
+export type HotelBookingState = Partial<HotelBookingInfo>
 
 export default (state: HotelBookingState = autosaveData?.hotelBooking ?? {}, action: GetAction<AnyAppAction>): HotelBookingState => {
 	switch (action.type) {

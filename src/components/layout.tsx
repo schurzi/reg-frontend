@@ -3,7 +3,6 @@ import { useObservable, useObservableState } from 'observable-hooks'
 
 import Header from './header'
 import Footer from './footer'
-import { Page } from '@eurofurence/reg-component-library'
 import '@eurofurence/reg-component-library/dist/index.css'
 import { loadLanguage, useCurrentLangKey } from '~/localization'
 import { from } from 'rxjs'
@@ -24,9 +23,7 @@ const Layout = ({ deadline, children }: LayoutProps) => {
 	return <LocalizationProvider l10n={localization}>
 		<>
 			<Header deadline={deadline}/>
-			<Page>
-				{children}
-			</Page>
+			{children}
 			<Footer/>
 		</>
 	</LocalizationProvider>

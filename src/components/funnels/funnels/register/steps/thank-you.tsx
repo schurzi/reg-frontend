@@ -1,0 +1,18 @@
+import { Localized } from '@fluent/react'
+import ReactMarkdown from 'react-markdown'
+import SplashFunnelLayout from '~/components/funnels/layout/splash'
+import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
+import conCat from '~/images/con-cats/thank-you.png'
+
+const ThankYou = (_: ReadonlyRouteComponentProps) => <SplashFunnelLayout image={conCat}>
+	<Localized id="register-thank-you-title"><h1>Thank you for your registration</h1></Localized>
+	<Localized id="register-thank-you-subtitle"><h2>Next steps</h2></Localized>
+	<Localized id="register-thank-you-content">
+		<ReactMarkdown>
+			You&apos;ll receive a confirmation after we&apos;ve processed and approved your registration.
+			We&apos;ll review your registration and send you a response within a week or two.
+		</ReactMarkdown>
+	</Localized>
+</SplashFunnelLayout>
+
+export default ThankYou

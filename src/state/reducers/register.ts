@@ -1,16 +1,10 @@
-import { ContactInfo, OptionalInfo, PersonalInfo, TicketLevel, TicketType } from '~/state/models/register'
+import { RegistrationInfo } from '~/state/models/register'
 import { AnyAppAction, GetAction } from '~/state/actions'
 import type { DeepNonNullable } from 'ts-essentials'
 import { SubmitForm } from '../actions/forms'
 import autosaveData from '~/state/autosave'
 
-export interface RegisterState {
-	readonly ticketType?: TicketType
-	readonly ticketLevel?: TicketLevel
-	readonly contactInfo?: ContactInfo
-	readonly optionalInfo?: OptionalInfo
-	readonly personalInfo?: PersonalInfo
-}
+export type RegisterState = Partial<RegistrationInfo>
 
 export default (state: RegisterState = autosaveData?.register ?? {}, action: GetAction<AnyAppAction>): RegisterState => {
 	switch (action.type) {
