@@ -36,7 +36,7 @@ const localizeValidations = <TFieldValues extends FieldValues, TFieldName extend
 	const localizedRule = <TFieldValue>(id: string, value: TFieldValue) => ({ value, message: getMessage(id) })
 
 	return {
-		...required === undefined || !required ? { } : { required: getMessage('required') },
+		...required === undefined ? { } : { required: required && getMessage('required') },
 		...min === undefined ? { } : { min: localizedRule('min', min) },
 		...max === undefined ? { } : { max: localizedRule('max', max) },
 		...minLength === undefined ? { } : { minLength: localizedRule('min-length', minLength) },
@@ -65,7 +65,7 @@ export const useFunnelForm = <F extends FormIds>(id: F) => {
 		const subscription = watch(formData => dispatch(ChangeForm(id).create(formData as never)))
 
 		return () => subscription.unsubscribe()
-	})
+	}, [watch])
 
 	const newRegister = <
 		TFieldName extends FieldPath<FormValuesType<F>> = FieldPath<FormValuesType<F>>

@@ -42,7 +42,7 @@ export interface PersonalInfo {
 	readonly fullNamePermission: boolean
 	readonly nameOnBadge: 'legal-name' | 'nickname' | 'legal-name-and-nickname'
 	readonly spokenLanguages: readonly string[]
-	readonly gender: 'male' | 'female' | 'non-binary' | 'prefer-not-to-say'
+	readonly pronouns: string
 	readonly wheelchair: boolean
 }
 

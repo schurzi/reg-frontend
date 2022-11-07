@@ -179,20 +179,23 @@ register-personal-info-name-on-badge-legal-name-and-nickname =
 register-personal-info-spoken-languages =
   .label = Spoken languages
 
-register-personal-info-gender =
-  .legend = Gender
+register-personal-info-pronouns =
+  .legend = Pronouns
 
-register-personal-info-gender-male =
-  .label = { -gender(gender: "male") }
+register-personal-info-pronouns-he-him =
+  .label = { -pronouns(pronouns: "he-him") }
 
-register-personal-info-gender-female =
-  .label = { -gender(gender: "female") }
+register-personal-info-pronouns-she-her =
+  .label = { -pronouns(pronouns: "she-her") }
 
-register-personal-info-gender-non-binary =
-  .label = { -gender(gender: "non-binary") }
+register-personal-info-pronouns-they-them =
+  .label = { -pronouns(pronouns: "they-them") }
 
-register-personal-info-gender-prefer-not-to-say =
-  .label = { -gender(gender: "prefer-not-to-say") }
+register-personal-info-pronouns-other =
+  .label = { -pronouns(pronouns: "other") }
+
+register-personal-info-pronouns-other-textfield =
+  .placeholder = Xe/Xem
 
 register-personal-info-accessibility =
   .legend = Accessibility
@@ -209,7 +212,7 @@ register-personal-info-validation-errors-first-name-required = Please provide a 
 register-personal-info-validation-errors-last-name-required = Please provide a last name.
 register-personal-info-validation-errors-name-on-badge-required = Please select which name you would like to have on your badge.
 register-personal-info-validation-errors-spoken-languages-required = Please select your spoken languages.
-register-personal-info-validation-errors-gender-required = Please select your gender, or select "I prefer not to say" if you would rather not provide this information.
+register-personal-info-validation-errors-pronouns-required = Please select your pronouns.
 
 
 
@@ -283,7 +286,7 @@ register-summary-edit = Edit information
 
 register-summary-section-personal-property-nickname-name = Nickname
 register-summary-section-personal-property-full-name-name = Full name
-register-summary-section-personal-property-gender-name = Gender
+register-summary-section-personal-property-pronouns-name = Pronouns
 register-summary-section-personal-property-badge-name-name = You will be known as
 register-summary-section-personal-property-spoken-languages-name = Spoken language(s)
 register-summary-section-personal-property-wheelchair-accomodation-name = Wheelchair accomodation
@@ -444,18 +447,18 @@ price = {$price ->
   *[other] {NUMBER($price, minimumFractionDigits: 0)}
 }
 
--gender = { $gender ->
-  [male]              Male
-  [female]            Female
-  [non-binary]        Non-binary
- *[prefer-not-to-say] I prefer not to say
+-pronouns = { $pronouns ->
+  [he-him]    He/Him
+  [she-her]   She/Her
+  [they-them] They/Them
+ *[other]     Other:
 }
 
-gender = { $gender ->
-  [male]              { -gender(gender: "male") }
-  [female]            { -gender(gender: "female") }
-  [non-binary]        { -gender(gender: "non-binary") }
- *[prefer-not-to-say] { -gender(gender: "prefer-not-to-say") }
+pronouns = { $pronouns ->
+  [he-him]    { -pronouns(pronouns: "he-him") }
+  [she-her]   { -pronouns(pronouns: "she-her") }
+  [they-them] { -pronouns(pronouns: "they-them") }
+ *[other]     { -pronouns(pronouns: "other") }
 }
 
 -notification-type = { $type ->

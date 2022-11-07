@@ -2,8 +2,8 @@ import type { DeepPartial } from 'ts-essentials'
 import { FormIds, FormValuesType } from '~/state/forms'
 import { AppActionBundle, createAction } from './create-action'
 
-type ChangeFormActionBundle<F extends FormIds> = F extends FormIds ? AppActionBundle<`[Form] Change form ${F}`, DeepPartial<FormValuesType<F>>> : never
-type SubmitFormActionBundle<F extends FormIds> = F extends FormIds ? AppActionBundle<`[Form] Submit form ${F}`, FormValuesType<F>> : never
+export type ChangeFormActionBundle<F extends FormIds> = F extends FormIds ? AppActionBundle<`[Form] Change form ${F}`, DeepPartial<FormValuesType<F>>> : never
+export type SubmitFormActionBundle<F extends FormIds> = F extends FormIds ? AppActionBundle<`[Form] Submit form ${F}`, FormValuesType<F>> : never
 
 export const ChangeForm = <F extends FormIds>(f: F): ChangeFormActionBundle<F> =>
 	createAction<DeepPartial<FormValuesType<F>>, `[Form] Change form ${F}`>(`[Form] Change form ${f}`) as never
