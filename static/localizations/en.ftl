@@ -182,21 +182,6 @@ register-personal-info-spoken-languages =
 register-personal-info-pronouns =
   .legend = Pronouns
 
-register-personal-info-pronouns-he-him =
-  .label = { -pronouns(pronouns: "he-him") }
-
-register-personal-info-pronouns-she-her =
-  .label = { -pronouns(pronouns: "she-her") }
-
-register-personal-info-pronouns-they-them =
-  .label = { -pronouns(pronouns: "they-them") }
-
-register-personal-info-pronouns-other =
-  .label = { -pronouns(pronouns: "other") }
-
-register-personal-info-pronouns-other-textfield =
-  .placeholder = Xe/Xem
-
 register-personal-info-accessibility =
   .legend = Accessibility
 
@@ -445,20 +430,6 @@ hotel-booking-email-description =
 price = {$price ->
    [0]     Free
   *[other] {NUMBER($price, minimumFractionDigits: 0)}
-}
-
--pronouns = { $pronouns ->
-  [he-him]    He/Him
-  [she-her]   She/Her
-  [they-them] They/Them
- *[other]     Other:
-}
-
-pronouns = { $pronouns ->
-  [he-him]    { -pronouns(pronouns: "he-him") }
-  [she-her]   { -pronouns(pronouns: "she-her") }
-  [they-them] { -pronouns(pronouns: "they-them") }
- *[other]     { -pronouns(pronouns: "other") }
 }
 
 -notification-type = { $type ->

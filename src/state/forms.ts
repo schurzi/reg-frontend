@@ -39,7 +39,7 @@ export const forms = {
 		},
 	}),
 	'register-personal-info': createForm<Omit<PersonalInfo, 'pronouns'> & {
-		readonly pronounsSelection: 'he-him' | 'she-her' | 'they-them' | 'other'
+		readonly pronounsSelection: 'He/Him' | 'She/Her' | 'They/Them' | 'other'
 		readonly pronounsOther: string
 	}>({
 		nickname: null,

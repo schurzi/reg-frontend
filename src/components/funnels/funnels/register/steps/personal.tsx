@@ -72,22 +72,12 @@ const Personal = (_: ReadonlyRouteComponentProps) => {
 			}/>
 			<Localized id="register-personal-info-pronouns" attrs={{ legend: true }}>
 				<RadioSet name="pronounsSelection" legend="Pronouns">
-					<Localized id="register-personal-info-pronouns-he-him" attrs={{ label: true }}>
-						<RadioItem label="He/Him" value="he-him" {...register('pronounsSelection', { required: true })}/>
-					</Localized>
-					<Localized id="register-personal-info-pronouns-she-her" attrs={{ label: true }}>
-						<RadioItem label="She/Her" value="she-her" {...register('pronounsSelection', { required: true })}/>
-					</Localized>
-					<Localized id="register-personal-info-pronouns-they-them" attrs={{ label: true }}>
-						<RadioItem label="They/Them" value="they-them" {...register('pronounsSelection', { required: true })}/>
-					</Localized>
-					<Localized id="register-personal-info-pronouns-other" attrs={{ label: true }}>
-						<RadioItem label="Other:" value="other" {...register('pronounsSelection', { required: true })}>
-							<Localized id="register-personal-info-pronouns-other-textfield" attrs={{ placeholder: true }}>
-								<TextField placeholder="Xe/Xem" {...register('pronounsOther', { required: pronounsSelection === 'other' })}/>
-							</Localized>
-						</RadioItem>
-					</Localized>
+					<RadioItem label="He/Him" value="He/Him" {...register('pronounsSelection', { required: true })}/>
+					<RadioItem label="She/Her" value="She/Her" {...register('pronounsSelection', { required: true })}/>
+					<RadioItem label="They/Them" value="They/Them" {...register('pronounsSelection', { required: true })}/>
+					<RadioItem label="Other:" value="other" {...register('pronounsSelection', { required: true })}>
+						<TextField placeholder="Xe/Xem" {...register('pronounsOther', { required: pronounsSelection === 'other' })}/>
+					</RadioItem>
 				</RadioSet>
 			</Localized>
 			<Localized id="register-personal-info-accessibility" attrs={{ legend: true }}>
