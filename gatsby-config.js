@@ -2,12 +2,14 @@ const path = require('path')
 
 module.exports = {
   siteMetadata: {
-    title: `Eurofurence Reg`,
+    title: `Eurofurence Registration`,
     description: `Eurofurence registration site.`,
     author: `Eurofurence`,
+		twitter: {
+			creator: '@eurofurence',
+		},
   },
   plugins: [
-    `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {

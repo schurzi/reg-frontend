@@ -4,8 +4,9 @@ import SEO from '~/components/seo'
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 import config from '~/config'
 
+export const Head = () => <SEO title="Hotel Booking" />
+
 const HotelBookingPage = (_: ReadonlyRouteComponentProps) => <Layout deadline={config.hotelBookingLaunch}>
-	<SEO title="Hotel Booking" />
 	{HotelBookingRouter()}
 </Layout>
 
