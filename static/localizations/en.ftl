@@ -201,12 +201,14 @@ register-personal-info-accessibility-wheelchair =
   .label = Please accomodate my wheelchair (and me).
 
 register-personal-info-validation-errors-nickname-required = Please provide a nickname.
-register-personal-info-validation-errors-nickname-pattern = Please avoid special characters.
-register-personal-info-validation-errors-nickname-min-length = Your nickname must be at least 1 character long.
-register-personal-info-validation-errors-nickname-max-length = Your nickname must be at most 80 characters long.
+register-personal-info-validation-errors-nickname-max-length = Your nickname may be at most {$limit} characters long.
 register-personal-info-validation-errors-nickname-validate-no-leading-or-trailing-whitespace = Please avoid leading or trailing whitespace.
+register-personal-info-validation-errors-nickname-validate-min-one-alphanumeric-char = Your nickname must contain at least 1 letter or number.
+register-personal-info-validation-errors-nickname-validate-max-two-non-alphanumeric-chars = Your nickname may contain at most 2 special characters.
 register-personal-info-validation-errors-first-name-required = Please provide a first name.
+register-personal-info-validation-errors-first-name-max-length = Your first name may be at most {$limit} characters long.
 register-personal-info-validation-errors-last-name-required = Please provide a last name.
+register-personal-info-validation-errors-last-name-max-length = Your last name may be at most {$limit} characters long.
 register-personal-info-validation-errors-name-on-badge-required = Please select which name you would like to have on your badge.
 register-personal-info-validation-errors-spoken-languages-required = Please select your spoken languages.
 register-personal-info-validation-errors-gender-required = Please select your gender, or select "I prefer not to say" if you would rather not provide this information.
@@ -243,12 +245,20 @@ register-contact-info-country =
   .placeholder = Germany
 
 register-contact-info-validation-errors-email-required = Please provide an email address.
+register-contact-info-validation-errors-email-max-length = Your email address may be at most {$limit} characters long.
+register-contact-info-validation-errors-email-pattern = Your email address must look like an email address.
 register-contact-info-validation-errors-phone-number-required = Please provide a phone number.
+register-contact-info-validation-errors-phone-number-max-length = Your phone number may be at most {$limit} characters long.
 register-contact-info-validation-errors-street-required = Please provide a street.
+register-contact-info-validation-errors-street-max-length = Your street name may be at most {$limit} characters long.
 register-contact-info-validation-errors-city-required = Please provide a city.
+register-contact-info-validation-errors-city-max-length = Your city name may be at most {$limit} characters long.
 register-contact-info-validation-errors-postal-code-required = Please provide a postal code.
+register-contact-info-validation-errors-postal-code-max-length = Your postal code may be at most {$limit} characters long.
 register-contact-info-validation-errors-state-or-province-required = Please provide a state or province.
+register-contact-info-validation-errors-state-or-province-max-length = Your street name may be at most {$limit} characters long.
 register-contact-info-validation-errors-country-required = Please provide a country.
+register-contact-info-validation-errors-country-max-length = Your street name may be at most {$limit} characters long.
 
 
 # Register optional info page
