@@ -105,7 +105,7 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 		<Section id="personal" editLink="/register/personal-info" properties={[
 			{ id: 'nickname', value: personalInfo.nickname },
 			{ id: 'full-name', value: `${personalInfo.firstName} ${personalInfo.lastName}` },
-			{ id: 'gender', value: l10n.getString('gender', { gender: personalInfo.gender }, personalInfo.gender) },
+			{ id: 'pronouns', value: l10n.getString('pronouns', { pronouns: personalInfo.pronouns }, personalInfo.pronouns) },
 			{ id: 'wheelchair-accomodation', value: l10n.getString('register-summary-section-personal-property-wheelchair-accomodation-value', { value: personalInfo.wheelchair.toString() }) },
 			{ id: 'badge-name', wide: true, value: getBadgeName(personalInfo) },
 			{ id: 'spoken-languages', wide: true, value: personalInfo.spokenLanguages.map(langKey => langmap[langKey].nativeName).join(', ') },
