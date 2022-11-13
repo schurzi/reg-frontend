@@ -1,10 +1,16 @@
 import { RegistrationInfo } from '~/state/models/register'
 import { AnyAppAction, GetAction } from '~/state/actions'
 import type { DeepNonNullable } from 'ts-essentials'
-import { SubmitForm } from '../actions/forms'
+import { SubmitForm, SubmitFormActionBundle } from '../actions/forms'
 import autosaveData from '~/state/autosave'
 
 export type RegisterState = Partial<RegistrationInfo>
+
+const transformPronouns = (payload: GetAction<SubmitFormActionBundle<'register-personal-info'>>['payload']) => {
+	const { pronounsSelection, pronounsOther, ...rest } = payload as DeepNonNullable<typeof payload>
+
+	return { pronouns: pronounsSelection === 'other' ? pronounsOther : pronounsSelection, ...rest }
+}
 
 export default (state: RegisterState = autosaveData?.register ?? {}, action: GetAction<AnyAppAction>): RegisterState => {
 	switch (action.type) {
@@ -19,7 +25,7 @@ export default (state: RegisterState = autosaveData?.register ?? {}, action: Get
 		case SubmitForm('register-optional-info').type:
 			return { ...state, optionalInfo: action.payload as DeepNonNullable<typeof action.payload> }
 		case SubmitForm('register-personal-info').type:
-			return { ...state, personalInfo: action.payload as DeepNonNullable<typeof action.payload> }
+			return { ...state, personalInfo: transformPronouns(action.payload) }
 		default:
 			return state
 	}
