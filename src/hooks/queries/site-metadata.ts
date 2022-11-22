@@ -4,6 +4,9 @@ export interface SiteMetadata {
 	readonly title: string
 	readonly description: string
 	readonly author: string
+	readonly twitter: {
+		readonly creator: string
+	}
 }
 
 /*
@@ -19,6 +22,9 @@ export const useSiteMetadata = () => {
 					title
 					description
 					author
+					twitter {
+						creator
+					}
 				}
 			}
 		}
