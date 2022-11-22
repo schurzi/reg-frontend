@@ -14,6 +14,9 @@ const languageOptions = [...Object.entries(langMap)]
 // Don't understand why react-select makes me do this manually but ok
 const languageOptionsByValue = new Map(languageOptions.map(l => [l.value, l]))
 
+const reAlphaNum = /[\p{Letter}\p{Number}]/ug
+const alphaNumCount = (s: string) => s.match(reAlphaNum)?.length ?? 0
+
 const Personal = (_: ReadonlyRouteComponentProps) => {
 	const { register, handleSubmit, control, watch } = useFunnelForm('register-personal-info')
 
@@ -27,20 +30,20 @@ const Personal = (_: ReadonlyRouteComponentProps) => {
 					placeholder="Johnny_The_Sergal"
 					{...register('nickname', {
 						required: true,
-						pattern: /^[\p{Letter}\p{Number}\p{Space_Separator}]+$/u,
-						minLength: 1,
 						maxLength: 80,
 						validate: {
 							noLeadingOrTrailingWhitespace: v => v!.trim() === v,
+							minOneAlphanumericChar: v => alphaNumCount(v!) > 0,
+							maxTwoNonAlphanumericChars: v => v!.length - alphaNumCount(v!) <= 2,
 						},
 					})}
 				/>
 			</Localized>
 			<Localized id="register-personal-info-first-name" attrs={{ label: true, placeholder: true }}>
-				<TextField label="First name" placeholder="John" gridSpan={5} {...register('firstName', { required: true })}/>
+				<TextField label="First name" placeholder="John" gridSpan={5} {...register('firstName', { required: true, maxLength: 80 })}/>
 			</Localized>
 			<Localized id="register-personal-info-last-name" attrs={{ label: true, placeholder: true }}>
-				<TextField label="Last name" placeholder="Doe" gridSpan={5} {...register('lastName', { required: true })}/>
+				<TextField label="Last name" placeholder="Doe" gridSpan={5} {...register('lastName', { required: true, maxLength: 80 })}/>
 			</Localized>
 			<Localized id="register-personal-info-full-name-permission" attrs={{ label: true }}>
 				<Checkbox label="I grant permission to use my full name in Eurofurence related media." {...register('fullNamePermission')}/>

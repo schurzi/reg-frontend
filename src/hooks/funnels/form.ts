@@ -2,12 +2,14 @@ import { ReactLocalization, useLocalization } from '@fluent/react'
 import { useEffect } from 'react'
 import { useForm, FieldValues, RegisterOptions, FieldPath, FieldPathValue } from 'react-hook-form'
 import { DeepReadonly } from 'ts-essentials'
+import type { DeepReadonly as DeepReadonlyForDate } from 'utility-types'
 import { mapObjIndexed } from 'ramda'
 import { paramCase } from 'change-case'
 import { useAppDispatch, useAppSelector } from '~/hooks/redux'
 import { ChangeForm, SubmitForm } from '~/state/actions/forms'
 import { FormIds, FormValuesType } from '~/state/forms'
 import { getFormValues } from '~/state/selectors/forms'
+import { FluentVariable } from '@fluent/bundle'
 
 type LocalizedValidate<TFieldValue> = (value: TFieldValue) => boolean | Promise<boolean>
 
@@ -28,12 +30,12 @@ const localizeValidations = <TFieldValues extends FieldValues, TFieldName extend
 	name: TFieldName,
 	{ required, min, max, minLength, maxLength, pattern, validate, ...rest }: LocalizedRegisterOptions<TFieldValues, TFieldName> = {},
 ): RegisterOptions<TFieldValues, TFieldName> => {
-	const getMessage = (rulename: string) =>
-		l10n.getString(`${prefix}-validation-errors-${name.split('.').filter(x => Number.isNaN(Number(x))).join('-')}-${rulename}`)
+	const getMessage = (rulename: string, args?: DeepReadonlyForDate<Record<string, FluentVariable>>) =>
+		l10n.getString(`${prefix}-validation-errors-${name.split('.').filter(x => Number.isNaN(Number(x))).join('-')}-${rulename}`, args)
 
 	// eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
 	const localizedValidate = <TFieldValue>(id: string, f: LocalizedValidate<TFieldValue>) => (value: TFieldValue) => f(value) || getMessage(id)
-	const localizedRule = <TFieldValue>(id: string, value: TFieldValue) => ({ value, message: getMessage(id) })
+	const localizedRule = <TFieldValue>(id: string, value: TFieldValue) => ({ value, message: getMessage(id, typeof value === 'number' ? { limit: value } : { }) })
 
 	return {
 		...required === undefined ? { } : { required: required && getMessage('required') },
