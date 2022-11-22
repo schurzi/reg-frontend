@@ -22,7 +22,7 @@ export const submitRegistration = (registrationInfo: RegistrationInfo) => ajax({
 		// telegram: "string",
 		birthday: '1995-02-15',
 		gender: 'notprovided',
-		pronouns: 'they/them',
+		pronouns: registrationInfo.personalInfo.pronouns,
 		tshirt_size: registrationInfo.ticketLevel.addons.tshirt.size,
 		options: Object
 			.entries(registrationInfo.optionalInfo.notifications)

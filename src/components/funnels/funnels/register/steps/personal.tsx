@@ -18,7 +18,9 @@ const reAlphaNum = /[\p{Letter}\p{Number}]/ug
 const alphaNumCount = (s: string) => s.match(reAlphaNum)?.length ?? 0
 
 const Personal = (_: ReadonlyRouteComponentProps) => {
-	const { register, handleSubmit, control } = useFunnelForm('register-personal-info')
+	const { register, handleSubmit, control, watch } = useFunnelForm('register-personal-info')
+
+	const pronounsSelection = watch('pronounsSelection')
 
 	return <WithInvoiceRegisterFunnelLayout onNext={handleSubmit} currentStep={2}>
 		<Form onSubmit={handleSubmit}>
@@ -59,7 +61,7 @@ const Personal = (_: ReadonlyRouteComponentProps) => {
 					</Localized>
 				</RadioSet>
 			</Localized>
-			<Controller control={control} name="spokenLanguages" defaultValue={[]} rules={{ required: true }} render={({ field: { onChange, value, ref, ...field } }) =>
+			<Controller control={control} name="spokenLanguages" rules={{ required: true }} render={({ field: { onChange, value, ref, ...field } }) =>
 				<Localized id="register-personal-info-spoken-languages" attrs={{ label: true }}>
 					<Select
 						label="Spoken languages"
@@ -71,20 +73,14 @@ const Personal = (_: ReadonlyRouteComponentProps) => {
 					/>
 				</Localized>
 			}/>
-			<Localized id="register-personal-info-gender" attrs={{ legend: true }}>
-				<RadioSet name="gender" legend="Gender">
-					<Localized id="register-personal-info-gender-male" attrs={{ label: true }}>
-						<RadioItem label="Male" value="male" {...register('gender', { required: true })}/>
-					</Localized>
-					<Localized id="register-personal-info-gender-female" attrs={{ label: true }}>
-						<RadioItem label="Female" value="female" {...register('gender', { required: true })}/>
-					</Localized>
-					<Localized id="register-personal-info-gender-non-binary" attrs={{ label: true }}>
-						<RadioItem label="Non-binary" value="non-binary" {...register('gender', { required: true })}/>
-					</Localized>
-					<Localized id="register-personal-info-gender-prefer-not-to-say" attrs={{ label: true }}>
-						<RadioItem label="I prefer not to say" value="prefer-not-to-say" defaultChecked {...register('gender', { required: true })}/>
-					</Localized>
+			<Localized id="register-personal-info-pronouns" attrs={{ legend: true }}>
+				<RadioSet name="pronounsSelection" legend="Pronouns">
+					<RadioItem label="He/Him" value="He/Him" {...register('pronounsSelection', { required: true })}/>
+					<RadioItem label="She/Her" value="She/Her" {...register('pronounsSelection', { required: true })}/>
+					<RadioItem label="They/Them" value="They/Them" {...register('pronounsSelection', { required: true })}/>
+					<RadioItem label="Other:" value="other" {...register('pronounsSelection', { required: true })}>
+						<TextField placeholder="Xe/Xem" {...register('pronounsOther', { required: pronounsSelection === 'other' })}/>
+					</RadioItem>
 				</RadioSet>
 			</Localized>
 			<Localized id="register-personal-info-accessibility" attrs={{ legend: true }}>
