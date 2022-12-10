@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { useMemo } from 'react'
-import { Localized } from '@fluent/react'
+import { Localized, useLocalization } from '@fluent/react'
 import { Controller } from 'react-hook-form'
 import { RadioGroup, Select } from '@eurofurence/reg-component-library'
 import config from '~/config'
@@ -36,12 +36,13 @@ const TicketLevel = (_: ReadonlyRouteComponentProps) => {
 	const { register, control, handleSubmit, watch } = useFunnelForm('register-ticket-level')
 	const level = watch('level', 'standard')
 	const tshirtSelected = watch('addons.tshirt.selected')
+	const { l10n } = useLocalization()
 
 	const { sizes, sizesByValue } = useMemo(() => {
-		const sizes = config.tshirtSizes.map(size => ({ value: size, label: size }))
+		const sizes = config.tshirtSizes.map(size => ({ value: size, label: l10n.getString('tshirt-size', { size }) }))
 
 		return { sizes, sizesByValue: new Map(sizes.map(size => [size.value, size])) }
-	}, [])
+	}, [l10n])
 
 	const expirationDate = config.registrationExpirationDate
 
