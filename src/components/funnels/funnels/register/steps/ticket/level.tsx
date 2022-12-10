@@ -19,8 +19,12 @@ const TicketLevelSection = styled.section`
 const TicketLevelGrid = styled.section`
 	display: grid;
 	gap: 20px;
-	grid: auto-flow 1fr / repeat(3, 1fr);
+	grid: auto-flow auto / 1fr;
 	margin-top: 2em;
+
+	@media (min-width: 1260px) {
+		grid: auto-flow 1fr / repeat(3, 1fr);
+	}
 `
 
 const AddonsSection = styled.section`

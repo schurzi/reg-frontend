@@ -16,7 +16,11 @@ import conCatSunday from '~/images/con-cats/days/sunday.png'
 const Grid = styled.div`
 	display: grid;
 	gap: 20px;
-	grid: auto-flow 1fr / repeat(3, 1fr);
+	grid: auto-flow 1fr / 1fr;
+
+	@media (min-width: 1260px) {
+		grid: auto-flow 1fr / repeat(3, 1fr);
+	}
 `
 
 const ConCat = styled.figure`

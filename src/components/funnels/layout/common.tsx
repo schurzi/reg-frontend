@@ -21,6 +21,12 @@ const Nav = styled.nav`
 	display: flex;
 	align-items: center;
 	column-gap: 22px;
+
+	@media not (min-width: 1260px) {
+		width: 100%;
+		flex-direction: column;
+		align-items: stretch;
+	}
 `
 
 export interface CommonFunnelLayoutProps {

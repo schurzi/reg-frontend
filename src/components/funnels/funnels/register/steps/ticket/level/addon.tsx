@@ -5,20 +5,26 @@ import ReactMarkdown from 'react-markdown'
 import Price from '~/components/funnels/price'
 import type { ReadonlyReactNode } from '~/util/readonly-types'
 
-export interface TicketLevelAddonProps extends CheckboxProps {
-	readonly label: string
+export type TicketLevelAddonProps = CheckboxProps & {
 	readonly description: string
 	readonly children?: ReadonlyReactNode
 	readonly price: number
 }
 
-const CheckboxWrapper = styled.section`
-	font-size: 2rem;
-`
-
 const Container = styled.section`
-	display: flex;
-	align-items: start;
+	display: grid;
+	grid: "label       price"       auto
+	      "description description" auto
+			"options     options"     auto
+	      / 1fr auto;
+
+	@media (min-width: 1260px) {
+		grid: "label       price"   auto
+		      "description options" auto
+		      / fit-content(60rem) auto;
+	}
+
+	gap: 1.6rem;
 
 	&:not(:first-child) {
 		margin-top: 6.4rem;
@@ -29,39 +35,39 @@ const Container = styled.section`
 	}
 `
 
-const DescriptionContainer = styled.section`
-	flex: 1;
+const CheckboxContainer = styled.section`
+	grid-area: label;
+	font-size: 2rem;
 `
 
 const Description = styled.section`
-	margin-top: 1.6rem;
-	max-width: 600px;
+	grid-area: description;
 `
 
 const PriceContainer = styled.section`
-	display: flex;
-	flex-direction: column;
-	align-items: end;
+	grid-area: price;
+	justify-self: end;
 `
 
 const OptionsContainer = styled.div`
-	width: 22rem;
+	grid-area: options;
+
+	@media (min-width: 1260px) {
+		justify-self: end;
+		width: 22rem;
+	}
 
 	font-family: Manrope;
 `
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 const TicketLevelAddon = forwardRef(({ children, price, description, ...rest }: TicketLevelAddonProps, ref: ForwardedRef<HTMLInputElement>) =>
 	<Container>
-		<DescriptionContainer>
-			<CheckboxWrapper><Checkbox ref={ref} {...rest}/></CheckboxWrapper>
-			<Description><ReactMarkdown>{description}</ReactMarkdown></Description>
-		</DescriptionContainer>
-		<PriceContainer>
-			<Price price={price}/>
-			<OptionsContainer>
-				{children}
-			</OptionsContainer>
-		</PriceContainer>
+		<CheckboxContainer><Checkbox ref={ref} {...rest}/></CheckboxContainer>
+		<Description><ReactMarkdown>{description}</ReactMarkdown></Description>
+		<PriceContainer><Price price={price}/></PriceContainer>
+		<OptionsContainer>
+			{children}
+		</OptionsContainer>
 	</Container>,
 )
 

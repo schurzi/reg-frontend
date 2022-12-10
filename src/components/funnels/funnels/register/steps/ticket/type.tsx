@@ -10,6 +10,7 @@ import conCatFull from '~/images/con-cats/ticket-types/full.png'
 const TicketTypeGrid = styled.div`
 	display: flex;
 	gap: 20px;
+	flex-wrap: wrap;
 
 	> * {
 		flex: 1;

@@ -13,6 +13,10 @@ import { Invoice as InvoiceModel } from '~/state/models/invoice'
 const InvoiceCard = styled(Card)`
 	grid-column: 10 / span 3;
 	align-self: start;
+
+	@media not (min-width: 1260px) {
+		display: none;
+	}
 `
 
 export interface InvoiceProps {
