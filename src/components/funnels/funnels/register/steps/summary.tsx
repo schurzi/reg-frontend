@@ -24,9 +24,17 @@ interface SectionProps {
 
 const SectionContainer = styled.section`
 	display: grid;
-	grid: "title title" auto
-	      "edit  props" auto
-	      / 273px auto;
+	grid: "title" auto
+	      "edit" auto
+			"spacer" 2em
+	      "props" auto
+	      / 1fr;
+
+	@media (min-width: 1260px) {
+		grid: "title title" auto
+		      "edit  props" auto
+		      / 273px auto;
+	}
 
 	&:not(:last-of-type) {
 		border-bottom: 1px solid var(--color-grays-200);
@@ -107,8 +115,8 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 			{ id: 'spoken-languages', wide: true, value: personalInfo.spokenLanguages.map(langKey => langmap[langKey].nativeName).join(', ') },
 		]}/>
 		<Section id="contact" editLink="/register/contact-info" properties={[
-			{ id: 'email', value: contactInfo.email },
-			{ id: 'phone-number', value: contactInfo.phoneNumber },
+			{ id: 'email', wide: true, value: contactInfo.email },
+			{ id: 'phone-number', wide: true, value: contactInfo.phoneNumber },
 			{ id: 'street', wide: true, value: contactInfo.street },
 			{ id: 'city', value: contactInfo.city },
 			{ id: 'postal-code', value: contactInfo.postalCode },

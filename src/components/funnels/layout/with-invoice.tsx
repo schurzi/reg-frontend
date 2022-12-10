@@ -21,13 +21,17 @@ export interface WithInvoiceFunnelLayoutProps {
 }
 
 const Grid = styled.div`
-	display: grid;
-	grid-template-columns: repeat(12, 1fr);
-	gap: 24px;
+	@media (min-width: 1260px) {
+		display: grid;
+		grid-template-columns: repeat(12, 1fr);
+		gap: 24px;
+	}
 `
 
 const GridConformer = styled.div`
-	grid-column: span 8;
+	@media (min-width: 1260px) {
+		grid-column: span 8;
+	}
 `
 
 const WithInvoiceFunnelLayout = ({ children, onNext, invoiceTitle, invoiceEditLink, invoice, onPay, ...passthroughProps }: WithInvoiceFunnelLayoutProps) =>

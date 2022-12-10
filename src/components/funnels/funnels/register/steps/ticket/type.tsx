@@ -9,6 +9,7 @@ import { StaticImage } from 'gatsby-plugin-image'
 const TicketTypeGrid = styled.div`
 	display: flex;
 	gap: 20px;
+	flex-wrap: wrap;
 
 	> * {
 		flex: 1;

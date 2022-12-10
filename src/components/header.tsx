@@ -68,8 +68,16 @@ const Header = ({ deadline }: HeaderProps) => {
 			{config.eventName}
 		</section>
 		<Clock deadline={deadline} />
-		<Dropdown><Localized id="header-dropdown-my-account">My account</Localized></Dropdown>
-		<Dropdown><Localized id="header-dropdown-language">Language</Localized></Dropdown>
+		<menu>
+			<li><Localized id="header-dropdown-my-account">My account</Localized></li>
+			<li>
+				<Localized id="header-dropdown-language">Language</Localized>
+				<menu>
+					<li>English</li>
+					<li>Deutsch</li>
+				</menu>
+			</li>
+		</menu>
 	</NavBar>
 }
 
