@@ -243,7 +243,6 @@ register-contact-info-validation-errors-city-required = Please provide a city.
 register-contact-info-validation-errors-city-max-length = Your city name may be at most {$limit} characters long.
 register-contact-info-validation-errors-postal-code-required = Please provide a postal code.
 register-contact-info-validation-errors-postal-code-max-length = Your postal code may be at most {$limit} characters long.
-register-contact-info-validation-errors-state-or-province-required = Please provide a state or province.
 register-contact-info-validation-errors-state-or-province-max-length = Your street name may be at most {$limit} characters long.
 register-contact-info-validation-errors-country-required = Please provide a country.
 register-contact-info-validation-errors-country-max-length = Your street name may be at most {$limit} characters long.
