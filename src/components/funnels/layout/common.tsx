@@ -29,9 +29,10 @@ export interface CommonFunnelLayoutProps {
 	readonly isFirstPage?: boolean
 	readonly isLastPage?: boolean
 	readonly onNext: () => void
+	readonly showBack?: boolean
 }
 
-const CommonFunnelLayout = ({ children, header: headerContent, isFirstPage = false, isLastPage = false, onNext }: CommonFunnelLayoutProps) => <Page>
+const CommonFunnelLayout = ({ children, header: headerContent, isFirstPage = false, isLastPage = false, onNext, showBack = false }: CommonFunnelLayoutProps) => <Page>
 	<header>
 		{headerContent}
 	</header>
@@ -39,7 +40,7 @@ const CommonFunnelLayout = ({ children, header: headerContent, isFirstPage = fal
 	<Footer>
 		<Nav>
 			<Localized id={isLastPage ? 'register-navigation-finish' : 'register-navigation-next'}><Button onClick={onNext}>Continue</Button></Localized>
-			{!isFirstPage ? <Localized id="register-navigation-back"><a onClick={() => navigate(-1)}>Go back</a></Localized> : null}
+			{!isFirstPage || showBack ? <Localized id="register-navigation-back"><a onClick={() => navigate(-1)}>Go back</a></Localized> : null}
 		</Nav>
 	</Footer>
 </Page>
