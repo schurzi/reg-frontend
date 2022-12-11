@@ -23,6 +23,10 @@ const Nav = styled.nav`
 	column-gap: 22px;
 `
 
+const Link = styled.a`
+	cursor: pointer;
+`
+
 export interface CommonFunnelLayoutProps {
 	readonly children: ReadonlyReactNode
 	readonly header?: ReadonlyReactNode
@@ -39,7 +43,7 @@ const CommonFunnelLayout = ({ children, header: headerContent, isFirstPage = fal
 	<Footer>
 		<Nav>
 			<Localized id={isLastPage ? 'register-navigation-finish' : 'register-navigation-next'}><Button onClick={onNext}>Continue</Button></Localized>
-			{!isFirstPage ? <Localized id="register-navigation-back"><a onClick={() => navigate(-1)}>Go back</a></Localized> : null}
+			{!isFirstPage ? <Localized id="register-navigation-back"><Link onClick={() => navigate(-1)}>Go back</Link></Localized> : null}
 		</Nav>
 	</Footer>
 </Page>
