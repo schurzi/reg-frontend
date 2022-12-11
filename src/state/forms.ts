@@ -55,6 +55,7 @@ export const forms = {
 	'register-contact-info': createForm<ContactInfo>({
 		email: null,
 		phoneNumber: null,
+		telegramUsername: null,
 		street: null,
 		city: null,
 		postalCode: null,

@@ -19,7 +19,7 @@ export const submitRegistration = (registrationInfo: RegistrationInfo) => ajax({
 		country_badge: registrationInfo.personalInfo.spokenLanguages[0].toUpperCase(),
 		email: registrationInfo.contactInfo.email,
 		phone: registrationInfo.contactInfo.phoneNumber,
-		// telegram: "string",
+		telegram: registrationInfo.contactInfo.telegramUsername,
 		birthday: '1995-02-15',
 		gender: 'notprovided',
 		pronouns: registrationInfo.personalInfo.pronouns,
