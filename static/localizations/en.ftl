@@ -84,9 +84,6 @@ register-ticket-day-card =
 
 register-ticket-day-validation-errors-day-required = Please select a day.
 
-register-change-ticket-type =
-  .label = Change ticket type
-
 
 
 # Register ticket level page
