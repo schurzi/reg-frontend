@@ -32,7 +32,7 @@ const conCats = [conCatSunday, null, null, conCatWednesday, conCatThursday, conC
 const TicketDay = (_: ReadonlyRouteComponentProps) => {
 	const { register, handleSubmit } = useFunnelForm('register-ticket-day')
 
-	return <FullWidthRegisterFunnelLayout onNext={handleSubmit} currentStep={0}>
+	return <FullWidthRegisterFunnelLayout onNext={handleSubmit} currentStep={0} showBack={true}>
 		<form onSubmit={handleSubmit}>
 			<RadioGroup name="day">
 				<Grid>
@@ -45,8 +45,6 @@ const TicketDay = (_: ReadonlyRouteComponentProps) => {
 					)}
 				</Grid>
 			</RadioGroup>
-			<br/>
-			<Localized id="register-change-ticket-type"><a onClick={() => navigate(-1)}>Change ticket type</a></Localized>
 		</form>
 	</FullWidthRegisterFunnelLayout>
 }
