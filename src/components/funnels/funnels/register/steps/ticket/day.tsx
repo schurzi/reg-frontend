@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
 import { Localized } from '@fluent/react'
-import { navigate } from '@reach/router'
 import { RadioGroup, RadioCard } from '@eurofurence/reg-component-library'
 import config from '~/config'
 import { useFunnelForm } from '~/hooks/funnels/form'
