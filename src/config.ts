@@ -43,7 +43,7 @@ export default {
 		{ id: 'deluxe-suite', price: 228, image: DeluxeSuiteImage },
 	],
 	apis: {
-		// TODO can we discover the base path so the URLs are correct even in the presence of a path prefix?
+		// can we discover the base path so the URLs are correct even in the presence of a path prefix?
 		authsrv: {
 			// this could be '/some-secret-prefix/authsrv', if our app is under '/some-secret-prefix/app' in the testing environment
 			url: '/authsrv/v1',

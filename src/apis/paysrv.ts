@@ -1,5 +1,6 @@
 import { ajax } from 'rxjs/ajax'
 import config from '~/config'
+/* eslint-disable camelcase */
 
 /*
  * GET /transactions obtains all visible payment/dues transaction for the provided badge number.
@@ -32,7 +33,8 @@ export const findTransactionsForBadgeNumber = (debitorId: bigint) => ajax({
  * usually type:payment, method:credit, status:tentative, a transaction id derived from the current timestamp and the
  * debitor id, etc.
  *
- * 400: assuming you sent a valid debitorId, means the current dues balance for this debitor is 0. They cannot pay anything. Usually this means, they have paid in a different session and you should reload their information.
+ * 400: assuming you sent a valid debitorId, means the current dues balance for this debitor is 0. They cannot pay anything.
+ *      Usually this means, they have paid in a different session and you should reload their information.
  * 401: the user's token has expired. You should redirect them to the auth start and have them return here once refreshed.
  * 404: No dues transactions for this debitor id exist. Maybe they have not been approved yet.
  * 409: This debitor already has an open payment link, please use that one.
