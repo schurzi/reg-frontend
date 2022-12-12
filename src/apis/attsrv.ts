@@ -2,9 +2,11 @@ import { ajax } from 'rxjs/ajax'
 import config from '~/config'
 /* eslint-disable camelcase */
 import { RegistrationInfo } from '~/state/models/register'
+import { AttendeeDto, AttendeeIdListDto, CountdownDto, ErrorDto } from '~/state/models/api'
 
-const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo) => {
+const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): AttendeeDto => {
 	return {
+		id: null, // not used when submitting attendee data, contains badge number when reading them
 		nickname: registrationInfo.personalInfo.nickname,
 		first_name: registrationInfo.personalInfo.firstName,
 		last_name: registrationInfo.personalInfo.lastName,
@@ -15,11 +17,14 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo) => 
 		country_badge: registrationInfo.personalInfo.spokenLanguages[0].toUpperCase(),
 		email: registrationInfo.contactInfo.email,
 		phone: registrationInfo.contactInfo.phoneNumber,
-		// telegram: "string",
+		telegram: registrationInfo.contactInfo.telegram,
+		partner: null, // unused by EF
+		state: registrationInfo.contactInfo.stateOrProvince, // optional, may be null
 		birthday: '1995-02-15',
 		gender: 'notprovided',
 		pronouns: registrationInfo.personalInfo.pronouns,
 		tshirt_size: registrationInfo.ticketLevel.addons.tshirt.size,
+		flags: 'hc,anon', // hc = wheelchair, anon = do not use name
 		options: Object
 			.entries(registrationInfo.optionalInfo.notifications)
 			.filter(([, enabled]) => enabled)
@@ -30,7 +35,7 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo) => 
 				fursuiting: 'suit',
 			}[id]))
 			.join(','),
-		packages: 'room-none,attendance,stage',
+		packages: 'room-none,attendance,stage', // the choices made regarding day guest/full, sponsorship etc.
 		user_comments: registrationInfo.optionalInfo.comments,
 	}
 }
@@ -51,7 +56,7 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo) => 
  *
  * This endpoint is optimized in the backend for high traffic, so it is safe to call during initial reg.
  */
-export const registrationCountdownCheck = () => ajax({
+export const registrationCountdownCheck = () => ajax<CountdownDto | ErrorDto>({
 	url: `${config.apis.attsrv.url}/countdown`,
 	method: 'GET',
 	crossDomain: true,
@@ -96,7 +101,7 @@ export const submitRegistration = (registrationInfo: RegistrationInfo) => ajax({
  *
  * This endpoint should be avoided during initial reg, as it entails a database select.
  */
-export const findMyRegistrations = () => ajax({
+export const findMyRegistrations = () => ajax<AttendeeIdListDto | ErrorDto>({
 	url: `${config.apis.attsrv.url}/attendees`,
 	method: 'GET',
 	crossDomain: true,
@@ -113,7 +118,7 @@ export const findMyRegistrations = () => ajax({
  * 401: The user's token has expired, and you need to redirect them to the auth start to refresh it.
  * 500: It is important to communicate the ErrorDto's requestid field to the user, so they can give it to us, so we can look in the logs.
  */
-export const loadRegistration = (id: bigint) => ajax({
+export const loadRegistration = (id: bigint) => ajax<AttendeeDto | ErrorDto>({
 	url: `${config.apis.attsrv.url}/attendees/${id}`,
 	method: 'GET',
 	crossDomain: true,

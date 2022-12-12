@@ -1,6 +1,45 @@
 import { ajax } from 'rxjs/ajax'
 import config from '~/config'
 /* eslint-disable camelcase */
+import { ErrorDto, Status, TransactionDto, TransactionResponseDto, TransactionType } from '~/state/models/api'
+
+/*
+ * use this after a successful call to findTransactionsForBadgeNumber to calculate the outstanding dues
+ *
+ * The payment service handles all currency amounts as integers in the currency's smallest denomination, for EUR this is cents.
+ */
+export const calculateOutstandingDues = (transactions: TransactionResponseDto): bigint => {
+	let duesCents: bigint = BigInt(0)
+	let paymentsCents: bigint = BigInt(0)
+
+	transactions.payload.forEach((transaction) => {
+		if (transaction.status === Status.valid) {
+			if (transaction.transaction_type === TransactionType.due) {
+				duesCents += transaction.amount.gross_cent
+			} else {
+				paymentsCents += transaction.amount.gross_cent
+			}
+		}
+	})
+
+	return duesCents - paymentsCents
+}
+
+/*
+ * use this after a successful call to findTransactionsForBadgeNumber to decide whether to display a
+ * warning about not paying twice while a payment is being processed.
+ *
+ * Should also not generate a new paylink while this is the case.
+ */
+export const hasUnprocessedPayments = (transactions: TransactionResponseDto): boolean => {
+	transactions.payload.forEach((transaction) => {
+		if (transaction.status === Status.pending && transaction.transaction_type === TransactionType.payment) {
+			return true // you have pending payments. Please wait while we manually process your payment. Do not pay twice!
+		}
+	})
+
+	return false
+}
 
 /*
  * GET /transactions obtains all visible payment/dues transaction for the provided badge number.
@@ -14,8 +53,8 @@ import config from '~/config'
  * 404: there are no visible transactions for this debitor id.
  * 500: It is important to communicate the ErrorDto's requestid field to the user, so they can give it to us, so we can look in the logs.
  */
-export const findTransactionsForBadgeNumber = (debitorId: bigint) => ajax({
-	url: `${config.apis.paysrv.url}/transactions?debitor_id=${debitorId}`,
+export const findTransactionsForBadgeNumber = (badgeNumber: bigint) => ajax<TransactionResponseDto | ErrorDto>({
+	url: `${config.apis.paysrv.url}/transactions?debitor_id=${badgeNumber}`,
 	method: 'GET',
 	crossDomain: true,
 	withCredentials: true,
@@ -40,12 +79,12 @@ export const findTransactionsForBadgeNumber = (debitorId: bigint) => ajax({
  * 409: This debitor already has an open payment link, please use that one.
  * 500: It is important to communicate the ErrorDto's requestid field to the user, so they can give it to us, so we can look in the logs.
  */
-export const initiateCreditCardPayment = (debitorId: bigint) => ajax({
+export const initiateCreditCardPayment = (badgeNumber: bigint) => ajax<TransactionDto | ErrorDto>({
 	url: `${config.apis.paysrv.url}/transactions/initiate-payment`,
 	method: 'POST',
 	crossDomain: true,
 	withCredentials: true,
 	body: {
-		debitor_id: debitorId,
+		debitor_id: badgeNumber,
 	},
 })
