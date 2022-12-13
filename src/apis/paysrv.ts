@@ -1,29 +1,62 @@
 import { ajax } from 'rxjs/ajax'
 import config from '~/config'
 /* eslint-disable camelcase */
-import { ErrorDto, Status, TransactionDto, TransactionResponseDto, TransactionType } from '~/state/models/api'
+import { ErrorDto } from './common'
+import { sum } from 'ramda'
+
+export type TransactionType = 'due' | 'payment'
+export type Method = 'credit' | 'paypal' | 'transfer' | 'internal' | 'gift'
+export type Status = 'tentative' | 'pending' | 'valid' | 'deleted'
+
+export interface Amount {
+	readonly currency: string // EUR
+	readonly gross_cent: number // positive or negative amount in whole cents (the smallest currency donation to be precise)
+	readonly vat_rate: number // VAT rate in percent, in Germany usually 7.0 or 19.0
+}
+
+export interface TransactionDto {
+	// same as attendee id (we use the badge number as debitor id)
+	readonly debitor_id: number
+
+	// a reference id that can be used to search for a particular transaction
+	readonly transaction_identifier: string // EF2022-000004-1230-184425-1234
+
+	readonly transaction_type: TransactionType
+
+	readonly method: Method
+
+	readonly amount: Amount
+
+	readonly comment: string
+
+	readonly status: Status
+
+	// this is where you find the paylink!
+	readonly payment_start_url: string
+
+	readonly effective_date: string // 2022-12-30
+
+	readonly due_date: string // 2022-12-28
+
+	// when this record was created
+	readonly creation_date: string // 2022-06-24T11:12:13Z
+}
+
+export interface TransactionResponseDto {
+	readonly payload: readonly TransactionDto[]
+}
 
 /*
  * use this after a successful call to findTransactionsForBadgeNumber to calculate the outstanding dues
  *
  * The payment service handles all currency amounts as integers in the currency's smallest denomination, for EUR this is cents.
  */
-export const calculateOutstandingDues = (transactions: TransactionResponseDto): bigint => {
-	let duesCents: bigint = BigInt(0)
-	let paymentsCents: bigint = BigInt(0)
-
-	transactions.payload.forEach((transaction) => {
-		if (transaction.status === Status.valid) {
-			if (transaction.transaction_type === TransactionType.due) {
-				duesCents += transaction.amount.gross_cent
-			} else {
-				paymentsCents += transaction.amount.gross_cent
-			}
-		}
-	})
-
-	return duesCents - paymentsCents
-}
+export const calculateOutstandingDues = (transactions: TransactionResponseDto) =>
+	sum(
+		transactions.payload
+			.filter(t => t.status === 'valid')
+			.map(t => t.transaction_type === 'due' ? t.amount.gross_cent : -t.amount.gross_cent),
+	)
 
 /*
  * use this after a successful call to findTransactionsForBadgeNumber to decide whether to display a
@@ -31,15 +64,8 @@ export const calculateOutstandingDues = (transactions: TransactionResponseDto): 
  *
  * Should also not generate a new paylink while this is the case.
  */
-export const hasUnprocessedPayments = (transactions: TransactionResponseDto): boolean => {
-	transactions.payload.forEach((transaction) => {
-		if (transaction.status === Status.pending && transaction.transaction_type === TransactionType.payment) {
-			return true // you have pending payments. Please wait while we manually process your payment. Do not pay twice!
-		}
-	})
-
-	return false
-}
+export const hasUnprocessedPayments = (transactions: TransactionResponseDto) =>
+	transactions.payload.some(t => t.status === 'pending' && t.transaction_type === 'payment')
 
 /*
  * GET /transactions obtains all visible payment/dues transaction for the provided badge number.
@@ -53,7 +79,7 @@ export const hasUnprocessedPayments = (transactions: TransactionResponseDto): bo
  * 404: there are no visible transactions for this debitor id.
  * 500: It is important to communicate the ErrorDto's requestid field to the user, so they can give it to us, so we can look in the logs.
  */
-export const findTransactionsForBadgeNumber = (badgeNumber: bigint) => ajax<TransactionResponseDto | ErrorDto>({
+export const findTransactionsForBadgeNumber = (badgeNumber: number) => ajax<TransactionResponseDto | ErrorDto>({
 	url: `${config.apis.paysrv.url}/transactions?debitor_id=${badgeNumber}`,
 	method: 'GET',
 	crossDomain: true,
@@ -79,7 +105,7 @@ export const findTransactionsForBadgeNumber = (badgeNumber: bigint) => ajax<Tran
  * 409: This debitor already has an open payment link, please use that one.
  * 500: It is important to communicate the ErrorDto's requestid field to the user, so they can give it to us, so we can look in the logs.
  */
-export const initiateCreditCardPayment = (badgeNumber: bigint) => ajax<TransactionDto | ErrorDto>({
+export const initiateCreditCardPayment = (badgeNumber: number) => ajax<TransactionDto | ErrorDto>({
 	url: `${config.apis.paysrv.url}/transactions/initiate-payment`,
 	method: 'POST',
 	crossDomain: true,
