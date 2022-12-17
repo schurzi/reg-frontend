@@ -27,7 +27,7 @@ const Contact = (_: ReadonlyRouteComponentProps) => {
 				<TextField label="Postal code (ZIP)" placeholder="8888" gridSpan={3} {...register('postalCode', { required: true, maxLength: 20 })}/>
 			</Localized>
 			<Localized id="register-contact-info-state-or-province" attrs={{ label: true, placeholder: true }}>
-				<TextField label="State / Province" placeholder="Fur Valley" gridSpan={5} {...register('stateOrProvince', { required: true, maxLength: 80 })}/>
+				<TextField label="State / Province" placeholder="Fur Valley" gridSpan={5} {...register('stateOrProvince', { maxLength: 80 })}/>
 			</Localized>
 			<Localized id="register-contact-info-country" attrs={{ label: true, placeholder: true }}>
 				<TextField label="Country" placeholder="Germany" gridSpan={5} {...register('country', { required: true })}/>
