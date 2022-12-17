@@ -451,3 +451,11 @@ notification-type = { $type ->
   [music]      { -notification-type(type: "music") }
  *[fursuiting] { -notification-type(type: "fursuiting") }
 }
+
+tshirt-size = { $size ->
+ *[S]   Small
+  [M]   Medium
+  [L]   Large
+  [XL]  X-Large
+  [XXL] XX-Large
+}

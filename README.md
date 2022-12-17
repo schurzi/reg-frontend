@@ -6,6 +6,19 @@ Note: On Windows, both projects need to be checked out with, `git config core.au
 
 ### first time
 
+#### Configure access to the GitHub npm registry
+
+One of our dependencies is `@eurofurence/reg-component-library`, which we only publish to the private GitHub packages
+registry.
+
+To configure access, obtain a GitHub personal access token with `read:packages` scope permissions. With that, do
+
+```
+echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" >> ~/.npmrc
+```
+
+#### install gatsby and dependencies
+
 ```
 npm install -g gatsby-cli
 gatsby telemetry --disable
@@ -20,3 +33,37 @@ npm start
 ```
 
 Then point your browser to http://localhost:8000/register
+
+### server-like installation on localhost
+
+You can run locally together with one or more of the backend services (most likely you'll want at least
+reg-attendee-service and reg-payment-service).
+
+See the instructions [here](https://github.com/eurofurence/reg-regsys-classic), as well as the readme's of the
+backend services.
+
+Then you can use the system exactly as it is installed on the server by pointing your browser to http://localhost:10000/register
+
+This also lets you avoid any CORS issues because everything is coming from the same domain.
+
+### webpack build and upload to the server (ci)
+
+In `gatsby-config.js`, set the correct `pathPrefix`. Then do
+
+```
+PREFIX_PATHS=true npm run build
+```
+
+This will generate a full static version of the site into `public`, which you can then tar.gz and upload to the server
+for roll-out with a script similar to this one (assuming you have ssh-agent running and have access):
+
+```
+# build application with prefix paths as configured
+PREFIX_PATHS=true npm run build
+
+# upload and roll out
+tar czf public.tgz public
+scp public.tgz regtest@reg.eurofurence.org:projects/
+ssh regtest@reg.eurofurence.org -t "bash -l -c 'scripts/update-app.sh'"
+rm -f public.tgz
+```
