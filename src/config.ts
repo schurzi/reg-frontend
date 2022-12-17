@@ -43,11 +43,34 @@ export default {
 		{ id: 'deluxe-suite', price: 228, image: DeluxeSuiteImage },
 	],
 	apis: {
+		// can we discover the base path so the URLs are correct even in the presence of a path prefix?
 		authsrv: {
-			url: 'https://regtest.eurofurence.org/test-a56k-dev/authsrv/v1',
+			// this could be '/some-secret-prefix/authsrv', if our app is under '/some-secret-prefix/app' in the testing environment
+			url: '/authsrv/v1',
+			appName: 'registration-system',
 		},
 		attsrv: {
-			url: 'https://regtest.eurofurence.org/test-a56k-dev/attsrv/api/rest/v1',
+			url: '/attsrv/api/rest/v1',
 		},
+		paysrv: {
+			url: '/paysrv/api/rest/v1',
+		},
+	},
+	websiteLinks: {
+		// these two links need to be in the footer bar on each page
+		privacyStatement: 'https://help.eurofurence.org/legal/privacy',
+		imprint: 'https://help.eurofurence.org/legal/imprint',
+		// further links we may need
+		policies: 'https://www.eurofurence.org/EF27/policies',
+		hotelInfo: 'https://www.eurofurence.org/EF27/hotel',
+		terms: 'https://help.eurofurence.org/legal/terms',
+		rules: 'https://help.eurofurence.org/legal/roc',
+		waiver: 'https://help.eurofurence.org/legal/liability',
+		// the cookie statement should probably be part of the registration system
+		//
+		// text: something like:
+		//   This registration system uses a cookie to identify you while you are logged in.
+		//   As soon as you log out, the cookie is deleted. Even if you do not log out explicitly, the cookie expires after a few hours.
+		//   We do not employ any third party cookies or tracking solutions.
 	},
 } as const
