@@ -161,18 +161,6 @@ register-personal-info-last-name =
 register-personal-info-full-name-permission =
   .label = I grant permission to use my full name in Eurofurence related media.
 
-register-personal-info-name-on-badge =
-  .legend = Name on badge
-
-register-personal-info-name-on-badge-legal-name =
-  .label = Legal name
-
-register-personal-info-name-on-badge-nickname =
-  .label = Nickname
-
-register-personal-info-name-on-badge-legal-name-and-nickname =
-  .label = Legal name + nickname
-
 register-personal-info-spoken-languages =
   .label = Spoken languages
 
@@ -194,7 +182,6 @@ register-personal-info-validation-errors-first-name-required = Please provide a 
 register-personal-info-validation-errors-first-name-max-length = Your first name may be at most {$limit} characters long.
 register-personal-info-validation-errors-last-name-required = Please provide a last name.
 register-personal-info-validation-errors-last-name-max-length = Your last name may be at most {$limit} characters long.
-register-personal-info-validation-errors-name-on-badge-required = Please select which name you would like to have on your badge.
 register-personal-info-validation-errors-spoken-languages-required = Please select your spoken languages.
 register-personal-info-validation-errors-pronouns-required = Please select your pronouns.
 
@@ -246,7 +233,6 @@ register-contact-info-validation-errors-city-required = Please provide a city.
 register-contact-info-validation-errors-city-max-length = Your city name may be at most {$limit} characters long.
 register-contact-info-validation-errors-postal-code-required = Please provide a postal code.
 register-contact-info-validation-errors-postal-code-max-length = Your postal code may be at most {$limit} characters long.
-register-contact-info-validation-errors-state-or-province-required = Please provide a state or province.
 register-contact-info-validation-errors-state-or-province-max-length = Your street name may be at most {$limit} characters long.
 register-contact-info-validation-errors-country-required = Please provide a country.
 register-contact-info-validation-errors-country-max-length = Your street name may be at most {$limit} characters long.
@@ -285,7 +271,6 @@ register-summary-edit = Edit information
 register-summary-section-personal-property-nickname-name = Nickname
 register-summary-section-personal-property-full-name-name = Full name
 register-summary-section-personal-property-pronouns-name = Pronouns
-register-summary-section-personal-property-badge-name-name = You will be known as
 register-summary-section-personal-property-spoken-languages-name = Spoken language(s)
 register-summary-section-personal-property-wheelchair-accomodation-name = Wheelchair accomodation
 register-summary-section-contact-property-email-name = E-mail address
@@ -457,4 +442,12 @@ notification-type = { $type ->
   [animation]  { -notification-type(type: "animation") }
   [music]      { -notification-type(type: "music") }
  *[fursuiting] { -notification-type(type: "fursuiting") }
+}
+
+tshirt-size = { $size ->
+ *[S]   Small
+  [M]   Medium
+  [L]   Large
+  [XL]  X-Large
+  [XXL] XX-Large
 }
