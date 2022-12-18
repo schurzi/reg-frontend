@@ -50,7 +50,7 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
 	country_badge: registrationInfo.personalInfo.spokenLanguages[0].toUpperCase(),
 	email: registrationInfo.contactInfo.email,
 	phone: registrationInfo.contactInfo.phoneNumber,
-	telegram: registrationInfo.contactInfo.telegram,
+	telegram: registrationInfo.contactInfo.telegramUsername,
 	partner: null, // unused by EF
 	state: registrationInfo.contactInfo.stateOrProvince, // optional, may be null
 	birthday: '1995-02-15',

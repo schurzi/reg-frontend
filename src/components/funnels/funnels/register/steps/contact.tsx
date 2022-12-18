@@ -5,6 +5,7 @@ import { useFunnelForm } from '~/hooks/funnels/form'
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 
 const reEmail = /^[^@\p{Space_Separator}]+@[^@\p{Space_Separator}]+$/u
+const reTelegram = /^@.+$/u
 
 const Contact = (_: ReadonlyRouteComponentProps) => {
 	const { register, handleSubmit } = useFunnelForm('register-contact-info')
@@ -12,10 +13,13 @@ const Contact = (_: ReadonlyRouteComponentProps) => {
 	return <WithInvoiceRegisterFunnelLayout onNext={handleSubmit} currentStep={3}>
 		<Form onSubmit={handleSubmit}>
 			<Localized id="register-contact-info-email" attrs={{ label: true, placeholder: true }}>
-				<TextField label="Email address" placeholder="john.smith@email.com" gridSpan={7} {...register('email', { required: true, maxLength: 200, pattern: reEmail })}/>
+				<TextField label="Email address" placeholder="john.smith@email.com" {...register('email', { required: true, maxLength: 200, pattern: reEmail })}/>
 			</Localized>
 			<Localized id="register-contact-info-phone-number" attrs={{ label: true, placeholder: true }}>
-				<TextField label="Phone number" placeholder="+32 0 000 00 00" gridSpan={3} {...register('phoneNumber', { required: true, maxLength: 32 })}/>
+				<TextField label="Phone number" placeholder="+32 0 000 00 00" gridSpan={5} {...register('phoneNumber', { required: true, maxLength: 32 })}/>
+			</Localized>
+			<Localized id="register-contact-info-telegram-username" attrs={{ label: true, placeholder: true }}>
+				<TextField label="Telegram username" placeholder="@johnnythesergal" gridSpan={5} {...register('telegramUsername', { maxLength: 80, pattern: reTelegram })}/>
 			</Localized>
 			<Localized id="register-contact-info-street" attrs={{ label: true, placeholder: true }}>
 				<TextField label="Street" placeholder="Pennylane 40" {...register('street', { required: true, maxLength: 120 })}/>

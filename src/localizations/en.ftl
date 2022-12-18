@@ -196,6 +196,10 @@ register-contact-info-phone-number =
   .label = Phone number
   .placeholder = +32 0 000 00 00
 
+register-contact-info-telegram-username =
+  .label = Telegram username
+  .placeholder = @johnnythesergal
+
 register-contact-info-street =
   .label = Street
   .placeholder = Pennylane 40
@@ -221,6 +225,8 @@ register-contact-info-validation-errors-email-max-length = Your email address ma
 register-contact-info-validation-errors-email-pattern = Your email address must look like an email address.
 register-contact-info-validation-errors-phone-number-required = Please provide a phone number.
 register-contact-info-validation-errors-phone-number-max-length = Your phone number may be at most {$limit} characters long.
+register-contact-info-validation-errors-telegram-username-max-length = Your phone number may be at most {$limit} characters long.
+register-contact-info-validation-errors-telegram-username-pattern = Your telegram username must include the initial @ character.
 register-contact-info-validation-errors-street-required = Please provide a street.
 register-contact-info-validation-errors-street-max-length = Your street name may be at most {$limit} characters long.
 register-contact-info-validation-errors-city-required = Please provide a city.

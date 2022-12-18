@@ -18,7 +18,7 @@ export type TicketLevel = {
 export interface ContactInfo {
 	readonly email: string
 	readonly phoneNumber: string
-	readonly telegram: string
+	readonly telegramUsername: string
 	readonly street: string
 	readonly city: string
 	readonly postalCode: string
