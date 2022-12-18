@@ -78,14 +78,6 @@ const Section = ({ id: sectionId, editLink, properties }: SectionProps) => <Sect
 	</PropertyList>
 </SectionContainer>
 
-const getBadgeName = (personalInfo: PersonalInfo) => {
-	switch (personalInfo.nameOnBadge) {
-		case 'nickname': return personalInfo.nickname
-		case 'legal-name': return `${personalInfo.firstName} ${personalInfo.lastName}`
-		case 'legal-name-and-nickname': return `${personalInfo.firstName} "${personalInfo.nickname}" ${personalInfo.lastName}`
-	}
-}
-
 const Summary = (_: ReadonlyRouteComponentProps) => {
 	const personalInfo = useAppSelector(getPersonalInfo())!
 	const contactInfo = useAppSelector(getContactInfo())!
@@ -107,7 +99,6 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 			{ id: 'full-name', value: `${personalInfo.firstName} ${personalInfo.lastName}` },
 			{ id: 'pronouns', value: l10n.getString('pronouns', { pronouns: personalInfo.pronouns }, personalInfo.pronouns) },
 			{ id: 'wheelchair-accomodation', value: l10n.getString('register-summary-section-personal-property-wheelchair-accomodation-value', { value: personalInfo.wheelchair.toString() }) },
-			{ id: 'badge-name', wide: true, value: getBadgeName(personalInfo) },
 			{ id: 'spoken-languages', wide: true, value: personalInfo.spokenLanguages.map(langKey => langmap[langKey].nativeName).join(', ') },
 		]}/>
 		<Section id="contact" editLink="/register/contact-info" properties={[

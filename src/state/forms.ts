@@ -46,7 +46,6 @@ export const forms = {
 		firstName: null,
 		lastName: null,
 		fullNamePermission: false,
-		nameOnBadge: null,
 		spokenLanguages: [],
 		pronounsSelection: null,
 		pronounsOther: null,
