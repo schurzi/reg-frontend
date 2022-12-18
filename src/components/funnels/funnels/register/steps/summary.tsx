@@ -3,7 +3,6 @@ import WithInvoiceRegisterFunnelLayout from '~/components/funnels/funnels/regist
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 import styled from '@emotion/styled'
 import { useAppDispatch, useAppSelector } from '~/hooks/redux'
-import { PersonalInfo } from '~/state/models/register'
 import { getContactInfo, getOptionalInfo, getPersonalInfo } from '~/state/selectors/register'
 import langmap from 'langmap'
 import { Link } from 'gatsby'
