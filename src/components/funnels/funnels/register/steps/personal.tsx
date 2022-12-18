@@ -48,19 +48,6 @@ const Personal = (_: ReadonlyRouteComponentProps) => {
 			<Localized id="register-personal-info-full-name-permission" attrs={{ label: true }}>
 				<Checkbox label="I grant permission to use my full name in Eurofurence related media." {...register('fullNamePermission')}/>
 			</Localized>
-			<Localized id="register-personal-info-name-on-badge" attrs={{ legend: true }}>
-				<RadioSet name="nameOnBadge" legend="Name on badge">
-					<Localized id="register-personal-info-name-on-badge-legal-name" attrs={{ label: true }}>
-						<RadioItem label="Real name" value="legal-name" {...register('nameOnBadge', { required: true })}/>
-					</Localized>
-					<Localized id="register-personal-info-name-on-badge-nickname" attrs={{ label: true }}>
-						<RadioItem label="Nickname" value="nickname" {...register('nameOnBadge', { required: true })}/>
-					</Localized>
-					<Localized id="register-personal-info-name-on-badge-legal-name-and-nickname" attrs={{ label: true }}>
-						<RadioItem label="Real name + nickname" value="legal-name-and-nickname" {...register('nameOnBadge', { required: true })}/>
-					</Localized>
-				</RadioSet>
-			</Localized>
 			<Controller control={control} name="spokenLanguages" rules={{ required: true }} render={({ field: { onChange, value, ref, ...field } }) =>
 				<Localized id="register-personal-info-spoken-languages" attrs={{ label: true }}>
 					<Select
