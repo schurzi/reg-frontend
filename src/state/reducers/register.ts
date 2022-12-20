@@ -6,10 +6,10 @@ import autosaveData from '~/state/autosave'
 
 export type RegisterState = Partial<RegistrationInfo>
 
-const transformPronouns = (payload: GetAction<SubmitFormActionBundle<'register-personal-info'>>['payload']) => {
-	const { pronounsSelection, pronounsOther, ...rest } = payload as DeepNonNullable<typeof payload>
+const transformPersonalInfo = (payload: GetAction<SubmitFormActionBundle<'register-personal-info'>>['payload']) => {
+	const { pronounsSelection, pronounsOther, dateOfBirth, ...rest } = payload as DeepNonNullable<typeof payload>
 
-	return { pronouns: pronounsSelection === 'other' ? pronounsOther : pronounsSelection, ...rest }
+	return { pronouns: pronounsSelection === 'other' ? pronounsOther : pronounsSelection, dateOfBirth: new Date(dateOfBirth), ...rest }
 }
 
 export default (state: RegisterState = autosaveData?.register ?? {}, action: GetAction<AnyAppAction>): RegisterState => {
@@ -25,7 +25,7 @@ export default (state: RegisterState = autosaveData?.register ?? {}, action: Get
 		case SubmitForm('register-optional-info').type:
 			return { ...state, optionalInfo: action.payload as DeepNonNullable<typeof action.payload> }
 		case SubmitForm('register-personal-info').type:
-			return { ...state, personalInfo: transformPronouns(action.payload) }
+			return { ...state, personalInfo: transformPersonalInfo(action.payload) }
 		default:
 			return state
 	}

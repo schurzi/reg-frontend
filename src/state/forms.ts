@@ -38,14 +38,16 @@ export const forms = {
 			tshirt: { selected: false, size: null },
 		},
 	}),
-	'register-personal-info': createForm<Omit<PersonalInfo, 'pronouns'> & {
+	'register-personal-info': createForm<Omit<PersonalInfo, 'pronouns' | 'dateOfBirth'> & {
 		readonly pronounsSelection: 'He/Him' | 'She/Her' | 'They/Them' | 'other'
 		readonly pronounsOther: string
+		readonly dateOfBirth: string
 	}>({
 		nickname: null,
 		firstName: null,
 		lastName: null,
 		fullNamePermission: false,
+		dateOfBirth: null,
 		spokenLanguages: [],
 		pronounsSelection: null,
 		pronounsOther: null,

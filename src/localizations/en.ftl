@@ -161,6 +161,10 @@ register-personal-info-last-name =
 register-personal-info-full-name-permission =
   .label = I grant permission to use my full name in Eurofurence related media.
 
+register-personal-info-date-of-birth =
+  .label = Date of birth
+  .placeholder = 1995-06-30
+
 register-personal-info-spoken-languages =
   .label = Spoken languages
 
@@ -182,6 +186,9 @@ register-personal-info-validation-errors-first-name-required = Please provide a 
 register-personal-info-validation-errors-first-name-max-length = Your first name may be at most {$limit} characters long.
 register-personal-info-validation-errors-last-name-required = Please provide a last name.
 register-personal-info-validation-errors-last-name-max-length = Your last name may be at most {$limit} characters long.
+register-personal-info-validation-errors-date-of-birth-required = Please provide your date of birth.
+register-personal-info-validation-errors-date-of-birth-validate-minimum-age = You must be at least 18 years old to attend Eurofurence.
+register-personal-info-validation-errors-date-of-birth-validate-maximum-age = 122-year-olds are the oldest people allowed at Eurofurence for technical reasons.
 register-personal-info-validation-errors-spoken-languages-required = Please select your spoken languages.
 register-personal-info-validation-errors-pronouns-required = Please select your pronouns.
 
