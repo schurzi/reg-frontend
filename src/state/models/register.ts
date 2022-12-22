@@ -1,3 +1,5 @@
+import { ReadonlyDate } from '~/util/readonly-types'
+
 export type TicketType
 	= { readonly type: 'full' }
 	| { readonly type: 'day', readonly day: string }
@@ -40,6 +42,7 @@ export interface PersonalInfo {
 	readonly nickname: string
 	readonly firstName: string
 	readonly lastName: string
+	readonly dateOfBirth: ReadonlyDate
 	readonly fullNamePermission: boolean
 	readonly spokenLanguages: readonly string[]
 	readonly pronouns: string

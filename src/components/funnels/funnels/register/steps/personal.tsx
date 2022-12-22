@@ -6,6 +6,8 @@ import langMap from 'langmap'
 import { pluck } from 'ramda'
 import { useFunnelForm } from '~/hooks/funnels/form'
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
+import { sub } from 'date-fns'
+import config from '~/config'
 
 const languageOptions = [...Object.entries(langMap)]
 	.filter(([key]) => !key.includes('-'))
@@ -47,6 +49,15 @@ const Personal = (_: ReadonlyRouteComponentProps) => {
 			</Localized>
 			<Localized id="register-personal-info-full-name-permission" attrs={{ label: true }}>
 				<Checkbox label="I grant permission to use my full name in Eurofurence related media." {...register('fullNamePermission')}/>
+			</Localized>
+			<Localized id="register-personal-info-date-of-birth" attrs={{ label: true }}>
+				<TextField label="Date of birth" placeholder="1995-06-30" type="date" {...register('dateOfBirth', {
+					required: true,
+					validate: {
+						minimumAge: v => new Date(v!) <= sub(config.eventStartDate, { years: config.minimumAge }),
+						maximumAge: v => new Date(v!) >= config.earliestBirthDate,
+					},
+				})}/>
 			</Localized>
 			<Controller control={control} name="spokenLanguages" rules={{ required: true }} render={({ field: { onChange, value, ref, ...field } }) =>
 				<Localized id="register-personal-info-spoken-languages" attrs={{ label: true }}>
