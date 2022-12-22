@@ -190,7 +190,8 @@ register-personal-info-validation-errors-date-of-birth-required = Please provide
 register-personal-info-validation-errors-date-of-birth-validate-minimum-age = You must be at least 18 years old to attend Eurofurence.
 register-personal-info-validation-errors-date-of-birth-validate-maximum-age = 122-year-olds are the oldest people allowed at Eurofurence for technical reasons.
 register-personal-info-validation-errors-spoken-languages-required = Please select your spoken languages.
-register-personal-info-validation-errors-pronouns-required = Please select your pronouns.
+register-personal-info-validation-errors-pronouns-selection-required = Please select your pronouns.
+register-personal-info-validation-errors-pronouns-other-required = Provide an alternative set of pronouns.
 
 
 
@@ -232,7 +233,7 @@ register-contact-info-validation-errors-email-max-length = Your email address ma
 register-contact-info-validation-errors-email-pattern = Your email address must look like an email address.
 register-contact-info-validation-errors-phone-number-required = Please provide a phone number.
 register-contact-info-validation-errors-phone-number-max-length = Your phone number may be at most {$limit} characters long.
-register-contact-info-validation-errors-telegram-username-max-length = Your phone number may be at most {$limit} characters long.
+register-contact-info-validation-errors-telegram-username-max-length = Your telegram username may be at most {$limit} characters long.
 register-contact-info-validation-errors-telegram-username-pattern = Your telegram username must include the initial @ character.
 register-contact-info-validation-errors-street-required = Please provide a street.
 register-contact-info-validation-errors-street-max-length = Your street name may be at most {$limit} characters long.
