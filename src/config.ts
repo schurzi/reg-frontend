@@ -10,6 +10,8 @@ export default {
 	hotelBookingLaunch: new Date('2023-01-28T12:30:23+02:00'),
 	eventStartDate: new Date('2023-08-02'),
 	eventEndDate: new Date('2023-08-06'),
+	earliestBirthDate: new Date('1901-01-01'),
+	minimumAge: 18,
 	stagePassPrice: 5,
 	tshirtPrice: 20,
 	tshirtSizes: ['S', 'M', 'L', 'XL', 'XXL'],

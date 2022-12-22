@@ -1,6 +1,6 @@
 import { ReactLocalization, useLocalization } from '@fluent/react'
 import { useEffect } from 'react'
-import { useForm, FieldValues, RegisterOptions, FieldPath, FieldPathValue } from 'react-hook-form'
+import { useForm, FieldValues, RegisterOptions, FieldPath, FieldPathValue, Path, UnPackAsyncDefaultValues, ControllerProps, Controller } from 'react-hook-form'
 import { DeepReadonly } from 'ts-essentials'
 import type { DeepReadonly as DeepReadonlyForDate } from 'utility-types'
 import { mapObjIndexed } from 'ramda'
@@ -13,16 +13,18 @@ import { FluentVariable } from '@fluent/bundle'
 
 type LocalizedValidate<TFieldValue> = (value: TFieldValue) => boolean | Promise<boolean>
 
+type LocalizedRules<TFieldValues extends FieldValues = FieldValues, TFieldName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>> = Partial<{
+	required: boolean
+	min: number | string
+	max: number | string
+	maxLength: number
+	minLength: number
+	pattern: RegExp
+	validate: LocalizedValidate<FieldPathValue<TFieldValues, TFieldName>> | Record<string, LocalizedValidate<FieldPathValue<TFieldValues, TFieldName>>>
+}>
+
 type LocalizedRegisterOptions<TFieldValues extends FieldValues = FieldValues, TFieldName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>> =
-	Omit<RegisterOptions<TFieldValues, TFieldName>, 'required' | 'min' | 'max' | 'minLength' | 'maxLength' | 'pattern' | 'validate'> & Partial<{
-		required: boolean
-		min: number | string
-		max: number | string
-		maxLength: number
-		minLength: number
-		pattern: RegExp
-		validate: LocalizedValidate<FieldPathValue<TFieldValues, TFieldName>> | Record<string, LocalizedValidate<FieldPathValue<TFieldValues, TFieldName>>>
-	}>
+	Omit<RegisterOptions<TFieldValues, TFieldName>, 'required' | 'min' | 'max' | 'minLength' | 'maxLength' | 'pattern' | 'validate'> & LocalizedRules<TFieldValues, TFieldName>
 
 const localizeValidations = <TFieldValues extends FieldValues, TFieldName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>>(
 	l10n: DeepReadonly<ReactLocalization>,
@@ -31,11 +33,11 @@ const localizeValidations = <TFieldValues extends FieldValues, TFieldName extend
 	{ required, min, max, minLength, maxLength, pattern, validate, ...rest }: LocalizedRegisterOptions<TFieldValues, TFieldName> = {},
 ): RegisterOptions<TFieldValues, TFieldName> => {
 	const getMessage = (rulename: string, args?: DeepReadonlyForDate<Record<string, FluentVariable>>) =>
-		l10n.getString(`${prefix}-validation-errors-${name.split('.').filter(x => Number.isNaN(Number(x))).join('-')}-${rulename}`, args)
+		l10n.getString(`${prefix}-validation-errors-${name.split('.').filter(x => Number.isNaN(Number(x))).map(paramCase).join('-')}-${rulename}`, args)
 
 	// eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-	const localizedValidate = <TFieldValue>(id: string, f: LocalizedValidate<TFieldValue>) => (value: TFieldValue) => f(value) || getMessage(id)
-	const localizedRule = <TFieldValue>(id: string, value: TFieldValue) => ({ value, message: getMessage(id, typeof value === 'number' ? { limit: value } : { }) })
+	const localizedValidate = <TFieldValue,>(id: string, f: LocalizedValidate<TFieldValue>) => (value: TFieldValue) => f(value) || getMessage(id)
+	const localizedRule = <TFieldValue,>(id: string, value: TFieldValue) => ({ value, message: getMessage(id, typeof value === 'number' ? { limit: value } : { }) })
 
 	return {
 		...required === undefined ? { } : { required: required && getMessage('required') },
@@ -75,10 +77,21 @@ export const useFunnelForm = <F extends FormIds>(id: F) => {
 	>(name: TFieldName, options?: LocalizedRegisterOptions<FormValuesType<F>, TFieldName>) =>
 		register(name, localizeValidations(l10n, id, name, options))
 
+	const FunnelController = <
+		TFieldValues extends FieldValues = FieldValues,
+		TName extends Path<UnPackAsyncDefaultValues<TFieldValues>> = Path<UnPackAsyncDefaultValues<TFieldValues>>
+	// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
+	>({ rules, ...props }: Omit<ControllerProps<TFieldValues, TName>, 'rules'> & { rules: LocalizedRules<TFieldValues, TName> }) => {
+		const { l10n } = useLocalization()
+
+		return <Controller rules={localizeValidations(l10n, id, props.name, rules)} {...props}/>
+	}
+
 	return {
 		handleSubmit: handleSubmit(formData => dispatch(SubmitForm(id).create(formData as never))),
 		watch,
 		register: newRegister,
+		FunnelController,
 		...methods,
 	}
 }
