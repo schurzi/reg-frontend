@@ -1,14 +1,31 @@
-import { Localized } from '@fluent/react'
-import { Form, TextField } from '@eurofurence/reg-component-library'
+import { Localized, useLocalization } from '@fluent/react'
+import { Form, Select, TextField } from '@eurofurence/reg-component-library'
 import WithInvoiceRegisterFunnelLayout from '~/components/funnels/funnels/register/layout/form/with-invoice'
 import { useFunnelForm } from '~/hooks/funnels/form'
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
+import { useMemo } from 'react'
+import { countryCodeEmoji } from 'country-code-emoji'
+import config from '~/config'
+import { prop, sortBy } from 'ramda'
 
 const reEmail = /^[^@\p{Space_Separator}]+@[^@\p{Space_Separator}]+$/u
 const reTelegram = /^@.+$/u
 
 const Contact = (_: ReadonlyRouteComponentProps) => {
-	const { register, handleSubmit, formState: { errors } } = useFunnelForm('register-contact-info')
+	const { register, handleSubmit, control, formState: { errors }, FunnelController } = useFunnelForm('register-contact-info')
+	const { l10n } = useLocalization()
+
+	const { countryOptions, countryOptionsByValue } = useMemo(() => {
+		const countryNames = sortBy(prop('name'), config.allowedCountries.map(countryCode => ({ countryCode, name: l10n.getString('country-name', { countryCode }) })))
+
+		// eslint-disable-next-line @typescript-eslint/no-shadow
+		const countryOptions = countryNames.map(({ countryCode, name }) => ({
+			value: countryCode,
+			label: `${countryCodeEmoji(countryCode)} ${name}`,
+		}))
+
+		return { countryOptions, countryOptionsByValue: new Map(countryOptions.map(o => [o.value, o])) }
+	}, [l10n])
 
 	return <WithInvoiceRegisterFunnelLayout onNext={handleSubmit} currentStep={3}>
 		<Form onSubmit={handleSubmit}>
@@ -33,9 +50,19 @@ const Contact = (_: ReadonlyRouteComponentProps) => {
 			<Localized id="register-contact-info-state-or-province" attrs={{ label: true, placeholder: true }}>
 				<TextField label="State / Province" placeholder="Fur Valley" gridSpan={5} error={errors.stateOrProvince?.message} {...register('stateOrProvince', { maxLength: 80 })}/>
 			</Localized>
-			<Localized id="register-contact-info-country" attrs={{ label: true, placeholder: true }}>
-				<TextField label="Country" placeholder="Germany" gridSpan={5} error={errors.country?.message} {...register('country', { required: true })}/>
-			</Localized>
+			<FunnelController control={control} name="country" rules={{ required: true }} render={({ field: { onChange, value, ref, ...field } }) =>
+				<Localized id="register-contact-info-country" attrs={{ label: true }}>
+					<Select
+						label="Country"
+						gridSpan={5}
+						options={countryOptions}
+						onChange={option => onChange(option?.value)}
+						value={value === null ? null : countryOptionsByValue.get(value)}
+						error={errors.country?.message}
+						{...field}
+					/>
+				</Localized>
+			}/>
 		</Form>
 	</WithInvoiceRegisterFunnelLayout>
 }

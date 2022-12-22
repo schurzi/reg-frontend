@@ -1,3 +1,4 @@
+import config from '~/config'
 import { ReadonlyDate } from '~/util/readonly-types'
 
 export type TicketType
@@ -25,7 +26,7 @@ export interface ContactInfo {
 	readonly city: string
 	readonly postalCode: string
 	readonly stateOrProvince: string
-	readonly country: string
+	readonly country: (typeof config.allowedCountries)[number]
 }
 
 export interface OptionalInfo {
