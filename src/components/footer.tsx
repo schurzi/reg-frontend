@@ -3,6 +3,7 @@ import { Localized } from '@fluent/react'
 import { Footer as CLFooter } from '@eurofurence/reg-component-library'
 import { useAppSelector } from '~/hooks/redux'
 import { getLastSaved } from '~/state/selectors/autosave'
+import config from '~/config'
 
 const Links = styled.nav`
 	display: flex;
@@ -20,9 +21,10 @@ const Footer = () => {
 	return <CLFooter>
 		<Grid>
 			<Links>
-				<Localized id="footer-links-privacy-policy"><a>Privacy policy</a></Localized>
-				<Localized id="footer-links-cookie-statement"><a>Cookie statement</a></Localized>
-				<Localized id="footer-links-contact"><a>Contact Eurofurence</a></Localized>
+				<Localized id="footer-links-privacy-policy"><a href={config.websiteLinks.privacyStatement}>Privacy policy</a></Localized>
+				<Localized id="footer-links-legal-info"><a href={config.websiteLinks.imprint}>Legal info</a></Localized>
+				<Localized id="footer-links-policies"><a href={config.websiteLinks.policies}>Policies</a></Localized>
+				<Localized id="footer-links-contact"><a href={config.websiteLinks.contact}>Contact Eurofurence</a></Localized>
 			</Links>
 			<section>
 				{lastSaved === undefined ? undefined : <Localized id="footer-last-saved" vars={{ lastSaved }}>

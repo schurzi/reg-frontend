@@ -18,9 +18,8 @@ header-clock-component-seconds =
 
 # Footer
 footer-links-privacy-policy = Privacy policy
-
-footer-links-cookie-statement = Cookie statement
-
+footer-links-legal-info = Legal info
+footer-links-policies = Policies
 footer-links-contact = Contact Eurofurence
 
 footer-last-saved = Your information was last saved on {DATETIME($lastSaved, weekday: "long", month: "long", day: "numeric", year: "numeric")} at {DATETIME($lastSaved, hour: "numeric", minute: "numeric")}.

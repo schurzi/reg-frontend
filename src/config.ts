@@ -68,6 +68,7 @@ export default {
 		terms: 'https://help.eurofurence.org/legal/terms',
 		rules: 'https://help.eurofurence.org/legal/roc',
 		waiver: 'https://help.eurofurence.org/legal/liability',
+		contact: 'https://help.eurofurence.org/contact',
 		// the cookie statement should probably be part of the registration system
 		//
 		// text: something like:
