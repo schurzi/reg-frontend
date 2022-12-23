@@ -11,5 +11,5 @@ export interface ErrorDto {
 	readonly message: string // attendee.owned.notfound or similar
 
 	// Optional additional details about the error. If available, will usually contain English language technobabble.
-	readonly details: object // map[string][]string
+	readonly details: Record<string, string[]>
 }

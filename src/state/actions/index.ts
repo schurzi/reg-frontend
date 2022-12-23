@@ -1,3 +1,4 @@
+import { AuthAction } from './auth'
 import { AutosaveAction } from './autosave'
 import { FormAction } from './forms'
 import { RegisterAction } from './register'
@@ -5,6 +6,7 @@ import { RegisterAction } from './register'
 export type { GetAction } from './create-action'
 
 export type AnyAppAction =
+	| AuthAction
 	| AutosaveAction
 	| FormAction
 	| RegisterAction
