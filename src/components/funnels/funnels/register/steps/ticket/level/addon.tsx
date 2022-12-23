@@ -5,8 +5,7 @@ import ReactMarkdown from 'react-markdown'
 import Price from '~/components/funnels/price'
 import type { ReadonlyReactNode } from '~/util/readonly-types'
 
-export interface TicketLevelAddonProps extends CheckboxProps {
-	readonly label: string
+export type TicketLevelAddonProps = CheckboxProps & {
 	readonly description: string
 	readonly children?: ReadonlyReactNode
 	readonly price: number
