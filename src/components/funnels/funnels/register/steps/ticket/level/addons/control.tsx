@@ -5,7 +5,7 @@ import ReactMarkdown from 'react-markdown'
 import Price from '~/components/funnels/price'
 import type { ReadonlyReactNode } from '~/util/readonly-types'
 
-export type TicketLevelAddonProps = CheckboxProps & {
+export type TicketLevelAddonControlProps = CheckboxProps & {
 	readonly description: string
 	readonly children?: ReadonlyReactNode
 	readonly price: number
@@ -48,8 +48,9 @@ const OptionsContainer = styled.div`
 
 	font-family: Manrope;
 `
+
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
-const TicketLevelAddon = forwardRef(({ children, price, description, ...rest }: TicketLevelAddonProps, ref: ForwardedRef<HTMLInputElement>) =>
+const TicketLevelAddonControl = forwardRef(({ children, price, description, ...rest }: TicketLevelAddonControlProps, ref: ForwardedRef<HTMLInputElement>) =>
 	<Container>
 		<DescriptionContainer>
 			<CheckboxWrapper><Checkbox ref={ref} {...rest}/></CheckboxWrapper>
@@ -64,4 +65,4 @@ const TicketLevelAddon = forwardRef(({ children, price, description, ...rest }: 
 	</Container>,
 )
 
-export default TicketLevelAddon
+export default TicketLevelAddonControl

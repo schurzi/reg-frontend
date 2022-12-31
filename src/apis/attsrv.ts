@@ -1,8 +1,11 @@
+import { isFriday, isSaturday, isThursday } from 'date-fns'
+import { head, last } from 'ramda'
 import { ajax } from 'rxjs/ajax'
+import type { DeepReadonly } from 'ts-essentials'
 import config from '~/config'
 /* eslint-disable camelcase */
 import { RegistrationInfo } from '~/state/models/register'
-import { ErrorDto } from './common'
+import type { ErrorDto } from './common'
 
 export interface AttendeeDto {
 	readonly id: number | null
@@ -37,6 +40,7 @@ export interface CountdownDto {
 	readonly countdown: number
 }
 
+const optionsToFlags = (options: DeepReadonly<Record<string, boolean>>) => Object.entries(options).filter(last).map(head).join(',')
 
 const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): AttendeeDto => ({
 	id: null, // not used when submitting attendee data, contains badge number when reading them
@@ -56,19 +60,27 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
 	birthday: '1995-02-15',
 	gender: 'notprovided',
 	pronouns: registrationInfo.personalInfo.pronouns,
-	tshirt_size: registrationInfo.ticketLevel.addons.tshirt.size,
-	flags: 'hc,anon', // hc = wheelchair, anon = do not use name
-	options: Object
-		.entries(registrationInfo.optionalInfo.notifications)
-		.filter(([, enabled]) => enabled)
-		.map(([id]) => ({
-			animation: 'anim',
-			art: 'art',
-			music: 'music',
-			fursuiting: 'suit',
-		}[id]))
-		.join(','),
-	packages: 'room-none,attendance,stage', // the choices made regarding day guest/full, sponsorship etc.
+	tshirt_size: registrationInfo.ticketLevel.addons.tshirt.options.size,
+	flags: optionsToFlags({
+		hc: registrationInfo.personalInfo.wheelchair,
+		anon: !registrationInfo.personalInfo.fullNamePermission,
+	}),
+	options: optionsToFlags({
+		anim: registrationInfo.optionalInfo.notifications.animation,
+		art: registrationInfo.optionalInfo.notifications.art,
+		music: registrationInfo.optionalInfo.notifications.music,
+		suit: registrationInfo.optionalInfo.notifications.fursuiting,
+	}),
+	packages: optionsToFlags({
+		'room-none': true,
+		'attendance': registrationInfo.ticketType.type === 'full',
+		'day-thu': registrationInfo.ticketType.type === 'day' && isThursday(registrationInfo.ticketType.day),
+		'day-fri': registrationInfo.ticketType.type === 'day' && isFriday(registrationInfo.ticketType.day),
+		'day-sat': registrationInfo.ticketType.type === 'day' && isSaturday(registrationInfo.ticketType.day),
+		'stage': registrationInfo.ticketLevel.addons['stage-pass'].selected,
+		'sponsor': registrationInfo.ticketLevel.level === 'sponsor',
+		'sponsor2': registrationInfo.ticketLevel.level === 'super-sponsor',
+	}),
 	user_comments: registrationInfo.optionalInfo.comments,
 })
 

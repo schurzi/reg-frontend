@@ -1,7 +1,9 @@
-import { FieldValues } from 'react-hook-form'
-import { Builtin } from 'ts-essentials'
-import { AdditionalInfo, GuestsInfo, RoomInfo } from './models/hotel-booking'
-import { ContactInfo, OptionalInfo, PersonalInfo, TicketLevel, TicketType } from './models/register'
+import type { FieldValues } from 'react-hook-form'
+import type { Builtin } from 'ts-essentials'
+import type { AdditionalInfo, GuestsInfo, RoomInfo } from './models/hotel-booking'
+import type { ContactInfo, OptionalInfo, PersonalInfo, TicketLevel, TicketType } from './models/register'
+import config from '~/config'
+import { map } from 'ramda'
 
 /* eslint-disable @typescript-eslint/indent */
 export declare type DeepField<T> =
@@ -33,10 +35,10 @@ export const forms = {
 	}),
 	'register-ticket-level': createForm<TicketLevel>({
 		level: null,
-		addons: {
-			stagePass: { selected: false },
-			tshirt: { selected: false, size: null },
-		},
+		addons: map(addon => ({
+			selected: addon.default,
+			options: map(option => option.default as never, addon.options),
+		}), config.addons),
 	}),
 	'register-personal-info': createForm<Omit<PersonalInfo, 'pronouns' | 'dateOfBirth'> & {
 		readonly pronounsSelection: 'He/Him' | 'She/Her' | 'They/Them' | 'other'

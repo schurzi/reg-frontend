@@ -8,8 +8,8 @@ import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 import { sub } from 'date-fns'
 import config from '~/config'
 
-const languageOptions = [...Object.entries(langMap)]
-	.filter(([key]) => !key.includes('-'))
+const languageOptions = Object.entries(langMap)
+	.filter(([key]) => !(key as string).includes('-'))
 	.map(([value, names]) => ({ label: names.nativeName, value }))
 
 // Don't understand why react-select makes me do this manually but ok
