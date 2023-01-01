@@ -1,7 +1,6 @@
 import { isFriday, isSaturday, isThursday } from 'date-fns'
 import { head, last } from 'ramda'
 import { ajax } from 'rxjs/ajax'
-import type { DeepReadonly } from 'ts-essentials'
 import config from '~/config'
 /* eslint-disable camelcase */
 import { RegistrationInfo } from '~/state/models/register'
@@ -40,7 +39,7 @@ export interface CountdownDto {
 	readonly countdown: number
 }
 
-const optionsToFlags = (options: DeepReadonly<Record<string, boolean>>) => Object.entries(options).filter(last).map(head).join(',')
+const optionsToFlags = (options: Readonly<Record<string, boolean>>) => Object.entries(options).filter(last).map(head).join(',')
 
 const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): AttendeeDto => ({
 	id: null, // not used when submitting attendee data, contains badge number when reading them
