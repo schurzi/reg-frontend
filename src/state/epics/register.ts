@@ -4,24 +4,27 @@ import { AnyAppAction, GetAction } from '~/state/actions'
 import { always } from 'ramda'
 import { AppState } from '~/state'
 import { nextPage } from './generators/next-page'
-import { SubmitForm } from '../actions/forms'
-import { RegistrationSubmissionFailed, SubmitRegistration } from '../actions/register'
+import { InitiateLogin } from '~/state/actions/auth'
+import { SubmitForm } from '~/state/actions/forms'
+import { RegistrationSubmissionFailed, SubmitRegistration } from '~/state/actions/register'
 import { submitRegistration } from '~/apis/attsrv'
 import { navigate } from 'gatsby'
-import { getRegistrationInfo } from '../selectors/register'
-import { RegistrationInfo } from '../models/register'
+import { getRegistrationInfo } from '~/state/selectors/register'
+import { RegistrationInfo } from '~/state/models/register'
 import { of } from 'rxjs'
-import config from '~/config'
 import { AjaxError } from 'rxjs/ajax'
 import { StatusCodes } from 'http-status-codes'
 
 export default combineEpics<GetAction<AnyAppAction>, GetAction<AnyAppAction>, AppState>(
+	// Navigation in the funnel
 	nextPage(SubmitForm('register-ticket-type'), ({ payload }) => `/register/ticket/${payload.type === 'full' ? 'level' : 'day'}`),
 	nextPage(SubmitForm('register-ticket-day'), always('/register/ticket/level')),
 	nextPage(SubmitForm('register-ticket-level'), always('/register/personal-info')),
 	nextPage(SubmitForm('register-personal-info'), always('/register/contact-info')),
 	nextPage(SubmitForm('register-contact-info'), always('/register/optional-info')),
 	nextPage(SubmitForm('register-optional-info'), always('/register/summary')),
+
+	// Submit registration
 	(action$, state$) => action$.pipe(
 		ofType(SubmitRegistration.type),
 		withLatestFrom(state$),
@@ -31,7 +34,7 @@ export default combineEpics<GetAction<AnyAppAction>, GetAction<AnyAppAction>, Ap
 			catchError(err => {
 				if (err instanceof AjaxError) {
 					if (err.status === StatusCodes.UNAUTHORIZED) {
-						location.href = `${config.apis.authsrv.url}/auth?app_name=${config.apis.authsrv.appName}`//&dropoff_url=${location.href}`
+						return of(InitiateLogin.create(undefined))
 					}
 				}
 

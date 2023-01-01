@@ -1,7 +1,6 @@
 import { ajax } from 'rxjs/ajax'
 import config from '~/config'
 /* eslint-disable camelcase */
-import { ErrorDto } from './common'
 import { sum } from 'ramda'
 
 export type TransactionType = 'due' | 'payment'
@@ -79,7 +78,7 @@ export const hasUnprocessedPayments = (transactions: TransactionResponseDto) =>
  * 404: there are no visible transactions for this debitor id.
  * 500: It is important to communicate the ErrorDto's requestid field to the user, so they can give it to us, so we can look in the logs.
  */
-export const findTransactionsForBadgeNumber = (badgeNumber: number) => ajax<TransactionResponseDto | ErrorDto>({
+export const findTransactionsForBadgeNumber = (badgeNumber: number) => ajax<TransactionResponseDto>({
 	url: `${config.apis.paysrv.url}/transactions?debitor_id=${badgeNumber}`,
 	method: 'GET',
 	crossDomain: true,
@@ -105,7 +104,7 @@ export const findTransactionsForBadgeNumber = (badgeNumber: number) => ajax<Tran
  * 409: This debitor already has an open payment link, please use that one.
  * 500: It is important to communicate the ErrorDto's requestid field to the user, so they can give it to us, so we can look in the logs.
  */
-export const initiateCreditCardPayment = (badgeNumber: number) => ajax<TransactionDto | ErrorDto>({
+export const initiateCreditCardPayment = (badgeNumber: number) => ajax<TransactionDto>({
 	url: `${config.apis.paysrv.url}/transactions/initiate-payment`,
 	method: 'POST',
 	crossDomain: true,
