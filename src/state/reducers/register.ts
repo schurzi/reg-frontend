@@ -17,7 +17,7 @@ export default (state: RegisterState = autosaveData?.register ?? {}, action: Get
 		case SubmitForm('register-ticket-type').type:
 			return action.payload.type === 'day' ? state : { ...state, ticketType: { type: action.payload.type! } }
 		case SubmitForm('register-ticket-day').type:
-			return { ...state, ticketType: { type: 'day', day: action.payload.day! } }
+			return { ...state, ticketType: { type: 'day', day: new Date(action.payload.day!) } }
 		case SubmitForm('register-ticket-level').type:
 			return { ...state, ticketLevel: action.payload as DeepNonNullable<typeof action.payload> }
 		case SubmitForm('register-contact-info').type:

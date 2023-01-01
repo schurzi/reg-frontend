@@ -1,19 +1,35 @@
+import config from '~/config'
 import { ReadonlyDate } from '~/util/readonly-types'
+
+type TicketLevelConfig = typeof config.ticketLevels
+type TicketAddonsConfig = typeof config.addons
+
+/* eslint-disable @typescript-eslint/indent */
+type ParseAddonOption<T> =
+	T extends { readonly type: 'select', readonly items: readonly (infer I)[] } ? I
+	: never
+/* eslint-enable @typescript-eslint/indent */
 
 export type TicketType
 	= { readonly type: 'full' }
-	| { readonly type: 'day', readonly day: string }
+	| { readonly type: 'day', readonly day: ReadonlyDate }
 
 export type TicketLevel = {
-	readonly level: 'standard' | 'sponsor' | 'super-sponsor'
+	readonly level: keyof TicketLevelConfig
 	readonly addons: {
-		readonly stagePass: {
+		readonly [K in keyof TicketAddonsConfig]: {
 			readonly selected: boolean
+			readonly options: {
+				[L in keyof TicketAddonsConfig[K]['options']]: ParseAddonOption<TicketAddonsConfig[K]['options'][L]>
+			}
 		}
-		readonly tshirt: {
-			readonly selected: boolean
-			readonly size: 'S' | 'M' | 'L' | 'XL' | 'XXL'
-		}
+		// readonly stagePass: {
+		// 	readonly selected: boolean
+		// }
+		// readonly tshirt: {
+		// 	readonly selected: boolean
+		// 	readonly size: 'S' | 'M' | 'L' | 'XL' | 'XXL'
+		// }
 	}
 }
 

@@ -15,11 +15,7 @@ export const getInvoice = createSelector(getTicketType(), getTicketLevel(), (tic
 		return undefined
 	}
 
-	const ticketLevelConfig = config.ticketLevels.find(l => l.id === ticketLevel.level)
-
-	if (ticketLevelConfig === undefined) {
-		throw new Error('Configuration error: Specified ticket level does not exist!')
-	}
+	const ticketLevelConfig = config.ticketLevels[ticketLevel.level]
 
 	const ticketLine: UncalculatedInvoiceItem = ticketType.type === 'day'
 		? {
@@ -35,13 +31,14 @@ export const getInvoice = createSelector(getTicketType(), getTicketLevel(), (tic
 			unitPrice: ticketLevelConfig.prices.full,
 		}
 
-	const stagePassLine = ticketLevel.addons.stagePass.selected
-		? [{ id: 'register-ticket-addons-stage-pass', amount: 1, unitPrice: config.stagePassPrice }]
-		: []
+	const addonLines = Object.entries(ticketLevel.addons)
+		.filter(([, addon]) => addon.selected)
+		.map(([addonId, addon]) => ({
+			id: `register-ticket-addons-${addonId}`,
+			amount: 1,
+			unitPrice: (config.ticketLevels[ticketLevel.level].includes as readonly string[]).includes(addonId) ? 0 : config.addons[addonId].price,
+			options: addon.options,
+		}))
 
-	const tshirtLine = ticketLevel.addons.tshirt.selected
-		? [{ id: 'register-ticket-addons-tshirt', amount: 1, options: { size: ticketLevel.addons.tshirt.size }, unitPrice: ticketLevel.level === 'standard' ? config.tshirtPrice : 0 }]
-		: []
-
-	return buildInvoice([ticketLine, ...stagePassLine, ...tshirtLine])
+	return buildInvoice([ticketLine, ...addonLines])
 })
