@@ -18,29 +18,47 @@ export default {
 	stagePassPrice: 5,
 	tshirtPrice: 20,
 	tshirtSizes: ['S', 'M', 'L', 'XL', 'XXL'],
-	ticketLevels: [
-		{
-			id: 'standard',
+	ticketLevels: {
+		'standard': {
 			prices: {
 				full: 90,
 				day: 25,
 			},
+			includes: [],
 		},
-		{
-			id: 'sponsor',
+		'sponsor': {
 			prices: {
 				full: 155,
 				day: 45,
 			},
+			includes: ['tshirt'],
 		},
-		{
-			id: 'super-sponsor',
+		'super-sponsor': {
 			prices: {
 				full: 250,
 				day: 125,
 			},
+			includes: ['tshirt'],
 		},
-	],
+	},
+	addons: {
+		'stage-pass': {
+			price: 5,
+			default: true,
+			options: {},
+		},
+		'tshirt': {
+			price: 20,
+			default: false,
+			options: {
+				size: {
+					type: 'select',
+					items: ['S', 'M', 'L', 'XL', 'XXL'],
+					default: null,
+				},
+			},
+		},
+	},
 	rooms: [
 		{ id: 'standard', price: 140, image: StandardRoomImage },
 		{ id: 'deluxe', price: 160, image: DeluxeRoomImage },

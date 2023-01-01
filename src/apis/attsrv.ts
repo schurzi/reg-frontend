@@ -1,8 +1,9 @@
+import { isFriday, isSaturday, isThursday } from 'date-fns'
+import { head, last } from 'ramda'
 import { ajax } from 'rxjs/ajax'
 import config from '~/config'
 /* eslint-disable camelcase */
 import { RegistrationInfo } from '~/state/models/register'
-import { ErrorDto } from './common'
 
 export interface AttendeeDto {
 	readonly id: number | null
@@ -37,6 +38,7 @@ export interface CountdownDto {
 	readonly countdown: number
 }
 
+const optionsToFlags = (options: Readonly<Record<string, boolean>>) => Object.entries(options).filter(last).map(head).join(',')
 
 const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): AttendeeDto => ({
 	id: null, // not used when submitting attendee data, contains badge number when reading them
@@ -46,7 +48,7 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
 	street: registrationInfo.contactInfo.street,
 	zip: registrationInfo.contactInfo.postalCode,
 	city: registrationInfo.contactInfo.city,
-	country: registrationInfo.contactInfo.country.toUpperCase(),
+	country: registrationInfo.contactInfo.country,
 	country_badge: registrationInfo.personalInfo.spokenLanguages[0].toUpperCase(),
 	email: registrationInfo.contactInfo.email,
 	phone: registrationInfo.contactInfo.phoneNumber,
@@ -56,19 +58,27 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
 	birthday: '1995-02-15',
 	gender: 'notprovided',
 	pronouns: registrationInfo.personalInfo.pronouns,
-	tshirt_size: registrationInfo.ticketLevel.addons.tshirt.size,
-	flags: 'hc,anon', // hc = wheelchair, anon = do not use name
-	options: Object
-		.entries(registrationInfo.optionalInfo.notifications)
-		.filter(([, enabled]) => enabled)
-		.map(([id]) => ({
-			animation: 'anim',
-			art: 'art',
-			music: 'music',
-			fursuiting: 'suit',
-		}[id]))
-		.join(','),
-	packages: 'room-none,attendance,stage', // the choices made regarding day guest/full, sponsorship etc.
+	tshirt_size: registrationInfo.ticketLevel.addons.tshirt.options.size,
+	flags: optionsToFlags({
+		hc: registrationInfo.personalInfo.wheelchair,
+		anon: !registrationInfo.personalInfo.fullNamePermission,
+	}),
+	options: optionsToFlags({
+		anim: registrationInfo.optionalInfo.notifications.animation,
+		art: registrationInfo.optionalInfo.notifications.art,
+		music: registrationInfo.optionalInfo.notifications.music,
+		suit: registrationInfo.optionalInfo.notifications.fursuiting,
+	}),
+	packages: optionsToFlags({
+		'room-none': true,
+		'attendance': registrationInfo.ticketType.type === 'full',
+		'day-thu': registrationInfo.ticketType.type === 'day' && isThursday(registrationInfo.ticketType.day),
+		'day-fri': registrationInfo.ticketType.type === 'day' && isFriday(registrationInfo.ticketType.day),
+		'day-sat': registrationInfo.ticketType.type === 'day' && isSaturday(registrationInfo.ticketType.day),
+		'stage': registrationInfo.ticketLevel.addons['stage-pass'].selected,
+		'sponsor': registrationInfo.ticketLevel.level === 'sponsor',
+		'sponsor2': registrationInfo.ticketLevel.level === 'super-sponsor',
+	}),
 	user_comments: registrationInfo.optionalInfo.comments,
 })
 
@@ -88,7 +98,7 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
  *
  * This endpoint is optimized in the backend for high traffic, so it is safe to call during initial reg.
  */
-export const registrationCountdownCheck = () => ajax<CountdownDto | ErrorDto>({
+export const registrationCountdownCheck = () => ajax<CountdownDto>({
 	url: `${config.apis.attsrv.url}/countdown`,
 	method: 'GET',
 	crossDomain: true,
@@ -133,7 +143,7 @@ export const submitRegistration = (registrationInfo: RegistrationInfo) => ajax({
  *
  * This endpoint should be avoided during initial reg, as it entails a database select.
  */
-export const findMyRegistrations = () => ajax<AttendeeIdListDto | ErrorDto>({
+export const findMyRegistrations = () => ajax<AttendeeIdListDto>({
 	url: `${config.apis.attsrv.url}/attendees`,
 	method: 'GET',
 	crossDomain: true,
@@ -150,7 +160,7 @@ export const findMyRegistrations = () => ajax<AttendeeIdListDto | ErrorDto>({
  * 401: The user's token has expired, and you need to redirect them to the auth start to refresh it.
  * 500: It is important to communicate the ErrorDto's requestid field to the user, so they can give it to us, so we can look in the logs.
  */
-export const loadRegistration = (id: number) => ajax<AttendeeDto | ErrorDto>({
+export const loadRegistration = (id: number) => ajax<AttendeeDto>({
 	url: `${config.apis.attsrv.url}/attendees/${id}`,
 	method: 'GET',
 	crossDomain: true,

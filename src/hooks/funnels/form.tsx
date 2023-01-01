@@ -33,7 +33,7 @@ const localizeValidations = <TFieldValues extends FieldValues, TFieldName extend
 	{ required, min, max, minLength, maxLength, pattern, validate, ...rest }: LocalizedRegisterOptions<TFieldValues, TFieldName> = {},
 ): RegisterOptions<TFieldValues, TFieldName> => {
 	const getMessage = (rulename: string, args?: DeepReadonlyForDate<Record<string, FluentVariable>>) =>
-		l10n.getString(`${prefix}-validation-errors-${name.split('.').filter(x => Number.isNaN(Number(x))).map(paramCase).join('-')}-${rulename}`, args)
+		l10n.getString(`${prefix}-validation-errors-${name.split('.').filter(x => Number.isNaN(Number(x))).map(x => paramCase(x)).join('-')}-${rulename}`, args)
 
 	// eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
 	const localizedValidate = <TFieldValue,>(id: string, f: LocalizedValidate<TFieldValue>) => (value: TFieldValue) => f(value) || getMessage(id)

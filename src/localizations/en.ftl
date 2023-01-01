@@ -138,6 +138,14 @@ register-ticket-level-addons-item-tshirt =
 register-ticket-level-addons-item-tshirt-option-size =
   .label = T-shirt size
 
+register-ticket-level-addons-item-tshirt-option-size-value = { $value ->
+ *[S]   Small
+  [M]   Medium
+  [L]   Large
+  [XL]  X-Large
+  [XXL] XX-Large
+}
+
 register-ticket-level-validation-errors-level-required = Please select a ticket level.
 
 register-ticket-level-validation-errors-addons-tshirt-size-required = Please select a T-shirt size.
@@ -308,6 +316,15 @@ register-thank-you-content =
 
 
 
+register-not-open-yet-title = Registration is not open yet!
+register-not-open-yet-content =
+  We are not yet accepting registrations.
+  Check back here when registration opens!
+
+
+
+
+
 # Common hotel booking messages
 hotel-booking-header-title = Welcome to Eurofurence 2022!
 
@@ -449,14 +466,6 @@ notification-type = { $type ->
   [animation]  { -notification-type(type: "animation") }
   [music]      { -notification-type(type: "music") }
  *[fursuiting] { -notification-type(type: "fursuiting") }
-}
-
-tshirt-size = { $size ->
- *[S]   Small
-  [M]   Medium
-  [L]   Large
-  [XL]  X-Large
-  [XXL] XX-Large
 }
 
 country-name = { $countryCode ->
