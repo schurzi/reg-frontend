@@ -77,6 +77,7 @@
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "lint": "eslint ./src",
+    "tsc": "tsc",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "repository": {
