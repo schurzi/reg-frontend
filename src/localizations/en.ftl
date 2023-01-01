@@ -316,6 +316,15 @@ register-thank-you-content =
 
 
 
+register-not-open-yet-title = Registration is not open yet!
+register-not-open-yet-content =
+  We are not yet accepting registrations.
+  Check back here when registration opens!
+
+
+
+
+
 # Common hotel booking messages
 hotel-booking-header-title = Welcome to Eurofurence 2022!
 

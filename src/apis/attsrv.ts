@@ -4,7 +4,6 @@ import { ajax } from 'rxjs/ajax'
 import config from '~/config'
 /* eslint-disable camelcase */
 import { RegistrationInfo } from '~/state/models/register'
-import type { ErrorDto } from './common'
 
 export interface AttendeeDto {
 	readonly id: number | null
@@ -49,7 +48,7 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
 	street: registrationInfo.contactInfo.street,
 	zip: registrationInfo.contactInfo.postalCode,
 	city: registrationInfo.contactInfo.city,
-	country: registrationInfo.contactInfo.country.toUpperCase(),
+	country: registrationInfo.contactInfo.country,
 	country_badge: registrationInfo.personalInfo.spokenLanguages[0].toUpperCase(),
 	email: registrationInfo.contactInfo.email,
 	phone: registrationInfo.contactInfo.phoneNumber,
@@ -99,7 +98,7 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
  *
  * This endpoint is optimized in the backend for high traffic, so it is safe to call during initial reg.
  */
-export const registrationCountdownCheck = () => ajax<CountdownDto | ErrorDto>({
+export const registrationCountdownCheck = () => ajax<CountdownDto>({
 	url: `${config.apis.attsrv.url}/countdown`,
 	method: 'GET',
 	crossDomain: true,
@@ -144,7 +143,7 @@ export const submitRegistration = (registrationInfo: RegistrationInfo) => ajax({
  *
  * This endpoint should be avoided during initial reg, as it entails a database select.
  */
-export const findMyRegistrations = () => ajax<AttendeeIdListDto | ErrorDto>({
+export const findMyRegistrations = () => ajax<AttendeeIdListDto>({
 	url: `${config.apis.attsrv.url}/attendees`,
 	method: 'GET',
 	crossDomain: true,
@@ -161,7 +160,7 @@ export const findMyRegistrations = () => ajax<AttendeeIdListDto | ErrorDto>({
  * 401: The user's token has expired, and you need to redirect them to the auth start to refresh it.
  * 500: It is important to communicate the ErrorDto's requestid field to the user, so they can give it to us, so we can look in the logs.
  */
-export const loadRegistration = (id: number) => ajax<AttendeeDto | ErrorDto>({
+export const loadRegistration = (id: number) => ajax<AttendeeDto>({
 	url: `${config.apis.attsrv.url}/attendees/${id}`,
 	method: 'GET',
 	crossDomain: true,
