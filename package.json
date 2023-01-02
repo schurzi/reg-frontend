@@ -7,7 +7,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
-    "@eurofurence/reg-component-library": "^0.0.12",
+    "@eurofurence/reg-component-library": "^0.0.13",
     "@fluent/bundle": "^0.17.1",
     "@fluent/react": "^0.14.1",
     "axios": "^1.1.3",
@@ -53,6 +53,7 @@
     "eslint-plugin-promise": "^6.1.1",
     "gatsby-plugin-react-svg": "^3.1.0",
     "ts-essentials": "^9.3.0",
+    "type-fest": "^3.5.0",
     "typescript": "^4.8.4",
     "utility-types": "^3.10.0"
   },

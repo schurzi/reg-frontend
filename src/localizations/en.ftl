@@ -448,6 +448,31 @@ hotel-booking-email-description =
 
   The secret code will also be sent out on our [https://twitter.com/eurofurence](Twitter) and Telegram accounts.
 
+
+# Error reporting
+funnel-error-report-title = Oh no...
+
+funnel-error-report-operation = {$operation ->
+  [registration-submission] We couldn't submit your registration.
+ *[unknown]                 We encountered an error trying to handle your request.
+}
+
+funnel-error-report-message = {$category ->
+  [attsrv] {$code ->
+    [attendee-data-duplicate]  There is already an attendee registered with the information you supplied.
+    [attendee-data-invalid]    The information you filled in was not accepted by the server. This shouldn't happen under normal conditions. Please try again in a few minutes or contact support.
+    [attendee-parse-error]     The server did not understand the information the website sent to it. This shouldn't happen under normal conditions. Please try again in a few minutes or contact support.
+    [attendee-write-error]     An error occurred when trying to save your attendee information. This shouldn't happen under normal conditions. Please try again in a few minutes or contact support.
+    [auth-forbidden]           You do not have permission to do this. Contact support if you believe this is a mistake.
+   *[unknown]                  The server encountered an unexpected problem while processing your request. Please try again in a few minutes or contact support.
+  }
+ *[frontend] {$code ->
+    [network-error]            We could not reach the server to process your request. Please check if you are connected to the internet.
+   *[unknown]                  An error occurred when we tried to handle your request. Please try again later. If this problem persists, try clearing your browser's cache and refreshing the page. If that doesn't resolve the problem, contact support.
+  }
+}
+
+
 # General utility messages
 price = {$price ->
    [0]     Free
