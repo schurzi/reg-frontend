@@ -148,7 +148,7 @@ register-ticket-level-addons-item-tshirt-option-size-value = { $value ->
 
 register-ticket-level-validation-errors-level-required = Please select a ticket level.
 
-register-ticket-level-validation-errors-addons-tshirt-size-required = Please select a T-shirt size.
+register-ticket-level-validation-errors-addons-tshirt-options-size-required = Please select a T-shirt size.
 
 
 
