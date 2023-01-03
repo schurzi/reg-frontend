@@ -1,5 +1,5 @@
 /*
- * A layout that's common to all funnel pages.
+ * A layout that's common to all funnel step pages.
  * Features a header that can be passed as the `headerContent` prop and a footer showing navigation buttons,
  * of which the "back" button will be invisible if `isFirstPage` is true.
  */
@@ -23,7 +23,7 @@ const Nav = styled.nav`
 	column-gap: 22px;
 `
 
-export interface CommonFunnelLayoutProps {
+export interface StepFunnelLayoutProps {
 	readonly children: ReadonlyReactNode
 	readonly header?: ReadonlyReactNode
 	readonly isFirstPage?: boolean
@@ -32,7 +32,7 @@ export interface CommonFunnelLayoutProps {
 	readonly showBack?: boolean
 }
 
-const CommonFunnelLayout = ({ children, header: headerContent, isFirstPage = false, isLastPage = false, onNext, showBack = false }: CommonFunnelLayoutProps) => <Page>
+const StepFunnelLayout = ({ children, header: headerContent, isFirstPage = false, isLastPage = false, onNext, showBack = false }: StepFunnelLayoutProps) => <Page>
 	<header>
 		{headerContent}
 	</header>
@@ -45,4 +45,4 @@ const CommonFunnelLayout = ({ children, header: headerContent, isFirstPage = fal
 	</Footer>
 </Page>
 
-export default CommonFunnelLayout
+export default StepFunnelLayout

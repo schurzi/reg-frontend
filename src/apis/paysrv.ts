@@ -2,6 +2,17 @@ import { ajax } from 'rxjs/ajax'
 import config from '~/config'
 /* eslint-disable camelcase */
 import { sum } from 'ramda'
+import type { ErrorDto as CommonErrorDto } from './common'
+
+export type ErrorMessage =
+	| 'Status Error (Bad Request)'
+	| 'Status Error (Unauthorized)'
+	| 'Status Error (Forbidden)'
+	| 'Status Error (Not Found)'
+	| 'Status Error (Conflict)'
+	| 'Status Error (Internal Server Error)'
+
+export type ErrorDto = CommonErrorDto<ErrorMessage>
 
 export type TransactionType = 'due' | 'payment'
 export type Method = 'credit' | 'paypal' | 'transfer' | 'internal' | 'gift'

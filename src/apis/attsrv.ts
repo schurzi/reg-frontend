@@ -4,6 +4,7 @@ import { ajax } from 'rxjs/ajax'
 import config from '~/config'
 /* eslint-disable camelcase */
 import { RegistrationInfo } from '~/state/models/register'
+import type { ErrorDto as CommonErrorDto } from './common'
 
 export interface AttendeeDto {
 	readonly id: number | null
@@ -14,7 +15,8 @@ export interface AttendeeDto {
 	readonly zip: string
 	readonly city: string
 	readonly country: string // DE
-	readonly country_badge: string // will change soon
+	readonly spoken_languages: string
+	readonly registration_language: string
 	readonly state: string | null
 	readonly email: string
 	readonly phone: string
@@ -29,6 +31,47 @@ export interface AttendeeDto {
 	readonly packages: string // room-none,attendance,sponsor
 	readonly user_comments: string | null
 }
+
+export type ErrorMessage =
+	| 'admin.data.invalid'
+	| 'admin.parse.error'
+	| 'admin.read.error'
+	| 'admin.write.error'
+	| 'attendee.data.duplicate'
+	| 'attendee.data.invalid'
+	| 'attendee.id.invalid'
+	| 'attendee.id.notfound'
+	| 'attendee.max_id.error'
+	| 'attendee.owned.error'
+	| 'attendee.owned.notfound'
+	| 'attendee.parse.error'
+	| 'attendee.write.error'
+	| 'auth.forbidden'
+	| 'auth.unauthorized'
+	| 'ban.data.duplicate'
+	| 'ban.data.invalid'
+	| 'ban.id.invalid'
+	| 'ban.id.notfound'
+	| 'ban.parse.error'
+	| 'ban.read.error'
+	| 'ban.write.error'
+	| 'internal.error'
+	| 'search.parse.error'
+	| 'search.read.error'
+	| 'status.cannot.delete'
+	| 'status.data.invalid'
+	| 'status.has.paid'
+	| 'status.mail.error'
+	| 'status.parse.error'
+	| 'status.payment.error'
+	| 'status.read.error'
+	| 'status.unchanged.invalid'
+	| 'status.unpaid.dues'
+	| 'status.use.approved'
+	| 'status.write.error'
+	| 'unknown'
+
+export type ErrorDto = CommonErrorDto<ErrorMessage>
 
 export interface AttendeeIdListDto {
 	readonly ids: readonly number[]
@@ -49,7 +92,8 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
 	zip: registrationInfo.contactInfo.postalCode,
 	city: registrationInfo.contactInfo.city,
 	country: registrationInfo.contactInfo.country,
-	country_badge: registrationInfo.personalInfo.spokenLanguages[0].toUpperCase(),
+	spoken_languages: registrationInfo.personalInfo.spokenLanguages.map(l => l.toUpperCase()).join(','),
+	registration_language: 'en-US',
 	email: registrationInfo.contactInfo.email,
 	phone: registrationInfo.contactInfo.phoneNumber,
 	telegram: registrationInfo.contactInfo.telegramUsername,
