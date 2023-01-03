@@ -12,12 +12,13 @@ import AdditionalInfo from '~/components/funnels/funnels/hotel-booking/steps/add
 import Email from '~/components/funnels/funnels/hotel-booking/steps/email'
 
 import * as ROUTES from './routes'
+import { withPrefix } from 'gatsby'
 
 export const EFRouter = () =>
 	<IndexPage />
 
 export const RegisterRouter = () =>
-	<Router basepath="/register">
+	<Router basepath={withPrefix('/register')}>
 		<Ticket default path={`/${ROUTES.REGISTER_TICKET}/*`} />
 		<Personal path={`/${ROUTES.REGISTER_PERSONAL}`} />
 		<Contact path={`/${ROUTES.REGISTER_CONTACT}`} />
@@ -27,7 +28,7 @@ export const RegisterRouter = () =>
 	</Router>
 
 export const HotelBookingRouter = () =>
-	<Router basepath="/hotel-booking">
+	<Router basepath={withPrefix('/hotel-booking')}>
 		<Room path={ROUTES.HOTEL_BOOKING_ROOM} />
 		<Guests path={ROUTES.HOTEL_BOOKING_GUESTS} />
 		<AdditionalInfo path={ROUTES.HOTEL_BOOKING_ADDITIONAL_INFO} />
