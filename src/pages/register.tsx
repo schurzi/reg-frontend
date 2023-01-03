@@ -11,12 +11,13 @@ import { StatusCodes } from 'http-status-codes'
 import { InitiateLogin } from '~/state/actions/auth'
 import { useAppDispatch } from '~/hooks/redux'
 import NotOpenYet from '~/components/funnels/funnels/register/not-open-yet'
+import FunnelErrorGuard from '~/components/funnels/error-guard'
 
 export const Head = () => <SEO title="Register" />
 
 const Content = ({ isRegistrationOpen }: { readonly isRegistrationOpen: boolean | null }) => {
 	switch (isRegistrationOpen) {
-		case true: return <RegisterRouter/>
+		case true: return <FunnelErrorGuard><RegisterRouter/></FunnelErrorGuard>
 		case false: return <NotOpenYet/>
 		case null: return <div>Loading...</div>
 	}

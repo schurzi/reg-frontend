@@ -6,7 +6,7 @@ import styled from '@emotion/styled'
 import InvoiceComponent from '~/components/funnels/invoice/invoice'
 import { Invoice } from '~/state/models/invoice'
 import type { ReadonlyReactNode } from '~/util/readonly-types'
-import CommonFunnelLayout from './common'
+import StepFunnelLayout from './step'
 
 export interface WithInvoiceFunnelLayoutProps {
 	readonly header?: ReadonlyReactNode
@@ -29,13 +29,13 @@ const GridConformer = styled.div`
 `
 
 const WithInvoiceFunnelLayout = ({ children, onNext, invoiceTitle, invoice, ...passthroughProps }: WithInvoiceFunnelLayoutProps) =>
-	<CommonFunnelLayout {...passthroughProps} onNext={onNext}>
+	<StepFunnelLayout {...passthroughProps} onNext={onNext}>
 		<Grid>
 			<GridConformer>
 				{children}
 			</GridConformer>
 			<InvoiceComponent title={invoiceTitle} invoice={invoice}/>
 		</Grid>
-	</CommonFunnelLayout>
+	</StepFunnelLayout>
 
 export default WithInvoiceFunnelLayout
