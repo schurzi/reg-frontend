@@ -1,6 +1,6 @@
 import { ReactLocalization, useLocalization } from '@fluent/react'
 import { useEffect } from 'react'
-import { useForm, FieldValues, RegisterOptions, FieldPath, FieldPathValue, Path, UnPackAsyncDefaultValues, ControllerProps, Controller } from 'react-hook-form'
+import { useForm, FieldValues, RegisterOptions, FieldPath, FieldPathValue, Path, ControllerProps, Controller } from 'react-hook-form'
 import { DeepReadonly } from 'ts-essentials'
 import type { DeepReadonly as DeepReadonlyForDate } from 'utility-types'
 import { mapObjIndexed } from 'ramda'
@@ -79,7 +79,7 @@ export const useFunnelForm = <F extends FormIds>(id: F) => {
 
 	const FunnelController = <
 		TFieldValues extends FieldValues = FieldValues,
-		TName extends Path<UnPackAsyncDefaultValues<TFieldValues>> = Path<UnPackAsyncDefaultValues<TFieldValues>>
+		TName extends Path<TFieldValues> = Path<TFieldValues>
 	// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 	>({ rules, ...props }: Omit<ControllerProps<TFieldValues, TName>, 'rules'> & { rules: LocalizedRules<TFieldValues, TName> }) => {
 		const { l10n } = useLocalization()
