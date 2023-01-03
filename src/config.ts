@@ -1,9 +1,14 @@
 /* eslint-disable max-len */
 
+import { withPrefix } from 'gatsby'
+
 import StandardRoomImage from '~/images/rooms/standard_room.inline.svg'
 import DeluxeRoomImage from '~/images/rooms/deluxe_room.inline.svg'
 import JuniorSuiteImage from '~/images/rooms/junior_suite.inline.svg'
 import DeluxeSuiteImage from '~/images/rooms/suite_deluxe.inline.svg'
+
+// eslint-disable-next-line no-process-env
+const apiPath = (path: string) => process.env.GATSBY_API_BASE_URL === undefined ? withPrefix(path) : `${process.env.GATSBY_API_BASE_URL}${path}`
 
 export default {
 	eventName: 'Eurofurence',
@@ -66,17 +71,16 @@ export default {
 		{ id: 'deluxe-suite', price: 228, image: DeluxeSuiteImage },
 	],
 	apis: {
-		// can we discover the base path so the URLs are correct even in the presence of a path prefix?
 		authsrv: {
 			// this could be '/some-secret-prefix/authsrv', if our app is under '/some-secret-prefix/app' in the testing environment
-			url: '/authsrv/v1',
+			url: apiPath('/authsrv/v1'),
 			appName: 'registration-system',
 		},
 		attsrv: {
-			url: '/attsrv/api/rest/v1',
+			url: apiPath('/attsrv/api/rest/v1'),
 		},
 		paysrv: {
-			url: '/paysrv/api/rest/v1',
+			url: apiPath('/paysrv/api/rest/v1'),
 		},
 	},
 	websiteLinks: {
