@@ -26,6 +26,14 @@ gatsby telemetry --disable
 npm install
 ```
 
+#### set up a local dotenv
+
+```
+cp .example.env.development .env.development
+```
+
+Edit this new file and fill in the env vars with the test env information.
+
 ### run locally
 
 ```
