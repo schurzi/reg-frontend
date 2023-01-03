@@ -7,7 +7,7 @@
 import styled from '@emotion/styled'
 import { Button, Page } from '@eurofurence/reg-component-library'
 import { Localized } from '@fluent/react'
-import { navigate } from '@reach/router'
+import { navigate } from 'gatsby'
 import type { ReadonlyReactNode } from '~/util/readonly-types'
 
 const Footer = styled.footer`

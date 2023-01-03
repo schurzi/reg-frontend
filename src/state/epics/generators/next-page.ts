@@ -1,5 +1,5 @@
 import { Epic, ofType } from 'redux-observable'
-import { navigate } from '@reach/router'
+import { navigate } from 'gatsby'
 import { ignoreElements, tap } from 'rxjs/operators'
 import { AnyAppAction, GetAction } from '~/state/actions'
 import { AppState } from '~/state'
