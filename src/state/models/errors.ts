@@ -6,6 +6,7 @@ export type FrontendErrorCode =
 	| 'unknown'
 
 export type AppErrorOperation =
+	| 'registration-open-check'
 	| 'registration-submission'
 	| 'unknown'
 

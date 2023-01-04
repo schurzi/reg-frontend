@@ -1,4 +1,4 @@
-import { tap, concatMap, withLatestFrom, ignoreElements } from 'rxjs/operators'
+import { tap, concatMap, withLatestFrom, ignoreElements, catchError } from 'rxjs/operators'
 import { combineEpics, ofType } from 'redux-observable'
 import { AnyAppAction, GetAction } from '~/state/actions'
 import { always } from 'ramda'
@@ -10,7 +10,7 @@ import { submitRegistration } from '~/apis/attsrv'
 import { navigate } from 'gatsby'
 import { getRegistrationInfo } from '~/state/selectors/register'
 import { RegistrationInfo } from '~/state/models/register'
-import { catchAttSrvApiError } from './operators/error-handling'
+import { handleAttSrvApiError } from './error-handlers/apis'
 
 export default combineEpics<GetAction<AnyAppAction>, GetAction<AnyAppAction>, AppState>(
 	// Navigation in the funnel
@@ -28,7 +28,7 @@ export default combineEpics<GetAction<AnyAppAction>, GetAction<AnyAppAction>, Ap
 		concatMap(([, state]) => submitRegistration(getRegistrationInfo()(state) as RegistrationInfo).pipe(
 			tap(() => navigate('/register/thank-you')),
 			ignoreElements(),
-			catchAttSrvApiError('registration-submission'),
+			catchError(handleAttSrvApiError('registration-submission')),
 		)),
 	),
 )

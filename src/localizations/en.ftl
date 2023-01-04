@@ -454,7 +454,7 @@ funnel-error-report-title = Oh no...
 
 funnel-error-report-operation = {$operation ->
   [registration-submission] We couldn't submit your registration.
- *[unknown]                 We encountered an error trying to handle your request.
+ *[unknown]                 There was an error handling your request.
 }
 
 funnel-error-report-message = {$category ->
