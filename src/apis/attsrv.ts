@@ -92,7 +92,7 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
 	zip: registrationInfo.contactInfo.postalCode,
 	city: registrationInfo.contactInfo.city,
 	country: registrationInfo.contactInfo.country,
-	spoken_languages: registrationInfo.personalInfo.spokenLanguages.map(l => l.toUpperCase()).join(','),
+	spoken_languages: registrationInfo.personalInfo.spokenLanguages.join(','),
 	registration_language: 'en-US',
 	email: registrationInfo.contactInfo.email,
 	phone: registrationInfo.contactInfo.phoneNumber,
