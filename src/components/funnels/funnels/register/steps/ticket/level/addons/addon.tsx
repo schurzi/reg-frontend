@@ -22,7 +22,7 @@ const TicketLevelAddon = ({ addon, formContext }: TicketLevelAddonProps) => {
 
 	const level = watch('level')
 
-	const isIncluded = level !== null && (config.ticketLevels[level].includes as readonly string[]).includes(addon.id)
+	const isIncluded = level !== null && (config.ticketLevels[level].includes?.includes(addon.id) ?? false)
 
 	useEffect(() => {
 		setValue(`addons.${addon.id}.selected`, isIncluded ? true : addon.default)

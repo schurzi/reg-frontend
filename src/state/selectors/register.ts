@@ -36,7 +36,7 @@ export const getInvoice = createSelector(getTicketType(), getTicketLevel(), (tic
 		.map(([addonId, addon]) => ({
 			id: `register-ticket-addons-${addonId}`,
 			amount: 1,
-			unitPrice: (config.ticketLevels[ticketLevel.level].includes as readonly string[]).includes(addonId) ? 0 : config.addons[addonId].price,
+			unitPrice: config.ticketLevels[ticketLevel.level].includes?.includes(addonId) ?? false ? 0 : config.addons[addonId].price,
 			options: addon.options,
 		}))
 
