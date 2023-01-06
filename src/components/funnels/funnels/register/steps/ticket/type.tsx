@@ -4,8 +4,7 @@ import { RadioGroup, RadioCard } from '@eurofurence/reg-component-library'
 import FullWidthRegisterFunnelLayout from '~/components/funnels/funnels/register/layout/form/full-width'
 import { useFunnelForm } from '~/hooks/funnels/form'
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
-import conCatDay from '~/images/con-cats/ticket-types/day.png'
-import conCatFull from '~/images/con-cats/ticket-types/full.png'
+import { StaticImage } from 'gatsby-plugin-image'
 
 const TicketTypeGrid = styled.div`
 	display: flex;
@@ -20,10 +19,6 @@ const ConCat = styled.figure`
 	position: relative;
 `
 
-const ConCatImage = styled.img`
-	width: 100%;
-`
-
 const TicketType = (_: ReadonlyRouteComponentProps) => {
 	const { register, handleSubmit } = useFunnelForm('register-ticket-type')
 
@@ -33,12 +28,12 @@ const TicketType = (_: ReadonlyRouteComponentProps) => {
 				<TicketTypeGrid>
 					<Localized id="register-ticket-type-day" attrs={{ label: true }}>
 						<RadioCard label="Day ticket" value="day" {...register('type', { required: true })}>
-							<ConCat><ConCatImage src={conCatDay}/></ConCat>
+							<ConCat><StaticImage src="../../../../../../images/con-cats/ticket-types/day.png" alt=""/></ConCat>
 						</RadioCard>
 					</Localized>
 					<Localized id="register-ticket-type-full" attrs={{ label: true }}>
 						<RadioCard label="Full convention" value="full" {...register('type', { required: true })}>
-							<ConCat><ConCatImage src={conCatFull}/></ConCat>
+							<ConCat><StaticImage src="../../../../../../images/con-cats/ticket-types/full.png" alt=""/></ConCat>
 						</RadioCard>
 					</Localized>
 				</TicketTypeGrid>

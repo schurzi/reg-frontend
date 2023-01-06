@@ -1,8 +1,8 @@
 import styled from '@emotion/styled'
 import { Button } from '@eurofurence/reg-component-library'
 import { Localized } from '@fluent/react'
+import { StaticImage } from 'gatsby-plugin-image'
 import ReactMarkdown from 'react-markdown'
-import conCat from '~/images/con-cats/days/wednesday.png'
 import { AppError, FrontendAppError } from '~/state/models/errors'
 import SplashFunnelLayout from './layout/splash'
 
@@ -18,7 +18,7 @@ export interface FunnelErrorReportProps {
 const FunnelErrorReport = ({ error, onBack }: FunnelErrorReportProps) => {
 	const { operation, category, code } = error instanceof AppError ? error as AppError : new FrontendAppError('unknown', 'unknown', error.message)
 
-	return <SplashFunnelLayout image={conCat}>
+	return <SplashFunnelLayout image={<StaticImage src="../../images/con-cats/days/wednesday.png" alt=""/>}>
 		<Localized id="funnel-error-report-title"><h1>Oh no...</h1></Localized>
 		<Localized id="funnel-error-report-operation" vars={{ operation }}><h2>We encountered an error trying to handle your request.</h2></Localized>
 		<Localized id="funnel-error-report-message" vars={{ category, code }}>

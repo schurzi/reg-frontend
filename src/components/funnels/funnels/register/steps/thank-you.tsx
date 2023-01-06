@@ -2,9 +2,9 @@ import { Localized } from '@fluent/react'
 import ReactMarkdown from 'react-markdown'
 import SplashFunnelLayout from '~/components/funnels/layout/splash'
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
-import conCat from '~/images/con-cats/thank-you.png'
+import { StaticImage } from 'gatsby-plugin-image'
 
-const ThankYou = (_: ReadonlyRouteComponentProps) => <SplashFunnelLayout image={conCat}>
+const ThankYou = (_: ReadonlyRouteComponentProps) => <SplashFunnelLayout image={<StaticImage src="../../../../../images/con-cats/thank-you.png" alt=""/>}>
 	<Localized id="register-thank-you-title"><h1>Thank you for your registration</h1></Localized>
 	<Localized id="register-thank-you-subtitle"><h2>Next steps</h2></Localized>
 	<Localized id="register-thank-you-content">
