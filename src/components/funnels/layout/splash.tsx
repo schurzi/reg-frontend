@@ -1,8 +1,8 @@
 import { Splash } from '@eurofurence/reg-component-library'
-import { ReadonlyReactNode } from '~/util/readonly-types'
+import { ReadonlyReactElement, ReadonlyReactNode } from '~/util/readonly-types'
 
 export interface SplashFunnelLayoutProps {
-	readonly image: string
+	readonly image: ReadonlyReactElement
 	readonly children: ReadonlyReactNode
 }
 

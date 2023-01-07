@@ -6,11 +6,7 @@ import { useFunnelForm } from '~/hooks/funnels/form'
 import FullWidthRegisterFunnelLayout from '~/components/funnels/funnels/register/layout/form/full-width'
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 import { formatISOWithOptions, eachDayOfInterval, getDay } from 'date-fns/fp'
-import conCatWednesday from '~/images/con-cats/days/wednesday.png'
-import conCatThursday from '~/images/con-cats/days/thursday.png'
-import conCatFriday from '~/images/con-cats/days/friday.png'
-import conCatSaturday from '~/images/con-cats/days/saturday.png'
-import conCatSunday from '~/images/con-cats/days/sunday.png'
+import { StaticImage } from 'gatsby-plugin-image'
 
 const Grid = styled.div`
 	display: grid;
@@ -22,14 +18,20 @@ const ConCat = styled.figure`
 	position: relative;
 `
 
-const ConCatImage = styled.img`
-	width: 100%;
-`
-
-const conCats = [conCatSunday, null, null, conCatWednesday, conCatThursday, conCatFriday, conCatSaturday]
-
 const TicketDay = (_: ReadonlyRouteComponentProps) => {
 	const { register, handleSubmit } = useFunnelForm('register-ticket-day')
+
+	/* eslint-disable react/jsx-key */
+	const conCats = [
+		<StaticImage src="../../../../../../images/con-cats/days/sunday.png" alt=""/>,
+		null,
+		null,
+		<StaticImage src="../../../../../../images/con-cats/days/wednesday.png" alt=""/>,
+		<StaticImage src="../../../../../../images/con-cats/days/thursday.png" alt=""/>,
+		<StaticImage src="../../../../../../images/con-cats/days/friday.png" alt=""/>,
+		<StaticImage src="../../../../../../images/con-cats/days/saturday.png" alt=""/>,
+	]
+	/* eslint-enable react/jsx-key */
 
 	return <FullWidthRegisterFunnelLayout onNext={handleSubmit} currentStep={0} showBack={true}>
 		<form onSubmit={handleSubmit}>
@@ -38,7 +40,7 @@ const TicketDay = (_: ReadonlyRouteComponentProps) => {
 					{eachDayOfInterval({ start: config.eventStartDate, end: config.eventEndDate }).map(date =>
 						<Localized id="register-ticket-day-card" key={formatISOWithOptions({ representation: 'date' }, date)} attrs={{ label: true }} vars={{ date }}>
 							<RadioCard label={date.toString()} value={formatISOWithOptions({ representation: 'date' }, date)} {...register('day', { required: true })}>
-								<ConCat><ConCatImage src={conCats[getDay(date)]!}/></ConCat>
+								<ConCat>{conCats[getDay(date)]!}</ConCat>
 							</RadioCard>
 						</Localized>,
 					)}

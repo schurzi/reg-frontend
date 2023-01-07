@@ -23,7 +23,15 @@ module.exports = {
       },
     },
     `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
+    {
+			resolve: 'gatsby-plugin-sharp',
+			options: {
+				defaults: {
+					placeholder: 'blurred',
+				},
+			},
+		},
+		'gatsby-plugin-image',
     // { // TODO: Enable again after we have an icon.
     //   resolve: `gatsby-plugin-manifest`,
     //   options: {
