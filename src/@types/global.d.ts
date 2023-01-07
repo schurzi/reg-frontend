@@ -3,6 +3,7 @@ import { Entries, Replace } from 'type-fest'
 declare global {
 	interface ObjectConstructor {
 		entries<T extends object>(t: T): Entries<T>
+		fromEntries<T extends object>(t: Entries<T>): T
 	}
 
 	interface String {

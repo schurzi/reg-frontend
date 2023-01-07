@@ -48,6 +48,9 @@ const config = checkConfig({
 			price: 5,
 			default: true,
 			options: {},
+			unavailableFor: {
+				type: ['day'],
+			},
 		},
 		'tshirt': {
 			price: 20,
