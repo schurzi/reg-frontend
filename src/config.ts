@@ -15,6 +15,7 @@ const config = checkConfig({
 	eventName: 'Eurofurence',
 	registrationLaunch: new Date('2023-01-21T12:30:23+02:00'),
 	registrationExpirationDate: new Date('2023-01-31'),
+	hoursBeforeEditAvailable: 4,
 	hotelBookingLaunch: new Date('2023-01-28T12:30:23+02:00'),
 	eventStartDate: new Date('2023-08-02'),
 	eventEndDate: new Date('2023-08-06'),

@@ -1,10 +1,13 @@
-import { isFriday, isSaturday, isThursday } from 'date-fns'
+import { eachDayOfInterval, isFriday, isSaturday, isThursday } from 'date-fns'
 import { head, last } from 'ramda'
-import { ajax } from 'rxjs/ajax'
+import { catchError, concatMap, map } from 'rxjs/operators'
+import { ajax, AjaxError } from 'rxjs/ajax'
 import config from '~/config'
 /* eslint-disable camelcase */
 import { RegistrationInfo } from '~/state/models/register'
 import type { ErrorDto as CommonErrorDto } from './common'
+import { of } from 'rxjs'
+import { StatusCodes } from 'http-status-codes'
 
 export interface AttendeeDto {
 	readonly id: number | null
@@ -79,6 +82,8 @@ export interface AttendeeIdListDto {
 
 export interface CountdownDto {
 	readonly countdown: number
+	readonly currentTime: string
+	readonly targetTime: string
 }
 
 const optionsToFlags = (options: Readonly<Record<string, boolean>>) => Object.entries(options).filter(last).map(head).join(',')
@@ -125,6 +130,73 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
 	}),
 	user_comments: registrationInfo.optionalInfo.comments,
 })
+
+const registrationInfoFromAttendeeDto = (attendeeDto: AttendeeDto): RegistrationInfo => {
+	const packages = new Set(attendeeDto.packages.split(','))
+	const flags = new Set(attendeeDto.flags.split(','))
+	const options = new Set(attendeeDto.options.split(','))
+
+	const days = eachDayOfInterval({ start: config.eventStartDate, end: config.eventEndDate })
+
+	return {
+		id: attendeeDto.id!,
+		/* eslint-disable @typescript-eslint/indent */
+		ticketType: packages.has('attendance')
+			? { type: 'full' }
+			: {
+				type: 'day',
+				day: packages.has('day-thu') ? days.find(isThursday)!
+					: packages.has('day-fri') ? days.find(isFriday)!
+					: packages.has('day-sat') ? days.find(isSaturday)!
+					: days.find(isThursday)!, // FIXME: Cough
+			},
+		/* eslint-enable @typescript-eslint/indent */
+		ticketLevel: {
+			level: packages.has('sponsor2') ? 'super-sponsor' : packages.has('sponsor') ? 'sponsor' : 'standard',
+			addons: {
+				'stage-pass': {
+					selected: packages.has('stage'),
+					options: {},
+				},
+				tshirt: {
+					selected: true,
+					options: {
+						size: attendeeDto.tshirt_size as RegistrationInfo['ticketLevel']['addons']['tshirt']['options']['size'],
+					},
+				},
+			},
+		},
+		personalInfo: {
+			nickname: attendeeDto.nickname,
+			firstName: attendeeDto.first_name,
+			lastName: attendeeDto.last_name,
+			dateOfBirth: new Date(attendeeDto.birthday),
+			spokenLanguages: attendeeDto.spoken_languages.split(','),
+			pronouns: attendeeDto.pronouns,
+			wheelchair: flags.has('hc'),
+			fullNamePermission: !flags.has('anon'),
+		},
+		contactInfo: {
+			email: attendeeDto.email,
+			phoneNumber: attendeeDto.phone,
+			telegramUsername: attendeeDto.telegram,
+			street: attendeeDto.street,
+			city: attendeeDto.city,
+			postalCode: attendeeDto.zip,
+			stateOrProvince: attendeeDto.state,
+			country: attendeeDto.country as RegistrationInfo['contactInfo']['country'],
+		},
+		optionalInfo: {
+			comments: attendeeDto.user_comments,
+			notifications: {
+				animation: options.has('anim'),
+				art: options.has('art'),
+				fursuiting: options.has('suit'),
+				music: options.has('music'),
+			},
+		},
+	}
+}
 
 /*
  * GET /countdown checks if registration is open, or when it will open, checking that the user is logged in in the process.
@@ -227,10 +299,24 @@ export const loadRegistration = (id: number) => ajax<AttendeeDto>({
  *
  * 500: It is important to communicate the ErrorDto's requestid field to the user, so they can give it to us, so we can look in the logs.
  */
-export const updateRegistration = (id: number, registrationInfo: RegistrationInfo) => ajax({
-	url: `${config.apis.attsrv.url}/attendees/${id}`,
+export const updateRegistration = (registrationInfo: RegistrationInfo) => ajax({
+	url: `${config.apis.attsrv.url}/attendees/${registrationInfo.id}`,
 	method: 'PUT',
 	crossDomain: true,
 	withCredentials: true,
 	body: attendeeDtoFromRegistrationInfo(registrationInfo),
 })
+
+
+export const findExistingRegistration = () => findMyRegistrations().pipe(
+	concatMap(result =>
+		loadRegistration(result.response.ids[0]).pipe(map(r => registrationInfoFromAttendeeDto(r.response))),
+	),
+	catchError(err => {
+		if (err instanceof AjaxError && err.status === StatusCodes.NOT_FOUND) {
+			return of(undefined)
+		} else {
+			throw err
+		}
+	}),
+)

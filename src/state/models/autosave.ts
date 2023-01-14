@@ -4,7 +4,7 @@ import { HotelBookingState } from '~/state/reducers/hotel-booking'
 
 export interface AutosaveData {
 	readonly forms: FormsState
-	readonly register: RegisterState
+	readonly register: RegisterState['registrationInfo']
 	readonly hotelBooking: HotelBookingState
 }
 

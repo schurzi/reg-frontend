@@ -8,6 +8,7 @@ export type FrontendErrorCode =
 export type AppErrorOperation =
 	| 'registration-open-check'
 	| 'registration-submission'
+	| 'registration-update'
 	| 'unknown'
 
 export type AppErrorCode = {
