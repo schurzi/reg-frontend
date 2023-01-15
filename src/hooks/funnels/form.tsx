@@ -8,7 +8,7 @@ import { paramCase } from 'change-case'
 import { useAppDispatch, useAppSelector } from '~/hooks/redux'
 import { ChangeForm, SubmitForm } from '~/state/actions/forms'
 import { FormIds, FormValuesType } from '~/state/forms'
-import { getFormValues } from '~/state/selectors/forms'
+import { getFormValues, getSubmittedFormValues } from '~/state/selectors/forms'
 import { FluentVariable } from '@fluent/bundle'
 
 type LocalizedValidate<TFieldValue> = (value: TFieldValue) => boolean | Promise<boolean>
@@ -60,8 +60,9 @@ const localizeValidations = <TFieldValues extends FieldValues, TFieldName extend
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const useFunnelForm = <F extends FormIds>(id: F) => {
+	const submittedValues = useAppSelector(getSubmittedFormValues(id))
 	const formValues = useAppSelector(getFormValues(id))
-	const { watch, handleSubmit, register, ...methods } = useForm<FormValuesType<F>>({ defaultValues: formValues as never })
+	const { watch, handleSubmit, register, ...methods } = useForm<FormValuesType<F>>({ defaultValues: (submittedValues ?? formValues) as never })
 	const dispatch = useAppDispatch()
 	const { l10n } = useLocalization()
 

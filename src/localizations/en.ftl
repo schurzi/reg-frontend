@@ -57,6 +57,7 @@ register-header-description =
 
 register-navigation-back = Go back
 register-navigation-next = Continue
+register-navigation-update = Save
 register-navigation-finish = Finish
 
 register-invoice-layout =
