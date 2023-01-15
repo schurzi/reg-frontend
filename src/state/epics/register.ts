@@ -64,7 +64,7 @@ export default combineEpics<GetAction<AnyAppAction>, GetAction<AnyAppAction>, Ap
 				} else if (isBefore(new Date(result.response.currentTime), addHours(new Date(result.response.targetTime), config.hoursBeforeEditAvailable))) {
 					return of({ isOpen: true })
 				} else {
-					return findExistingRegistration().pipe(map(registrationInfo => ({ isOpen: true, registrationInfo })))
+					return findExistingRegistration().pipe(map(registration => ({ isOpen: true, registration })))
 				}
 			}),
 			map(LoadRegistrationState.create),
