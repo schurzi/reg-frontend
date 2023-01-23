@@ -7,6 +7,8 @@ export const getRoomInfo = () => (s: AppState) => s.hotelBooking.roomInfo
 export const getGuestsInfo = () => (s: AppState) => s.hotelBooking.guestsInfo
 export const getAdditionalInfo = () => (s: AppState) => s.hotelBooking.additionalInfo
 
+export const getSaveData = getHotelBookingInfo
+
 export const getInvoice = createSelector(getRoomInfo(), (roomInfo) => {
 	if (roomInfo === undefined) {
 		return undefined

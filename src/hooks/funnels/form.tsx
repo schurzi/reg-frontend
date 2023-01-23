@@ -6,10 +6,13 @@ import type { DeepReadonly as DeepReadonlyForDate } from 'utility-types'
 import { mapObjIndexed } from 'ramda'
 import { paramCase } from 'change-case'
 import { useAppDispatch, useAppSelector } from '~/hooks/redux'
-import { ChangeForm, SubmitForm } from '~/state/actions/forms'
-import { FormIds, FormValuesType } from '~/state/forms'
-import { getFormValues, getSubmittedFormValues } from '~/state/selectors/forms'
+import { SubmitForm } from '~/state/actions/forms'
+import { FormIds, forms, FormValuesType } from '~/state/forms'
+import { getSubmittedFormValues } from '~/state/selectors/forms'
 import { FluentVariable } from '@fluent/bundle'
+import { useRefFn } from '~/hooks/use-ref-fn'
+import { UpdateLastSavedTime } from '~/state/actions/autosave'
+import { load, save } from '~/util/local-storage'
 
 type LocalizedValidate<TFieldValue> = (value: TFieldValue) => boolean | Promise<boolean>
 
@@ -60,14 +63,17 @@ const localizeValidations = <TFieldValues extends FieldValues, TFieldName extend
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const useFunnelForm = <F extends FormIds>(id: F) => {
+	const autosaveValues = useRefFn(() => load<FormValuesType<F>>(`form:${id}`))
 	const submittedValues = useAppSelector(getSubmittedFormValues(id))
-	const formValues = useAppSelector(getFormValues(id))
-	const { watch, handleSubmit, register, ...methods } = useForm<FormValuesType<F>>({ defaultValues: (submittedValues ?? formValues) as never })
+	const { handleSubmit, watch, register, ...methods } = useForm<FormValuesType<F>>({ defaultValues: (submittedValues ?? autosaveValues.current ?? forms[id].defaultValues) as never })
 	const dispatch = useAppDispatch()
 	const { l10n } = useLocalization()
 
 	useEffect(() => {
-		const subscription = watch(formData => dispatch(ChangeForm(id).create(formData as never)))
+		const subscription = watch(formData => {
+			save(`form:${id}`, formData)
+			dispatch(UpdateLastSavedTime.create(new Date()))
+		})
 
 		return () => subscription.unsubscribe()
 	}, [watch])

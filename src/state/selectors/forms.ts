@@ -5,8 +5,6 @@ import { FormIds, FormValuesType } from '../forms'
 
 type GetSubmittedFormValuesFn = <F extends FormIds>(id: F) => (s: AppState) => FormValuesType<F> | undefined
 
-export const getFormValues = <F extends FormIds>(id: F) => (s: AppState) => s.forms[id]
-
 // eslint-disable-next-line complexity
 export const getSubmittedFormValues = ((id: FormIds) => (s: AppState): FormValuesType<FormIds> | undefined => {
 	switch (id) {

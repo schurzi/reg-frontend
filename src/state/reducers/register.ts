@@ -12,7 +12,13 @@ export interface RegisterState {
 }
 
 const defaultState: RegisterState = {
-	registrationInfo: autosaveData?.register ?? {},
+	registrationInfo: autosaveData?.register === undefined ? {} : {
+		...autosaveData.register,
+		personalInfo: autosaveData.register.personalInfo === undefined ? undefined : {
+			...autosaveData.register.personalInfo,
+			dateOfBirth: new Date(autosaveData.register.personalInfo.dateOfBirth),
+		},
+	},
 	isOpen: null,
 }
 

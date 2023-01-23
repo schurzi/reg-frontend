@@ -13,6 +13,14 @@ export const getPersonalInfo = () => (s: AppState) => s.register.registrationInf
 export const getContactInfo = () => (s: AppState) => s.register.registrationInfo.contactInfo
 export const getOptionalInfo = () => (s: AppState) => s.register.registrationInfo.optionalInfo
 
+export const getSaveData = () => (s: AppState) => ({
+	...s.register.registrationInfo,
+	personalInfo: s.register.registrationInfo.personalInfo === undefined ? undefined : {
+		...s.register.registrationInfo.personalInfo,
+		dateOfBirth: s.register.registrationInfo.personalInfo.dateOfBirth.toISOString(),
+	},
+})
+
 export const getInvoice = createSelector(getTicketType(), getTicketLevel(), (ticketType, ticketLevel) => {
 	if (ticketLevel === undefined || ticketType === undefined) {
 		return undefined
