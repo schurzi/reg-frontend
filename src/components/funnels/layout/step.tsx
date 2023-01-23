@@ -44,8 +44,12 @@ const StepFunnelLayout = ({ children, header: headerContent, isFirstPage = false
 		{children}
 		<Footer>
 			<Nav>
-				<Localized id={isEdit ? 'register-navigation-update' : isLastPage ? 'register-navigation-finish' : 'register-navigation-next'}><Button onClick={onNext}>Continue</Button></Localized>
-				{!isFirstPage || showBack ? <Localized id="register-navigation-back"><a onClick={() => navigate(-1)}>Go back</a></Localized> : null}
+				{isEdit && isLastPage ? null : <Localized id={isEdit ? 'register-navigation-update' : isLastPage ? 'register-navigation-finish' : 'register-navigation-next'}>
+					<Button onClick={onNext}>Continue</Button>
+				</Localized>}
+				{isEdit && isLastPage || isFirstPage && !showBack ? null : <Localized id="register-navigation-back">
+					<a onClick={() => navigate(-1)}>Go back</a>
+				</Localized>}
 			</Nav>
 		</Footer>
 	</Page>
