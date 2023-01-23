@@ -5,5 +5,7 @@ export const load = <T>(id: string) => {
 }
 
 export const save = (id: string, saveData: unknown) => {
-	localStorage.setItem(id, JSON.stringify(saveData))
+	if ('localStorage' in globalThis) {
+		localStorage.setItem(id, JSON.stringify(saveData))
+	}
 }
