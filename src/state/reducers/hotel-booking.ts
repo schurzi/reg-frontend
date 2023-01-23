@@ -6,7 +6,9 @@ import autosaveData from '~/state/autosave'
 
 export type HotelBookingState = Partial<HotelBookingInfo>
 
-export default (state: HotelBookingState = autosaveData?.hotelBooking ?? {}, action: GetAction<AnyAppAction>): HotelBookingState => {
+const defaultState: HotelBookingState = autosaveData?.hotelBooking ?? {}
+
+export default (state: HotelBookingState = defaultState, action: GetAction<AnyAppAction>): HotelBookingState => {
 	switch (action.type) {
 		case SubmitForm('hotel-booking-room').type:
 			return { ...state, roomInfo: action.payload as DeepNonNullable<typeof action.payload> }

@@ -57,6 +57,7 @@ register-header-description =
 
 register-navigation-back = Go back
 register-navigation-next = Continue
+register-navigation-update = Save
 register-navigation-finish = Finish
 
 register-invoice-layout =
@@ -453,7 +454,9 @@ hotel-booking-email-description =
 funnel-error-report-title = Oh no...
 
 funnel-error-report-operation = {$operation ->
+  [registration-open-check] We couldn't check if you are already registered.
   [registration-submission] We couldn't submit your registration.
+  [registration-update]     We couldn't update your registration.
  *[unknown]                 There was an error handling your request.
 }
 

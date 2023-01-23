@@ -96,7 +96,7 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 		<Section id="personal" editLink="/register/personal-info" properties={[
 			{ id: 'nickname', value: personalInfo.nickname },
 			{ id: 'full-name', value: `${personalInfo.firstName} ${personalInfo.lastName}` },
-			{ id: 'pronouns', value: l10n.getString('pronouns', { pronouns: personalInfo.pronouns }, personalInfo.pronouns) },
+			{ id: 'pronouns', value: personalInfo.pronouns === null ? '' : l10n.getString('pronouns', { pronouns: personalInfo.pronouns }, personalInfo.pronouns) },
 			{ id: 'wheelchair-accomodation', value: l10n.getString('register-summary-section-personal-property-wheelchair-accomodation-value', { value: personalInfo.wheelchair.toString() }) },
 			{ id: 'spoken-languages', wide: true, value: personalInfo.spokenLanguages.map(langKey => langmap[langKey].nativeName).join(', ') },
 		]}/>
@@ -106,12 +106,12 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 			{ id: 'street', wide: true, value: contactInfo.street },
 			{ id: 'city', value: contactInfo.city },
 			{ id: 'postal-code', value: contactInfo.postalCode },
-			{ id: 'state-or-province', value: contactInfo.stateOrProvince },
+			{ id: 'state-or-province', value: contactInfo.stateOrProvince ?? '' },
 			{ id: 'country', value: contactInfo.country },
 		]}/>
 		<Section id="optional" editLink="/register/optional-info" properties={[
 			{ id: 'notifications', wide: true, value: notificationNames },
-			{ id: 'comments', wide: true, value: optionalInfo.comments },
+			{ id: 'comments', wide: true, value: optionalInfo.comments ?? '' },
 		]}/>
 	</WithInvoiceRegisterFunnelLayout>
 }

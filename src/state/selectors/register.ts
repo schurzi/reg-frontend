@@ -3,12 +3,23 @@ import config from '~/config'
 import { AppState } from '..'
 import { buildInvoice, UncalculatedInvoiceItem } from '../models/invoice'
 
-export const getRegistrationInfo = () => (s: AppState) => s.register
-export const getTicketType = () => (s: AppState) => s.register.ticketType
-export const getTicketLevel = () => (s: AppState) => s.register.ticketLevel
-export const getPersonalInfo = () => (s: AppState) => s.register.personalInfo
-export const getContactInfo = () => (s: AppState) => s.register.contactInfo
-export const getOptionalInfo = () => (s: AppState) => s.register.optionalInfo
+export const isRegistrationOpen = () => (s: AppState) => s.register.isOpen
+export const isEditMode = () => (s: AppState) => s.register.registrationInfo.id !== undefined
+
+export const getRegistrationInfo = () => (s: AppState) => s.register.registrationInfo
+export const getTicketType = () => (s: AppState) => s.register.registrationInfo.ticketType
+export const getTicketLevel = () => (s: AppState) => s.register.registrationInfo.ticketLevel
+export const getPersonalInfo = () => (s: AppState) => s.register.registrationInfo.personalInfo
+export const getContactInfo = () => (s: AppState) => s.register.registrationInfo.contactInfo
+export const getOptionalInfo = () => (s: AppState) => s.register.registrationInfo.optionalInfo
+
+export const getSaveData = () => (s: AppState) => ({
+	...s.register.registrationInfo,
+	personalInfo: s.register.registrationInfo.personalInfo === undefined ? undefined : {
+		...s.register.registrationInfo.personalInfo,
+		dateOfBirth: s.register.registrationInfo.personalInfo.dateOfBirth.toISOString(),
+	},
+})
 
 export const getInvoice = createSelector(getTicketType(), getTicketLevel(), (ticketType, ticketLevel) => {
 	if (ticketLevel === undefined || ticketType === undefined) {

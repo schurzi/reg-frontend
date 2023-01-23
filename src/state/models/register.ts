@@ -36,11 +36,11 @@ export type TicketLevel = {
 export interface ContactInfo {
 	readonly email: string
 	readonly phoneNumber: string
-	readonly telegramUsername: string
+	readonly telegramUsername: string | null
 	readonly street: string
 	readonly city: string
 	readonly postalCode: string
-	readonly stateOrProvince: string
+	readonly stateOrProvince: string | null
 	readonly country: (typeof config.allowedCountries)[number]
 }
 
@@ -51,7 +51,7 @@ export interface OptionalInfo {
 		readonly music: boolean
 		readonly fursuiting: boolean
 	}
-	readonly comments: string
+	readonly comments: string | null
 }
 
 export interface PersonalInfo {
@@ -61,11 +61,12 @@ export interface PersonalInfo {
 	readonly dateOfBirth: ReadonlyDate
 	readonly fullNamePermission: boolean
 	readonly spokenLanguages: readonly string[]
-	readonly pronouns: string
+	readonly pronouns: string | null
 	readonly wheelchair: boolean
 }
 
 export interface RegistrationInfo {
+	readonly id?: number
 	readonly ticketType: TicketType
 	readonly ticketLevel: TicketLevel
 	readonly contactInfo: ContactInfo

@@ -2,10 +2,25 @@ import { RegistrationInfo, TicketLevel, TicketType } from '~/state/models/regist
 import { AnyAppAction, GetAction } from '~/state/actions'
 import type { DeepNonNullable } from 'ts-essentials'
 import { SubmitForm, SubmitFormActionBundle } from '../actions/forms'
+import { LoadRegistrationState } from '../actions/register'
 import autosaveData from '~/state/autosave'
 import config from '~/config'
 
-export type RegisterState = Partial<RegistrationInfo>
+export interface RegisterState {
+	readonly registrationInfo: Partial<RegistrationInfo>
+	readonly isOpen: boolean | null
+}
+
+const defaultState: RegisterState = {
+	registrationInfo: autosaveData?.register === undefined ? {} : {
+		...autosaveData.register,
+		personalInfo: autosaveData.register.personalInfo === undefined ? undefined : {
+			...autosaveData.register.personalInfo,
+			dateOfBirth: new Date(autosaveData.register.personalInfo.dateOfBirth),
+		},
+	},
+	isOpen: null,
+}
 
 const transformTicketLevel = (ticketType: TicketType, payload: GetAction<SubmitFormActionBundle<'register-ticket-level'>>['payload']): TicketLevel => {
 	const { addons, ...payloadRest } = payload as DeepNonNullable<typeof payload>
@@ -25,7 +40,7 @@ const transformPersonalInfo = (payload: GetAction<SubmitFormActionBundle<'regist
 	return { pronouns: pronounsSelection === 'other' ? pronounsOther : pronounsSelection, dateOfBirth: new Date(dateOfBirth), ...rest }
 }
 
-export default (state: RegisterState = autosaveData?.register ?? {}, action: GetAction<AnyAppAction>): RegisterState => {
+const registrationInfoReducer = (state: Partial<RegistrationInfo>, action: GetAction<AnyAppAction>): Partial<RegistrationInfo> => {
 	switch (action.type) {
 		case SubmitForm('register-ticket-type').type:
 			return action.payload.type === 'day' ? state : { ...state, ticketType: { type: action.payload.type! } }
@@ -41,5 +56,21 @@ export default (state: RegisterState = autosaveData?.register ?? {}, action: Get
 			return { ...state, personalInfo: transformPersonalInfo(action.payload) }
 		default:
 			return state
+	}
+}
+
+export default (state: RegisterState = defaultState, action: GetAction<AnyAppAction>): RegisterState => {
+	switch (action.type) {
+		case LoadRegistrationState.type:
+			return {
+				...state,
+				registrationInfo: action.payload.registration ?? state.registrationInfo,
+				isOpen: action.payload.isOpen,
+			}
+		default:
+			return {
+				...state,
+				registrationInfo: registrationInfoReducer(state.registrationInfo, action),
+			}
 	}
 }
