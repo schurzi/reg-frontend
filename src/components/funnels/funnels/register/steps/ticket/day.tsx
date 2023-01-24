@@ -4,9 +4,9 @@ import { RadioGroup, RadioCard } from '@eurofurence/reg-component-library'
 import config from '~/config'
 import { useFunnelForm } from '~/hooks/funnels/form'
 import FullWidthRegisterFunnelLayout from '~/components/funnels/funnels/register/layout/form/full-width'
-import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 import { formatISOWithOptions, eachDayOfInterval, getDay } from 'date-fns/fp'
 import { StaticImage } from 'gatsby-plugin-image'
+import { funnelStep } from '~/components/funnels/funnels/register/funnel-step'
 
 const Grid = styled.div`
 	display: grid;
@@ -18,7 +18,7 @@ const ConCat = styled.figure`
 	position: relative;
 `
 
-const TicketDay = (_: ReadonlyRouteComponentProps) => {
+const TicketDay = () => {
 	const { register, handleSubmit } = useFunnelForm('register-ticket-day')
 
 	/* eslint-disable react/jsx-key */
@@ -33,7 +33,7 @@ const TicketDay = (_: ReadonlyRouteComponentProps) => {
 	]
 	/* eslint-enable react/jsx-key */
 
-	return <FullWidthRegisterFunnelLayout onNext={handleSubmit} currentStep={0} showBack={true}>
+	return <FullWidthRegisterFunnelLayout onNext={handleSubmit}>
 		<form onSubmit={handleSubmit}>
 			<RadioGroup name="day">
 				<Grid>
@@ -50,4 +50,4 @@ const TicketDay = (_: ReadonlyRouteComponentProps) => {
 	</FullWidthRegisterFunnelLayout>
 }
 
-export default TicketDay
+export default funnelStep(0, true)(TicketDay)

@@ -227,7 +227,7 @@ rules:
   '@typescript-eslint/no-empty-interface': error
   '@typescript-eslint/no-explicit-any': error
   '@typescript-eslint/no-extra-non-null-assertion': error
-  '@typescript-eslint/no-extra-parens': error
+  '@typescript-eslint/no-extra-parens': [error, all, { nestedBinaryExpressions: false }]
   '@typescript-eslint/no-extraneous-class': error
   '@typescript-eslint/no-floating-promises': error
   '@typescript-eslint/no-for-in-array': error
@@ -238,7 +238,7 @@ rules:
   '@typescript-eslint/no-invalid-void-type': off
   '@typescript-eslint/no-loop-func': warn
   '@typescript-eslint/no-loss-of-precision': warn
-  '@typescript-eslint/no-magic-numbers': [warn, { ignore: [2, 1, 0, -1, 100, 200, 300, 400, 500, 600, 700, 800, 900], enforceConst: true }]
+  '@typescript-eslint/no-magic-numbers': [warn, { ignore: [10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, -1, 100, 200, 300, 400, 500, 600, 700, 800, 900], enforceConst: true }]
   '@typescript-eslint/no-misused-new': error
   '@typescript-eslint/no-misused-promises':
     - error

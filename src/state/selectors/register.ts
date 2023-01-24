@@ -21,6 +21,18 @@ export const getSaveData = () => (s: AppState) => ({
 	},
 })
 
+export const getNextStep = () => (s: AppState) => {
+	const idx = [
+		s.register.registrationInfo.ticketType,
+		s.register.registrationInfo.ticketLevel,
+		s.register.registrationInfo.personalInfo,
+		s.register.registrationInfo.contactInfo,
+		s.register.registrationInfo.optionalInfo,
+	].findIndex(state => state === undefined)
+
+	return idx === -1 ? undefined : idx
+}
+
 export const getInvoice = createSelector(getTicketType(), getTicketLevel(), (ticketType, ticketLevel) => {
 	if (ticketLevel === undefined || ticketType === undefined) {
 		return undefined

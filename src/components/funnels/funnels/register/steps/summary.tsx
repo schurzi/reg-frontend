@@ -1,6 +1,5 @@
 import { Localized, useLocalization } from '@fluent/react'
 import WithInvoiceRegisterFunnelLayout from '~/components/funnels/funnels/register/layout/form/with-invoice'
-import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 import styled from '@emotion/styled'
 import { useAppDispatch, useAppSelector } from '~/hooks/redux'
 import { getContactInfo, getOptionalInfo, getPersonalInfo } from '~/state/selectors/register'
@@ -8,6 +7,7 @@ import langmap from 'langmap'
 import { Link } from 'gatsby'
 import { css } from '@emotion/react'
 import { SubmitRegistration } from '~/state/actions/register'
+import { funnelStep } from '~/components/funnels/funnels/register/funnel-step'
 
 interface PropertyDefinition {
 	readonly id: string
@@ -77,7 +77,7 @@ const Section = ({ id: sectionId, editLink, properties }: SectionProps) => <Sect
 	</PropertyList>
 </SectionContainer>
 
-const Summary = (_: ReadonlyRouteComponentProps) => {
+const Summary = () => {
 	const personalInfo = useAppSelector(getPersonalInfo())!
 	const contactInfo = useAppSelector(getContactInfo())!
 	const optionalInfo = useAppSelector(getOptionalInfo())!
@@ -90,7 +90,7 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 		.map(([type]) => l10n.getString('notification-type', { type }, type))
 		.join(', ')
 
-	return <WithInvoiceRegisterFunnelLayout onNext={() => dispatch(SubmitRegistration.create(undefined))} currentStep={5}>
+	return <WithInvoiceRegisterFunnelLayout onNext={() => dispatch(SubmitRegistration.create(undefined))}>
 		<Localized id="register-summary-title"><h3>Registration</h3></Localized>
 
 		<Section id="personal" editLink="/register/personal-info" properties={[
@@ -116,4 +116,4 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 	</WithInvoiceRegisterFunnelLayout>
 }
 
-export default Summary
+export default funnelStep(5)(Summary)

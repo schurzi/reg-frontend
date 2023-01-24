@@ -8,9 +8,8 @@ import styled from '@emotion/styled'
 import { Button, Page } from '@eurofurence/reg-component-library'
 import { Localized } from '@fluent/react'
 import { navigate } from 'gatsby'
-import { useAppSelector } from '~/hooks/redux'
-import { isEditMode } from '~/state/selectors/register'
 import type { ReadonlyReactNode } from '~/util/readonly-types'
+import { useFunnelStep } from '~/components/funnels/funnel-step'
 
 const Footer = styled.footer`
 	height: 100px;
@@ -28,14 +27,14 @@ const Nav = styled.nav`
 export interface StepFunnelLayoutProps {
 	readonly children: ReadonlyReactNode
 	readonly header?: ReadonlyReactNode
-	readonly isFirstPage?: boolean
-	readonly isLastPage?: boolean
 	readonly onNext: () => void
-	readonly showBack?: boolean
 }
 
-const StepFunnelLayout = ({ children, header: headerContent, isFirstPage = false, isLastPage = false, onNext, showBack = false }: StepFunnelLayoutProps) => {
-	const isEdit = useAppSelector(isEditMode())
+const StepFunnelLayout = ({ children, header: headerContent, onNext }: StepFunnelLayoutProps) => {
+	const { current, total, isSubstep, isEditMode } = useFunnelStep()
+
+	const isFirstPage = current === 0
+	const isLastPage = current === total - 1
 
 	return <Page>
 		<header>
@@ -44,10 +43,10 @@ const StepFunnelLayout = ({ children, header: headerContent, isFirstPage = false
 		{children}
 		<Footer>
 			<Nav>
-				{isEdit && isLastPage ? null : <Localized id={isEdit ? 'register-navigation-update' : isLastPage ? 'register-navigation-finish' : 'register-navigation-next'}>
+				{isEditMode && isLastPage ? null : <Localized id={isEditMode ? 'register-navigation-update' : isLastPage ? 'register-navigation-finish' : 'register-navigation-next'}>
 					<Button onClick={onNext}>Continue</Button>
 				</Localized>}
-				{isEdit && isLastPage || isFirstPage && !showBack ? null : <Localized id="register-navigation-back">
+				{(isEditMode && isLastPage) || (isFirstPage && !isSubstep) ? null : <Localized id="register-navigation-back">
 					<a onClick={() => navigate(-1)}>Go back</a>
 				</Localized>}
 			</Nav>

@@ -4,9 +4,9 @@ import WithInvoiceRegisterFunnelLayout from '~/components/funnels/funnels/regist
 import langMap from 'langmap'
 import { pluck } from 'ramda'
 import { useFunnelForm } from '~/hooks/funnels/form'
-import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 import { sub } from 'date-fns'
 import config from '~/config'
+import { funnelStep } from '~/components/funnels/funnels/register/funnel-step'
 
 const languageOptions = Object.entries(langMap)
 	.filter(([key]) => !(key as string).includes('-'))
@@ -18,12 +18,12 @@ const languageOptionsByValue = new Map(languageOptions.map(l => [l.value, l]))
 const reAlphaNum = /[\p{Letter}\p{Number}]/ug
 const alphaNumCount = (s: string) => s.match(reAlphaNum)?.length ?? 0
 
-const Personal = (_: ReadonlyRouteComponentProps) => {
+const Personal = () => {
 	const { register, handleSubmit, control, watch, formState: { errors }, FunnelController } = useFunnelForm('register-personal-info')
 
 	const pronounsSelection = watch('pronounsSelection')
 
-	return <WithInvoiceRegisterFunnelLayout onNext={handleSubmit} currentStep={2}>
+	return <WithInvoiceRegisterFunnelLayout onNext={handleSubmit}>
 		<Form onSubmit={handleSubmit}>
 			<Localized id="register-personal-info-nickname" attrs={{ label: true, placeholder: true }}>
 				<TextField
@@ -94,4 +94,4 @@ const Personal = (_: ReadonlyRouteComponentProps) => {
 	</WithInvoiceRegisterFunnelLayout>
 }
 
-export default Personal
+export default funnelStep(2)(Personal)

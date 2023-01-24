@@ -2,16 +2,16 @@ import { Localized, useLocalization } from '@fluent/react'
 import { Form, Select, TextField } from '@eurofurence/reg-component-library'
 import WithInvoiceRegisterFunnelLayout from '~/components/funnels/funnels/register/layout/form/with-invoice'
 import { useFunnelForm } from '~/hooks/funnels/form'
-import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 import { useMemo } from 'react'
 import { countryCodeEmoji } from 'country-code-emoji'
 import config from '~/config'
 import { prop, sortBy } from 'ramda'
+import { funnelStep } from '~/components/funnels/funnels/register/funnel-step'
 
 const reEmail = /^[^@\p{Space_Separator}]+@[^@\p{Space_Separator}]+$/u
 const reTelegram = /^@.+$/u
 
-const Contact = (_: ReadonlyRouteComponentProps) => {
+const Contact = () => {
 	const { register, handleSubmit, control, formState: { errors }, FunnelController } = useFunnelForm('register-contact-info')
 	const { l10n } = useLocalization()
 
@@ -27,7 +27,7 @@ const Contact = (_: ReadonlyRouteComponentProps) => {
 		return { countryOptions, countryOptionsByValue: new Map(countryOptions.map(o => [o.value, o])) }
 	}, [l10n])
 
-	return <WithInvoiceRegisterFunnelLayout onNext={handleSubmit} currentStep={3}>
+	return <WithInvoiceRegisterFunnelLayout onNext={handleSubmit}>
 		<Form onSubmit={handleSubmit}>
 			<Localized id="register-contact-info-email" attrs={{ label: true, placeholder: true }}>
 				<TextField label="Email address" placeholder="john.smith@email.com" error={errors.email?.message} {...register('email', { required: true, maxLength: 200, pattern: reEmail })}/>
@@ -67,4 +67,4 @@ const Contact = (_: ReadonlyRouteComponentProps) => {
 	</WithInvoiceRegisterFunnelLayout>
 }
 
-export default Contact
+export default funnelStep(3)(Contact)

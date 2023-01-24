@@ -3,8 +3,8 @@ import { Localized } from '@fluent/react'
 import { RadioGroup, RadioCard } from '@eurofurence/reg-component-library'
 import FullWidthRegisterFunnelLayout from '~/components/funnels/funnels/register/layout/form/full-width'
 import { useFunnelForm } from '~/hooks/funnels/form'
-import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 import { StaticImage } from 'gatsby-plugin-image'
+import { funnelStep } from '~/components/funnels/funnels/register/funnel-step'
 
 const TicketTypeGrid = styled.div`
 	display: flex;
@@ -19,10 +19,10 @@ const ConCat = styled.figure`
 	position: relative;
 `
 
-const TicketType = (_: ReadonlyRouteComponentProps) => {
+const TicketType = () => {
 	const { register, handleSubmit } = useFunnelForm('register-ticket-type')
 
-	return <FullWidthRegisterFunnelLayout onNext={handleSubmit} currentStep={0}>
+	return <FullWidthRegisterFunnelLayout onNext={handleSubmit}>
 		<form onSubmit={handleSubmit}>
 			<RadioGroup name="type">
 				<TicketTypeGrid>
@@ -42,4 +42,4 @@ const TicketType = (_: ReadonlyRouteComponentProps) => {
 	</FullWidthRegisterFunnelLayout>
 }
 
-export default TicketType
+export default funnelStep(0)(TicketType)

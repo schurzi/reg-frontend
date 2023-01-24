@@ -8,23 +8,19 @@ import { useAppSelector } from '~/hooks/redux'
 import { buildInvoice } from '~/state/models/invoice'
 import { getInvoice } from '~/state/selectors/register'
 import type { ReadonlyReactNode } from '~/util/readonly-types'
-import { TOTAL_STEPS } from '../constants'
 import RegisterHeader from '../header'
 
 export interface WithInvoiceRegisterFunnelLayoutProps {
 	readonly children: ReadonlyReactNode
-	readonly currentStep: number
 	readonly onNext: () => void
 }
 
-const WithInvoiceRegisterFunnelLayout = ({ children, currentStep, onNext }: WithInvoiceRegisterFunnelLayoutProps) => {
+const WithInvoiceRegisterFunnelLayout = ({ children, onNext }: WithInvoiceRegisterFunnelLayoutProps) => {
 	const invoice = useAppSelector(getInvoice)
 
 	return <Localized id="register-invoice-layout" attrs={{ invoiceTitle: true }}>
 		<WithInvoiceFunnelLayout
-			header={<RegisterHeader currentStep={currentStep}/>}
-			isFirstPage={currentStep === 0}
-			isLastPage={currentStep === TOTAL_STEPS - 1}
+			header={<RegisterHeader/>}
 			onNext={onNext}
 			invoiceTitle="Your registration"
 			invoice={invoice ?? buildInvoice([])}

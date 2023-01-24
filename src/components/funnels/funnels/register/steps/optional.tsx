@@ -2,12 +2,12 @@ import { Localized } from '@fluent/react'
 import { Checkbox, FieldSet, Form, TextArea } from '@eurofurence/reg-component-library'
 import WithInvoiceRegisterFunnelLayout from '~/components/funnels/funnels/register/layout/form/with-invoice'
 import { useFunnelForm } from '~/hooks/funnels/form'
-import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
+import { funnelStep } from '~/components/funnels/funnels/register/funnel-step'
 
-const Optional = (_: ReadonlyRouteComponentProps) => {
+const Optional = () => {
 	const { register, handleSubmit } = useFunnelForm('register-optional-info')
 
-	return <WithInvoiceRegisterFunnelLayout onNext={handleSubmit} currentStep={4}>
+	return <WithInvoiceRegisterFunnelLayout onNext={handleSubmit}>
 		<Form onSubmit={handleSubmit}>
 			<Localized id="register-optional-info-notifications" attrs={{ legend: true }}>
 				<FieldSet legend="I would like to receive event information and announcements about">
@@ -32,4 +32,4 @@ const Optional = (_: ReadonlyRouteComponentProps) => {
 	</WithInvoiceRegisterFunnelLayout>
 }
 
-export default Optional
+export default funnelStep(4)(Optional)

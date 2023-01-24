@@ -8,17 +8,14 @@ import { WizardProgressBar } from '@eurofurence/reg-component-library'
 import { Localized, useLocalization } from '@fluent/react'
 import { range } from 'ramda'
 import ReactMarkdown from 'react-markdown'
-import { TOTAL_STEPS } from './constants'
+import { useFunnelStep } from '~/components/funnels/funnel-step'
 
-interface RegisterHeaderProps {
-	readonly currentStep: number
-}
-
-const RegisterHeader = ({ currentStep }: RegisterHeaderProps) => {
+const RegisterHeader = () => {
 	const { l10n } = useLocalization()
+	const { current, total } = useFunnelStep()
 
 	return <>
-		{currentStep !== 0 ? null : <>
+		{current !== 0 ? null : <>
 			<Localized id="register-header-title"><h1>Welcome to Eurofurence 2022!</h1></Localized>
 			<Localized id="register-header-description">
 				<ReactMarkdown>
@@ -27,7 +24,7 @@ const RegisterHeader = ({ currentStep }: RegisterHeaderProps) => {
 				</ReactMarkdown>
 			</Localized>
 		</>}
-		<WizardProgressBar steps={range(1, TOTAL_STEPS + 1).map(step => l10n.getString('register-step-counter', { step }, `Step ${step}`))} currentStep={currentStep}/>
+		<WizardProgressBar steps={range(1, total + 1).map(step => l10n.getString('register-step-counter', { step }, `Step ${step}`))} currentStep={current}/>
 	</>
 }
 

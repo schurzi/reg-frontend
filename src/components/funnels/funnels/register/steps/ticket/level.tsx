@@ -6,9 +6,9 @@ import TicketLevelCard from './level/card'
 import TicketLevelAddon, { AugmentedAddon } from './level/addons/addon'
 import FullWidthRegisterFunnelLayout from '~/components/funnels/funnels/register/layout/form/full-width'
 import { useFunnelForm } from '~/hooks/funnels/form'
-import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 import { useAppSelector } from '~/hooks/redux'
 import { getTicketType } from '~/state/selectors/register'
+import { funnelStep } from '~/components/funnels/funnels/register/funnel-step'
 
 const TicketLevelSection = styled.section`
 	margin-top: 1.5em;
@@ -29,14 +29,14 @@ const AddonsContainer = styled.section`
 	margin-top: 3em;
 `
 
-const TicketLevel = (_: ReadonlyRouteComponentProps) => {
+const TicketLevel = () => {
 	const ticketType = useAppSelector(getTicketType())!
 	const formContext = useFunnelForm('register-ticket-level')
 	const { register, handleSubmit } = formContext
 
 	const expirationDate = config.registrationExpirationDate
 
-	return <FullWidthRegisterFunnelLayout onNext={handleSubmit} currentStep={1}>
+	return <FullWidthRegisterFunnelLayout onNext={handleSubmit}>
 		<form onSubmit={handleSubmit}>
 			<TicketLevelSection>
 				<Localized id="register-ticket-level-title"><h3>Select your ticket</h3></Localized>
@@ -72,4 +72,4 @@ const TicketLevel = (_: ReadonlyRouteComponentProps) => {
 	</FullWidthRegisterFunnelLayout>
 }
 
-export default TicketLevel
+export default funnelStep(1)(TicketLevel)
