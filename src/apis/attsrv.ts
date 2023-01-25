@@ -308,7 +308,7 @@ export const updateRegistration = (registrationInfo: RegistrationInfo) => ajax({
 })
 
 
-export const findExistingRegistration = () => findMyRegistrations().pipe(
+export const findExistingRegistration = () => of(undefined) /*findMyRegistrations().pipe(
 	concatMap(result =>
 		loadRegistration(result.response.ids[0]).pipe(map(r => registrationInfoFromAttendeeDto(r.response))),
 	),
@@ -319,4 +319,4 @@ export const findExistingRegistration = () => findMyRegistrations().pipe(
 			throw err
 		}
 	}),
-)
+)*/
