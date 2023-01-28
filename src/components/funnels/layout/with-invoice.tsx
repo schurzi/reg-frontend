@@ -16,6 +16,7 @@ export interface WithInvoiceFunnelLayoutProps {
 	readonly invoiceTitle: string
 	readonly invoice: Invoice
 	readonly onNext: () => void
+	readonly onPay?: () => void
 }
 
 const Grid = styled.div`
@@ -28,13 +29,13 @@ const GridConformer = styled.div`
 	grid-column: span 8;
 `
 
-const WithInvoiceFunnelLayout = ({ children, onNext, invoiceTitle, invoice, ...passthroughProps }: WithInvoiceFunnelLayoutProps) =>
+const WithInvoiceFunnelLayout = ({ children, onNext, invoiceTitle, invoice, onPay, ...passthroughProps }: WithInvoiceFunnelLayoutProps) =>
 	<StepFunnelLayout {...passthroughProps} onNext={onNext}>
 		<Grid>
 			<GridConformer>
 				{children}
 			</GridConformer>
-			<InvoiceComponent title={invoiceTitle} invoice={invoice}/>
+			<InvoiceComponent title={invoiceTitle} invoice={invoice} onPay={onPay}/>
 		</Grid>
 	</StepFunnelLayout>
 

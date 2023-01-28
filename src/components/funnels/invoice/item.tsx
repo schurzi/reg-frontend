@@ -48,7 +48,7 @@ export interface InvoiceItemProps {
 
 const InvoiceItem = ({ amount, name, price, extra }: InvoiceItemProps) => <Container>
 	<Localized id="invoice-item-label" vars={{ amount, name }}><Label>{amount} x {name}</Label></Localized>
-	<Localized id="price" vars={{ price: new FluentNumber(price, { style: 'currency', currency: 'EUR' }) }}><Price>{price} €</Price></Localized>
+	<Localized id="price" vars={{ value: new FluentNumber(price, { style: 'currency', currency: 'EUR' }) }}><Price>{price} €</Price></Localized>
 	{extra === undefined ? undefined : <Extra>{extra}</Extra>}
 </Container>
 

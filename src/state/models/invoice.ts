@@ -15,17 +15,21 @@ export interface InvoiceItem extends UncalculatedInvoiceItem {
 export interface Invoice {
 	readonly items: readonly InvoiceItem[]
 	readonly totalPrice: number
+	readonly paid?: number
+	readonly due?: number
 }
 
 const augmentInvoiceItem = (item: UncalculatedInvoiceItem) => {
 	return { ...item, totalPrice: item.amount * item.unitPrice }
 }
 
-export const buildInvoice = (items: readonly UncalculatedInvoiceItem[]) => {
+export const buildInvoice = (items: readonly UncalculatedInvoiceItem[], { paid, due }: Pick<Invoice, 'paid' | 'due'> = {}) => {
 	const augmentedItems = items.map(augmentInvoiceItem)
 
 	return {
 		items: augmentedItems,
 		totalPrice: sum(pluck('totalPrice', augmentedItems)),
+		paid,
+		due,
 	}
 }

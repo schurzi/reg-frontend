@@ -8,6 +8,9 @@ import config from '~/config'
 
 export interface RegisterState {
 	readonly registrationInfo: Partial<RegistrationInfo>
+	readonly due?: number
+	readonly paid?: number
+	readonly unprocessedPayments?: boolean
 	readonly isOpen: boolean | null
 }
 
@@ -64,8 +67,7 @@ export default (state: RegisterState = defaultState, action: GetAction<AnyAppAct
 		case LoadRegistrationState.type:
 			return {
 				...state,
-				registrationInfo: action.payload.registration ?? state.registrationInfo,
-				isOpen: action.payload.isOpen,
+				...action.payload,
 			}
 		default:
 			return {

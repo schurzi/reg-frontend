@@ -4,7 +4,8 @@
 
 import { Localized } from '@fluent/react'
 import WithInvoiceFunnelLayout from '~/components/funnels/layout/with-invoice'
-import { useAppSelector } from '~/hooks/redux'
+import { useAppDispatch, useAppSelector } from '~/hooks/redux'
+import { InitiatePayment } from '~/state/actions/register'
 import { buildInvoice } from '~/state/models/invoice'
 import { getInvoice } from '~/state/selectors/register'
 import type { ReadonlyReactNode } from '~/util/readonly-types'
@@ -19,6 +20,7 @@ export interface WithInvoiceRegisterFunnelLayoutProps {
 
 const WithInvoiceRegisterFunnelLayout = ({ children, currentStep, onNext }: WithInvoiceRegisterFunnelLayoutProps) => {
 	const invoice = useAppSelector(getInvoice)
+	const dispatch = useAppDispatch()
 
 	return <Localized id="register-invoice-layout" attrs={{ invoiceTitle: true }}>
 		<WithInvoiceFunnelLayout
@@ -28,6 +30,7 @@ const WithInvoiceRegisterFunnelLayout = ({ children, currentStep, onNext }: With
 			onNext={onNext}
 			invoiceTitle="Your registration"
 			invoice={invoice ?? buildInvoice([])}
+			onPay={() => dispatch(InitiatePayment.create(undefined))}
 		>
 			{children}
 		</WithInvoiceFunnelLayout>
