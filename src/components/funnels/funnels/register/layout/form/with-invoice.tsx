@@ -6,7 +6,7 @@ import { Localized } from '@fluent/react'
 import WithInvoiceFunnelLayout from '~/components/funnels/layout/with-invoice'
 import { useAppSelector } from '~/hooks/redux'
 import { buildInvoice } from '~/state/models/invoice'
-import { getInvoice } from '~/state/selectors/register'
+import { getInvoice, isEditMode } from '~/state/selectors/register'
 import type { ReadonlyReactNode } from '~/util/readonly-types'
 import { TOTAL_STEPS } from '../constants'
 import RegisterHeader from '../header'
@@ -19,6 +19,7 @@ export interface WithInvoiceRegisterFunnelLayoutProps {
 
 const WithInvoiceRegisterFunnelLayout = ({ children, currentStep, onNext }: WithInvoiceRegisterFunnelLayoutProps) => {
 	const invoice = useAppSelector(getInvoice)
+	const isEdit = useAppSelector(isEditMode())
 
 	return <Localized id="register-invoice-layout" attrs={{ invoiceTitle: true }}>
 		<WithInvoiceFunnelLayout
@@ -27,7 +28,7 @@ const WithInvoiceRegisterFunnelLayout = ({ children, currentStep, onNext }: With
 			isLastPage={currentStep === TOTAL_STEPS - 1}
 			onNext={onNext}
 			invoiceTitle="Your registration"
-			invoiceEditLink="/register/ticket/level"
+			invoiceEditLink={isEdit ? '/register/ticket/level' : undefined}
 			invoice={invoice ?? buildInvoice([])}
 		>
 			{children}
