@@ -27,6 +27,7 @@ const WithInvoiceRegisterFunnelLayout = ({ children, currentStep, onNext }: With
 			isLastPage={currentStep === TOTAL_STEPS - 1}
 			onNext={onNext}
 			invoiceTitle="Your registration"
+			invoiceEditLink="/register/ticket/level"
 			invoice={invoice ?? buildInvoice([])}
 		>
 			{children}

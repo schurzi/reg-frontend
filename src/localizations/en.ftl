@@ -27,6 +27,8 @@ footer-last-saved = Your information was last saved on {DATETIME($lastSaved, wee
 
 
 # Invoices
+invoice-edit-selection = Edit selection
+
 invoice-total-label = Total
 invoice-total-taxesnotice = Taxes included
 
