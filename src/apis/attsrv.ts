@@ -1,4 +1,4 @@
-import { eachDayOfInterval, isFriday, isSaturday, isThursday } from 'date-fns'
+import { eachDayOfInterval, formatISO, isFriday, isSaturday, isThursday } from 'date-fns'
 import { head, last } from 'ramda'
 import { catchError, concatMap, map } from 'rxjs/operators'
 import { ajax, AjaxError } from 'rxjs/ajax'
@@ -104,7 +104,7 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
 	telegram: registrationInfo.contactInfo.telegramUsername,
 	partner: null, // unused by EF
 	state: registrationInfo.contactInfo.stateOrProvince, // optional, may be null
-	birthday: '1995-02-15',
+	birthday: formatISO(registrationInfo.personalInfo.dateOfBirth, { representation: 'date' }),
 	gender: 'notprovided',
 	pronouns: registrationInfo.personalInfo.pronouns,
 	tshirt_size: registrationInfo.ticketLevel.addons.tshirt.options.size,
