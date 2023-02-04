@@ -9,7 +9,8 @@ export default combineEpics<GetAction<AnyAppAction>, GetAction<AnyAppAction>, Ap
 	action$ => action$.pipe(
 		ofType(InitiateLogin.type),
 		tap(() => {
-			location.href = `${config.apis.authsrv.url}/auth?app_name=${config.apis.authsrv.appName}`//&dropoff_url=${location.href}`
+			// eslint-disable-next-line no-process-env
+			location.href = `${config.apis.authsrv.url}/auth?app_name=${config.apis.authsrv.appName}${process.env.NODE_ENV === 'development' ? '' : `&dropoff_url=${location.href}`}`
 		}),
 		ignoreElements(),
 	),
