@@ -314,6 +314,7 @@ register-summary-edit = Edit information
 register-summary-section-personal-property-nickname-name = Nickname
 register-summary-section-personal-property-full-name-name = Full name
 register-summary-section-personal-property-pronouns-name = Pronouns
+register-summary-section-personal-property-date-of-birth-name = Date of birth
 register-summary-section-personal-property-spoken-languages-name = Spoken language(s)
 register-summary-section-personal-property-wheelchair-accomodation-name = Wheelchair accomodation
 register-summary-section-contact-property-email-name = E-mail address

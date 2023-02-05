@@ -8,6 +8,7 @@ import langmap from 'langmap'
 import { Link } from 'gatsby'
 import { css } from '@emotion/react'
 import { SubmitRegistration } from '~/state/actions/register'
+import { useCurrentLangKey } from '~/localization'
 
 interface PropertyDefinition {
 	readonly id: string
@@ -84,6 +85,7 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 	const contactInfo = useAppSelector(getContactInfo())!
 	const optionalInfo = useAppSelector(getOptionalInfo())!
 	const isEdit = useAppSelector(isEditMode())
+	const langKey = useCurrentLangKey()
 	const { l10n } = useLocalization()
 	const dispatch = useAppDispatch()
 
@@ -100,6 +102,7 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 			{ id: 'nickname', value: personalInfo.nickname },
 			{ id: 'full-name', value: `${personalInfo.firstName} ${personalInfo.lastName}` },
 			{ id: 'pronouns', value: personalInfo.pronouns === null ? '' : l10n.getString('pronouns', { pronouns: personalInfo.pronouns }, personalInfo.pronouns) },
+			{ id: 'date-of-birth', value: new Intl.DateTimeFormat(langKey, { dateStyle: 'long' }).format(personalInfo.dateOfBirth) },
 			{ id: 'wheelchair-accomodation', value: l10n.getString('register-summary-section-personal-property-wheelchair-accomodation-value', { value: personalInfo.wheelchair.toString() }) },
 			{ id: 'spoken-languages', wide: true, value: personalInfo.spokenLanguages.map(langKey => langmap[langKey].nativeName).join(', ') },
 		]}/>
