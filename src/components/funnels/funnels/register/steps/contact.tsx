@@ -28,6 +28,8 @@ const Contact = (_: ReadonlyRouteComponentProps) => {
 	}, [l10n])
 
 	return <WithInvoiceRegisterFunnelLayout onNext={handleSubmit} currentStep={3}>
+		<Localized id="register-contact-info-title"><h3>Contact information</h3></Localized>
+
 		<Form onSubmit={handleSubmit}>
 			<Localized id="register-contact-info-email" attrs={{ label: true, placeholder: true }}>
 				<TextField label="Email address" placeholder="john.smith@email.com" error={errors.email?.message} {...register('email', { required: true, maxLength: 200, pattern: reEmail })}/>

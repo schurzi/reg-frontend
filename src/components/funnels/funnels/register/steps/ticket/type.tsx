@@ -23,6 +23,8 @@ const TicketType = (_: ReadonlyRouteComponentProps) => {
 	const { register, handleSubmit } = useFunnelForm('register-ticket-type')
 
 	return <FullWidthRegisterFunnelLayout onNext={handleSubmit} currentStep={0}>
+		<Localized id="register-ticket-type-title"><h3>Select your ticket</h3></Localized>
+
 		<form onSubmit={handleSubmit}>
 			<RadioGroup name="type">
 				<TicketTypeGrid>

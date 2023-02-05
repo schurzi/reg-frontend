@@ -80,6 +80,8 @@ register-step-counter = Step {$step}
 
 
 # Register ticket type page
+register-ticket-type-title = Select your ticket
+
 register-ticket-type-day =
   .label = Day ticket
 
@@ -91,6 +93,8 @@ register-ticket-type-validation-errors-type-required = Please select a ticket ty
 
 
 # Register ticket day page
+register-ticket-day-title = Select your ticket
+
 register-ticket-day-card =
   .label = {DATETIME($date, day: "numeric", month: "long", year: "numeric")}
 
@@ -166,6 +170,8 @@ register-ticket-level-validation-errors-addons-tshirt-options-size-required = Pl
 
 
 # Register personal info page
+register-personal-info-title = Personal information
+
 register-personal-info-nickname =
   .label = Nickname
   .placeholder = Johnny_The_Sergal
@@ -219,6 +225,8 @@ register-personal-info-validation-errors-pronouns-other-required = Provide an al
 
 
 # Register contact info page
+register-contact-info-title = Contact information
+
 register-contact-info-email =
   .label = Email address
   .placeholder = john.smith@email.com
@@ -270,6 +278,8 @@ register-contact-info-validation-errors-country-max-length = Your street name ma
 
 
 # Register optional info page
+register-optional-info-title = Optional information
+
 register-optional-info-notifications =
   .legend = I would like to receive event information and announcements about
 
@@ -291,7 +301,9 @@ register-optional-info-comments =
 
 
 # Register summary page
-register-summary-title = Registration
+register-summary-title-initial = Confirmation
+register-summary-title-edit = Registration
+
 
 register-summary-section-personal-title = Personal information
 register-summary-section-contact-title = Contact information

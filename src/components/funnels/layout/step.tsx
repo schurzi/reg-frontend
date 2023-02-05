@@ -12,6 +12,10 @@ import { useAppSelector } from '~/hooks/redux'
 import { isEditMode } from '~/state/selectors/register'
 import type { ReadonlyReactNode } from '~/util/readonly-types'
 
+const Header = styled.header`
+	margin-bottom: 3em;
+`
+
 const Footer = styled.footer`
 	height: 100px;
 	display: flex;
@@ -38,9 +42,9 @@ const StepFunnelLayout = ({ children, header: headerContent, isFirstPage = false
 	const isEdit = useAppSelector(isEditMode())
 
 	return <Page>
-		<header>
+		<Header>
 			{headerContent}
-		</header>
+		</Header>
 		{children}
 		<Footer>
 			<Nav>

@@ -10,10 +10,6 @@ import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 import { useAppSelector } from '~/hooks/redux'
 import { getTicketType } from '~/state/selectors/register'
 
-const TicketLevelSection = styled.section`
-	margin-top: 1.5em;
-`
-
 const TicketLevelGrid = styled.section`
 	display: grid;
 	gap: 20px;
@@ -38,7 +34,7 @@ const TicketLevel = (_: ReadonlyRouteComponentProps) => {
 
 	return <FullWidthRegisterFunnelLayout onNext={handleSubmit} currentStep={1}>
 		<form onSubmit={handleSubmit}>
-			<TicketLevelSection>
+			<section>
 				<Localized id="register-ticket-level-title"><h3>Select your ticket</h3></Localized>
 				<TicketLevelGrid>
 					<RadioGroup name="level">
@@ -58,7 +54,7 @@ const TicketLevel = (_: ReadonlyRouteComponentProps) => {
 						)}
 					</RadioGroup>
 				</TicketLevelGrid>
-			</TicketLevelSection>
+			</section>
 			<AddonsSection>
 				<Localized id="register-ticket-level-addons-title"><h3>Select add-ons</h3></Localized>
 				<AddonsContainer>

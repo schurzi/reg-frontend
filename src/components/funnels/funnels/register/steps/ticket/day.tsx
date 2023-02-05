@@ -34,6 +34,8 @@ const TicketDay = (_: ReadonlyRouteComponentProps) => {
 	/* eslint-enable react/jsx-key */
 
 	return <FullWidthRegisterFunnelLayout onNext={handleSubmit} currentStep={0} showBack={true}>
+		<Localized id="register-ticket-day-title"><h3>Select your ticket</h3></Localized>
+
 		<form onSubmit={handleSubmit}>
 			<RadioGroup name="day">
 				<Grid>

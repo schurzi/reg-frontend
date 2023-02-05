@@ -8,6 +8,8 @@ const Optional = (_: ReadonlyRouteComponentProps) => {
 	const { register, handleSubmit } = useFunnelForm('register-optional-info')
 
 	return <WithInvoiceRegisterFunnelLayout onNext={handleSubmit} currentStep={4}>
+		<Localized id="register-optional-info-title"><h3>Optional information</h3></Localized>
+
 		<Form onSubmit={handleSubmit}>
 			<Localized id="register-optional-info-notifications" attrs={{ legend: true }}>
 				<FieldSet legend="I would like to receive event information and announcements about">

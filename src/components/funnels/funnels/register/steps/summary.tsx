@@ -3,7 +3,7 @@ import WithInvoiceRegisterFunnelLayout from '~/components/funnels/funnels/regist
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 import styled from '@emotion/styled'
 import { useAppDispatch, useAppSelector } from '~/hooks/redux'
-import { getContactInfo, getOptionalInfo, getPersonalInfo } from '~/state/selectors/register'
+import { getContactInfo, getOptionalInfo, getPersonalInfo, isEditMode } from '~/state/selectors/register'
 import langmap from 'langmap'
 import { Link } from 'gatsby'
 import { css } from '@emotion/react'
@@ -27,12 +27,14 @@ const SectionContainer = styled.section`
 	      "edit  props" auto
 	      / 273px auto;
 
-	padding: 2em 0em;
-
 	&:not(:last-of-type) {
 		border-bottom: 1px solid var(--color-grays-200);
+		padding-bottom: 2em;
 	}
 
+	&:not(:first-of-type) {
+		padding-top: 2em;
+	}
 `
 
 const SectionTitle = styled.h4`
@@ -81,6 +83,7 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 	const personalInfo = useAppSelector(getPersonalInfo())!
 	const contactInfo = useAppSelector(getContactInfo())!
 	const optionalInfo = useAppSelector(getOptionalInfo())!
+	const isEdit = useAppSelector(isEditMode())
 	const { l10n } = useLocalization()
 	const dispatch = useAppDispatch()
 
@@ -91,7 +94,7 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 		.join(', ')
 
 	return <WithInvoiceRegisterFunnelLayout onNext={() => dispatch(SubmitRegistration.create(undefined))} currentStep={5}>
-		<Localized id="register-summary-title"><h3>Registration</h3></Localized>
+		<Localized id={`register-summary-title-${isEdit ? 'edit' : 'initial'}`}><h3>Registration</h3></Localized>
 
 		<Section id="personal" editLink="/register/personal-info" properties={[
 			{ id: 'nickname', value: personalInfo.nickname },

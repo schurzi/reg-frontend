@@ -24,6 +24,8 @@ const Personal = (_: ReadonlyRouteComponentProps) => {
 	const pronounsSelection = watch('pronounsSelection')
 
 	return <WithInvoiceRegisterFunnelLayout onNext={handleSubmit} currentStep={2}>
+		<Localized id="register-personal-info-title"><h3>Personal information</h3></Localized>
+
 		<Form onSubmit={handleSubmit}>
 			<Localized id="register-personal-info-nickname" attrs={{ label: true, placeholder: true }}>
 				<TextField
