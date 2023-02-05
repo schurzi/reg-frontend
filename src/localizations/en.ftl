@@ -532,6 +532,7 @@ notification-type = { $type ->
 
 country-name = { $countryCode ->
   [AF] Afghanistan
+  [AX] Åland Islands
   [AL] Albania
   [DZ] Algeria
   [AS] American Samoa
@@ -543,6 +544,7 @@ country-name = { $countryCode ->
   [AR] Argentina
   [AM] Armenia
   [AW] Aruba
+  [AC] Ascension
   [AU] Australia
   [AT] Austria
   [AZ] Azerbaijan
@@ -557,6 +559,7 @@ country-name = { $countryCode ->
   [BM] Bermuda
   [BT] Bhutan
   [BO] Bolivia
+  [BQ] Bonaire
   [BA] Bosnia and Herzegovina
   [BW] Botswana
   [BV] Bouvet Island
@@ -566,29 +569,34 @@ country-name = { $countryCode ->
   [BG] Bulgaria
   [BF] Burkina Faso
   [BI] Burundi
+  [CV] Cabo Verde
   [KH] Cambodia
   [CM] Cameroon
   [CA] Canada
-  [CV] Cape Verde
   [KY] Cayman Islands
   [CF] Central African Republic
+  [EA] Ceuta, Melilla
   [TD] Chad
   [CL] Chile
-  [CN] People's Republic of China
+  [CN] China
   [CX] Christmas Island
+  [CP] Clipperton
   [CC] Cocos (Keeling) Islands
   [CO] Colombia
   [KM] Comoros
-  [CG] Republic of the Congo
-  [CD] Democratic Republic of the Congo
+  [CG] Congo
+  [CD] Congo (Democratic Republic of the)
   [CK] Cook Islands
   [CR] Costa Rica
-  [CI] Cote D'Ivoire
   [HR] Croatia
   [CU] Cuba
+  [CW] Curaçao
   [CY] Cyprus
-  [CZ] Czech Republic
+  [CZ] Czechia
+  [CI] Côte d'Ivoire
+  [ZR] Demokratische Republik Kongo
   [DK] Denmark
+  [DG] Diego Garcia
   [DJ] Djibouti
   [DM] Dominica
   [DO] Dominican Republic
@@ -598,17 +606,19 @@ country-name = { $countryCode ->
   [GQ] Equatorial Guinea
   [ER] Eritrea
   [EE] Estonia
+  [SZ] Eswatini
   [ET] Ethiopia
-  [FK] Falkland Islands (Malvinas)
+  [FK] Falkland Islands
   [FO] Faroe Islands
   [FJ] Fiji
   [FI] Finland
   [FR] France
+  [FX] France métropolitaine
   [GF] French Guiana
   [PF] French Polynesia
   [TF] French Southern Territories
   [GA] Gabon
-  [GM] Republic of The Gambia
+  [GM] Gambia
   [GE] Georgia
  *[DE] Germany
   [GH] Ghana
@@ -619,6 +629,7 @@ country-name = { $countryCode ->
   [GP] Guadeloupe
   [GU] Guam
   [GT] Guatemala
+  [GG] Guernsey
   [GN] Guinea
   [GW] Guinea-Bissau
   [GY] Guyana
@@ -631,14 +642,17 @@ country-name = { $countryCode ->
   [IS] Iceland
   [IN] India
   [ID] Indonesia
-  [IR] Islamic Republic of Iran
+  [IR] Iran
   [IQ] Iraq
   [IE] Ireland
+  [IM] Isle of Man
   [IL] Israel
   [IT] Italy
   [JM] Jamaica
   [JP] Japan
+  [JE] Jersey
   [JO] Jordan
+  [IC] Kanarische Inseln
   [KZ] Kazakhstan
   [KE] Kenya
   [KI] Kiribati
@@ -646,7 +660,7 @@ country-name = { $countryCode ->
   [KR] South Korea
   [KW] Kuwait
   [KG] Kyrgyzstan
-  [LA] Lao People's Democratic Republic
+  [LA] Lao
   [LV] Latvia
   [LB] Lebanon
   [LS] Lesotho
@@ -668,18 +682,21 @@ country-name = { $countryCode ->
   [MU] Mauritius
   [YT] Mayotte
   [MX] Mexico
-  [FM] Micronesia, Federated States of
-  [MD] Moldova, Republic of
+  [FM] Micronesia
+  [MD] Moldova
   [MC] Monaco
   [MN] Mongolia
+  [ME] Montenegro
   [MS] Montserrat
   [MA] Morocco
   [MZ] Mozambique
+  [BU] Myanmar
   [MM] Myanmar
   [NA] Namibia
   [NR] Nauru
   [NP] Nepal
   [NL] Netherlands
+  [NT] Neutrale Zone
   [NC] New Caledonia
   [NZ] New Zealand
   [NI] Nicaragua
@@ -687,13 +704,13 @@ country-name = { $countryCode ->
   [NG] Nigeria
   [NU] Niue
   [NF] Norfolk Island
-  [MK] The Republic of North Macedonia
+  [MK] North Macedonia
   [MP] Northern Mariana Islands
   [NO] Norway
   [OM] Oman
   [PK] Pakistan
   [PW] Palau
-  [PS] State of Palestine
+  [PS] Palestine, State of
   [PA] Panama
   [PG] Papua New Guinea
   [PY] Paraguay
@@ -704,13 +721,15 @@ country-name = { $countryCode ->
   [PT] Portugal
   [PR] Puerto Rico
   [QA] Qatar
-  [RE] Reunion
+  [RE] Réunion
   [RO] Romania
   [RU] Russian Federation
   [RW] Rwanda
+  [BL] Saint Barthélemy
   [SH] Saint Helena
   [KN] Saint Kitts and Nevis
   [LC] Saint Lucia
+  [MF] Saint Martin (French part)
   [PM] Saint Pierre and Miquelon
   [VC] Saint Vincent and the Grenadines
   [WS] Samoa
@@ -718,33 +737,36 @@ country-name = { $countryCode ->
   [ST] Sao Tome and Principe
   [SA] Saudi Arabia
   [SN] Senegal
+  [RS] Serbia
   [SC] Seychelles
   [SL] Sierra Leone
   [SG] Singapore
+  [SX] Sint Maarten (Dutch part)
   [SK] Slovakia
   [SI] Slovenia
   [SB] Solomon Islands
   [SO] Somalia
   [ZA] South Africa
   [GS] South Georgia and the South Sandwich Islands
+  [SS] South Sudan
   [ES] Spain
   [LK] Sri Lanka
   [SD] Sudan
   [SR] Suriname
-  [SJ] Svalbard and Jan Mayen
-  [SZ] Eswatini
+  [SJ] Svalbard
   [SE] Sweden
   [CH] Switzerland
   [SY] Syrian Arab Republic
   [TW] Taiwan
   [TJ] Tajikistan
-  [TZ] United Republic of Tanzania
+  [TZ] Tanzania
   [TH] Thailand
   [TL] Timor-Leste
   [TG] Togo
   [TK] Tokelau
   [TO] Tonga
   [TT] Trinidad and Tobago
+  [TA] Tristan da Cunha
   [TN] Tunisia
   [TR] Türkiye
   [TM] Turkmenistan
@@ -754,31 +776,18 @@ country-name = { $countryCode ->
   [UA] Ukraine
   [AE] United Arab Emirates
   [GB] United Kingdom
-  [US] United States of America
   [UM] United States Minor Outlying Islands
+  [US] United States of America
   [UY] Uruguay
   [UZ] Uzbekistan
   [VU] Vanuatu
   [VE] Venezuela
-  [VN] Vietnam
-  [VG] Virgin Islands, British
-  [VI] Virgin Islands, U.S.
+  [VN] Viet Nam
+  [VG] Virgin Islands (British)
+  [VI] Virgin Islands (U.S.)
   [WF] Wallis and Futuna
   [EH] Western Sahara
   [YE] Yemen
   [ZM] Zambia
   [ZW] Zimbabwe
-  [AX] Åland Islands
-  [BQ] Bonaire, Sint Eustatius and Saba
-  [CW] Curaçao
-  [GG] Guernsey
-  [IM] Isle of Man
-  [JE] Jersey
-  [ME] Montenegro
-  [BL] Saint Barthélemy
-  [MF] Saint Martin (French part)
-  [RS] Serbia
-  [SX] Sint Maarten (Dutch part)
-  [SS] South Sudan
-  [XK] Kosovo
 }
