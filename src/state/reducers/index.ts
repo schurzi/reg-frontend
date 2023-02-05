@@ -1,18 +1,18 @@
 import { combineReducers } from 'redux'
 
 import autosave from './autosave'
-import forms from './forms'
+import errors from './errors'
 import register from './register'
 import hotelBooking from './hotel-booking'
 
 export default combineReducers<{
 	readonly autosave: typeof autosave
-	readonly forms: typeof forms
+	readonly errors: typeof errors
 	readonly register: typeof register
 	readonly hotelBooking: typeof hotelBooking
 }>({
 	autosave,
-	forms,
+	errors,
 	register,
 	hotelBooking,
 })

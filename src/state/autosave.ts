@@ -1,5 +1,5 @@
-import { AutosaveData } from './models/autosave'
 
-const serializedData = 'localStorage' in globalThis ? localStorage.getItem('autosave') : null
+import { load } from '~/util/local-storage'
+import type { getSaveData } from './selectors/autosave'
 
-export default serializedData === null ? null : JSON.parse(serializedData) as AutosaveData
+export default load<ReturnType<ReturnType<typeof getSaveData>>>('redux-state')

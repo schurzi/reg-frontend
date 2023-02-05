@@ -1,28 +1,47 @@
+import config from '~/config'
+import { ReadonlyDate } from '~/util/readonly-types'
+
+type TicketLevelConfig = typeof config.ticketLevels
+type TicketAddonsConfig = typeof config.addons
+
+/* eslint-disable @typescript-eslint/indent */
+type ParseAddonOption<T> =
+	T extends { readonly type: 'select', readonly items: readonly (infer I)[] } ? I
+	: never
+/* eslint-enable @typescript-eslint/indent */
+
 export type TicketType
 	= { readonly type: 'full' }
-	| { readonly type: 'day', readonly day: string }
+	| { readonly type: 'day', readonly day: ReadonlyDate }
 
 export type TicketLevel = {
-	readonly level: 'standard' | 'sponsor' | 'super-sponsor'
+	readonly level: keyof TicketLevelConfig
 	readonly addons: {
-		readonly stagePass: {
+		readonly [K in keyof TicketAddonsConfig]: {
 			readonly selected: boolean
+			readonly options: {
+				[L in keyof TicketAddonsConfig[K]['options']]: ParseAddonOption<TicketAddonsConfig[K]['options'][L]>
+			}
 		}
-		readonly tshirt: {
-			readonly selected: boolean
-			readonly size: 'S' | 'M' | 'L' | 'XL' | 'XXL'
-		}
+		// readonly stagePass: {
+		// 	readonly selected: boolean
+		// }
+		// readonly tshirt: {
+		// 	readonly selected: boolean
+		// 	readonly size: 'S' | 'M' | 'L' | 'XL' | 'XXL'
+		// }
 	}
 }
 
 export interface ContactInfo {
 	readonly email: string
 	readonly phoneNumber: string
+	readonly telegramUsername: string | null
 	readonly street: string
 	readonly city: string
 	readonly postalCode: string
-	readonly stateOrProvince: string
-	readonly country: string
+	readonly stateOrProvince: string | null
+	readonly country: (typeof config.allowedCountries)[number]
 }
 
 export interface OptionalInfo {
@@ -32,21 +51,22 @@ export interface OptionalInfo {
 		readonly music: boolean
 		readonly fursuiting: boolean
 	}
-	readonly comments: string
+	readonly comments: string | null
 }
 
 export interface PersonalInfo {
 	readonly nickname: string
 	readonly firstName: string
 	readonly lastName: string
+	readonly dateOfBirth: ReadonlyDate
 	readonly fullNamePermission: boolean
-	readonly nameOnBadge: 'legal-name' | 'nickname' | 'legal-name-and-nickname'
 	readonly spokenLanguages: readonly string[]
-	readonly gender: 'male' | 'female' | 'non-binary' | 'prefer-not-to-say'
+	readonly pronouns: string | null
 	readonly wheelchair: boolean
 }
 
 export interface RegistrationInfo {
+	readonly id?: number
 	readonly ticketType: TicketType
 	readonly ticketLevel: TicketLevel
 	readonly contactInfo: ContactInfo

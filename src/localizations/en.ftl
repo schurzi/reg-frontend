@@ -18,9 +18,8 @@ header-clock-component-seconds =
 
 # Footer
 footer-links-privacy-policy = Privacy policy
-
-footer-links-cookie-statement = Cookie statement
-
+footer-links-legal-info = Legal info
+footer-links-policies = Policies
 footer-links-contact = Contact Eurofurence
 
 footer-last-saved = Your information was last saved on {DATETIME($lastSaved, weekday: "long", month: "long", day: "numeric", year: "numeric")} at {DATETIME($lastSaved, hour: "numeric", minute: "numeric")}.
@@ -28,10 +27,11 @@ footer-last-saved = Your information was last saved on {DATETIME($lastSaved, wee
 
 
 # Invoices
-invoice-total-label = Total
-invoice-total-taxesnotice = Taxes included
+invoice-edit-selection = Edit selection
 
 invoice-item-label = {$amount} x {$name}
+
+invoice-total-item-label = {$name}
 
 invoice-item-definition-register-ticket-type-day =
   .name = Day ticket
@@ -48,6 +48,17 @@ invoice-item-definition-register-ticket-addons-tshirt =
   .name = T-shirt
   .extra = {$size}
 
+invoice-total =
+  .name = Total
+  .extra = Taxes included
+
+invoice-paid =
+  .name = Paid
+
+invoice-due =
+  .name = Due
+
+invoice-pay-button-credit-card = 💳 Pay with CC
 
 
 # Common register messages
@@ -58,6 +69,7 @@ register-header-description =
 
 register-navigation-back = Go back
 register-navigation-next = Continue
+register-navigation-update = Save
 register-navigation-finish = Finish
 
 register-invoice-layout =
@@ -68,6 +80,8 @@ register-step-counter = Step {$step}
 
 
 # Register ticket type page
+register-ticket-type-title = Select your ticket
+
 register-ticket-type-day =
   .label = Day ticket
 
@@ -79,13 +93,12 @@ register-ticket-type-validation-errors-type-required = Please select a ticket ty
 
 
 # Register ticket day page
+register-ticket-day-title = Select your ticket
+
 register-ticket-day-card =
   .label = {DATETIME($date, day: "numeric", month: "long", year: "numeric")}
 
 register-ticket-day-validation-errors-day-required = Please select a day.
-
-register-change-ticket-type =
-  .label = Change ticket type
 
 
 
@@ -142,13 +155,23 @@ register-ticket-level-addons-item-tshirt =
 register-ticket-level-addons-item-tshirt-option-size =
   .label = T-shirt size
 
+register-ticket-level-addons-item-tshirt-option-size-value = { $value ->
+ *[S]   Small
+  [M]   Medium
+  [L]   Large
+  [XL]  X-Large
+  [XXL] XX-Large
+}
+
 register-ticket-level-validation-errors-level-required = Please select a ticket level.
 
-register-ticket-level-validation-errors-addons-tshirt-size-required = Please select a T-shirt size.
+register-ticket-level-validation-errors-addons-tshirt-options-size-required = Please select a T-shirt size.
 
 
 
 # Register personal info page
+register-personal-info-title = Personal information
+
 register-personal-info-nickname =
   .label = Nickname
   .placeholder = Johnny_The_Sergal
@@ -164,35 +187,18 @@ register-personal-info-last-name =
 register-personal-info-full-name-permission =
   .label = I grant permission to use my full name in Eurofurence related media.
 
-register-personal-info-name-on-badge =
-  .legend = Name on badge
-
-register-personal-info-name-on-badge-legal-name =
-  .label = Legal name
-
-register-personal-info-name-on-badge-nickname =
-  .label = Nickname
-
-register-personal-info-name-on-badge-legal-name-and-nickname =
-  .label = Legal name + nickname
+register-personal-info-date-of-birth =
+  .label = Date of birth
+  .placeholder = 1995-06-30
 
 register-personal-info-spoken-languages =
   .label = Spoken languages
 
-register-personal-info-gender =
-  .legend = Gender
+register-personal-info-pronouns =
+  .legend = Pronouns
 
-register-personal-info-gender-male =
-  .label = { -gender(gender: "male") }
-
-register-personal-info-gender-female =
-  .label = { -gender(gender: "female") }
-
-register-personal-info-gender-non-binary =
-  .label = { -gender(gender: "non-binary") }
-
-register-personal-info-gender-prefer-not-to-say =
-  .label = { -gender(gender: "prefer-not-to-say") }
+register-personal-info-pronouns-other =
+  .label = Other
 
 register-personal-info-accessibility =
   .legend = Accessibility
@@ -201,19 +207,26 @@ register-personal-info-accessibility-wheelchair =
   .label = Please accomodate my wheelchair (and me).
 
 register-personal-info-validation-errors-nickname-required = Please provide a nickname.
-register-personal-info-validation-errors-nickname-pattern = Please avoid special characters.
-register-personal-info-validation-errors-nickname-min-length = Your nickname must be at least 1 character long.
-register-personal-info-validation-errors-nickname-max-length = Your nickname must be at most 80 characters long.
+register-personal-info-validation-errors-nickname-max-length = Your nickname may be at most {$limit} characters long.
 register-personal-info-validation-errors-nickname-validate-no-leading-or-trailing-whitespace = Please avoid leading or trailing whitespace.
+register-personal-info-validation-errors-nickname-validate-min-one-alphanumeric-char = Your nickname must contain at least 1 letter or number.
+register-personal-info-validation-errors-nickname-validate-max-two-non-alphanumeric-chars = Your nickname may contain at most 2 special characters.
 register-personal-info-validation-errors-first-name-required = Please provide a first name.
+register-personal-info-validation-errors-first-name-max-length = Your first name may be at most {$limit} characters long.
 register-personal-info-validation-errors-last-name-required = Please provide a last name.
-register-personal-info-validation-errors-name-on-badge-required = Please select which name you would like to have on your badge.
+register-personal-info-validation-errors-last-name-max-length = Your last name may be at most {$limit} characters long.
+register-personal-info-validation-errors-date-of-birth-required = Please provide your date of birth.
+register-personal-info-validation-errors-date-of-birth-validate-minimum-age = You must be at least 18 years old to attend Eurofurence.
+register-personal-info-validation-errors-date-of-birth-validate-maximum-age = 122-year-olds are the oldest people allowed at Eurofurence for technical reasons.
 register-personal-info-validation-errors-spoken-languages-required = Please select your spoken languages.
-register-personal-info-validation-errors-gender-required = Please select your gender, or select "I prefer not to say" if you would rather not provide this information.
+register-personal-info-validation-errors-pronouns-selection-required = Please select your pronouns.
+register-personal-info-validation-errors-pronouns-other-required = Provide an alternative set of pronouns.
 
 
 
 # Register contact info page
+register-contact-info-title = Contact information
+
 register-contact-info-email =
   .label = Email address
   .placeholder = john.smith@email.com
@@ -221,6 +234,10 @@ register-contact-info-email =
 register-contact-info-phone-number =
   .label = Phone number
   .placeholder = +32 0 000 00 00
+
+register-contact-info-telegram-username =
+  .label = Telegram username
+  .placeholder = @johnnythesergal
 
 register-contact-info-street =
   .label = Street
@@ -243,15 +260,26 @@ register-contact-info-country =
   .placeholder = Germany
 
 register-contact-info-validation-errors-email-required = Please provide an email address.
+register-contact-info-validation-errors-email-max-length = Your email address may be at most {$limit} characters long.
+register-contact-info-validation-errors-email-pattern = Your email address must look like an email address.
 register-contact-info-validation-errors-phone-number-required = Please provide a phone number.
+register-contact-info-validation-errors-phone-number-max-length = Your phone number may be at most {$limit} characters long.
+register-contact-info-validation-errors-telegram-username-max-length = Your telegram username may be at most {$limit} characters long.
+register-contact-info-validation-errors-telegram-username-pattern = Your telegram username must include the initial @ character.
 register-contact-info-validation-errors-street-required = Please provide a street.
+register-contact-info-validation-errors-street-max-length = Your street name may be at most {$limit} characters long.
 register-contact-info-validation-errors-city-required = Please provide a city.
+register-contact-info-validation-errors-city-max-length = Your city name may be at most {$limit} characters long.
 register-contact-info-validation-errors-postal-code-required = Please provide a postal code.
-register-contact-info-validation-errors-state-or-province-required = Please provide a state or province.
+register-contact-info-validation-errors-postal-code-max-length = Your postal code may be at most {$limit} characters long.
+register-contact-info-validation-errors-state-or-province-max-length = Your street name may be at most {$limit} characters long.
 register-contact-info-validation-errors-country-required = Please provide a country.
+register-contact-info-validation-errors-country-max-length = Your street name may be at most {$limit} characters long.
 
 
 # Register optional info page
+register-optional-info-title = Optional information
+
 register-optional-info-notifications =
   .legend = I would like to receive event information and announcements about
 
@@ -273,7 +301,9 @@ register-optional-info-comments =
 
 
 # Register summary page
-register-summary-title = Registration
+register-summary-title-initial = Confirmation
+register-summary-title-edit = Registration
+
 
 register-summary-section-personal-title = Personal information
 register-summary-section-contact-title = Contact information
@@ -283,8 +313,8 @@ register-summary-edit = Edit information
 
 register-summary-section-personal-property-nickname-name = Nickname
 register-summary-section-personal-property-full-name-name = Full name
-register-summary-section-personal-property-gender-name = Gender
-register-summary-section-personal-property-badge-name-name = You will be known as
+register-summary-section-personal-property-pronouns-name = Pronouns
+register-summary-section-personal-property-date-of-birth-name = Date of birth
 register-summary-section-personal-property-spoken-languages-name = Spoken language(s)
 register-summary-section-personal-property-wheelchair-accomodation-name = Wheelchair accomodation
 register-summary-section-contact-property-email-name = E-mail address
@@ -310,6 +340,15 @@ register-thank-you-subtitle = Next steps
 register-thank-you-content =
   We'll review your registration and send you a response within a week or two.
   You'll receive a confirmation after we've processed and approved your registration.
+
+
+
+
+
+register-not-open-yet-title = Registration is not open yet!
+register-not-open-yet-content =
+  We are not yet accepting registrations.
+  Check back here when registration opens!
 
 
 
@@ -438,25 +477,44 @@ hotel-booking-email-description =
 
   The secret code will also be sent out on our [https://twitter.com/eurofurence](Twitter) and Telegram accounts.
 
+
+# Error reporting
+funnel-error-report-title = Oh no...
+
+funnel-error-report-operation = {$operation ->
+  [registration-open-check]       We couldn't check if you are already registered.
+  [registration-submission]       We couldn't submit your registration.
+  [registration-update]           We couldn't update your registration.
+  [registration-initiate-payment] We couldn't initiate your payment.
+ *[unknown]                       There was an error handling your request.
+}
+
+funnel-error-report-message = {$category ->
+  [attsrv] {$code ->
+    [attendee-data-duplicate]  There is already an attendee registered with the information you supplied.
+    [attendee-data-invalid]    The information you filled in was not accepted by the server. This shouldn't happen under normal conditions. Please try again in a few minutes or contact support.
+    [attendee-parse-error]     The server did not understand the information the website sent to it. This shouldn't happen under normal conditions. Please try again in a few minutes or contact support.
+    [attendee-write-error]     An error occurred when trying to save your attendee information. This shouldn't happen under normal conditions. Please try again in a few minutes or contact support.
+    [auth-forbidden]           You do not have permission to do this. Contact support if you believe this is a mistake.
+   *[unknown]                  The server encountered an unexpected problem while processing your request. Please try again in a few minutes or contact support.
+  }
+  [paysrv] {$code ->
+   *[unknown]                  The server encountered an unexpected problem while processing your request. Please try again in a few minutes or contact support.
+  }
+ *[frontend] {$code ->
+    [network-error]            We could not reach the server to process your request. Please check if you are connected to the internet.
+   *[unknown]                  An error occurred when we tried to handle your request. Please try again later. If this problem persists, try clearing your browser's cache and refreshing the page. If that doesn't resolve the problem, contact support.
+  }
+}
+
+
 # General utility messages
-price = {$price ->
+price = {$value ->
    [0]     Free
-  *[other] {NUMBER($price, minimumFractionDigits: 0)}
+  *[other] {NUMBER($value, minimumFractionDigits: 0)}
 }
 
--gender = { $gender ->
-  [male]              Male
-  [female]            Female
-  [non-binary]        Non-binary
- *[prefer-not-to-say] I prefer not to say
-}
-
-gender = { $gender ->
-  [male]              { -gender(gender: "male") }
-  [female]            { -gender(gender: "female") }
-  [non-binary]        { -gender(gender: "non-binary") }
- *[prefer-not-to-say] { -gender(gender: "prefer-not-to-say") }
-}
+due = {NUMBER($value, minimumFractionDigits: 0)}
 
 -notification-type = { $type ->
   [art]        Art
@@ -470,4 +528,257 @@ notification-type = { $type ->
   [animation]  { -notification-type(type: "animation") }
   [music]      { -notification-type(type: "music") }
  *[fursuiting] { -notification-type(type: "fursuiting") }
+}
+
+country-name = { $countryCode ->
+  [AF] Afghanistan
+  [AL] Albania
+  [DZ] Algeria
+  [AS] American Samoa
+  [AD] Andorra
+  [AO] Angola
+  [AI] Anguilla
+  [AQ] Antarctica
+  [AG] Antigua and Barbuda
+  [AR] Argentina
+  [AM] Armenia
+  [AW] Aruba
+  [AU] Australia
+  [AT] Austria
+  [AZ] Azerbaijan
+  [BS] Bahamas
+  [BH] Bahrain
+  [BD] Bangladesh
+  [BB] Barbados
+  [BY] Belarus
+  [BE] Belgium
+  [BZ] Belize
+  [BJ] Benin
+  [BM] Bermuda
+  [BT] Bhutan
+  [BO] Bolivia
+  [BA] Bosnia and Herzegovina
+  [BW] Botswana
+  [BV] Bouvet Island
+  [BR] Brazil
+  [IO] British Indian Ocean Territory
+  [BN] Brunei Darussalam
+  [BG] Bulgaria
+  [BF] Burkina Faso
+  [BI] Burundi
+  [KH] Cambodia
+  [CM] Cameroon
+  [CA] Canada
+  [CV] Cape Verde
+  [KY] Cayman Islands
+  [CF] Central African Republic
+  [TD] Chad
+  [CL] Chile
+  [CN] People's Republic of China
+  [CX] Christmas Island
+  [CC] Cocos (Keeling) Islands
+  [CO] Colombia
+  [KM] Comoros
+  [CG] Republic of the Congo
+  [CD] Democratic Republic of the Congo
+  [CK] Cook Islands
+  [CR] Costa Rica
+  [CI] Cote D'Ivoire
+  [HR] Croatia
+  [CU] Cuba
+  [CY] Cyprus
+  [CZ] Czech Republic
+  [DK] Denmark
+  [DJ] Djibouti
+  [DM] Dominica
+  [DO] Dominican Republic
+  [EC] Ecuador
+  [EG] Egypt
+  [SV] El Salvador
+  [GQ] Equatorial Guinea
+  [ER] Eritrea
+  [EE] Estonia
+  [ET] Ethiopia
+  [FK] Falkland Islands (Malvinas)
+  [FO] Faroe Islands
+  [FJ] Fiji
+  [FI] Finland
+  [FR] France
+  [GF] French Guiana
+  [PF] French Polynesia
+  [TF] French Southern Territories
+  [GA] Gabon
+  [GM] Republic of The Gambia
+  [GE] Georgia
+ *[DE] Germany
+  [GH] Ghana
+  [GI] Gibraltar
+  [GR] Greece
+  [GL] Greenland
+  [GD] Grenada
+  [GP] Guadeloupe
+  [GU] Guam
+  [GT] Guatemala
+  [GN] Guinea
+  [GW] Guinea-Bissau
+  [GY] Guyana
+  [HT] Haiti
+  [HM] Heard Island and McDonald Islands
+  [VA] Holy See (Vatican City State)
+  [HN] Honduras
+  [HK] Hong Kong
+  [HU] Hungary
+  [IS] Iceland
+  [IN] India
+  [ID] Indonesia
+  [IR] Islamic Republic of Iran
+  [IQ] Iraq
+  [IE] Ireland
+  [IL] Israel
+  [IT] Italy
+  [JM] Jamaica
+  [JP] Japan
+  [JO] Jordan
+  [KZ] Kazakhstan
+  [KE] Kenya
+  [KI] Kiribati
+  [KP] North Korea
+  [KR] South Korea
+  [KW] Kuwait
+  [KG] Kyrgyzstan
+  [LA] Lao People's Democratic Republic
+  [LV] Latvia
+  [LB] Lebanon
+  [LS] Lesotho
+  [LR] Liberia
+  [LY] Libya
+  [LI] Liechtenstein
+  [LT] Lithuania
+  [LU] Luxembourg
+  [MO] Macao
+  [MG] Madagascar
+  [MW] Malawi
+  [MY] Malaysia
+  [MV] Maldives
+  [ML] Mali
+  [MT] Malta
+  [MH] Marshall Islands
+  [MQ] Martinique
+  [MR] Mauritania
+  [MU] Mauritius
+  [YT] Mayotte
+  [MX] Mexico
+  [FM] Micronesia, Federated States of
+  [MD] Moldova, Republic of
+  [MC] Monaco
+  [MN] Mongolia
+  [MS] Montserrat
+  [MA] Morocco
+  [MZ] Mozambique
+  [MM] Myanmar
+  [NA] Namibia
+  [NR] Nauru
+  [NP] Nepal
+  [NL] Netherlands
+  [NC] New Caledonia
+  [NZ] New Zealand
+  [NI] Nicaragua
+  [NE] Niger
+  [NG] Nigeria
+  [NU] Niue
+  [NF] Norfolk Island
+  [MK] The Republic of North Macedonia
+  [MP] Northern Mariana Islands
+  [NO] Norway
+  [OM] Oman
+  [PK] Pakistan
+  [PW] Palau
+  [PS] State of Palestine
+  [PA] Panama
+  [PG] Papua New Guinea
+  [PY] Paraguay
+  [PE] Peru
+  [PH] Philippines
+  [PN] Pitcairn
+  [PL] Poland
+  [PT] Portugal
+  [PR] Puerto Rico
+  [QA] Qatar
+  [RE] Reunion
+  [RO] Romania
+  [RU] Russian Federation
+  [RW] Rwanda
+  [SH] Saint Helena
+  [KN] Saint Kitts and Nevis
+  [LC] Saint Lucia
+  [PM] Saint Pierre and Miquelon
+  [VC] Saint Vincent and the Grenadines
+  [WS] Samoa
+  [SM] San Marino
+  [ST] Sao Tome and Principe
+  [SA] Saudi Arabia
+  [SN] Senegal
+  [SC] Seychelles
+  [SL] Sierra Leone
+  [SG] Singapore
+  [SK] Slovakia
+  [SI] Slovenia
+  [SB] Solomon Islands
+  [SO] Somalia
+  [ZA] South Africa
+  [GS] South Georgia and the South Sandwich Islands
+  [ES] Spain
+  [LK] Sri Lanka
+  [SD] Sudan
+  [SR] Suriname
+  [SJ] Svalbard and Jan Mayen
+  [SZ] Eswatini
+  [SE] Sweden
+  [CH] Switzerland
+  [SY] Syrian Arab Republic
+  [TW] Taiwan
+  [TJ] Tajikistan
+  [TZ] United Republic of Tanzania
+  [TH] Thailand
+  [TL] Timor-Leste
+  [TG] Togo
+  [TK] Tokelau
+  [TO] Tonga
+  [TT] Trinidad and Tobago
+  [TN] Tunisia
+  [TR] Türkiye
+  [TM] Turkmenistan
+  [TC] Turks and Caicos Islands
+  [TV] Tuvalu
+  [UG] Uganda
+  [UA] Ukraine
+  [AE] United Arab Emirates
+  [GB] United Kingdom
+  [US] United States of America
+  [UM] United States Minor Outlying Islands
+  [UY] Uruguay
+  [UZ] Uzbekistan
+  [VU] Vanuatu
+  [VE] Venezuela
+  [VN] Vietnam
+  [VG] Virgin Islands, British
+  [VI] Virgin Islands, U.S.
+  [WF] Wallis and Futuna
+  [EH] Western Sahara
+  [YE] Yemen
+  [ZM] Zambia
+  [ZW] Zimbabwe
+  [AX] Åland Islands
+  [BQ] Bonaire, Sint Eustatius and Saba
+  [CW] Curaçao
+  [GG] Guernsey
+  [IM] Isle of Man
+  [JE] Jersey
+  [ME] Montenegro
+  [BL] Saint Barthélemy
+  [MF] Saint Martin (French part)
+  [RS] Serbia
+  [SX] Sint Maarten (Dutch part)
+  [SS] South Sudan
+  [XK] Kosovo
 }

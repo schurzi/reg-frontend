@@ -5,6 +5,8 @@ import { RadioCard, RadioCardProps } from '@eurofurence/reg-component-library'
 import ReactMarkdown from 'react-markdown'
 import Price from '~/components/funnels/price'
 import { ReadonlyDate } from '~/util/readonly-types'
+import listItemCheckmark from '~/images/list-item-checkmark.svg'
+import listItemCheckmarkHighlighted from '~/images/list-item-checkmark-highlighted.svg'
 
 export interface TicketLevelCardProps extends Omit<RadioCardProps, 'value'> {
 	readonly id: string
@@ -13,6 +15,28 @@ export interface TicketLevelCardProps extends Omit<RadioCardProps, 'value'> {
 	readonly expirationDate: ReadonlyDate
 	readonly children: string
 }
+
+const Description = styled.div`
+	ul {
+		margin-left: 1.5em;
+	}
+
+	li {
+		list-style-image: url("${listItemCheckmark}");
+
+		:not(:first-child) {
+			margin-top: 1em;
+		}
+
+		:not(:last-child) {
+			margin-bottom: 1em;
+		}
+	}
+
+	label[data-checked] & li {
+		list-style-image: url("${listItemCheckmarkHighlighted}");
+	}
+`
 
 const Footer = styled.footer`
 	display: flex;
@@ -35,7 +59,9 @@ const ExpirationNotice = styled.aside`
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 const TicketLevelCard = forwardRef(({ id, price, priceLabel, expirationDate, children, ...rest }: TicketLevelCardProps, ref: ForwardedRef<HTMLInputElement>) =>
 	<RadioCard value={id} ref={ref} {...rest}>
-		<div><ReactMarkdown>{children}</ReactMarkdown></div>
+		<Description>
+			<ReactMarkdown>{children}</ReactMarkdown>
+		</Description>
 		<Footer>
 			<PriceLabelContainer>
 				<PriceLabel>{priceLabel}</PriceLabel>

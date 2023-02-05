@@ -3,12 +3,12 @@ import WithInvoiceRegisterFunnelLayout from '~/components/funnels/funnels/regist
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 import styled from '@emotion/styled'
 import { useAppDispatch, useAppSelector } from '~/hooks/redux'
-import { PersonalInfo } from '~/state/models/register'
-import { getContactInfo, getOptionalInfo, getPersonalInfo } from '~/state/selectors/register'
+import { getContactInfo, getOptionalInfo, getPersonalInfo, isEditMode } from '~/state/selectors/register'
 import langmap from 'langmap'
 import { Link } from 'gatsby'
 import { css } from '@emotion/react'
 import { SubmitRegistration } from '~/state/actions/register'
+import { useCurrentLangKey } from '~/localization'
 
 interface PropertyDefinition {
 	readonly id: string
@@ -36,12 +36,14 @@ const SectionContainer = styled.section`
 		      / 273px auto;
 	}
 
-	padding: 2em 0em;
-
 	&:not(:last-of-type) {
 		border-bottom: 1px solid var(--color-grays-200);
+		padding-bottom: 2em;
 	}
 
+	&:not(:first-of-type) {
+		padding-top: 2em;
+	}
 `
 
 const SectionTitle = styled.h4`
@@ -86,18 +88,12 @@ const Section = ({ id: sectionId, editLink, properties }: SectionProps) => <Sect
 	</PropertyList>
 </SectionContainer>
 
-const getBadgeName = (personalInfo: PersonalInfo) => {
-	switch (personalInfo.nameOnBadge) {
-		case 'nickname': return personalInfo.nickname
-		case 'legal-name': return `${personalInfo.firstName} ${personalInfo.lastName}`
-		case 'legal-name-and-nickname': return `${personalInfo.firstName} "${personalInfo.nickname}" ${personalInfo.lastName}`
-	}
-}
-
 const Summary = (_: ReadonlyRouteComponentProps) => {
 	const personalInfo = useAppSelector(getPersonalInfo())!
 	const contactInfo = useAppSelector(getContactInfo())!
 	const optionalInfo = useAppSelector(getOptionalInfo())!
+	const isEdit = useAppSelector(isEditMode())
+	const langKey = useCurrentLangKey()
 	const { l10n } = useLocalization()
 	const dispatch = useAppDispatch()
 
@@ -108,14 +104,14 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 		.join(', ')
 
 	return <WithInvoiceRegisterFunnelLayout onNext={() => dispatch(SubmitRegistration.create(undefined))} currentStep={5}>
-		<Localized id="register-summary-title"><h3>Registration</h3></Localized>
+		<Localized id={`register-summary-title-${isEdit ? 'edit' : 'initial'}`}><h3>Registration</h3></Localized>
 
 		<Section id="personal" editLink="/register/personal-info" properties={[
 			{ id: 'nickname', value: personalInfo.nickname },
 			{ id: 'full-name', value: `${personalInfo.firstName} ${personalInfo.lastName}` },
-			{ id: 'gender', value: l10n.getString('gender', { gender: personalInfo.gender }, personalInfo.gender) },
+			{ id: 'pronouns', value: personalInfo.pronouns === null ? '' : l10n.getString('pronouns', { pronouns: personalInfo.pronouns }, personalInfo.pronouns) },
+			{ id: 'date-of-birth', value: new Intl.DateTimeFormat(langKey, { dateStyle: 'long' }).format(personalInfo.dateOfBirth) },
 			{ id: 'wheelchair-accomodation', value: l10n.getString('register-summary-section-personal-property-wheelchair-accomodation-value', { value: personalInfo.wheelchair.toString() }) },
-			{ id: 'badge-name', wide: true, value: getBadgeName(personalInfo) },
 			{ id: 'spoken-languages', wide: true, value: personalInfo.spokenLanguages.map(langKey => langmap[langKey].nativeName).join(', ') },
 		]}/>
 		<Section id="contact" editLink="/register/contact-info" properties={[
@@ -124,12 +120,12 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 			{ id: 'street', wide: true, value: contactInfo.street },
 			{ id: 'city', value: contactInfo.city },
 			{ id: 'postal-code', value: contactInfo.postalCode },
-			{ id: 'state-or-province', value: contactInfo.stateOrProvince },
+			{ id: 'state-or-province', value: contactInfo.stateOrProvince ?? '' },
 			{ id: 'country', value: contactInfo.country },
 		]}/>
 		<Section id="optional" editLink="/register/optional-info" properties={[
 			{ id: 'notifications', wide: true, value: notificationNames },
-			{ id: 'comments', wide: true, value: optionalInfo.comments },
+			{ id: 'comments', wide: true, value: optionalInfo.comments ?? '' },
 		]}/>
 	</WithInvoiceRegisterFunnelLayout>
 }

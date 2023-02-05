@@ -1,13 +1,20 @@
 const path = require('path')
 
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 module.exports = {
+  pathPrefix: process.env.PATH_PREFIX, // need to build with PREFIX_PATHS=true npm run build for this to have effect, also currently loads the bundles from /localizations
   siteMetadata: {
-    title: `Eurofurence Reg`,
+    title: `Eurofurence Registration`,
     description: `Eurofurence registration site.`,
     author: `Eurofurence`,
+		twitter: {
+			creator: '@eurofurence',
+		},
   },
   plugins: [
-    `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -16,7 +23,15 @@ module.exports = {
       },
     },
     `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
+    {
+			resolve: 'gatsby-plugin-sharp',
+			options: {
+				defaults: {
+					placeholder: 'blurred',
+				},
+			},
+		},
+		'gatsby-plugin-image',
     // { // TODO: Enable again after we have an icon.
     //   resolve: `gatsby-plugin-manifest`,
     //   options: {

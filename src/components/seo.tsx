@@ -1,67 +1,32 @@
-import { Helmet } from 'react-helmet'
-import { LanguageKey } from '~/localization'
 import { useSiteMetadata } from '~/hooks/queries/site-metadata'
+import brand from '~/images/brand.svg'
+import { ReadonlyReactNode } from '~/util/readonly-types'
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 const SEO = ({
-	description = '',
-	lang = 'en',
-	meta = [],
 	title,
+	description,
+	children,
 }: {
-	readonly description?: string
-	readonly lang?: LanguageKey
-	readonly meta?: JSX.IntrinsicElements['meta'][]
 	readonly title: string
+	readonly description?: string
+	readonly children?: ReadonlyReactNode
 }) => {
 	const siteMetadata = useSiteMetadata()
+	const fullTitle = `${siteMetadata.title} | ${title}`
+	const fullDescription = description ?? siteMetadata.description
 
-	const metaDescription = description || siteMetadata.description
-	const defaultTitle = siteMetadata.title
-
-	return (
-		<Helmet
-			htmlAttributes={{
-				lang,
-			}}
-			title={title}
-			titleTemplate={defaultTitle ? `%s | ${defaultTitle}` : undefined}
-			meta={([
-				{
-					name: `description`,
-					content: metaDescription,
-				},
-				{
-					property: `og:title`,
-					content: title,
-				},
-				{
-					property: `og:description`,
-					content: metaDescription,
-				},
-				{
-					property: `og:type`,
-					content: `website`,
-				},
-				{
-					name: `twitter:card`,
-					content: `summary`,
-				},
-				{
-					name: `twitter:creator`,
-					content: siteMetadata.author || ``,
-				},
-				{
-					name: `twitter:title`,
-					content: title,
-				},
-				{
-					name: `twitter:description`,
-					content: metaDescription,
-				},
-			] as JSX.IntrinsicElements['meta'][]).concat(meta)}
-		/>
-	)
+	return <>
+		<title>{fullTitle}</title>
+		<meta name="description" content={fullDescription}/>
+		<meta name="image" content={brand}/>
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={fullTitle} />
+		<meta name="twitter:description" content={fullDescription} />
+		<meta name="twitter:image" content={brand} />
+		<meta name="twitter:creator" content={siteMetadata.twitter.creator} />
+		{children}
+	</>
 }
 
 export default SEO

@@ -12,22 +12,28 @@ import AdditionalInfo from '~/components/funnels/funnels/hotel-booking/steps/add
 import Email from '~/components/funnels/funnels/hotel-booking/steps/email'
 
 import * as ROUTES from './routes'
+import { withPrefix } from 'gatsby'
+import { useAppSelector } from '~/hooks/redux'
+import { isEditMode } from '~/state/selectors/register'
 
 export const EFRouter = () =>
 	<IndexPage />
 
-export const RegisterRouter = () =>
-	<Router basepath="/register">
-		<Ticket default path={`/${ROUTES.REGISTER_TICKET}/*`} />
+export const RegisterRouter = () => {
+	const isEdit = useAppSelector(isEditMode())
+
+	return <Router basepath={withPrefix('/register')}>
+		<Ticket default={!isEdit} path={`/${ROUTES.REGISTER_TICKET}/*`} />
 		<Personal path={`/${ROUTES.REGISTER_PERSONAL}`} />
 		<Contact path={`/${ROUTES.REGISTER_CONTACT}`} />
 		<Optional path={`/${ROUTES.REGISTER_OPTIONAL}`} />
-		<Summary path={`/${ROUTES.REGISTER_SUMMARY}`} />
+		<Summary default={isEdit} path={`/${ROUTES.REGISTER_SUMMARY}`} />
 		<ThankYou path={`/${ROUTES.REGISTER_THANK_YOU}`} />
 	</Router>
+}
 
 export const HotelBookingRouter = () =>
-	<Router basepath="/hotel-booking">
+	<Router basepath={withPrefix('/hotel-booking')}>
 		<Room path={ROUTES.HOTEL_BOOKING_ROOM} />
 		<Guests path={ROUTES.HOTEL_BOOKING_GUESTS} />
 		<AdditionalInfo path={ROUTES.HOTEL_BOOKING_ADDITIONAL_INFO} />
