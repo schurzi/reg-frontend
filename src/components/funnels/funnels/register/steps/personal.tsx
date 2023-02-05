@@ -77,10 +77,12 @@ const Personal = (_: ReadonlyRouteComponentProps) => {
 					<RadioItem label="He/Him" value="He/Him" {...register('pronounsSelection', { required: true })}/>
 					<RadioItem label="She/Her" value="She/Her" {...register('pronounsSelection', { required: true })}/>
 					<RadioItem label="They/Them" value="They/Them" {...register('pronounsSelection', { required: true })}/>
-					<RadioItem label="Other:" value="other" {...register('pronounsSelection', { required: true })}>
-						<TextField placeholder="Xe/Xem" error={errors.pronounsOther?.message} {...register('pronounsOther', { required: pronounsSelection === 'other' })}/>
-						{errors.pronounsOther?.message === undefined ? undefined : <ErrorMessage>{errors.pronounsOther.message}</ErrorMessage>}
-					</RadioItem>
+					<Localized id="register-personal-info-pronouns-other" attrs={{ label: true }}>
+						<RadioItem label="Other:" value="other" {...register('pronounsSelection', { required: true })}>
+							<TextField placeholder="Xe/Xem" error={errors.pronounsOther?.message} {...register('pronounsOther', { required: pronounsSelection === 'other' })}/>
+							{errors.pronounsOther?.message === undefined ? undefined : <ErrorMessage>{errors.pronounsOther.message}</ErrorMessage>}
+						</RadioItem>
+					</Localized>
 				</RadioSet>
 			</Localized>
 			<Localized id="register-personal-info-accessibility" attrs={{ legend: true }}>

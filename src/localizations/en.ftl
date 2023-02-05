@@ -191,6 +191,9 @@ register-personal-info-spoken-languages =
 register-personal-info-pronouns =
   .legend = Pronouns
 
+register-personal-info-pronouns-other =
+  .label = Other
+
 register-personal-info-accessibility =
   .legend = Accessibility
 
