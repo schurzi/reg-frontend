@@ -9,10 +9,16 @@ import InvoiceItem from './item'
 import InvoiceTotalItem from './total-item'
 import { Localized } from '@fluent/react'
 import { Invoice as InvoiceModel } from '~/state/models/invoice'
+import { Link } from 'gatsby'
 
 const InvoiceCard = styled(Card)`
 	grid-column: 10 / span 3;
 	align-self: start;
+`
+
+const EditLink = styled(Link)`
+	color: var(--color-brand-2-100);
+	font-size: 1.4rem;
 `
 
 const PayButton = styled(Button)`
@@ -23,13 +29,17 @@ const PayButton = styled(Button)`
 export interface InvoiceProps {
 	readonly title: string
 	readonly invoice: InvoiceModel
+	readonly editLink?: string
 	readonly onPay?: () => void
 }
 
-const Invoice = ({ title, invoice, onPay }: InvoiceProps) =>
+const Invoice = ({ title, invoice, editLink, onPay }: InvoiceProps) =>
 	<InvoiceCard inverted={true}>
 		<header>
 			<h1>{title}</h1>
+			{editLink === undefined ? undefined : <Localized id="invoice-edit-selection">
+				<EditLink to={editLink}>Edit selection</EditLink>
+			</Localized>}
 		</header>
 		<section>
 			<ul>

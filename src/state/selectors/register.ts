@@ -17,11 +17,11 @@ export const getPersonalInfo = () => (s: AppState) => s.register.registrationInf
 export const getContactInfo = () => (s: AppState) => s.register.registrationInfo.contactInfo
 export const getOptionalInfo = () => (s: AppState) => s.register.registrationInfo.optionalInfo
 
-export const getSaveData = () => (s: AppState) => ({
-	...s.register.registrationInfo,
-	personalInfo: s.register.registrationInfo.personalInfo === undefined ? undefined : {
-		...s.register.registrationInfo.personalInfo,
-		dateOfBirth: s.register.registrationInfo.personalInfo.dateOfBirth.toISOString(),
+export const getSaveData = () => ({ register: { registrationInfo: { id, personalInfo, ...registrationInfo } } }: AppState) => ({
+	...registrationInfo,
+	personalInfo: personalInfo === undefined ? undefined : {
+		...personalInfo,
+		dateOfBirth: personalInfo.dateOfBirth.toISOString(),
 	},
 })
 

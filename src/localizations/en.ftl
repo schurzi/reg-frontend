@@ -27,6 +27,7 @@ footer-last-saved = Your information was last saved on {DATETIME($lastSaved, wee
 
 
 # Invoices
+invoice-edit-selection = Edit selection
 
 invoice-item-label = {$amount} x {$name}
 
