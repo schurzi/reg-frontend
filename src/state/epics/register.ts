@@ -5,16 +5,17 @@ import { always } from 'ramda'
 import { AppState } from '~/state'
 import { nextPage } from './generators/next-page'
 import { SubmitForm } from '~/state/actions/forms'
-import { CheckCountdown, LoadRegistrationState, SubmitRegistration } from '~/state/actions/register'
+import { CheckCountdown, InitiatePayment, LoadRegistrationState, SubmitRegistration } from '~/state/actions/register'
 import { findExistingRegistration, registrationCountdownCheck, submitRegistration, updateRegistration } from '~/apis/attsrv'
 import { navigate } from 'gatsby'
-import { getRegistrationInfo, isEditMode } from '~/state/selectors/register'
+import { getRegistrationId, getRegistrationInfo, isEditMode } from '~/state/selectors/register'
 import { RegistrationInfo } from '~/state/models/register'
 import { justDo } from '~/state/epics/operators/just-do'
-import { handleAttSrvApiError } from './error-handlers/apis'
+import { handleAttSrvApiError, handlePaySrvApiError } from './error-handlers/apis'
 import { EMPTY, of } from 'rxjs'
 import { addHours, isBefore } from 'date-fns'
 import config from '~/config'
+import { calculateOutstandingDues, calculateTotalPaid, findTransactionsForBadgeNumber, hasUnprocessedPayments, initiateCreditCardPaymentOrUseExisting } from '~/apis/paysrv'
 
 const nextPageOrSave = <T extends AnyAppAction>(actionBundle: T, pathProvider: (action: GetAction<T>) => string): Epic<GetAction<AnyAppAction>, GetAction<AnyAppAction>, AppState> =>
 	(action$, state$) => action$.pipe(
@@ -60,15 +61,39 @@ export default combineEpics<GetAction<AnyAppAction>, GetAction<AnyAppAction>, Ap
 		concatMap(() => registrationCountdownCheck().pipe(
 			concatMap(result => {
 				if (result.response.countdown > 0) {
-					return of({ isOpen: false })
+					return of(LoadRegistrationState.create({ isOpen: false }))
 				} else if (isBefore(new Date(result.response.currentTime), addHours(new Date(result.response.targetTime), config.hoursBeforeEditAvailable))) {
-					return of({ isOpen: true })
+					return of(LoadRegistrationState.create({ isOpen: true }))
 				} else {
-					return findExistingRegistration().pipe(map(registration => ({ isOpen: true, registration })))
+					return findExistingRegistration().pipe(
+						concatMap(registrationInfo => registrationInfo === undefined
+							? of(LoadRegistrationState.create({ isOpen: true }))
+							: findTransactionsForBadgeNumber(registrationInfo.id!).pipe(
+								map(transactions => LoadRegistrationState.create({
+									isOpen: true,
+									registrationInfo,
+									paid: calculateTotalPaid(transactions) / 100,
+									due: calculateOutstandingDues(transactions) / 100, // TODO: Use big.js
+									unprocessedPayments: hasUnprocessedPayments(transactions),
+								})),
+								catchError(handlePaySrvApiError('registration-open-check')),
+							),
+						),
+					)
 				}
 			}),
-			map(LoadRegistrationState.create),
 			catchError(handleAttSrvApiError('registration-open-check')),
+		)),
+	),
+
+	(action$, state$) => action$.pipe(
+		ofType(InitiatePayment.type),
+		withLatestFrom(state$),
+		concatMap(([, state]) => initiateCreditCardPaymentOrUseExisting(getRegistrationId()(state)!).pipe(
+			justDo(transaction => {
+				location.href = transaction.payment_start_url
+			}),
+			catchError(handlePaySrvApiError('registration-initiate-payment')),
 		)),
 	),
 )

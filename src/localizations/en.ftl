@@ -29,10 +29,9 @@ footer-last-saved = Your information was last saved on {DATETIME($lastSaved, wee
 # Invoices
 invoice-edit-selection = Edit selection
 
-invoice-total-label = Total
-invoice-total-taxesnotice = Taxes included
-
 invoice-item-label = {$amount} x {$name}
+
+invoice-total-item-label = {$name}
 
 invoice-item-definition-register-ticket-type-day =
   .name = Day ticket
@@ -49,6 +48,17 @@ invoice-item-definition-register-ticket-addons-tshirt =
   .name = T-shirt
   .extra = {$size}
 
+invoice-total =
+  .name = Total
+  .extra = Taxes included
+
+invoice-paid =
+  .name = Paid
+
+invoice-due =
+  .name = Due
+
+invoice-pay-button-credit-card = 💳 Pay with CC
 
 
 # Common register messages
@@ -456,10 +466,11 @@ hotel-booking-email-description =
 funnel-error-report-title = Oh no...
 
 funnel-error-report-operation = {$operation ->
-  [registration-open-check] We couldn't check if you are already registered.
-  [registration-submission] We couldn't submit your registration.
-  [registration-update]     We couldn't update your registration.
- *[unknown]                 There was an error handling your request.
+  [registration-open-check]       We couldn't check if you are already registered.
+  [registration-submission]       We couldn't submit your registration.
+  [registration-update]           We couldn't update your registration.
+  [registration-initiate-payment] We couldn't initiate your payment.
+ *[unknown]                       There was an error handling your request.
 }
 
 funnel-error-report-message = {$category ->
@@ -471,6 +482,9 @@ funnel-error-report-message = {$category ->
     [auth-forbidden]           You do not have permission to do this. Contact support if you believe this is a mistake.
    *[unknown]                  The server encountered an unexpected problem while processing your request. Please try again in a few minutes or contact support.
   }
+  [paysrv] {$code ->
+   *[unknown]                  The server encountered an unexpected problem while processing your request. Please try again in a few minutes or contact support.
+  }
  *[frontend] {$code ->
     [network-error]            We could not reach the server to process your request. Please check if you are connected to the internet.
    *[unknown]                  An error occurred when we tried to handle your request. Please try again later. If this problem persists, try clearing your browser's cache and refreshing the page. If that doesn't resolve the problem, contact support.
@@ -479,10 +493,12 @@ funnel-error-report-message = {$category ->
 
 
 # General utility messages
-price = {$price ->
+price = {$value ->
    [0]     Free
-  *[other] {NUMBER($price, minimumFractionDigits: 0)}
+  *[other] {NUMBER($value, minimumFractionDigits: 0)}
 }
+
+due = {NUMBER($value, minimumFractionDigits: 0)}
 
 -notification-type = { $type ->
   [art]        Art

@@ -5,7 +5,7 @@ import { ErrorDto as AttSrvErrorDto } from '~/apis/attsrv'
 import { AnyAppAction, GetAction } from '~/state/actions'
 import { InitiateLogin } from '~/state/actions/auth'
 import { ReportError } from '~/state/actions/errors'
-import { AppErrorOperation, AttSrvAppError, FrontendAppError } from '~/state/models/errors'
+import { AppErrorOperation, AttSrvAppError, PaySrvAppError, FrontendAppError } from '~/state/models/errors'
 
 
 function handleApiError<O extends ObservableInput<GetAction<AnyAppAction>>>(
@@ -59,3 +59,11 @@ export const handleAttSrvApiError = (operation: AppErrorOperation) => handleApiE
 	}
 })
 
+export const handlePaySrvApiError = (operation: AppErrorOperation) => handleApiError(operation, err => {
+	switch (err.status) {
+		case StatusCodes.UNAUTHORIZED:
+			return of(InitiateLogin.create(undefined))
+		default:
+			return of(ReportError.create(new PaySrvAppError(operation, err.status)))
+	}
+})

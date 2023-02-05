@@ -6,7 +6,11 @@ import { buildInvoice, UncalculatedInvoiceItem } from '../models/invoice'
 export const isRegistrationOpen = () => (s: AppState) => s.register.isOpen
 export const isEditMode = () => (s: AppState) => s.register.registrationInfo.id !== undefined
 
+export const getPaidAmount = () => (s: AppState) => s.register.paid
+export const getDueAmount = () => (s: AppState) => s.register.due
+
 export const getRegistrationInfo = () => (s: AppState) => s.register.registrationInfo
+export const getRegistrationId = () => (s: AppState) => s.register.registrationInfo.id
 export const getTicketType = () => (s: AppState) => s.register.registrationInfo.ticketType
 export const getTicketLevel = () => (s: AppState) => s.register.registrationInfo.ticketLevel
 export const getPersonalInfo = () => (s: AppState) => s.register.registrationInfo.personalInfo
@@ -21,7 +25,7 @@ export const getSaveData = () => ({ register: { registrationInfo: { id, personal
 	},
 })
 
-export const getInvoice = createSelector(getTicketType(), getTicketLevel(), (ticketType, ticketLevel) => {
+export const getInvoice = createSelector(getTicketType(), getTicketLevel(), getPaidAmount(), getDueAmount(), (ticketType, ticketLevel, paid, due) => {
 	if (ticketLevel === undefined || ticketType === undefined) {
 		return undefined
 	}
@@ -51,5 +55,5 @@ export const getInvoice = createSelector(getTicketType(), getTicketLevel(), (tic
 			options: addon.options,
 		}))
 
-	return buildInvoice([ticketLine, ...addonLines])
+	return buildInvoice([ticketLine, ...addonLines], { paid, due })
 })

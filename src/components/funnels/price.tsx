@@ -18,7 +18,7 @@ interface PriceProps {
 	readonly price: number
 }
 
-const Price = ({ price }: PriceProps) => <Localized id="price" vars={{ price: new FluentNumber(price, { style: 'currency', currency: 'EUR' }) }}>
+const Price = ({ price }: PriceProps) => <Localized id="price" vars={{ value: new FluentNumber(price, { style: 'currency', currency: 'EUR' }) }}>
 	<Container>{price} €</Container>
 </Localized>
 
