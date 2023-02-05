@@ -225,6 +225,9 @@ register-personal-info-spoken-languages =
 register-personal-info-pronouns =
   .legend = Pronouns
 
+register-personal-info-pronouns-prefer-not-to-say =
+  .label = Prefer not to say
+
 register-personal-info-pronouns-other =
   .label = Other
 

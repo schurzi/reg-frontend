@@ -41,7 +41,7 @@ export const forms = {
 		}), config.addons),
 	}),
 	'register-personal-info': createForm<Omit<PersonalInfo, 'pronouns' | 'dateOfBirth'> & {
-		readonly pronounsSelection: 'He/Him' | 'She/Her' | 'They/Them' | 'other'
+		readonly pronounsSelection: 'prefer-not-to-say' | 'He/Him' | 'She/Her' | 'They/Them' | 'other'
 		readonly pronounsOther: string
 		readonly dateOfBirth: string
 	}>({
@@ -51,7 +51,7 @@ export const forms = {
 		fullNamePermission: false,
 		dateOfBirth: null,
 		spokenLanguages: [],
-		pronounsSelection: null,
+		pronounsSelection: 'prefer-not-to-say',
 		pronounsOther: null,
 		wheelchair: false,
 	}),

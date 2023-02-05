@@ -34,7 +34,15 @@ const transformTicketLevel = (ticketType: TicketType, payload: GetAction<SubmitF
 const transformPersonalInfo = (payload: GetAction<SubmitFormActionBundle<'register-personal-info'>>['payload']) => {
 	const { pronounsSelection, pronounsOther, dateOfBirth, ...rest } = payload as DeepNonNullable<typeof payload>
 
-	return { pronouns: pronounsSelection === 'other' ? pronounsOther : pronounsSelection, dateOfBirth: new Date(dateOfBirth), ...rest }
+	return {
+		pronouns: pronounsSelection === 'prefer-not-to-say'
+			? null
+			: pronounsSelection === 'other'
+				? pronounsOther
+				: pronounsSelection,
+		dateOfBirth: new Date(dateOfBirth),
+		...rest,
+	}
 }
 
 const registrationInfoReducer = (state: Partial<RegistrationInfo>, action: GetAction<AnyAppAction>): Partial<RegistrationInfo> => {
