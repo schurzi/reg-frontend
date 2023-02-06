@@ -1,13 +1,14 @@
+/* eslint-disable camelcase */
 import { eachDayOfInterval, formatISO, isFriday, isSaturday, isThursday } from 'date-fns'
 import { head, last } from 'ramda'
 import { catchError, concatMap, map } from 'rxjs/operators'
-import { ajax, AjaxError } from 'rxjs/ajax'
+import { ajax, AjaxConfig, AjaxError } from 'rxjs/ajax'
 import config from '~/config'
-/* eslint-disable camelcase */
-import { RegistrationInfo } from '~/state/models/register'
-import type { ErrorDto as CommonErrorDto } from './common'
+import type { RegistrationInfo } from '~/state/models/register'
+import { ErrorDto as CommonErrorDto, handleStandardApiErrors } from './common'
 import { of } from 'rxjs'
-import { StatusCodes } from 'http-status-codes'
+import { AppError } from '~/state/models/errors'
+import type { Replace } from 'type-fest'
 
 export interface AttendeeDto {
 	readonly id: number | null
@@ -198,6 +199,23 @@ const registrationInfoFromAttendeeDto = (attendeeDto: AttendeeDto): Registration
 	}
 }
 
+export class AttSrvAppError extends AppError<Replace<ErrorMessage, '.', '-', { all: true }>> {
+	// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
+	constructor(err: AjaxError) {
+		super('attsrv', (err.response as ErrorDto).message.replaceAll('.', '-'), 'API error')
+	}
+}
+
+// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
+const apiCall = <T>({ path, ...cfg }: Omit<AjaxConfig, 'url'> & { path: string }) => ajax<T>({
+	url: `${config.apis.attsrv.url}${path}`,
+	crossDomain: true,
+	withCredentials: true,
+	...cfg,
+}).pipe(
+	catchError(handleStandardApiErrors(AttSrvAppError)),
+)
+
 /*
  * GET /countdown checks if registration is open, or when it will open, checking that the user is logged in in the process.
  *
@@ -214,8 +232,8 @@ const registrationInfoFromAttendeeDto = (attendeeDto: AttendeeDto): Registration
  *
  * This endpoint is optimized in the backend for high traffic, so it is safe to call during initial reg.
  */
-export const registrationCountdownCheck = () => ajax<CountdownDto>({
-	url: `${config.apis.attsrv.url}/countdown`,
+export const registrationCountdownCheck = () => apiCall<CountdownDto>({
+	path: '/countdown',
 	method: 'GET',
 	crossDomain: true,
 	withCredentials: true,
@@ -240,8 +258,8 @@ export const registrationCountdownCheck = () => ajax<CountdownDto>({
  *
  * This endpoint is optimized in the backend for high traffic, so it is safe to call during initial reg.
  */
-export const submitRegistration = (registrationInfo: RegistrationInfo) => ajax({
-	url: `${config.apis.attsrv.url}/attendees`,
+export const submitRegistration = (registrationInfo: RegistrationInfo) => apiCall({
+	path: '/attendees',
 	method: 'POST',
 	crossDomain: true,
 	withCredentials: true,
@@ -259,8 +277,8 @@ export const submitRegistration = (registrationInfo: RegistrationInfo) => ajax({
  *
  * This endpoint should be avoided during initial reg, as it entails a database select.
  */
-export const findMyRegistrations = () => ajax<AttendeeIdListDto>({
-	url: `${config.apis.attsrv.url}/attendees`,
+export const findMyRegistrations = () => apiCall<AttendeeIdListDto>({
+	path: '/attendees',
 	method: 'GET',
 	crossDomain: true,
 	withCredentials: true,
@@ -276,8 +294,8 @@ export const findMyRegistrations = () => ajax<AttendeeIdListDto>({
  * 401: The user's token has expired, and you need to redirect them to the auth start to refresh it.
  * 500: It is important to communicate the ErrorDto's requestid field to the user, so they can give it to us, so we can look in the logs.
  */
-export const loadRegistration = (id: number) => ajax<AttendeeDto>({
-	url: `${config.apis.attsrv.url}/attendees/${id}`,
+export const loadRegistration = (id: number) => apiCall<AttendeeDto>({
+	path: `/attendees/${id}`,
 	method: 'GET',
 	crossDomain: true,
 	withCredentials: true,
@@ -299,8 +317,8 @@ export const loadRegistration = (id: number) => ajax<AttendeeDto>({
  *
  * 500: It is important to communicate the ErrorDto's requestid field to the user, so they can give it to us, so we can look in the logs.
  */
-export const updateRegistration = (registrationInfo: RegistrationInfo) => ajax({
-	url: `${config.apis.attsrv.url}/attendees/${registrationInfo.id}`,
+export const updateRegistration = (registrationInfo: RegistrationInfo) => apiCall({
+	path: `/attendees/${registrationInfo.id}`,
 	method: 'PUT',
 	crossDomain: true,
 	withCredentials: true,
@@ -313,7 +331,7 @@ export const findExistingRegistration = () => findMyRegistrations().pipe(
 		loadRegistration(result.response.ids[0]).pipe(map(r => registrationInfoFromAttendeeDto(r.response))),
 	),
 	catchError(err => {
-		if (err instanceof AjaxError && err.status === StatusCodes.NOT_FOUND) {
+		if (err instanceof AttSrvAppError && err.code === 'attendee-owned-notfound') {
 			return of(undefined)
 		} else {
 			throw err

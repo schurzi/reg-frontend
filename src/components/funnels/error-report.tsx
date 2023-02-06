@@ -3,7 +3,7 @@ import { Button } from '@eurofurence/reg-component-library'
 import { Localized } from '@fluent/react'
 import { StaticImage } from 'gatsby-plugin-image'
 import ReactMarkdown from 'react-markdown'
-import { AppError, FrontendAppError } from '~/state/models/errors'
+import { AppError, ErrorReport, FrontendAppError } from '~/state/models/errors'
 import SplashFunnelLayout from './layout/splash'
 
 const BackButton = styled(Button)`
@@ -11,12 +11,16 @@ const BackButton = styled(Button)`
 `
 
 export interface FunnelErrorReportProps {
-	readonly error: Readonly<Error>
+	readonly report: ErrorReport
 	readonly onBack: () => void
 }
 
-const FunnelErrorReport = ({ error, onBack }: FunnelErrorReportProps) => {
-	const { operation, category, code } = error instanceof AppError ? error as AppError : new FrontendAppError('unknown', 'unknown', error.message)
+const FunnelErrorReport = ({ report: { operation, error }, onBack }: FunnelErrorReportProps) => {
+	const { category, code } = error instanceof AppError
+		? error as AppError
+		: error instanceof Error
+			? new FrontendAppError('unknown', error.message)
+			: new FrontendAppError('unknown', String(error))
 
 	return <SplashFunnelLayout image={<StaticImage src="../../images/con-cats/days/wednesday.png" alt=""/>}>
 		<Localized id="funnel-error-report-title"><h1>Oh no...</h1></Localized>
