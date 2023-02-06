@@ -1,4 +1,4 @@
-import { concatMap, withLatestFrom, catchError, map } from 'rxjs/operators'
+import { concatMap, withLatestFrom, map } from 'rxjs/operators'
 import { combineEpics, Epic, ofType } from 'redux-observable'
 import { AnyAppAction, GetAction } from '~/state/actions'
 import { always } from 'ramda'
@@ -11,11 +11,11 @@ import { navigate } from 'gatsby'
 import { getRegistrationId, getRegistrationInfo, isEditMode } from '~/state/selectors/register'
 import { RegistrationInfo } from '~/state/models/register'
 import { justDo } from '~/state/epics/operators/just-do'
-import { handleAttSrvApiError, handlePaySrvApiError } from './error-handlers/apis'
 import { EMPTY, of } from 'rxjs'
 import { addHours, isBefore } from 'date-fns'
 import config from '~/config'
 import { calculateOutstandingDues, calculateTotalPaid, findTransactionsForBadgeNumber, hasUnprocessedPayments, initiateCreditCardPaymentOrUseExisting } from '~/apis/paysrv'
+import { catchAppError } from './operators/catch-app-error'
 
 const nextPageOrSave = <T extends AnyAppAction>(actionBundle: T, pathProvider: (action: GetAction<T>) => string): Epic<GetAction<AnyAppAction>, GetAction<AnyAppAction>, AppState> =>
 	(action$, state$) => action$.pipe(
@@ -25,7 +25,7 @@ const nextPageOrSave = <T extends AnyAppAction>(actionBundle: T, pathProvider: (
 			if (isEditMode()(state)) {
 				return updateRegistration(getRegistrationInfo()(state) as RegistrationInfo).pipe(
 					justDo(() => navigate('/register/summary')),
-					catchError(handleAttSrvApiError('registration-update')),
+					catchAppError('registration-update'),
 				)
 			} else {
 				// eslint-disable-next-line @typescript-eslint/no-floating-promises
@@ -51,8 +51,8 @@ export default combineEpics<GetAction<AnyAppAction>, GetAction<AnyAppAction>, Ap
 		withLatestFrom(state$),
 		concatMap(([, state]) => submitRegistration(getRegistrationInfo()(state) as RegistrationInfo).pipe(
 			justDo(() => navigate('/register/thank-you')),
-			catchError(handleAttSrvApiError('registration-submission')),
 		)),
+		catchAppError('registration-submission'),
 	),
 
 	// Check if registrations are open and if and existing registration exists
@@ -76,14 +76,13 @@ export default combineEpics<GetAction<AnyAppAction>, GetAction<AnyAppAction>, Ap
 									due: calculateOutstandingDues(transactions) / 100, // TODO: Use big.js
 									unprocessedPayments: hasUnprocessedPayments(transactions),
 								})),
-								catchError(handlePaySrvApiError('registration-open-check')),
 							),
 						),
 					)
 				}
 			}),
-			catchError(handleAttSrvApiError('registration-open-check')),
 		)),
+		catchAppError('registration-open-check'),
 	),
 
 	(action$, state$) => action$.pipe(
@@ -93,7 +92,7 @@ export default combineEpics<GetAction<AnyAppAction>, GetAction<AnyAppAction>, Ap
 			justDo(transaction => {
 				location.href = transaction.payment_start_url
 			}),
-			catchError(handlePaySrvApiError('registration-initiate-payment')),
 		)),
+		catchAppError('registration-initiate-payment'),
 	),
 )
