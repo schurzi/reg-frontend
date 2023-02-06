@@ -62,10 +62,10 @@ invoice-pay-button-credit-card = 💳 Pay with CC
 
 
 # Common register messages
-register-header-title = Welcome to Eurofurence 2022!
+register-header-title = Welcome to Eurofurence 2023!
 register-header-description =
-  We're very excited that you've decided to join us for this confurence.
-  Get ready for a fun couple of days with likeminded people and enjoy all the activities and events that we've got lined up for you this year.
+  We're very excited that you've decided to join us.
+  Get ready for a fun couple of days with like-minded people and enjoy all the activities and events that we've got lined up for you this year.
 
 register-navigation-back = Go back
 register-navigation-next = Continue
@@ -106,7 +106,7 @@ register-ticket-day-validation-errors-day-required = Please select a day.
 register-ticket-level-title = Select your ticket
 
 register-ticket-level-card-standard =
-  This Standard Convention ticket grants you access to the convention from Wednesday to Sunday.
+  This Standard Convention ticket grants you access to the convention from Sunday to Wednesday.
 
   + Standard convention badge
   + program book
@@ -121,11 +121,12 @@ register-ticket-level-card-sponsor =
   + Sponsor convention badge
   + program book + honorable mention
   + participation in all scheduled events
-  + early access to the Dealer's Den on Thursday
+  + early access to the Dealers' Den
   + free T-shirt
 
   .label = Sponsor
-  .priceLabel = Early-bird ticket
+  # TODO why does this say Early-bird ticket? sponsor or not has nothing to do with price levels, and we've scrapped price levels anyway
+  .priceLabel = Sponsor ticket
 
 register-ticket-level-card-super-sponsor =
   An even more generous donation, you've earned a Super Sponsor ticket! This means you'll get
@@ -133,34 +134,97 @@ register-ticket-level-card-super-sponsor =
   + Super Sponsor convention badge
   + program book + honorable mention
   + participation in all scheduled events
-  + super-early access to the Dealer's Den on Thursday
+  + super-early access to the Dealers' Den
   + free T-shirt
   + access to exclusive Super Sponsor events
 
   .label = Super sponsor
-  .priceLabel = Super early-bird ticket
+  # TODO why does this say Super early-bird ticket? super sponsor or not has nothing to do with price levels, and we've scrapped price levels anyway
+  .priceLabel = Super sponsor ticket
 
+# TODO we've scrapped price levels, but this is still referenced in the code
 register-ticket-level-expiration-notice = Register before {DATETIME($expirationDate, day: "numeric", month: "long")}
 
 register-ticket-level-addons-title = Select add-ons
 
 register-ticket-level-addons-item-stage-pass =
   .label = Stage pass
-  .description = The Stage pass will grant you access to the stage events from **Wednesday** to **Saturday**.
+  .description = The Stage pass will grant you access to the stage events.
 
 register-ticket-level-addons-item-tshirt =
   .label = Eurofurence T-shirt
-  .description = 100% cotton, high-quality T-shirts. You can also purchase these at the event, but purchasing it now will guarantee the availability of your size.
+  .description = 100% cotton, high-quality T-shirts. You can also purchase these at the event, but purchasing one now will guarantee availability of your size.
 
 register-ticket-level-addons-item-tshirt-option-size =
   .label = T-shirt size
 
+# t-shirt size configuration:
+# tshirtsizes:
+#    - 'XS':
+#        'en-US': 'XS (Regular Cut)'
+#        'de-DE': 'XS (weit geschnitten)'
+#    - 'wXS':
+#        'en-US': 'XS (Narrow Cut)'
+#        'de-DE': 'XS (schmal geschnitten)'
+#    - 'S':
+#        'en-US': 'S (Regular Cut)'
+#        'de-DE': 'S (weit geschnitten)'
+#    - 'wS':
+#        'en-US': 'S (Narrow Cut)'
+#        'de-DE': 'S (schmal geschnitten)'
+#    - 'M':
+#        'en-US': 'M (Regular Cut)'
+#        'de-DE': 'M (weit geschnitten)'
+#    - 'wM':
+#        'en-US': 'M (Narrow Cut)'
+#        'de-DE': 'M (schmal geschnitten)'
+#    - 'L':
+#        'en-US': 'L (Regular Cut)'
+#        'de-DE': 'L (weit geschnitten)'
+#    - 'wL':
+#        'en-US': 'L (Narrow Cut)'
+#        'de-DE': 'L (schmal geschnitten)'
+#    - 'XL':
+#        'en-US': 'XL (Regular Cut)'
+#        'de-DE': 'XL (weit geschnitten)'
+#    - 'wXL':
+#        'en-US': 'XL (Narrow Cut)'
+#        'de-DE': 'XL (schmal geschnitten)'
+#    - 'XXL':
+#        'en-US': 'XXL (Regular Cut)'
+#        'de-DE': 'XXL (weit geschnitten)'
+#    - 'wXXL':
+#        'en-US': 'XXL (Narrow Cut)'
+#        'de-DE': 'XXL (schmal geschnitten)'
+#    - '3XL':
+#        'en-US': '3XL (Regular Cut)'
+#        'de-DE': '3XL (weit geschnitten)'
+#    - 'w3XL':
+#        'en-US': '3XL (Narrow Cut)'
+#        'de-DE': '3XL (schmal geschnitten)'
+#    - '4XL':
+#        'en-US': '4XL (Regular Cut)'
+#        'de-DE': '4XL (weit geschnitten)'
+#    - 'w4XL':
+#        'en-US': '4XL (Narrow Cut)'
+#        'de-DE': '4XL (schmal geschnitten)'
 register-ticket-level-addons-item-tshirt-option-size-value = { $value ->
- *[S]   Small
-  [M]   Medium
-  [L]   Large
-  [XL]  X-Large
-  [XXL] XX-Large
+  [XS]   X-Small (Regular Cut)
+  [wXS]  X-Small (Narrow Cut)
+ *[S]    Small (Regular Cut)
+  [wS]   Small (Narrow Cut)
+  [M]    Medium (Regular Cut)
+  [wM]   Medium (Narrow Cut)
+  [L]    Large (Regular Cut)
+  [wL]   Large (Narrow Cut)
+  [XL]   X-Large (Regular Cut)
+  [wXL]  X-Large (Narrow Cut)
+  [XXL]  XX-Large (Regular Cut)
+  [wXXL] XX-Large (Narrow Cut)
+  [3XL]  3X-Large (Regular Cut)
+  [w3XL] 3X-Large (Narrow Cut)
+  [4XL]  4X-Large (Regular Cut)
+  [w4XL] 4X-Large (Narrow Cut)
 }
 
 register-ticket-level-validation-errors-level-required = Please select a ticket level.
@@ -229,7 +293,7 @@ register-contact-info-title = Contact information
 
 register-contact-info-email =
   .label = Email address
-  .placeholder = john.smith@email.com
+  .placeholder = john.smith@example.com
 
 register-contact-info-phone-number =
   .label = Phone number
@@ -338,8 +402,8 @@ register-summary-section-personal-property-wheelchair-accomodation-value = { $va
 register-thank-you-title = Thank you for your registration
 register-thank-you-subtitle = Next steps
 register-thank-you-content =
-  We'll review your registration and send you a response within a week or two.
-  You'll receive a confirmation after we've processed and approved your registration.
+  We'll review your registration and send you a response within a few weeks.
+  You'll receive an update by e-mail after we've processed and approved your registration.
 
 
 
@@ -355,7 +419,7 @@ register-not-open-yet-content =
 
 
 # Common hotel booking messages
-hotel-booking-header-title = Welcome to Eurofurence 2022!
+hotel-booking-header-title = Welcome to Eurofurence 2023!
 
 hotel-booking-header-description =
   In order to speed up hotel booking and increase your chances of securing a room, you can enter your preferred dates,
