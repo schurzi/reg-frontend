@@ -120,8 +120,6 @@ export const hasUnprocessedPayments = (transactions: readonly TransactionDto[]) 
 export const findTransactionsForBadgeNumber = (badgeNumber: number) => apiCall<TransactionResponseDto>({
 	path: `/transactions?debitor_id=${badgeNumber}`,
 	method: 'GET',
-	crossDomain: true,
-	withCredentials: true,
 }).pipe(
 	map(result => result.response.payload),
 	catchError(err => {
@@ -155,8 +153,6 @@ export const findTransactionsForBadgeNumber = (badgeNumber: number) => apiCall<T
 export const initiateCreditCardPayment = (badgeNumber: number) => apiCall<TransactionDto>({
 	path: '/transactions/initiate-payment',
 	method: 'POST',
-	crossDomain: true,
-	withCredentials: true,
 	body: {
 		debitor_id: badgeNumber,
 	},

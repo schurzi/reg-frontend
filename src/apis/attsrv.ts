@@ -235,8 +235,6 @@ const apiCall = <T>({ path, ...cfg }: Omit<AjaxConfig, 'url'> & { path: string }
 export const registrationCountdownCheck = () => apiCall<CountdownDto>({
 	path: '/countdown',
 	method: 'GET',
-	crossDomain: true,
-	withCredentials: true,
 })
 
 /*
@@ -261,8 +259,6 @@ export const registrationCountdownCheck = () => apiCall<CountdownDto>({
 export const submitRegistration = (registrationInfo: RegistrationInfo) => apiCall({
 	path: '/attendees',
 	method: 'POST',
-	crossDomain: true,
-	withCredentials: true,
 	body: attendeeDtoFromRegistrationInfo(registrationInfo),
 })
 
@@ -280,8 +276,6 @@ export const submitRegistration = (registrationInfo: RegistrationInfo) => apiCal
 export const findMyRegistrations = () => apiCall<AttendeeIdListDto>({
 	path: '/attendees',
 	method: 'GET',
-	crossDomain: true,
-	withCredentials: true,
 })
 
 /*
@@ -297,8 +291,6 @@ export const findMyRegistrations = () => apiCall<AttendeeIdListDto>({
 export const loadRegistration = (id: number) => apiCall<AttendeeDto>({
 	path: `/attendees/${id}`,
 	method: 'GET',
-	crossDomain: true,
-	withCredentials: true,
 })
 
 /*
@@ -320,8 +312,6 @@ export const loadRegistration = (id: number) => apiCall<AttendeeDto>({
 export const updateRegistration = (registrationInfo: RegistrationInfo) => apiCall({
 	path: `/attendees/${registrationInfo.id}`,
 	method: 'PUT',
-	crossDomain: true,
-	withCredentials: true,
 	body: attendeeDtoFromRegistrationInfo(registrationInfo),
 })
 
