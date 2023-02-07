@@ -122,6 +122,8 @@ register-ticket-level-card-sponsor =
   + program book + honorable mention
   + participation in all scheduled events
   + early access to the Dealers' Den
+  + priority queueing for certain events
+  + Sponsor pack
   + free T-shirt
 
   .label = Sponsor
@@ -135,8 +137,9 @@ register-ticket-level-card-super-sponsor =
   + program book + honorable mention
   + participation in all scheduled events
   + super-early access to the Dealers' Den
+  + priority queueing for certain events
+  + Super Sponsor pack
   + free T-shirt
-  + access to exclusive Super Sponsor events
 
   .label = Super sponsor
   # TODO why does this say Super early-bird ticket? super sponsor or not has nothing to do with price levels, and we've scrapped price levels anyway
@@ -158,56 +161,6 @@ register-ticket-level-addons-item-tshirt =
 register-ticket-level-addons-item-tshirt-option-size =
   .label = T-shirt size
 
-# t-shirt size configuration:
-# tshirtsizes:
-#    - 'XS':
-#        'en-US': 'XS (Regular Cut)'
-#        'de-DE': 'XS (weit geschnitten)'
-#    - 'wXS':
-#        'en-US': 'XS (Narrow Cut)'
-#        'de-DE': 'XS (schmal geschnitten)'
-#    - 'S':
-#        'en-US': 'S (Regular Cut)'
-#        'de-DE': 'S (weit geschnitten)'
-#    - 'wS':
-#        'en-US': 'S (Narrow Cut)'
-#        'de-DE': 'S (schmal geschnitten)'
-#    - 'M':
-#        'en-US': 'M (Regular Cut)'
-#        'de-DE': 'M (weit geschnitten)'
-#    - 'wM':
-#        'en-US': 'M (Narrow Cut)'
-#        'de-DE': 'M (schmal geschnitten)'
-#    - 'L':
-#        'en-US': 'L (Regular Cut)'
-#        'de-DE': 'L (weit geschnitten)'
-#    - 'wL':
-#        'en-US': 'L (Narrow Cut)'
-#        'de-DE': 'L (schmal geschnitten)'
-#    - 'XL':
-#        'en-US': 'XL (Regular Cut)'
-#        'de-DE': 'XL (weit geschnitten)'
-#    - 'wXL':
-#        'en-US': 'XL (Narrow Cut)'
-#        'de-DE': 'XL (schmal geschnitten)'
-#    - 'XXL':
-#        'en-US': 'XXL (Regular Cut)'
-#        'de-DE': 'XXL (weit geschnitten)'
-#    - 'wXXL':
-#        'en-US': 'XXL (Narrow Cut)'
-#        'de-DE': 'XXL (schmal geschnitten)'
-#    - '3XL':
-#        'en-US': '3XL (Regular Cut)'
-#        'de-DE': '3XL (weit geschnitten)'
-#    - 'w3XL':
-#        'en-US': '3XL (Narrow Cut)'
-#        'de-DE': '3XL (schmal geschnitten)'
-#    - '4XL':
-#        'en-US': '4XL (Regular Cut)'
-#        'de-DE': '4XL (weit geschnitten)'
-#    - 'w4XL':
-#        'en-US': '4XL (Narrow Cut)'
-#        'de-DE': '4XL (schmal geschnitten)'
 register-ticket-level-addons-item-tshirt-option-size-value = { $value ->
   [XS]   X-Small (Regular Cut)
   [wXS]  X-Small (Narrow Cut)
