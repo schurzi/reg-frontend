@@ -30,8 +30,6 @@ const TicketLevel = (_: ReadonlyRouteComponentProps) => {
 	const formContext = useFunnelForm('register-ticket-level')
 	const { register, handleSubmit } = formContext
 
-	const expirationDate = config.registrationExpirationDate
-
 	return <FullWidthRegisterFunnelLayout onNext={handleSubmit} currentStep={1}>
 		<form onSubmit={handleSubmit}>
 			<section>
@@ -51,7 +49,6 @@ const TicketLevel = (_: ReadonlyRouteComponentProps) => {
 								<TicketLevelCard
 									id={id}
 									price={prices[ticketType.type]}
-									expirationDate={expirationDate}
 									label="Ticket level"
 									priceLabel="A ticket"
 									{...register('level', { required: true })}

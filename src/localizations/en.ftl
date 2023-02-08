@@ -62,10 +62,10 @@ invoice-pay-button-credit-card = 💳 Pay with CC
 
 
 # Common register messages
-register-header-title = Welcome to Eurofurence 2022!
+register-header-title = Welcome to Eurofurence 2023!
 register-header-description =
-  We're very excited that you've decided to join us for this confurence.
-  Get ready for a fun couple of days with likeminded people and enjoy all the activities and events that we've got lined up for you this year.
+  We're very excited that you've decided to join us.
+  Get ready for a fun couple of days with like-minded people and enjoy all the activities and events that we've got lined up for you this year.
 
 register-navigation-back = Go back
 register-navigation-next = Continue
@@ -106,39 +106,51 @@ register-ticket-day-validation-errors-day-required = Please select a day.
 register-ticket-level-title = Select your ticket
 
 register-ticket-level-card-standard =
-  This Standard Convention ticket grants you access to the convention from Wednesday to Sunday.
+  This Standard Convention ticket grants you access to the convention.
 
   + Standard convention badge
   + program book
-  + participation in all scheduled events
+  + participation in scheduled events
 
   .label = Standard
-  .priceLabel = Standard ticket
+  .priceLabel = {$type ->
+                   *[full] Standard ticket
+                    [day]  Standard day ticket
+                }
 
 register-ticket-level-card-sponsor =
   As a thank you for supporting Eurofurence with a voluntary donation, you will receive
 
   + Sponsor convention badge
   + program book + honorable mention
-  + participation in all scheduled events
-  + early access to the Dealer's Den on Thursday
+  + participation in scheduled events
+  + early access to the Dealers' Den (Monday only)
+  + priority queueing for certain events
+  + Sponsor pack
   + free T-shirt
 
   .label = Sponsor
-  .priceLabel = Early-bird ticket
+  .priceLabel = {$type ->
+                   *[full] Sponsor ticket
+                    [day]  Sponsor day ticket
+                }
 
 register-ticket-level-card-super-sponsor =
   An even more generous donation, you've earned a Super Sponsor ticket! This means you'll get
 
   + Super Sponsor convention badge
   + program book + honorable mention
-  + participation in all scheduled events
-  + super-early access to the Dealer's Den on Thursday
+  + participation in scheduled events
+  + super-early access to the Dealers' Den (Monday only)
+  + priority queueing for certain events
+  + Super Sponsor pack
   + free T-shirt
-  + access to exclusive Super Sponsor events
 
   .label = Super sponsor
-  .priceLabel = Super early-bird ticket
+  .priceLabel = {$type ->
+                   *[full] Super sponsor ticket
+                    [day]  Super sponsor day ticket
+                }
 
 register-ticket-level-expiration-notice = Register before {DATETIME($expirationDate, day: "numeric", month: "long")}
 
@@ -146,21 +158,32 @@ register-ticket-level-addons-title = Select add-ons
 
 register-ticket-level-addons-item-stage-pass =
   .label = Stage pass
-  .description = The Stage pass will grant you access to the stage events from **Wednesday** to **Saturday**.
+  .description = The Stage pass will grant you access to the stage events.
 
 register-ticket-level-addons-item-tshirt =
   .label = Eurofurence T-shirt
-  .description = 100% cotton, high-quality T-shirts. You can also purchase these at the event, but purchasing it now will guarantee the availability of your size.
+  .description = 100% cotton, high-quality T-shirts. You can also purchase these at the event, but purchasing one now will guarantee availability of your size.
 
 register-ticket-level-addons-item-tshirt-option-size =
   .label = T-shirt size
 
 register-ticket-level-addons-item-tshirt-option-size-value = { $value ->
- *[S]   Small
-  [M]   Medium
-  [L]   Large
-  [XL]  X-Large
-  [XXL] XX-Large
+  [XS]    X-Small (Regular Cut)
+  [wXS]   X-Small (Narrow Cut)
+ *[S]     Small (Regular Cut)
+  [wS]    Small (Narrow Cut)
+  [M]     Medium (Regular Cut)
+  [wM]    Medium (Narrow Cut)
+  [L]     Large (Regular Cut)
+  [wL]    Large (Narrow Cut)
+  [XL]    X-Large (Regular Cut)
+  [wXL]   X-Large (Narrow Cut)
+  [XXL]   XX-Large (Regular Cut)
+  [wXXL]  XX-Large (Narrow Cut)
+  [m3XL]  3X-Large (Regular Cut)
+  [wXL]   3X-Large (Narrow Cut)
+  [m4XL]  4X-Large (Regular Cut)
+  [w4XL]  4X-Large (Narrow Cut)
 }
 
 register-ticket-level-validation-errors-level-required = Please select a ticket level.
@@ -229,7 +252,7 @@ register-contact-info-title = Contact information
 
 register-contact-info-email =
   .label = Email address
-  .placeholder = john.smith@email.com
+  .placeholder = john.smith@example.com
 
 register-contact-info-phone-number =
   .label = Phone number
@@ -272,9 +295,9 @@ register-contact-info-validation-errors-city-required = Please provide a city.
 register-contact-info-validation-errors-city-max-length = Your city name may be at most {$limit} characters long.
 register-contact-info-validation-errors-postal-code-required = Please provide a postal code.
 register-contact-info-validation-errors-postal-code-max-length = Your postal code may be at most {$limit} characters long.
-register-contact-info-validation-errors-state-or-province-max-length = Your street name may be at most {$limit} characters long.
+register-contact-info-validation-errors-state-or-province-max-length = Your province name may be at most {$limit} characters long.
 register-contact-info-validation-errors-country-required = Please provide a country.
-register-contact-info-validation-errors-country-max-length = Your street name may be at most {$limit} characters long.
+register-contact-info-validation-errors-country-max-length = Your country name may be at most {$limit} characters long.
 
 
 # Register optional info page
@@ -338,8 +361,8 @@ register-summary-section-personal-property-wheelchair-accomodation-value = { $va
 register-thank-you-title = Thank you for your registration
 register-thank-you-subtitle = Next steps
 register-thank-you-content =
-  We'll review your registration and send you a response within a week or two.
-  You'll receive a confirmation after we've processed and approved your registration.
+  We'll review your registration and send you a response within a few weeks.
+  You'll receive an update by e-mail after we've processed and approved your registration.
 
 
 
@@ -355,7 +378,7 @@ register-not-open-yet-content =
 
 
 # Common hotel booking messages
-hotel-booking-header-title = Welcome to Eurofurence 2022!
+hotel-booking-header-title = Welcome to Eurofurence 2023!
 
 hotel-booking-header-description =
   In order to speed up hotel booking and increase your chances of securing a room, you can enter your preferred dates,
@@ -532,6 +555,7 @@ notification-type = { $type ->
 
 country-name = { $countryCode ->
   [AF] Afghanistan
+  [AX] Åland Islands
   [AL] Albania
   [DZ] Algeria
   [AS] American Samoa
@@ -543,6 +567,7 @@ country-name = { $countryCode ->
   [AR] Argentina
   [AM] Armenia
   [AW] Aruba
+  [AC] Ascension
   [AU] Australia
   [AT] Austria
   [AZ] Azerbaijan
@@ -557,6 +582,7 @@ country-name = { $countryCode ->
   [BM] Bermuda
   [BT] Bhutan
   [BO] Bolivia
+  [BQ] Bonaire
   [BA] Bosnia and Herzegovina
   [BW] Botswana
   [BV] Bouvet Island
@@ -566,29 +592,33 @@ country-name = { $countryCode ->
   [BG] Bulgaria
   [BF] Burkina Faso
   [BI] Burundi
+  [CV] Cabo Verde
   [KH] Cambodia
   [CM] Cameroon
   [CA] Canada
-  [CV] Cape Verde
   [KY] Cayman Islands
   [CF] Central African Republic
+  [EA] Ceuta, Melilla
   [TD] Chad
   [CL] Chile
-  [CN] People's Republic of China
+  [CN] China
   [CX] Christmas Island
+  [CP] Clipperton
   [CC] Cocos (Keeling) Islands
   [CO] Colombia
   [KM] Comoros
-  [CG] Republic of the Congo
-  [CD] Democratic Republic of the Congo
+  [CG] Congo
+  [CD] Congo (Democratic Republic of the)
   [CK] Cook Islands
   [CR] Costa Rica
-  [CI] Cote D'Ivoire
   [HR] Croatia
   [CU] Cuba
+  [CW] Curaçao
   [CY] Cyprus
-  [CZ] Czech Republic
+  [CZ] Czechia
+  [CI] Côte d'Ivoire
   [DK] Denmark
+  [DG] Diego Garcia
   [DJ] Djibouti
   [DM] Dominica
   [DO] Dominican Republic
@@ -598,8 +628,9 @@ country-name = { $countryCode ->
   [GQ] Equatorial Guinea
   [ER] Eritrea
   [EE] Estonia
+  [SZ] Eswatini
   [ET] Ethiopia
-  [FK] Falkland Islands (Malvinas)
+  [FK] Falkland Islands
   [FO] Faroe Islands
   [FJ] Fiji
   [FI] Finland
@@ -608,7 +639,7 @@ country-name = { $countryCode ->
   [PF] French Polynesia
   [TF] French Southern Territories
   [GA] Gabon
-  [GM] Republic of The Gambia
+  [GM] Gambia
   [GE] Georgia
  *[DE] Germany
   [GH] Ghana
@@ -619,6 +650,7 @@ country-name = { $countryCode ->
   [GP] Guadeloupe
   [GU] Guam
   [GT] Guatemala
+  [GG] Guernsey
   [GN] Guinea
   [GW] Guinea-Bissau
   [GY] Guyana
@@ -631,14 +663,17 @@ country-name = { $countryCode ->
   [IS] Iceland
   [IN] India
   [ID] Indonesia
-  [IR] Islamic Republic of Iran
+  [IR] Iran
   [IQ] Iraq
   [IE] Ireland
+  [IM] Isle of Man
   [IL] Israel
   [IT] Italy
   [JM] Jamaica
   [JP] Japan
+  [JE] Jersey
   [JO] Jordan
+  [IC] Kanarische Inseln
   [KZ] Kazakhstan
   [KE] Kenya
   [KI] Kiribati
@@ -646,7 +681,7 @@ country-name = { $countryCode ->
   [KR] South Korea
   [KW] Kuwait
   [KG] Kyrgyzstan
-  [LA] Lao People's Democratic Republic
+  [LA] Lao
   [LV] Latvia
   [LB] Lebanon
   [LS] Lesotho
@@ -668,10 +703,11 @@ country-name = { $countryCode ->
   [MU] Mauritius
   [YT] Mayotte
   [MX] Mexico
-  [FM] Micronesia, Federated States of
-  [MD] Moldova, Republic of
+  [FM] Micronesia
+  [MD] Moldova
   [MC] Monaco
   [MN] Mongolia
+  [ME] Montenegro
   [MS] Montserrat
   [MA] Morocco
   [MZ] Mozambique
@@ -687,13 +723,13 @@ country-name = { $countryCode ->
   [NG] Nigeria
   [NU] Niue
   [NF] Norfolk Island
-  [MK] The Republic of North Macedonia
+  [MK] North Macedonia
   [MP] Northern Mariana Islands
   [NO] Norway
   [OM] Oman
   [PK] Pakistan
   [PW] Palau
-  [PS] State of Palestine
+  [PS] Palestine, State of
   [PA] Panama
   [PG] Papua New Guinea
   [PY] Paraguay
@@ -704,13 +740,15 @@ country-name = { $countryCode ->
   [PT] Portugal
   [PR] Puerto Rico
   [QA] Qatar
-  [RE] Reunion
+  [RE] Réunion
   [RO] Romania
   [RU] Russian Federation
   [RW] Rwanda
+  [BL] Saint Barthélemy
   [SH] Saint Helena
   [KN] Saint Kitts and Nevis
   [LC] Saint Lucia
+  [MF] Saint Martin (French part)
   [PM] Saint Pierre and Miquelon
   [VC] Saint Vincent and the Grenadines
   [WS] Samoa
@@ -718,33 +756,36 @@ country-name = { $countryCode ->
   [ST] Sao Tome and Principe
   [SA] Saudi Arabia
   [SN] Senegal
+  [RS] Serbia
   [SC] Seychelles
   [SL] Sierra Leone
   [SG] Singapore
+  [SX] Sint Maarten (Dutch part)
   [SK] Slovakia
   [SI] Slovenia
   [SB] Solomon Islands
   [SO] Somalia
   [ZA] South Africa
   [GS] South Georgia and the South Sandwich Islands
+  [SS] South Sudan
   [ES] Spain
   [LK] Sri Lanka
   [SD] Sudan
   [SR] Suriname
-  [SJ] Svalbard and Jan Mayen
-  [SZ] Eswatini
+  [SJ] Svalbard
   [SE] Sweden
   [CH] Switzerland
   [SY] Syrian Arab Republic
   [TW] Taiwan
   [TJ] Tajikistan
-  [TZ] United Republic of Tanzania
+  [TZ] Tanzania
   [TH] Thailand
   [TL] Timor-Leste
   [TG] Togo
   [TK] Tokelau
   [TO] Tonga
   [TT] Trinidad and Tobago
+  [TA] Tristan da Cunha
   [TN] Tunisia
   [TR] Türkiye
   [TM] Turkmenistan
@@ -754,31 +795,18 @@ country-name = { $countryCode ->
   [UA] Ukraine
   [AE] United Arab Emirates
   [GB] United Kingdom
-  [US] United States of America
   [UM] United States Minor Outlying Islands
+  [US] United States of America
   [UY] Uruguay
   [UZ] Uzbekistan
   [VU] Vanuatu
   [VE] Venezuela
-  [VN] Vietnam
-  [VG] Virgin Islands, British
-  [VI] Virgin Islands, U.S.
+  [VN] Viet Nam
+  [VG] Virgin Islands (British)
+  [VI] Virgin Islands (U.S.)
   [WF] Wallis and Futuna
   [EH] Western Sahara
   [YE] Yemen
   [ZM] Zambia
   [ZW] Zimbabwe
-  [AX] Åland Islands
-  [BQ] Bonaire, Sint Eustatius and Saba
-  [CW] Curaçao
-  [GG] Guernsey
-  [IM] Isle of Man
-  [JE] Jersey
-  [ME] Montenegro
-  [BL] Saint Barthélemy
-  [MF] Saint Martin (French part)
-  [RS] Serbia
-  [SX] Sint Maarten (Dutch part)
-  [SS] South Sudan
-  [XK] Kosovo
 }
