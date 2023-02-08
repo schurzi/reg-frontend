@@ -30,8 +30,6 @@ const TicketLevel = (_: ReadonlyRouteComponentProps) => {
 	const formContext = useFunnelForm('register-ticket-level')
 	const { register, handleSubmit } = formContext
 
-	const expirationDate = config.registrationExpirationDate
-
 	return <FullWidthRegisterFunnelLayout onNext={handleSubmit} currentStep={1}>
 		<form onSubmit={handleSubmit}>
 			<section>
@@ -39,13 +37,14 @@ const TicketLevel = (_: ReadonlyRouteComponentProps) => {
 				<TicketLevelGrid>
 					<RadioGroup name="level">
 						{Object.entries(config.ticketLevels).map(([id, { prices }]) =>
-							<Localized key={id} id={`register-ticket-level-card-${id}`} attrs={{ label: true, priceLabel: true }}>
+							<Localized key={id} id={`register-ticket-level-card-${id}`} attrs={{ label: true, priceLabel: true, priceLabelDay: true }}>
 								<TicketLevelCard
 									id={id}
 									price={prices[ticketType.type]}
-									expirationDate={expirationDate}
 									label="Ticket level"
 									priceLabel="A ticket"
+									priceLabelDay="A day ticket"
+									isDayTicket={ticketType.type === 'day'}
 									{...register('level', { required: true })}
 								>
 									A ticket level

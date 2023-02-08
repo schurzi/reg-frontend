@@ -106,44 +106,47 @@ register-ticket-day-validation-errors-day-required = Bitte wähle einen Tag aus.
 register-ticket-level-title = Wähle Dein Ticket
 
 register-ticket-level-card-standard =
-  Dieses Standard-Ticket gibt Dir von Sonntag bis Mittwoch Zugang zur Veranstaltung.
+  Dieses Standard-Ticket gibt Dir Zugang zur Veranstaltung.
 
   + Standard-Badge
   + Programmheft
-  + Teilnahme an allen regulären Events
+  + Teilnahme an den regulären Events
 
   .label = Standard
   .priceLabel = Standard-Ticket
+  .priceLabelDay = Standard-Tagesticket
 
 register-ticket-level-card-sponsor =
   Als Dankeschön für Deine Unterstützung der Eurofurence durch Deine Spende erhälst Du
 
   + Sponsor-Badge
   + Programmheft mit Danksagung
-  + Teilnahme an allen regulären Events
-  + früher Zugang zum Dealers' Den
-  + Prioritäts-Warteschlange bei manchen Events
+  + Teilnahme an den regulären Events
+  + früher Zugang zum Dealers' Den (nur Montag)
+  + Prioritäts-Warteschlange bei bestimmten Events
   + Sponsor-Paket
   + kostenloses T-Shirt
 
   .label = Sponsor
   .priceLabel = Sponsor-Ticket
+  .priceLabelDay = Sponsor-Tagesticket
 
 register-ticket-level-card-super-sponsor =
   Mit dieser noch großzügigeren Spende verdienst Du ein Super-Sponsor-Ticket. Daher erhälst Du
 
   + Super-Sponsor-Badge
   + Programmheft mit Danksagung
-  + Teilnahme an allen regulären Events
-  + Besonders früher Zugang zum Dealers' Den
-  + Prioritäts-Warteschlange bei manchen Events
+  + Teilnahme an den regulären Events
+  + Besonders früher Zugang zum Dealers' Den (nur Montag)
+  + Prioritäts-Warteschlange bei bestimmten Events
   + Super-Sponsor-Paket
   + kostenloses T-Shirt
 
   .label = Supersponsor
   .priceLabel = Super-Sponsor-Ticket
+  .priceLabelDay = Super-Sponsor-Tagesticket
 
-register-ticket-level-expiration-notice = Regestriere Dich vor dem {DATETIME($expirationDate, day: "numeric", month: "long")}
+register-ticket-level-expiration-notice = Registriere Dich vor dem {DATETIME($expirationDate, day: "numeric", month: "long")}
 
 register-ticket-level-addons-title = Zusatzoptionen auswählen
 
@@ -598,7 +601,6 @@ country-name = { $countryCode ->
   [CK] Cookinseln
   [CR] CostaRica
   [CW] Curaçao
-  [ZR] Demokratische Republik Kongo
   [DK] Dänemark
  *[DE] Deutschland
   [DG] Diego Garcia
@@ -615,7 +617,6 @@ country-name = { $countryCode ->
   [FJ] Fidschi
   [FI] Finnland
   [FR] Frankreich
-  [FX] Frankreich France métropolitaine
   [GF] Französisch-Guayana
   [PF] Französisch-Polynesien
   [TF] Französische Süd- und Antarktisgebiete
@@ -695,13 +696,11 @@ country-name = { $countryCode ->
   [ME] Montenegro
   [MS] Montserrat
   [MZ] Mosambik
-  [BU] Myanmar
   [MM] Myanmar
   [NA] Namibia
   [NR] Nauru
   [NP] Nepal
   [NC] Neukaledonien
-  [NT] Neutrale Zone
   [NZ] New Zealand
   [NI] Nicaragua
   [NL] Niederlande

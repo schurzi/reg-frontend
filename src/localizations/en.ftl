@@ -106,42 +106,45 @@ register-ticket-day-validation-errors-day-required = Please select a day.
 register-ticket-level-title = Select your ticket
 
 register-ticket-level-card-standard =
-  This Standard Convention ticket grants you access to the convention from Sunday to Wednesday.
+  This Standard Convention ticket grants you access to the convention.
 
   + Standard convention badge
   + program book
-  + participation in all scheduled events
+  + participation in scheduled events
 
   .label = Standard
   .priceLabel = Standard ticket
+  .priceLabelDay = Standard day ticket
 
 register-ticket-level-card-sponsor =
   As a thank you for supporting Eurofurence with a voluntary donation, you will receive
 
   + Sponsor convention badge
   + program book + honorable mention
-  + participation in all scheduled events
-  + early access to the Dealers' Den
+  + participation in scheduled events
+  + early access to the Dealers' Den (Monday only)
   + priority queueing for certain events
   + Sponsor pack
   + free T-shirt
 
   .label = Sponsor
   .priceLabel = Sponsor ticket
+  .priceLabelDay = Sponsor day ticket
 
 register-ticket-level-card-super-sponsor =
   An even more generous donation, you've earned a Super Sponsor ticket! This means you'll get
 
   + Super Sponsor convention badge
   + program book + honorable mention
-  + participation in all scheduled events
-  + super-early access to the Dealers' Den
+  + participation in scheduled events
+  + super-early access to the Dealers' Den (Monday only)
   + priority queueing for certain events
   + Super Sponsor pack
   + free T-shirt
 
   .label = Super sponsor
   .priceLabel = Super sponsor ticket
+  .priceLabelDay = Super sponsor day ticket
 
 register-ticket-level-expiration-notice = Register before {DATETIME($expirationDate, day: "numeric", month: "long")}
 
@@ -608,7 +611,6 @@ country-name = { $countryCode ->
   [CY] Cyprus
   [CZ] Czechia
   [CI] Côte d'Ivoire
-  [ZR] Demokratische Republik Kongo
   [DK] Denmark
   [DG] Diego Garcia
   [DJ] Djibouti
@@ -627,7 +629,6 @@ country-name = { $countryCode ->
   [FJ] Fiji
   [FI] Finland
   [FR] France
-  [FX] France métropolitaine
   [GF] French Guiana
   [PF] French Polynesia
   [TF] French Southern Territories
@@ -704,13 +705,11 @@ country-name = { $countryCode ->
   [MS] Montserrat
   [MA] Morocco
   [MZ] Mozambique
-  [BU] Myanmar
   [MM] Myanmar
   [NA] Namibia
   [NR] Nauru
   [NP] Nepal
   [NL] Netherlands
-  [NT] Neutrale Zone
   [NC] New Caledonia
   [NZ] New Zealand
   [NI] Nicaragua
