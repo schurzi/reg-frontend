@@ -14,7 +14,7 @@ const FunnelErrorGuard = ({ children }: FunnelErrorGuardProps) => {
 
 	return currentError === undefined
 		? <>{children}</>
-		: <FunnelErrorReport error={currentError} onBack={() => dispatch(ClearError.create(undefined))}/>
+		: <FunnelErrorReport report={currentError} onBack={() => dispatch(ClearError.create(undefined))}/>
 }
 
 export default FunnelErrorGuard

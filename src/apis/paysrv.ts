@@ -1,11 +1,12 @@
-import { ajax, AjaxError } from 'rxjs/ajax'
+import { ajax, AjaxConfig, AjaxError } from 'rxjs/ajax'
 import { catchError, map } from 'rxjs/operators'
 import config from '~/config'
 /* eslint-disable camelcase */
 import { sum } from 'ramda'
-import type { ErrorDto as CommonErrorDto } from './common'
+import { ErrorDto as CommonErrorDto, handleStandardApiErrors } from './common'
 import { StatusCodes } from 'http-status-codes'
 import { of } from 'rxjs'
+import { AppError } from '~/state/models/errors'
 
 export type ErrorMessage =
 	| 'Status Error (Bad Request)'
@@ -59,6 +60,23 @@ export interface TransactionResponseDto {
 	readonly payload: readonly TransactionDto[]
 }
 
+export class PaySrvAppError extends AppError<StatusCodes> {
+	// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
+	constructor(err: AjaxError) {
+		super('paysrv', err.status, 'API error')
+	}
+}
+
+// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
+const apiCall = <T>({ path, ...cfg }: Omit<AjaxConfig, 'url'> & { path: string }) => ajax<T>({
+	url: `${config.apis.paysrv.url}${path}`,
+	crossDomain: true,
+	withCredentials: true,
+	...cfg,
+}).pipe(
+	catchError(handleStandardApiErrors(PaySrvAppError)),
+)
+
 export const calculateTotalPaid = (transactions: readonly TransactionDto[]) =>
 	sum(
 		transactions
@@ -99,15 +117,13 @@ export const hasUnprocessedPayments = (transactions: readonly TransactionDto[]) 
  * 404: there are no visible transactions for this debitor id.
  * 500: It is important to communicate the ErrorDto's requestid field to the user, so they can give it to us, so we can look in the logs.
  */
-export const findTransactionsForBadgeNumber = (badgeNumber: number) => ajax<TransactionResponseDto>({
-	url: `${config.apis.paysrv.url}/transactions?debitor_id=${badgeNumber}`,
+export const findTransactionsForBadgeNumber = (badgeNumber: number) => apiCall<TransactionResponseDto>({
+	path: `/transactions?debitor_id=${badgeNumber}`,
 	method: 'GET',
-	crossDomain: true,
-	withCredentials: true,
 }).pipe(
 	map(result => result.response.payload),
 	catchError(err => {
-		if (err instanceof AjaxError && err.status === StatusCodes.NOT_FOUND) {
+		if (err instanceof PaySrvAppError && err.code === StatusCodes.NOT_FOUND) {
 			return of([] as readonly TransactionDto[])
 		} else {
 			throw err
@@ -134,11 +150,9 @@ export const findTransactionsForBadgeNumber = (badgeNumber: number) => ajax<Tran
  * 409: This debitor already has an open payment link, please use that one.
  * 500: It is important to communicate the ErrorDto's requestid field to the user, so they can give it to us, so we can look in the logs.
  */
-export const initiateCreditCardPayment = (badgeNumber: number) => ajax<TransactionDto>({
-	url: `${config.apis.paysrv.url}/transactions/initiate-payment`,
+export const initiateCreditCardPayment = (badgeNumber: number) => apiCall<TransactionDto>({
+	path: '/transactions/initiate-payment',
 	method: 'POST',
-	crossDomain: true,
-	withCredentials: true,
 	body: {
 		debitor_id: badgeNumber,
 	},
@@ -149,7 +163,7 @@ export const initiateCreditCardPayment = (badgeNumber: number) => ajax<Transacti
 export const initiateCreditCardPaymentOrUseExisting = (badgeNumber: number) =>
 	initiateCreditCardPayment(badgeNumber).pipe(
 		catchError(err => {
-			if (err instanceof AjaxError && err.status === StatusCodes.CONFLICT) {
+			if (err instanceof PaySrvAppError && err.code === StatusCodes.CONFLICT) {
 				return findTransactionsForBadgeNumber(badgeNumber).pipe(
 					// TODO check for undefined (though this shouldn't happen, but, you know, race conditions)
 					// Could also call back to self, but this could become infinite...

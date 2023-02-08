@@ -55,8 +55,8 @@ const Invoice = ({ title, invoice, editLink, onPay }: InvoiceProps) =>
 				<Localized id="invoice-total" attrs={{ name: true, extra: true }}>
 					<InvoiceTotalItem type="price" name="Total" value={invoice.totalPrice}/>
 				</Localized>
-				{invoice.paid === undefined ? undefined : <Localized id="invoice-paid" attrs={{ name: true, extra: true }}>
-					<InvoiceTotalItem type="due" name="Paid" value={-invoice.paid}/>
+				{invoice.paid === undefined || invoice.paid === 0 || invoice.due === undefined || invoice.due === 0 ? undefined : <Localized id="invoice-paid" attrs={{ name: true, extra: true }}>
+					<InvoiceTotalItem type="due" name="Paid" value={invoice.paid}/>
 				</Localized>}
 				{invoice.due === undefined || invoice.due === 0 ? undefined : <Localized id="invoice-due" attrs={{ name: true, extra: true }}>
 					<InvoiceTotalItem type="due" name="Due" warn={true} value={invoice.due}/>

@@ -1,8 +1,9 @@
 import { AnyAppAction, GetAction } from '~/state/actions'
 import { ClearError, ReportError } from '~/state/actions/errors'
+import type { ErrorReport } from '~/state/models/errors'
 
 export interface ErrorsState {
-	readonly currentError?: Readonly<Error>
+	readonly currentError?: ErrorReport
 }
 
 export default (state: ErrorsState = {}, action: GetAction<AnyAppAction>): ErrorsState => {
