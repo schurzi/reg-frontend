@@ -1,9 +1,15 @@
 import { combineEpics, ofType } from 'redux-observable'
-import { ignoreElements, tap } from 'rxjs/operators'
+import { concatMap, ignoreElements, tap } from 'rxjs/operators'
+import { getUserInfo } from '~/apis/authsrv'
 import config from '~/config'
 import { AppState } from '~/state'
 import { AnyAppAction, GetAction } from '~/state/actions'
-import { InitiateLogin } from '~/state/actions/auth'
+import { InitiateLogin, LoadUserInfo, LookupUserInfo } from '~/state/actions/auth'
+import { catchAppError } from './operators/catch-app-error'
+import { from, of } from 'rxjs'
+import { LoadAutosave } from '~/state/actions/autosave'
+import { loadAutosave, removeAutosave } from '~/state/models/autosave'
+import { clearFormCache } from '~/hooks/funnels/form'
 
 export default combineEpics<GetAction<AnyAppAction>, GetAction<AnyAppAction>, AppState>(
 	action$ => action$.pipe(
@@ -13,5 +19,27 @@ export default combineEpics<GetAction<AnyAppAction>, GetAction<AnyAppAction>, Ap
 			location.href = `${config.apis.authsrv.url}/auth?app_name=${config.apis.authsrv.appName}${process.env.NODE_ENV === 'development' ? '' : `&dropoff_url=${location.href}`}`
 		}),
 		ignoreElements(),
+	),
+
+	action$ => action$.pipe(
+		ofType(LookupUserInfo.type),
+		concatMap(() => getUserInfo().pipe(
+			concatMap(userInfo => {
+				const saveData = loadAutosave()
+
+				if (saveData === null || saveData.userInfo === undefined || saveData.userInfo.subject !== userInfo.subject) {
+					removeAutosave()
+					clearFormCache()
+
+					return of(LoadUserInfo.create(userInfo))
+				} else {
+					return from([
+						LoadAutosave.create(saveData),
+						LoadUserInfo.create(userInfo),
+					])
+				}
+			}),
+		)),
+		catchAppError('user-info-lookup'),
 	),
 )

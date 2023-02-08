@@ -1,16 +1,19 @@
-import { catchError } from 'rxjs/operators'
+/* eslint-disable camelcase */
+
+import { catchError, map } from 'rxjs/operators'
 import { ajax, AjaxConfig, AjaxError } from 'rxjs/ajax'
 import config from '~/config'
+import { UserInfo } from '~/state/models/auth'
 import { ErrorDto as CommonErrorDto, handleStandardApiErrors } from './common'
 import { AppError } from '~/state/models/errors'
 import type { Replace } from 'type-fest'
 
-export interface UserinfoDto {
+export interface UserInfoDto {
 	readonly subject: string
 	readonly name: string
 	readonly email: string
-	readonly 'email_verified': boolean // TODO show message "you need to verify your email address before you can register with it"
-	readonly groups: string[]
+	readonly email_verified: boolean // TODO show message "you need to verify your email address before you can register with it"
+	readonly groups: readonly string[]
 }
 
 export type ErrorMessage =
@@ -26,6 +29,13 @@ export class AuthSrvAppError extends AppError<Replace<ErrorMessage, '.', '-', { 
 		super('authsrv', (err.response as ErrorDto).message.replaceAll('.', '-'), 'API error')
 	}
 }
+
+const userInfoDtoToUserInfo = (userInfo: UserInfoDto): UserInfo => ({
+	subject: userInfo.subject,
+	name: userInfo.name,
+	email: userInfo.email,
+	emailVerified: userInfo.email_verified,
+})
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 const apiCall = <T>({ path, ...cfg }: Omit<AjaxConfig, 'url'> & { path: string }) => ajax<T>({
@@ -54,7 +64,9 @@ const apiCall = <T>({ path, ...cfg }: Omit<AjaxConfig, 'url'> & { path: string }
  *
  * This endpoint is optimized in the backend for high traffic, so it is safe to call during initial reg.
  */
-export const userinfo = () => apiCall<UserinfoDto>({
+export const getUserInfo = () => apiCall<UserInfoDto>({
 	path: '/frontend-userinfo',
 	method: 'GET',
-})
+}).pipe(
+	map(result => userInfoDtoToUserInfo(result.response)),
+)

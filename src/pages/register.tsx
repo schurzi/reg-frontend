@@ -13,6 +13,11 @@ export const Head = () => <SEO title="Register" />
 
 const Content = () => {
 	const isOpen = useAppSelector(isRegistrationOpen())
+	const dispatch = useAppDispatch()
+
+	useEffect(() => {
+		dispatch(CheckCountdown.create(undefined))
+	}, [])
 
 	switch (isOpen) {
 		case true: return <RegisterRouter/>
@@ -21,18 +26,10 @@ const Content = () => {
 	}
 }
 
-const RegisterPage = (_: ReadonlyRouteComponentProps) => {
-	const dispatch = useAppDispatch()
-
-	useEffect(() => {
-		dispatch(CheckCountdown.create(undefined))
-	}, [])
-
-	return <Layout>
-		<FunnelErrorGuard>
-			<Content/>
-		</FunnelErrorGuard>
-	</Layout>
-}
+const RegisterPage = (_: ReadonlyRouteComponentProps) => <Layout>
+	<FunnelErrorGuard>
+		<Content/>
+	</FunnelErrorGuard>
+</Layout>
 
 export default RegisterPage
