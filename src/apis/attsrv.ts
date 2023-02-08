@@ -1,4 +1,4 @@
-import { eachDayOfInterval, formatISO, isFriday, isSaturday, isThursday } from 'date-fns'
+import { eachDayOfInterval, formatISO, isSunday, isMonday, isTuesday, isWednesday } from 'date-fns'
 import { head, last } from 'ramda'
 import { catchError, concatMap, map } from 'rxjs/operators'
 import { ajax, AjaxError } from 'rxjs/ajax'
@@ -86,6 +86,26 @@ export interface CountdownDto {
 	readonly targetTime: string
 }
 
+const tshirtFromApi = (apiValue: string | null) => {
+	if (apiValue === '3XL') {
+		return 'm3XL'
+	} else if (apiValue === '4XL') {
+		return 'm4XL'
+	} else {
+		return apiValue
+	}
+}
+
+const tshirtToApi = (frontendValue: string | null) => {
+	if (frontendValue === 'm3XL') {
+		return '3XL'
+	} else if (frontendValue === 'm4XL') {
+		return '4XL'
+	} else {
+		return frontendValue
+	}
+}
+
 const optionsToFlags = (options: Readonly<Record<string, boolean>>) => Object.entries(options).filter(last).map(head).join(',')
 
 const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): AttendeeDto => ({
@@ -107,7 +127,7 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
 	birthday: formatISO(registrationInfo.personalInfo.dateOfBirth, { representation: 'date' }),
 	gender: 'notprovided',
 	pronouns: registrationInfo.personalInfo.pronouns,
-	tshirt_size: registrationInfo.ticketLevel.addons.tshirt.options.size,
+	tshirt_size: tshirtToApi(registrationInfo.ticketLevel.addons.tshirt.options.size),
 	flags: optionsToFlags({
 		hc: registrationInfo.personalInfo.wheelchair,
 		anon: !registrationInfo.personalInfo.fullNamePermission,
@@ -121,9 +141,10 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
 	packages: optionsToFlags({
 		'room-none': true,
 		'attendance': registrationInfo.ticketType.type === 'full',
-		'day-thu': registrationInfo.ticketType.type === 'day' && isThursday(registrationInfo.ticketType.day),
-		'day-fri': registrationInfo.ticketType.type === 'day' && isFriday(registrationInfo.ticketType.day),
-		'day-sat': registrationInfo.ticketType.type === 'day' && isSaturday(registrationInfo.ticketType.day),
+		'day-sun': registrationInfo.ticketType.type === 'day' && isSunday(registrationInfo.ticketType.day),
+		'day-mon': registrationInfo.ticketType.type === 'day' && isMonday(registrationInfo.ticketType.day),
+		'day-tue': registrationInfo.ticketType.type === 'day' && isTuesday(registrationInfo.ticketType.day),
+		'day-wed': registrationInfo.ticketType.type === 'day' && isWednesday(registrationInfo.ticketType.day),
 		'stage': registrationInfo.ticketLevel.addons['stage-pass'].selected,
 		'sponsor': registrationInfo.ticketLevel.level === 'sponsor',
 		'sponsor2': registrationInfo.ticketLevel.level === 'super-sponsor',
@@ -145,10 +166,11 @@ const registrationInfoFromAttendeeDto = (attendeeDto: AttendeeDto): Registration
 			? { type: 'full' }
 			: {
 				type: 'day',
-				day: packages.has('day-thu') ? days.find(isThursday)!
-					: packages.has('day-fri') ? days.find(isFriday)!
-					: packages.has('day-sat') ? days.find(isSaturday)!
-					: days.find(isThursday)!, // FIXME: Cough
+				day: packages.has('day-sun') ? days.find(isSunday)!
+					: packages.has('day-mon') ? days.find(isMonday)!
+					: packages.has('day-tue') ? days.find(isTuesday)!
+					: packages.has('day-wed') ? days.find(isWednesday)!
+					: days.find(isWednesday)!, // FIXME: Cough
 			},
 		/* eslint-enable @typescript-eslint/indent */
 		ticketLevel: {
@@ -161,7 +183,7 @@ const registrationInfoFromAttendeeDto = (attendeeDto: AttendeeDto): Registration
 				tshirt: {
 					selected: true,
 					options: {
-						size: attendeeDto.tshirt_size as RegistrationInfo['ticketLevel']['addons']['tshirt']['options']['size'],
+						size: tshirtFromApi(attendeeDto.tshirt_size) as RegistrationInfo['ticketLevel']['addons']['tshirt']['options']['size'],
 					},
 				},
 			},

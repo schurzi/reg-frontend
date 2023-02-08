@@ -32,16 +32,14 @@ const config = checkConfig({
 		'sponsor': {
 			prices: {
 				full: 200,
-				// TODO sponsor does not combine with day guest (or should we allow that?)
-				day: 70,
+				day: 150,
 			},
 			includes: ['tshirt'],
 		},
 		'super-sponsor': {
 			prices: {
 				full: 310,
-				// TODO super-sponsor does not combine with day guest (or should we allow that?)
-				day: 70,
+				day: 260,
 			},
 			includes: ['tshirt'],
 		},
@@ -61,7 +59,7 @@ const config = checkConfig({
 			options: {
 				size: {
 					type: 'select',
-					items: ['XS', 'wXS', 'S', 'wS', 'M', 'wM', 'L', 'wL', 'XL', 'wXL', 'XXL', 'wXXL', '3XL', 'w3XL', '4XL', 'w4XL'],
+					items: ['XS', 'wXS', 'S', 'wS', 'M', 'wM', 'L', 'wL', 'XL', 'wXL', 'XXL', 'wXXL', 'm3XL', 'w3XL', 'm4XL', 'w4XL'],
 				},
 			},
 		},

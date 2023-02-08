@@ -127,7 +127,6 @@ register-ticket-level-card-sponsor =
   + free T-shirt
 
   .label = Sponsor
-  # TODO why does this say Early-bird ticket? sponsor or not has nothing to do with price levels, and we've scrapped price levels anyway
   .priceLabel = Sponsor ticket
 
 register-ticket-level-card-super-sponsor =
@@ -142,10 +141,8 @@ register-ticket-level-card-super-sponsor =
   + free T-shirt
 
   .label = Super sponsor
-  # TODO why does this say Super early-bird ticket? super sponsor or not has nothing to do with price levels, and we've scrapped price levels anyway
   .priceLabel = Super sponsor ticket
 
-# TODO we've scrapped price levels, but this is still referenced in the code
 register-ticket-level-expiration-notice = Register before {DATETIME($expirationDate, day: "numeric", month: "long")}
 
 register-ticket-level-addons-title = Select add-ons
@@ -162,22 +159,22 @@ register-ticket-level-addons-item-tshirt-option-size =
   .label = T-shirt size
 
 register-ticket-level-addons-item-tshirt-option-size-value = { $value ->
-  [XS]   X-Small (Regular Cut)
-  [wXS]  X-Small (Narrow Cut)
- *[S]    Small (Regular Cut)
-  [wS]   Small (Narrow Cut)
-  [M]    Medium (Regular Cut)
-  [wM]   Medium (Narrow Cut)
-  [L]    Large (Regular Cut)
-  [wL]   Large (Narrow Cut)
-  [XL]   X-Large (Regular Cut)
-  [wXL]  X-Large (Narrow Cut)
-  [XXL]  XX-Large (Regular Cut)
-  [wXXL] XX-Large (Narrow Cut)
-  [3XL]  3X-Large (Regular Cut)
-  [w3XL] 3X-Large (Narrow Cut)
-  [4XL]  4X-Large (Regular Cut)
-  [w4XL] 4X-Large (Narrow Cut)
+  [XS]    X-Small (Regular Cut)
+  [wXS]   X-Small (Narrow Cut)
+ *[S]     Small (Regular Cut)
+  [wS]    Small (Narrow Cut)
+  [M]     Medium (Regular Cut)
+  [wM]    Medium (Narrow Cut)
+  [L]     Large (Regular Cut)
+  [wL]    Large (Narrow Cut)
+  [XL]    X-Large (Regular Cut)
+  [wXL]   X-Large (Narrow Cut)
+  [XXL]   XX-Large (Regular Cut)
+  [wXXL]  XX-Large (Narrow Cut)
+  [m3XL]  3X-Large (Regular Cut)
+  [wXL]   3X-Large (Narrow Cut)
+  [m4XL]  4X-Large (Regular Cut)
+  [w4XL]  4X-Large (Narrow Cut)
 }
 
 register-ticket-level-validation-errors-level-required = Please select a ticket level.
