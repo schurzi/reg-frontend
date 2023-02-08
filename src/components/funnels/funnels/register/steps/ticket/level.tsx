@@ -37,7 +37,15 @@ const TicketLevel = (_: ReadonlyRouteComponentProps) => {
 				<TicketLevelGrid>
 					<RadioGroup name="level">
 						{Object.entries(config.ticketLevels).map(([id, { prices }]) =>
-							<Localized key={id} id={`register-ticket-level-card-${id}`} attrs={{ label: true, priceLabel: true, priceLabelDay: true }}>
+							<Localized
+								key={id}
+								id={`register-ticket-level-card-${id}`}
+								attrs={{ label: true, priceLabel: true, priceLabelDay: true }}
+								vars={{
+									...ticketType,
+									...ticketType.type !== 'day' ? {} : { dow: ticketType.day.getDay() },
+								}}
+							>
 								<TicketLevelCard
 									id={id}
 									price={prices[ticketType.type]}
