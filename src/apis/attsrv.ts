@@ -132,6 +132,10 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
 	flags: optionsToFlags({
 		hc: registrationInfo.personalInfo.wheelchair,
 		anon: !registrationInfo.personalInfo.fullNamePermission,
+		// TODO: this needs a checkbox on the show info page that is mandatory to select before submitting a new reg
+		//
+		// Text should be "I accept the terms and rules of conduct" with links to the terms and RoC
+		'terms-accepted': true,
 	}),
 	options: optionsToFlags({
 		anim: registrationInfo.optionalInfo.notifications.animation,
@@ -149,6 +153,7 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
 		'stage': registrationInfo.ticketLevel.addons['stage-pass'].selected,
 		'sponsor': registrationInfo.ticketLevel.level === 'sponsor',
 		'sponsor2': registrationInfo.ticketLevel.level === 'super-sponsor',
+		'tshirt': false, // TODO only set to true if tshirt is selected and is not included (type = normal)
 	}),
 	user_comments: registrationInfo.optionalInfo.comments,
 })
@@ -338,7 +343,7 @@ export const updateRegistration = (registrationInfo: RegistrationInfo) => apiCal
 })
 
 
-export const findExistingRegistration = () => of(undefined) /* findMyRegistrations().pipe(
+export const findExistingRegistration = () => of<RegistrationInfo | undefined>(undefined) /* findMyRegistrations().pipe(
 	concatMap(result =>
 		loadRegistration(result.response.ids[0]).pipe(map(r => registrationInfoFromAttendeeDto(r.response))),
 	),
