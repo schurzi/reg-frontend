@@ -1,7 +1,7 @@
 import { Localized } from '@fluent/react'
 import { StaticImage } from 'gatsby-plugin-image'
 import ReactMarkdown from 'react-markdown'
-import SplashFunnelLayout from '~/components/funnels/layout/splash'
+import { SplashFunnelLayout } from '~/components/funnels/layout/splash'
 
 const NotOpenYet = () => <SplashFunnelLayout image={<StaticImage src="../../../../images/con-cats/ticket-types/day.png" alt=""/>}>
 	<Localized id="register-not-open-yet-title"><h1>Registration is not open yet!</h1></Localized>

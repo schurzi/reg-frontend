@@ -6,7 +6,7 @@ export interface SplashFunnelLayoutProps {
 	readonly children: ReadonlyReactNode
 }
 
-const SplashFunnelLayout = ({ image, children }: SplashFunnelLayoutProps) => <Splash image={image}>
+export const SplashFunnelLayout = ({ image, children }: SplashFunnelLayoutProps) => <Splash image={image}>
 	{children}
 </Splash>
 
