@@ -40,7 +40,7 @@ const TicketLevel = (_: ReadonlyRouteComponentProps) => {
 							<Localized
 								key={id}
 								id={`register-ticket-level-card-${id}`}
-								attrs={{ label: true, priceLabel: true, priceLabelDay: true }}
+								attrs={{ label: true, priceLabel: true }}
 								vars={{
 									...ticketType,
 									...ticketType.type !== 'day' ? {} : { dow: ticketType.day.getDay() },
@@ -51,8 +51,6 @@ const TicketLevel = (_: ReadonlyRouteComponentProps) => {
 									price={prices[ticketType.type]}
 									label="Ticket level"
 									priceLabel="A ticket"
-									priceLabelDay="A day ticket"
-									isDayTicket={ticketType.type === 'day'}
 									{...register('level', { required: true })}
 								>
 									A ticket level

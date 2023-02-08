@@ -1,6 +1,6 @@
 import { Localized } from '@fluent/react'
 import ReactMarkdown from 'react-markdown'
-import { SplashFunnelLayout } from '~/components/funnels/layout/splash'
+import SplashFunnelLayout from '~/components/funnels/layout/splash'
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 import { StaticImage } from 'gatsby-plugin-image'
 

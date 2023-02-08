@@ -4,7 +4,7 @@ import { Localized } from '@fluent/react'
 import { StaticImage } from 'gatsby-plugin-image'
 import ReactMarkdown from 'react-markdown'
 import { AppError, ErrorReport, FrontendAppError } from '~/state/models/errors'
-import { SplashFunnelLayout } from './layout/splash'
+import SplashFunnelLayout from './layout/splash'
 
 const BackButton = styled(Button)`
 	margin-top: 2em;

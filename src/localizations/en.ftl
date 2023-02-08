@@ -113,8 +113,10 @@ register-ticket-level-card-standard =
   + participation in scheduled events
 
   .label = Standard
-  .priceLabel = Standard ticket
-  .priceLabelDay = Standard day ticket
+  .priceLabel = {$type ->
+                   *[full] Standard ticket
+                    [day]  Standard day ticket
+                }
 
 register-ticket-level-card-sponsor =
   As a thank you for supporting Eurofurence with a voluntary donation, you will receive
@@ -128,8 +130,10 @@ register-ticket-level-card-sponsor =
   + free T-shirt
 
   .label = Sponsor
-  .priceLabel = Sponsor ticket
-  .priceLabelDay = Sponsor day ticket
+  .priceLabel = {$type ->
+                   *[full] Sponsor ticket
+                    [day]  Sponsor day ticket
+                }
 
 register-ticket-level-card-super-sponsor =
   An even more generous donation, you've earned a Super Sponsor ticket! This means you'll get
@@ -143,8 +147,10 @@ register-ticket-level-card-super-sponsor =
   + free T-shirt
 
   .label = Super sponsor
-  .priceLabel = Super sponsor ticket
-  .priceLabelDay = Super sponsor day ticket
+  .priceLabel = {$type ->
+                   *[full] Super sponsor ticket
+                    [day]  Super sponsor day ticket
+                }
 
 register-ticket-level-expiration-notice = Register before {DATETIME($expirationDate, day: "numeric", month: "long")}
 

@@ -113,8 +113,10 @@ register-ticket-level-card-standard =
   + Teilnahme an den regulären Events
 
   .label = Standard
-  .priceLabel = Standard-Ticket
-  .priceLabelDay = Standard-Tagesticket
+  .priceLabel = {$type ->
+                   *[full] Standard-Ticket
+                    [day]  Standard-Tagesticket
+                }
 
 register-ticket-level-card-sponsor =
   Als Dankeschön für Deine Unterstützung der Eurofurence durch Deine Spende erhälst Du
@@ -128,8 +130,10 @@ register-ticket-level-card-sponsor =
   + kostenloses T-Shirt
 
   .label = Sponsor
-  .priceLabel = Sponsor-Ticket
-  .priceLabelDay = Sponsor-Tagesticket
+  .priceLabel = {$type ->
+                   *[full] Sponsor-Ticket
+                    [day]  Sponsor-Tagesticket
+                }
 
 register-ticket-level-card-super-sponsor =
   Mit dieser noch großzügigeren Spende verdienst Du ein Super-Sponsor-Ticket. Daher erhälst Du
@@ -143,8 +147,10 @@ register-ticket-level-card-super-sponsor =
   + kostenloses T-Shirt
 
   .label = Supersponsor
-  .priceLabel = Super-Sponsor-Ticket
-  .priceLabelDay = Super-Sponsor-Tagesticket
+  .priceLabel = {$type ->
+                   *[full] Super-Sponsor-Ticket
+                    [day]  Super-Sponsor-Tagesticket
+                }
 
 register-ticket-level-expiration-notice = Registriere Dich vor dem {DATETIME($expirationDate, day: "numeric", month: "long")}
 
