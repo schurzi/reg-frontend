@@ -28,7 +28,7 @@ const createForm = <ValuesType extends FieldValues>(defaultValues: DeepField<Val
 
 export const forms = {
 	'register-ticket-type': createForm<{ readonly type: TicketType['type'] }>({
-		type: null,
+		type: 'full',
 	}),
 	'register-ticket-day': createForm<{ readonly day: string }>({
 		day: null,
