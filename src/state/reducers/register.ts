@@ -17,6 +17,12 @@ export interface RegisterState {
 const defaultState: RegisterState = {
 	registrationInfo: autosaveData?.register === undefined ? {} : {
 		...autosaveData.register,
+		ticketType: autosaveData.register.ticketType === undefined ? undefined : autosaveData.register.ticketType.type !== 'day'
+			? autosaveData.register.ticketType
+			: {
+				...autosaveData.register.ticketType,
+				day: new Date(autosaveData.register.ticketType.day),
+			},
 		personalInfo: autosaveData.register.personalInfo === undefined ? undefined : {
 			...autosaveData.register.personalInfo,
 			dateOfBirth: new Date(autosaveData.register.personalInfo.dateOfBirth),
