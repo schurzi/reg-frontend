@@ -316,7 +316,7 @@ export const updateRegistration = (registrationInfo: RegistrationInfo) => apiCal
 })
 
 
-export const findExistingRegistration = () => of(undefined) /* findMyRegistrations().pipe(
+export const findExistingRegistration = () => findMyRegistrations().pipe(
 	concatMap(result =>
 		loadRegistration(result.response.ids[0]).pipe(map(r => registrationInfoFromAttendeeDto(r.response))),
 	),
@@ -327,4 +327,4 @@ export const findExistingRegistration = () => of(undefined) /* findMyRegistratio
 			throw err
 		}
 	}),
-)*/
+)
