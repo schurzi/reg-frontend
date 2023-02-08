@@ -343,15 +343,20 @@ export const updateRegistration = (registrationInfo: RegistrationInfo) => apiCal
 })
 
 
-export const findExistingRegistration = () => of<RegistrationInfo | undefined>(undefined) /* findMyRegistrations().pipe(
-	concatMap(result =>
-		loadRegistration(result.response.ids[0]).pipe(map(r => registrationInfoFromAttendeeDto(r.response))),
-	),
-	catchError(err => {
-		if (err instanceof AttSrvAppError && err.code === 'attendee-owned-notfound') {
-			return of(undefined)
-		} else {
-			throw err
-		}
-	}),
-)*/
+export const findExistingRegistration = () => {
+	findMyRegistrations().pipe(
+		concatMap(result =>
+			loadRegistration(result.response.ids[0]).pipe(map(r => registrationInfoFromAttendeeDto(r.response))),
+		),
+		catchError(err => {
+			if (err instanceof AttSrvAppError && err.code === 'attendee-owned-notfound') {
+				return of(undefined)
+			} else {
+				throw err
+			}
+		}),
+	)
+
+	// TODO temporary removal
+	return of<RegistrationInfo | undefined>(undefined)
+}
