@@ -200,7 +200,7 @@ const registrationInfoFromAttendeeDto = (attendeeDto: AttendeeDto): Registration
 			lastName: attendeeDto.last_name,
 			dateOfBirth: new Date(attendeeDto.birthday),
 			spokenLanguages: attendeeDto.spoken_languages.split(','),
-			pronouns: attendeeDto.pronouns,
+			pronouns: attendeeDto.pronouns === '' ? null : attendeeDto.pronouns,
 			wheelchair: flags.has('hc'),
 			fullNamePermission: !flags.has('anon'),
 		},
