@@ -27,9 +27,11 @@ export const getSubmittedFormValues = ((id: FormIds) => (s: AppState): FormValue
 			return {
 				...personalInfo,
 				dateOfBirth: formatISO(dateOfBirth, { representation: 'date' }),
-				...includes(['He/Him', 'She/Her', 'They/Them', null] as const, pronouns)
-					? { pronounsSelection: pronouns, pronounsOther: null }
-					: { pronounsSelection: 'other', pronounsOther: pronouns },
+				...pronouns === null
+					? { pronounsSelection: 'prefer-not-to-say', pronounsOther: null }
+					: includes(['He/Him', 'She/Her', 'They/Them'] as const, pronouns)
+						? { pronounsSelection: pronouns, pronounsOther: null }
+						: { pronounsSelection: 'other', pronounsOther: pronouns },
 			}
 		}
 

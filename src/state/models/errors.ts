@@ -7,6 +7,7 @@ export type AppErrorOperation =
 	| 'registration-submission'
 	| 'registration-update'
 	| 'registration-initiate-payment'
+	| 'user-info-lookup'
 	| 'unknown'
 
 export interface ErrorReport {

@@ -76,6 +76,9 @@ const Personal = (_: ReadonlyRouteComponentProps) => {
 			}/>
 			<Localized id="register-personal-info-pronouns" attrs={{ legend: true }}>
 				<RadioSet name="pronounsSelection" legend="Pronouns" error={errors.pronounsSelection?.message}>
+					<Localized id="register-personal-info-pronouns-prefer-not-to-say" attrs={{ label: true }}>
+						<RadioItem label="Prefer not to say" value="prefer-not-to-say" {...register('pronounsSelection', { required: true })}/>
+					</Localized>
 					<RadioItem label="He/Him" value="He/Him" {...register('pronounsSelection', { required: true })}/>
 					<RadioItem label="She/Her" value="She/Her" {...register('pronounsSelection', { required: true })}/>
 					<RadioItem label="They/Them" value="They/Them" {...register('pronounsSelection', { required: true })}/>

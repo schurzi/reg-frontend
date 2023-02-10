@@ -17,14 +17,6 @@ export const getPersonalInfo = () => (s: AppState) => s.register.registrationInf
 export const getContactInfo = () => (s: AppState) => s.register.registrationInfo.contactInfo
 export const getOptionalInfo = () => (s: AppState) => s.register.registrationInfo.optionalInfo
 
-export const getSaveData = () => ({ register: { registrationInfo: { id, personalInfo, ...registrationInfo } } }: AppState) => ({
-	...registrationInfo,
-	personalInfo: personalInfo === undefined ? undefined : {
-		...personalInfo,
-		dateOfBirth: personalInfo.dateOfBirth.toISOString(),
-	},
-})
-
 export const getInvoice = createSelector(getTicketType(), getTicketLevel(), getPaidAmount(), getDueAmount(), (ticketType, ticketLevel, paid, due) => {
 	if (ticketLevel === undefined || ticketType === undefined) {
 		return undefined

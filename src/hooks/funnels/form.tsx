@@ -56,6 +56,20 @@ const localizeValidations = <TFieldValues extends FieldValues, TFieldName extend
 	}
 }
 
+type FormCache = { [K in FormIds]: FormValuesType<K> }
+
+export const clearFormCache = () =>
+	save('funnel-form', {})
+
+const loadCache = <F extends FormIds>(id: F) =>
+	load<FormCache>('funnel-form')?.[id]
+
+const saveCache = <F extends FormIds>(id: F, values: FormValuesType<F>) => {
+	const cache = load<FormCache>('funnel-form')
+
+	save('funnel-form', { ...cache, [id]: values })
+}
+
 /*
  * Wrapper around react-hook-form's `useForm` that dispatches page-specific `ChangeAction`s
  * when an input changes and `SubmitAction`s when the form is submitted to, so that this
@@ -63,7 +77,7 @@ const localizeValidations = <TFieldValues extends FieldValues, TFieldName extend
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const useFunnelForm = <F extends FormIds>(id: F) => {
-	const autosaveValues = useRefFn(() => load<FormValuesType<F>>(`form:${id}`))
+	const autosaveValues = useRefFn(() => loadCache<F>(id))
 	const submittedValues = useAppSelector(getSubmittedFormValues(id))
 	const { handleSubmit, watch, register, ...methods } = useForm<FormValuesType<F>>({ defaultValues: (submittedValues ?? autosaveValues.current ?? forms[id].defaultValues) as never })
 	const dispatch = useAppDispatch()
@@ -71,7 +85,7 @@ export const useFunnelForm = <F extends FormIds>(id: F) => {
 
 	useEffect(() => {
 		const subscription = watch(formData => {
-			save(`form:${id}`, formData)
+			saveCache(id, formData as FormValuesType<F>)
 			dispatch(UpdateLastSavedTime.create(new Date()))
 		})
 
