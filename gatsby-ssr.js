@@ -1,7 +1,7 @@
-import { LocalizationProvider, ReactLocalization } from '@fluent/react'
+import { LocalizationProvider } from '@fluent/react'
 import { load } from 'cheerio'
 import { getCurrentLangKey } from 'ptz-i18n'
-import { createLocalization, useCurrentLangKey } from '~/localization'
+import { createLocalization, useCurrentLangKey, supportedLanguages } from '~/localization'
 import * as localizationFiles from '~/localizations'
 import wrapWithLibraries from './wrap-with-libraries'
 
@@ -29,7 +29,7 @@ const PageWrapper = ({ children }) => {
 }
 
 export const onRenderBody = ({ pathname, setHtmlAttributes }) => {
-	setHtmlAttributes({ lang: getCurrentLangKey(['en', 'de'], 'en', pathname) })
+	setHtmlAttributes({ lang: getCurrentLangKey(supportedLanguages, 'en', pathname) })
 }
 
 export const wrapPageElement = ({ element }) => <PageWrapper>

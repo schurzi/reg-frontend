@@ -43,11 +43,11 @@ const Contact = (_: ReadonlyRouteComponentProps) => {
 			<Localized id="register-contact-info-street" attrs={{ label: true, placeholder: true }}>
 				<TextField label="Street" placeholder="Pennylane 40" error={errors.street?.message} {...register('street', { required: true, maxLength: 120 })}/>
 			</Localized>
-			<Localized id="register-contact-info-city" attrs={{ label: true, placeholder: true }}>
-				<TextField label="City" placeholder="Zootopia" gridSpan={7} error={errors.city?.message} {...register('city', { required: true, maxLength: 80 })}/>
-			</Localized>
 			<Localized id="register-contact-info-postal-code" attrs={{ label: true, placeholder: true }}>
-				<TextField label="Postal code (ZIP)" placeholder="8888" gridSpan={3} error={errors.postalCode?.message} {...register('postalCode', { required: true, maxLength: 20 })}/>
+				<TextField label="Postal code (ZIP)" placeholder="8888" gridSpan={4} error={errors.postalCode?.message} {...register('postalCode', { required: true, maxLength: 20 })}/>
+			</Localized>
+			<Localized id="register-contact-info-city" attrs={{ label: true, placeholder: true }}>
+				<TextField label="City" placeholder="Zootopia" gridSpan={6} error={errors.city?.message} {...register('city', { required: true, maxLength: 80 })}/>
 			</Localized>
 			<Localized id="register-contact-info-state-or-province" attrs={{ label: true, placeholder: true }}>
 				<TextField label="State / Province" placeholder="Fur Valley" gridSpan={5} error={errors.stateOrProvince?.message} {...register('stateOrProvince', { maxLength: 80 })}/>

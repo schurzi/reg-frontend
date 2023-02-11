@@ -3,6 +3,7 @@
  */
 
 import styled from '@emotion/styled'
+import { MediaQueries } from '@eurofurence/reg-component-library'
 import InvoiceComponent from '~/components/funnels/invoice/invoice'
 import { Invoice } from '~/state/models/invoice'
 import type { ReadonlyReactNode } from '~/util/readonly-types'
@@ -21,13 +22,17 @@ export interface WithInvoiceFunnelLayoutProps {
 }
 
 const Grid = styled.div`
-	display: grid;
-	grid-template-columns: repeat(12, 1fr);
-	gap: 24px;
+	@media ${MediaQueries.laptop}, ${MediaQueries.desktop} {
+		display: grid;
+		grid-template-columns: auto max-content;
+		gap: 111px;
+	}
 `
 
 const GridConformer = styled.div`
-	grid-column: span 8;
+	// @media ${MediaQueries.laptop}, ${MediaQueries.desktop} {
+	// 	grid-column: span 8;
+	// }
 `
 
 const WithInvoiceFunnelLayout = ({ children, onNext, invoiceTitle, invoiceEditLink, invoice, onPay, ...passthroughProps }: WithInvoiceFunnelLayoutProps) =>

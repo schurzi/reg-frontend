@@ -4,7 +4,7 @@
  */
 
 import styled from '@emotion/styled'
-import { Button, Card } from '@eurofurence/reg-component-library'
+import { Button, Card, MediaQueries } from '@eurofurence/reg-component-library'
 import InvoiceItem from './item'
 import InvoiceTotalItem from './total-item'
 import { Localized } from '@fluent/react'
@@ -12,8 +12,13 @@ import { Invoice as InvoiceModel } from '~/state/models/invoice'
 import { Link } from 'gatsby'
 
 const InvoiceCard = styled(Card)`
-	grid-column: 10 / span 3;
+	// grid-column: 10 / span 3;
+	width: 254px;
 	align-self: start;
+
+	@media ${MediaQueries.phone}, ${MediaQueries.tablet} {
+		display: none;
+	}
 `
 
 const EditLink = styled(Link)`
@@ -63,7 +68,7 @@ const Invoice = ({ title, invoice, editLink, onPay }: InvoiceProps) =>
 				</Localized>}
 			</ul>
 			{invoice.due === undefined || invoice.due === 0 ? undefined : <Localized id="invoice-pay-button-credit-card">
-				<PayButton inverted={true} onClick={onPay}>Pay with CC</PayButton>
+				<PayButton variant="inverted-card" onClick={onPay}>Pay with CC</PayButton>
 			</Localized>}
 		</section>
 	</InvoiceCard>

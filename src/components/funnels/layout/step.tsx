@@ -5,7 +5,7 @@
  */
 
 import styled from '@emotion/styled'
-import { Button, Page } from '@eurofurence/reg-component-library'
+import { Button, MediaQueries, Page } from '@eurofurence/reg-component-library'
 import { Localized } from '@fluent/react'
 import { navigate } from 'gatsby'
 import { useAppSelector } from '~/hooks/redux'
@@ -17,6 +17,7 @@ const Header = styled.header`
 `
 
 const Footer = styled.footer`
+	margin-top: 3.5em;
 	height: 100px;
 	display: flex;
 	justify-content: space-between;
@@ -25,8 +26,17 @@ const Footer = styled.footer`
 
 const Nav = styled.nav`
 	display: flex;
-	align-items: center;
-	column-gap: 22px;
+	gap: 1em;
+
+	@media not all and ${MediaQueries.phone} {
+		align-items: center;
+	}
+
+	@media ${MediaQueries.phone} {
+		width: 100%;
+		flex-direction: column;
+		align-items: stretch;
+	}
 `
 
 export interface StepFunnelLayoutProps {
@@ -52,7 +62,7 @@ const StepFunnelLayout = ({ children, header: headerContent, isFirstPage = false
 					<Button onClick={onNext}>Continue</Button>
 				</Localized>}
 				{isEdit && isLastPage || isFirstPage && !showBack ? null : <Localized id="register-navigation-back">
-					<a onClick={() => navigate(-1)}>Go back</a>
+					<Button variant="inverted" onClick={() => navigate(-1)}>Go back</Button>
 				</Localized>}
 			</Nav>
 		</Footer>
