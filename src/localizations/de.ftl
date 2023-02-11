@@ -1,7 +1,9 @@
 # Header
-header-dropdown-my-account = Mein Konto
+header-menu-item-my-account =
+  .label = Mein Konto
 
-header-dropdown-language = Sprache
+header-menu-item-language =
+  .label = Sprache
 
 header-clock-component-months =
   .caption = Monate
@@ -17,12 +19,18 @@ header-clock-component-seconds =
 
 
 # Footer
-footer-links-privacy-policy = Datenschutzrichtlinie
-footer-links-legal-info = Rechtliche informationen
+footer-links-privacy-policy = Datenschutz
+footer-links-legal-info = Impressum
 footer-links-policies = Regelungen
 footer-links-contact = Kontakt
 
-footer-last-saved = Deine Daten wurden zuletzt am {DATETIME($lastSaved, weekday: "long", month: "long", day: "numeric", year: "numeric")} um {DATETIME($lastSaved, hour: "numeric", minute: "numeric")} gespeichert.
+footer-last-saved = Deine Informationen wurden zuletzt am {DATETIME($lastSaved, weekday: "long", month: "long", day: "numeric", year: "numeric")} um {DATETIME($lastSaved, hour: "numeric", minute: "numeric")} gespeichert.
+
+
+# Auth
+auth-unverified-title = Du hast deine Emailadresse noch nicht verifiziert.
+auth-unverified-message = Bitte klicke den Link in der Email an, bevor du dich registrierst!
+auth-unverified-retry = Neu versuchen
 
 
 
@@ -34,7 +42,7 @@ invoice-item-label = {$amount} x {$name}
 invoice-total-item-label = {$name}
 
 invoice-item-definition-register-ticket-type-day =
-  .name = Day ticket
+  .name = Tagesticket
   .extra = {DATETIME($day, month: "long", day: "numeric")}
 
 invoice-item-definition-register-ticket-type-full =
@@ -65,7 +73,7 @@ invoice-pay-button-credit-card = 💳 Mit KK zahlen
 register-header-title = Willkommen zur Eurofurence 2023!
 register-header-description =
   Wir freuen uns auf Dich!
-  Freu Dich auf eine tolle Zeit mit Gleichgesinnten, und genieße die Attraktionen und Veranstaltungen die wir für Dich bereit halten.
+  Mach dich bereit für eine tolle Zeit mit Gleichgesinnten, und genieße das reiche Angebot an Attraktionen und Events.
 
 register-navigation-back = Zurück
 register-navigation-next = Weiter
@@ -193,7 +201,7 @@ register-ticket-level-validation-errors-addons-tshirt-options-size-required = Bi
 
 
 # Register personal info page
-register-personal-info-title = Deine Daten
+register-personal-info-title = Deine Informationen
 
 register-personal-info-nickname =
   .label = Nickname
@@ -208,7 +216,7 @@ register-personal-info-last-name =
   .placeholder = Mustermann
 
 register-personal-info-full-name-permission =
-  .label = Ich stimme der Verwendung meines vollen Namens in Eurofurence-bezogenen Medien zu,
+  .label = Ich stimme der Verwendung meines vollen Namens in Eurofurence-bezogenen Veröffentlichungen zu,
 
 register-personal-info-date-of-birth =
   .label = Geburtstag
@@ -219,6 +227,9 @@ register-personal-info-spoken-languages =
 
 register-personal-info-pronouns =
   .legend = Pronomen
+
+register-personal-info-pronouns-prefer-not-to-say =
+  .label = Keine Angabe
 
 register-personal-info-pronouns-other =
   .label = Andere
@@ -239,7 +250,7 @@ register-personal-info-validation-errors-first-name-max-length = Dein Vorname ka
 register-personal-info-validation-errors-last-name-required = Bitte gib einen Nachnamen ein.
 register-personal-info-validation-errors-last-name-max-length = Dein Nachname kann nur maximal {$limit} Zeichen lang sein.
 register-personal-info-validation-errors-date-of-birth-required = Bitte gib ein Geburtsdatum ein.
-register-personal-info-validation-errors-date-of-birth-validate-minimum-age = Du musst mindestens 18 Jahre alt sein um an Eurofurence teilnehmen zu können.
+register-personal-info-validation-errors-date-of-birth-validate-minimum-age = Du musst mindestens 18 Jahre alt sein, um an Eurofurence teilnehmen zu können.
 register-personal-info-validation-errors-date-of-birth-validate-maximum-age = Aus technischen Gründen können wir die Teilnahme an Eurofurence nur bis zu einem Alter von 122 Jahren zulassen.
 register-personal-info-validation-errors-spoken-languages-required = Bitte gib an welche Sprachen Du sprichst.
 register-personal-info-validation-errors-pronouns-selection-required = Bitte wähle Deine Pronomen.
@@ -354,6 +365,11 @@ register-summary-section-personal-property-wheelchair-accomodation-value = { $va
   [true] Ja
  *[false] Nein
 }
+
+register-summary-rules-and-conditions-accepted = Ich akzeptiere die  <rules>Regeln</rules> und <conditions>Teilnahmebedingungen</conditions>.
+
+register-summary-validation-errors-rules-and-conditions-accepted-required = Du musst die Regeln und Teilnahmebedingungen akzeptieren.
+
 
 
 
