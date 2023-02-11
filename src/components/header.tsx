@@ -79,7 +79,7 @@ const Header = ({ deadline }: HeaderProps) => {
 			<Localized id="header-menu-item-my-account" attrs={{ label: true }}><NavBarMenuItem icon={user} label="My account" href="https://identity.eurofurence.org/dashboard"/></Localized>
 			<Localized id="header-menu-item-language" attrs={{ label: true }}>
 				<NavBarSubMenu icon={globe} label="Language">
-					{supportedLanguages.map(langKey => <NavBarMenuItem key={langKey} label={langmap[langKey].nativeName}/>)}
+					{supportedLanguages.map(locale => <NavBarMenuItem key={locale} label={langmap[locale].nativeName}/>)}
 				</NavBarSubMenu>
 			</Localized>
 		</NavBarMenu>

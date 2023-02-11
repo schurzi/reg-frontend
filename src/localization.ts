@@ -6,12 +6,12 @@ import { DATETIME_RANGE, NUMBER_RANGE } from 'fluent-ranges'
 
 export const supportedLanguages = ['en', 'de'] as const
 
-export type LanguageKey = (typeof supportedLanguages)[number]
+export type Locale = (typeof supportedLanguages)[number]
 
-export const createLocalization = (langKey: LanguageKey, ftl: string, parseMarkup?: MarkupParser | null | undefined) => {
+export const createLocalization = (locale: Locale, ftl: string, parseMarkup?: MarkupParser | null | undefined) => {
 	const resource = new FluentResource(ftl)
 
-	const bundle = new FluentBundle([langKey], {
+	const bundle = new FluentBundle([locale], {
 		functions: {
 			DATETIME_RANGE,
 			NUMBER_RANGE,
@@ -23,14 +23,14 @@ export const createLocalization = (langKey: LanguageKey, ftl: string, parseMarku
 	return new ReactLocalization([bundle], parseMarkup)
 }
 
-export const loadLanguage = async (langKey: LanguageKey): Promise<ReactLocalization> => {
-	const { default: ftl } = await import(`raw-loader!~/localizations/${langKey}.ftl`) as { default: string }
+export const loadLanguage = async (locale: Locale): Promise<ReactLocalization> => {
+	const { default: ftl } = await import(`raw-loader!~/localizations/${locale}.ftl`) as { default: string }
 
-	return createLocalization(langKey, ftl)
+	return createLocalization(locale, ftl)
 }
 
-export const useCurrentLangKey = () => {
+export const useCurrentLocale = () => {
 	const location = useLocation()
 
-	return getCurrentLangKey<LanguageKey>(['en', 'de'], 'en', location.pathname)
+	return getCurrentLangKey(supportedLanguages, 'en', location.pathname)
 }

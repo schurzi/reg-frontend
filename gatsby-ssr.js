@@ -1,7 +1,7 @@
 import { LocalizationProvider } from '@fluent/react'
 import { load } from 'cheerio'
 import { getCurrentLangKey } from 'ptz-i18n'
-import { createLocalization, useCurrentLangKey, supportedLanguages } from '~/localization'
+import { createLocalization, useCurrentLocale, supportedLanguages } from '~/localization'
 import * as localizationFiles from '~/localizations'
 import wrapWithLibraries from './wrap-with-libraries'
 
@@ -18,12 +18,12 @@ const parseMarkup = (str) => {
 		}))
 }
 
-const localizations = Object.fromEntries(Object.entries(localizationFiles).map(([langKey, ftl]) => [langKey, createLocalization(langKey, ftl, parseMarkup)]))
+const localizations = Object.fromEntries(Object.entries(localizationFiles).map(([locale, ftl]) => [locale, createLocalization(locale, ftl, parseMarkup)]))
 
 const PageWrapper = ({ children }) => {
-	const langKey = useCurrentLangKey()
+	const locale = useCurrentLocale()
 
-	return <LocalizationProvider l10n={localizations[langKey]}>
+	return <LocalizationProvider l10n={localizations[locale]}>
 		{children}
 	</LocalizationProvider>
 }
