@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { Localized } from '@fluent/react'
-import { RadioGroup, RadioCard } from '@eurofurence/reg-component-library'
+import { RadioGroup, RadioCard, MediaQueries } from '@eurofurence/reg-component-library'
 import config from '~/config'
 import { useFunnelForm } from '~/hooks/funnels/form'
 import FullWidthRegisterFunnelLayout from '~/components/funnels/funnels/register/layout/form/full-width'
@@ -11,9 +11,16 @@ import { StaticImage } from 'gatsby-plugin-image'
 const Grid = styled.div`
 	display: grid;
 	gap: 20px;
-	grid: auto-flow 1fr / 1fr;
 
-	@media (min-width: 1260px) {
+	@media (max-width: 649.99px) {
+		grid: auto-flow 1fr / 1fr;
+	}
+
+	@media (min-width: 650px) and (max-width: 799.99px) {
+		grid: auto-flow 1fr / repeat(2, 1fr);
+	}
+
+	@media ${MediaQueries.laptop}, ${MediaQueries.desktop} {
 		grid: auto-flow 1fr / repeat(3, 1fr);
 	}
 `

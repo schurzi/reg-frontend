@@ -4,7 +4,9 @@ import { useLocation } from '@reach/router'
 import { getCurrentLangKey } from 'ptz-i18n'
 import { DATETIME_RANGE, NUMBER_RANGE } from 'fluent-ranges'
 
-export type LanguageKey = 'en' | 'de'
+export const supportedLanguages = ['en', 'de'] as const
+
+export type LanguageKey = (typeof supportedLanguages)[number]
 
 export const createLocalization = (langKey: LanguageKey, ftl: string, parseMarkup?: MarkupParser | null | undefined) => {
 	const resource = new FluentResource(ftl)

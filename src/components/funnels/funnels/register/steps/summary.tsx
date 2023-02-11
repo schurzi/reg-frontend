@@ -24,13 +24,16 @@ interface SectionProps {
 
 const SectionContainer = styled.section`
 	display: grid;
-	grid: "title" auto
-	      "edit" auto
-			"spacer" 2em
-	      "props" auto
-	      / 1fr;
 
-	@media (min-width: 1260px) {
+	@media not all and (min-width: 1050px) {
+		grid: "title" auto
+		      "edit" auto
+		      "spacer" 2em
+		      "props" auto
+		      / 1fr;
+	}
+
+	@media (min-width: 1050px) {
 		grid: "title title" auto
 		      "edit  props" auto
 		      / 273px auto;

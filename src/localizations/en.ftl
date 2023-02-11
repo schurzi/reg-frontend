@@ -1,7 +1,9 @@
 # Header
-header-dropdown-my-account = My account
+header-menu-item-my-account =
+  .label = My account
 
-header-dropdown-language = Language
+header-menu-item-language =
+  .label = Language
 
 header-clock-component-months =
   .caption = Months
@@ -101,7 +103,7 @@ register-ticket-type-validation-errors-type-required = Please select a ticket ty
 register-ticket-day-title = Select your ticket
 
 register-ticket-day-card =
-  .label = {DATETIME($date, day: "numeric", month: "long", year: "numeric")}
+  .label = {DATETIME($date, weekday: "long", day: "numeric", month: "short")}
 
 register-ticket-day-validation-errors-day-required = Please select a day.
 

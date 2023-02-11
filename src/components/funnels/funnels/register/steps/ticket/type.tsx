@@ -7,12 +7,15 @@ import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 import { StaticImage } from 'gatsby-plugin-image'
 
 const TicketTypeGrid = styled.div`
-	display: flex;
+	display: grid;
 	gap: 20px;
-	flex-wrap: wrap;
 
-	> * {
-		flex: 1;
+	@media not all and (min-width: 600px) {
+		grid: auto-flow auto / 1fr;
+	}
+
+	@media (min-width: 600px) {
+		grid: auto-flow 1fr / 1fr 1fr;
 	}
 `
 
@@ -29,14 +32,14 @@ const TicketType = (_: ReadonlyRouteComponentProps) => {
 		<form onSubmit={handleSubmit}>
 			<RadioGroup name="type">
 				<TicketTypeGrid>
-					<Localized id="register-ticket-type-day" attrs={{ label: true }}>
-						<RadioCard label="Day ticket" value="day" {...register('type', { required: true })}>
-							<ConCat><StaticImage src="../../../../../../images/con-cats/ticket-types/day.png" alt=""/></ConCat>
-						</RadioCard>
-					</Localized>
 					<Localized id="register-ticket-type-full" attrs={{ label: true }}>
 						<RadioCard label="Full convention" value="full" {...register('type', { required: true })}>
 							<ConCat><StaticImage src="../../../../../../images/con-cats/ticket-types/full.png" alt=""/></ConCat>
+						</RadioCard>
+					</Localized>
+					<Localized id="register-ticket-type-day" attrs={{ label: true }}>
+						<RadioCard label="Day ticket" value="day" {...register('type', { required: true })}>
+							<ConCat><StaticImage src="../../../../../../images/con-cats/ticket-types/day.png" alt=""/></ConCat>
 						</RadioCard>
 					</Localized>
 				</TicketTypeGrid>

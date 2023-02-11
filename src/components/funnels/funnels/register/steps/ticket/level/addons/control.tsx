@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { forwardRef, ForwardedRef } from 'react'
-import { Checkbox, CheckboxProps } from '@eurofurence/reg-component-library'
+import { Checkbox, CheckboxProps, MediaQueries } from '@eurofurence/reg-component-library'
 import ReactMarkdown from 'react-markdown'
 import Price from '~/components/funnels/price'
 import type { ReadonlyReactNode } from '~/util/readonly-types'
@@ -13,12 +13,15 @@ export type TicketLevelAddonControlProps = CheckboxProps & {
 
 const Container = styled.section`
 	display: grid;
-	grid: "label       price"       auto
-	      "description description" auto
-			"options     options"     auto
-	      / 1fr auto;
 
-	@media (min-width: 1260px) {
+	@media ${MediaQueries.phone}, ${MediaQueries.tablet} {
+		grid: "label       price"       auto
+		      "description description" auto
+		      "options     options"     auto
+		      / 1fr auto;
+	}
+
+	@media ${MediaQueries.laptop}, ${MediaQueries.desktop} {
 		grid: "label       price"   auto
 		      "description options" auto
 		      / fit-content(60rem) auto;
@@ -52,7 +55,7 @@ const PriceContainer = styled.section`
 const OptionsContainer = styled.div`
 	grid-area: options;
 
-	@media (min-width: 1260px) {
+	@media ${MediaQueries.laptop}, ${MediaQueries.desktop} {
 		justify-self: end;
 		width: 22rem;
 	}
