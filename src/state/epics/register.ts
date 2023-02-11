@@ -5,7 +5,7 @@ import { always } from 'ramda'
 import { AppState } from '~/state'
 import { nextPage } from './generators/next-page'
 import { SubmitForm } from '~/state/actions/forms'
-import { CheckCountdown, InitiatePayment, LoadRegistrationState, SubmitRegistration } from '~/state/actions/register'
+import { CheckCountdown, InitiatePayment, LoadRegistrationState } from '~/state/actions/register'
 import { findExistingRegistration, registrationCountdownCheck, submitRegistration, updateRegistration } from '~/apis/attsrv'
 import { navigate } from 'gatsby'
 import { getRegistrationId, getRegistrationInfo, isEditMode } from '~/state/selectors/register'
@@ -47,7 +47,7 @@ export default combineEpics<GetAction<AnyAppAction>, GetAction<AnyAppAction>, Ap
 
 	// Submit registration
 	(action$, state$) => action$.pipe(
-		ofType(SubmitRegistration.type),
+		ofType(SubmitForm('register-summary').type),
 		withLatestFrom(state$),
 		concatMap(([, state]) => submitRegistration(getRegistrationInfo()(state) as RegistrationInfo).pipe(
 			justDo(() => navigate('/register/thank-you')),

@@ -10,13 +10,11 @@ export type LoadedRegistrationState = {
 	readonly unprocessedPayments: boolean
 })
 
-export const SubmitRegistration = createAction<undefined, '[Register] UwU'>('[Register] UwU')
 export const CheckCountdown = createAction<undefined, '[Register] Check countdown'>('[Register] Check countdown')
 export const LoadRegistrationState = createAction<LoadedRegistrationState, '[Register] Load registration state'>('[Register] Load registration state')
 export const InitiatePayment = createAction<undefined, '[Register] Initiate payment'>('[Register] Initiate payment')
 
 export type RegisterAction
-	= typeof SubmitRegistration
-	| typeof CheckCountdown
+	= typeof CheckCountdown
 	| typeof LoadRegistrationState
 	| typeof InitiatePayment
