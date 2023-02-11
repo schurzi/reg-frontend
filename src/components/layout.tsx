@@ -28,7 +28,7 @@ const LoginGuard = ({ children }: { readonly children: ReadonlyReactNode }) => {
 			? 'Loading...'
 			: userInfo.emailVerified
 				? children
-				: <Splash image={<StaticImage src="../images/con-cats/days/wednesday.png" alt=""/>}>
+				: <Splash image={<StaticImage src="../images/con-cats/ticket-types/day.png" alt=""/>}>
 					<Localized id="auth-unverified-title"><h1>You have not verified your email address.</h1></Localized>
 					<Localized id="auth-unverified-message"><p>Please click the verification link in the email you received before registering!</p></Localized>
 				</Splash>}

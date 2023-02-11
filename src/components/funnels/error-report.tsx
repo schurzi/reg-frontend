@@ -22,7 +22,7 @@ const FunnelErrorReport = ({ report: { operation, error }, onBack }: FunnelError
 			? new FrontendAppError('unknown', error.message)
 			: new FrontendAppError('unknown', String(error))
 
-	return <SplashFunnelLayout image={<StaticImage src="../../images/con-cats/days/wednesday.png" alt=""/>}>
+	return <SplashFunnelLayout image={<StaticImage src="../../images/con-cats/ticket-types/day.png" alt=""/>}>
 		<Localized id="funnel-error-report-title"><h1>Oh no...</h1></Localized>
 		<Localized id="funnel-error-report-operation" vars={{ operation }}><h2>We encountered an error trying to handle your request.</h2></Localized>
 		<Localized id="funnel-error-report-message" vars={{ category, code }}>
