@@ -29,18 +29,12 @@ const Grid = styled.div`
 	}
 `
 
-const GridConformer = styled.div`
-	// @media ${MediaQueries.laptop}, ${MediaQueries.desktop} {
-	// 	grid-column: span 8;
-	// }
-`
-
 const WithInvoiceFunnelLayout = ({ children, onNext, invoiceTitle, invoiceEditLink, invoice, onPay, ...passthroughProps }: WithInvoiceFunnelLayoutProps) =>
 	<StepFunnelLayout {...passthroughProps} onNext={onNext}>
 		<Grid>
-			<GridConformer>
+			<div>
 				{children}
-			</GridConformer>
+			</div>
 			<InvoiceComponent title={invoiceTitle} editLink={invoiceEditLink} invoice={invoice} onPay={onPay}/>
 		</Grid>
 	</StepFunnelLayout>
