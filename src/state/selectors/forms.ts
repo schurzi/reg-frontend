@@ -116,7 +116,7 @@ export const getSubmittedFormValues = ((id: FormIds) => (s: AppState): FormValue
 		case 'register-optional-info':
 			return s.register.registrationInfo.optionalInfo
 		case 'register-summary':
-			return { rulesAndConditionsAccepted: true } // Otherwise this wouldn't have gotten submitted
+			return s.register.registrationInfo.id === undefined ? undefined : { rulesAndConditionsAccepted: true }
 
 		case 'hotel-booking-room':
 		case 'hotel-booking-guests':
