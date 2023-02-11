@@ -2,13 +2,15 @@ import { Localized, useLocalization } from '@fluent/react'
 import WithInvoiceRegisterFunnelLayout from '~/components/funnels/funnels/register/layout/form/with-invoice'
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 import styled from '@emotion/styled'
-import { useAppDispatch, useAppSelector } from '~/hooks/redux'
+import { useAppSelector } from '~/hooks/redux'
 import { getContactInfo, getOptionalInfo, getPersonalInfo, isEditMode } from '~/state/selectors/register'
 import langmap from 'langmap'
 import { Link } from 'gatsby'
 import { css } from '@emotion/react'
-import { SubmitRegistration } from '~/state/actions/register'
 import { useCurrentLangKey } from '~/localization'
+import { useFunnelForm } from '~/hooks/funnels/form'
+import { Checkbox, ErrorMessage, Form } from '@eurofurence/reg-component-library'
+import config from '~/config'
 
 interface PropertyDefinition {
 	readonly id: string
@@ -80,6 +82,10 @@ const PropertyName = styled.dt`
 const PropertyDescription = styled.dd`
 `
 
+const TermsForm = styled(Form)`
+	margin-top: 5em;
+`
+
 const Section = ({ id: sectionId, editLink, properties }: SectionProps) => <SectionContainer>
 	<Localized id={`register-summary-section-${sectionId}-title`}><SectionTitle>{sectionId}</SectionTitle></Localized>
 	<Localized id="register-summary-edit"><Link css={editButtonStyle} to={editLink}>Edit information</Link></Localized>
@@ -98,7 +104,7 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 	const isEdit = useAppSelector(isEditMode())
 	const langKey = useCurrentLangKey()
 	const { l10n } = useLocalization()
-	const dispatch = useAppDispatch()
+	const { handleSubmit, register, formState: { errors } } = useFunnelForm('register-summary')
 
 	const notificationNames = Object
 		.entries(optionalInfo.notifications)
@@ -106,7 +112,7 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 		.map(([type]) => l10n.getString('notification-type', { type }, type))
 		.join(', ')
 
-	return <WithInvoiceRegisterFunnelLayout onNext={() => dispatch(SubmitRegistration.create(undefined))} currentStep={5}>
+	return <WithInvoiceRegisterFunnelLayout onNext={handleSubmit} currentStep={5}>
 		<Localized id={`register-summary-title-${isEdit ? 'edit' : 'initial'}`}><h3>Registration</h3></Localized>
 
 		<Section id="personal" editLink="/register/personal-info" properties={[
@@ -130,6 +136,18 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 			{ id: 'notifications', wide: true, value: notificationNames },
 			{ id: 'comments', wide: true, value: optionalInfo.comments ?? '' },
 		]}/>
+
+		{isEdit ? undefined : <TermsForm onSubmit={handleSubmit}>
+			<Checkbox gridSpan={10} {...register('rulesAndConditionsAccepted', { required: true })}>
+				<Localized id="register-summary-rules-and-conditions-accepted" elems={{
+					rules: <a href={config.websiteLinks.rules}/>,
+					conditions: <a href={config.websiteLinks.terms}/>,
+				}}>
+					<span>I accept the <a>rules</a> and <a>conditions</a>.</span>
+				</Localized>
+			</Checkbox>
+			{errors.rulesAndConditionsAccepted?.message === undefined ? undefined : <ErrorMessage>{errors.rulesAndConditionsAccepted.message}</ErrorMessage>}
+		</TermsForm>}
 	</WithInvoiceRegisterFunnelLayout>
 }
 

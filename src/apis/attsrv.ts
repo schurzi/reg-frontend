@@ -132,9 +132,6 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
 	flags: optionsToFlags({
 		hc: registrationInfo.personalInfo.wheelchair,
 		anon: !registrationInfo.personalInfo.fullNamePermission,
-		// TODO: this needs a checkbox on the show info page that is mandatory to select before submitting a new reg
-		//
-		// Text should be "I accept the terms and rules of conduct" with links to the terms and RoC
 		'terms-accepted': true,
 	}),
 	options: optionsToFlags({

@@ -74,6 +74,9 @@ export const forms = {
 		},
 		comments: null,
 	}),
+	'register-summary': createForm<{ readonly rulesAndConditionsAccepted: boolean }>({
+		rulesAndConditionsAccepted: false,
+	}),
 	'hotel-booking-room': createForm<RoomInfo>({
 		type: null,
 	}),

@@ -365,6 +365,11 @@ register-summary-section-personal-property-wheelchair-accomodation-value = { $va
  *[false] No
 }
 
+register-summary-rules-and-conditions-accepted = I accept the <rules>rules</rules> and <conditions>conditions</conditions>.
+
+register-summary-validation-errors-rules-and-conditions-accepted-required = You must accept the rules and conditions to register.
+
+
 
 
 # Register thank you page
