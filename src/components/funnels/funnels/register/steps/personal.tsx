@@ -19,7 +19,7 @@ const reAlphaNum = /[\p{Letter}\p{Number}]/ug
 const alphaNumCount = (s: string) => s.match(reAlphaNum)?.length ?? 0
 
 // spaces neither count towards alphanumerics nor the non-alphanumeric count
-const reSpaceNum = / /ug
+const reSpaceNum = /[\p{White_Space}]/ug
 const spaceCount = (s: string) => s.match(reSpaceNum)?.length ?? 0
 
 const Personal = (_: ReadonlyRouteComponentProps) => {
