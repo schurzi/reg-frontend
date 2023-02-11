@@ -2,6 +2,7 @@ import { createSelector } from 'reselect'
 import config from '~/config'
 import { AppState } from '..'
 import { buildInvoice, UncalculatedInvoiceItem } from '../models/invoice'
+import { getUserInfo } from './auth'
 
 export const isRegistrationOpen = () => (s: AppState) => s.register.isOpen
 export const isEditMode = () => (s: AppState) => s.register.registrationInfo.id !== undefined
@@ -49,3 +50,10 @@ export const getInvoice = createSelector(getTicketType(), getTicketLevel(), getP
 
 	return buildInvoice([ticketLine, ...addonLines], { paid, due })
 })
+
+export const getVerifiedEmails = () => (s: AppState) => {
+	const editMode = isEditMode()(s)
+	const userEmail = getUserInfo()(s)!.email
+
+	return editMode ? [getContactInfo()(s)!.email, userEmail] : [userEmail]
+}

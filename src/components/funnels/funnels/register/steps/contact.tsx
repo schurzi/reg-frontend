@@ -7,6 +7,8 @@ import { useMemo } from 'react'
 import { countryCodeEmoji } from 'country-code-emoji'
 import config from '~/config'
 import { prop, sortBy } from 'ramda'
+import { useAppSelector } from '~/hooks/redux'
+import { getVerifiedEmails } from '~/state/selectors/register'
 
 const reEmail = /^[^@\p{Space_Separator}]+@[^@\p{Space_Separator}]+$/u
 const reTelegram = /^@.+$/u
@@ -14,6 +16,7 @@ const reTelegram = /^@.+$/u
 const Contact = (_: ReadonlyRouteComponentProps) => {
 	const { register, handleSubmit, control, formState: { errors }, FunnelController } = useFunnelForm('register-contact-info')
 	const { l10n } = useLocalization()
+	const verifiedEmails = useAppSelector(getVerifiedEmails())
 
 	const { countryOptions, countryOptionsByValue } = useMemo(() => {
 		const countryNames = sortBy(prop('name'), config.allowedCountries.map(countryCode => ({ countryCode, name: l10n.getString('country-name', { countryCode }) })))
@@ -32,7 +35,7 @@ const Contact = (_: ReadonlyRouteComponentProps) => {
 
 		<Form onSubmit={handleSubmit}>
 			<Localized id="register-contact-info-email" attrs={{ label: true, placeholder: true }}>
-				<TextField label="Email address" placeholder="john.smith@email.com" error={errors.email?.message} {...register('email', { required: true, maxLength: 200, pattern: reEmail })}/>
+				<TextField label="Email address" placeholder="john.smith@email.com" error={errors.email?.message} {...register('email', { required: true, maxLength: 200, pattern: reEmail, validate: { isVerified: v => verifiedEmails.includes(v!) } })}/>
 			</Localized>
 			<Localized id="register-contact-info-phone-number" attrs={{ label: true, placeholder: true }}>
 				<TextField label="Phone number" placeholder="+32 0 000 00 00" gridSpan={5} error={errors.phoneNumber?.message} {...register('phoneNumber', { required: true, maxLength: 32 })}/>

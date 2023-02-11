@@ -7,8 +7,8 @@ import { mapObjIndexed } from 'ramda'
 import { paramCase } from 'change-case'
 import { useAppDispatch, useAppSelector } from '~/hooks/redux'
 import { SubmitForm } from '~/state/actions/forms'
-import { FormIds, forms, FormValuesType } from '~/state/forms'
-import { getSubmittedFormValues } from '~/state/selectors/forms'
+import { FormIds, FormValuesType } from '~/state/forms'
+import { getDefaultFormValues, getSubmittedFormValues } from '~/state/selectors/forms'
 import { FluentVariable } from '@fluent/bundle'
 import { useRefFn } from '~/hooks/use-ref-fn'
 import { UpdateLastSavedTime } from '~/state/actions/autosave'
@@ -78,8 +78,9 @@ const saveCache = <F extends FormIds>(id: F, values: FormValuesType<F>) => {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const useFunnelForm = <F extends FormIds>(id: F) => {
 	const autosaveValues = useRefFn(() => loadCache<F>(id))
+	const defaultValues = useAppSelector(getDefaultFormValues(id))
 	const submittedValues = useAppSelector(getSubmittedFormValues(id))
-	const { handleSubmit, watch, register, ...methods } = useForm<FormValuesType<F>>({ defaultValues: (submittedValues ?? autosaveValues.current ?? forms[id].defaultValues) as never })
+	const { handleSubmit, watch, register, ...methods } = useForm<FormValuesType<F>>({ defaultValues: (submittedValues ?? autosaveValues.current ?? defaultValues) as never })
 	const dispatch = useAppDispatch()
 	const { l10n } = useLocalization()
 
