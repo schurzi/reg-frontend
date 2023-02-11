@@ -21,7 +21,10 @@ const Links = styled.nav`
 
 const SaveTime = styled.section`
 	grid-area: save-time;
-	justify-self: end;
+
+	@media ${MediaQueries.laptop}, ${MediaQueries.desktop} {
+		justify-self: end;
+	}
 `
 
 const Grid = styled.div`
