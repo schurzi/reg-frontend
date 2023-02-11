@@ -295,6 +295,7 @@ register-contact-info-country =
 register-contact-info-validation-errors-email-required = Please provide an email address.
 register-contact-info-validation-errors-email-max-length = Your email address may be at most {$limit} characters long.
 register-contact-info-validation-errors-email-pattern = Your email address must look like an email address.
+register-contact-info-validation-errors-email-validate-is-verified = You may only use either your login email address or an email address you previously registered with.
 register-contact-info-validation-errors-phone-number-required = Please provide a phone number.
 register-contact-info-validation-errors-phone-number-max-length = Your phone number may be at most {$limit} characters long.
 register-contact-info-validation-errors-telegram-username-max-length = Your telegram username may be at most {$limit} characters long.
