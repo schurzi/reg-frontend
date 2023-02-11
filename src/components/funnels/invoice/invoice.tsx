@@ -12,7 +12,6 @@ import { Invoice as InvoiceModel } from '~/state/models/invoice'
 import { Link } from 'gatsby'
 
 const InvoiceCard = styled(Card)`
-	// grid-column: 10 / span 3;
 	width: 254px;
 	align-self: start;
 
