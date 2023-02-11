@@ -3,8 +3,11 @@ import { FluentBundle, FluentResource } from '@fluent/bundle'
 import { useLocation } from '@reach/router'
 import { getCurrentLangKey } from 'ptz-i18n'
 import { DATETIME_RANGE, NUMBER_RANGE } from 'fluent-ranges'
+import { useAppSelector } from './hooks/redux'
+import { getPreferredLocale } from './state/selectors/register'
+import { negotiateLanguages } from '@fluent/langneg'
 
-export const supportedLanguages = ['en', 'de'] as const
+export const supportedLanguages = ['en-US', 'de-DE'] as const
 
 export type Locale = (typeof supportedLanguages)[number]
 
@@ -29,8 +32,20 @@ export const loadLanguage = async (locale: Locale): Promise<ReactLocalization> =
 	return createLocalization(locale, ftl)
 }
 
+/*
+ * Returns the current locale, using multiple strategies with a prioritization
+ *
+ * 1. URL based locale
+ * 2. Locale saved for the user when submitting a registration
+ * 3. Browser preference
+ * 4. Fallback to en-US
+ */
 export const useCurrentLocale = () => {
 	const location = useLocation()
+	const preferredLocale = useAppSelector(getPreferredLocale())
+	const fallbackLocale = preferredLocale !== undefined
+		? preferredLocale
+		: negotiateLanguages(navigator.languages, supportedLanguages, { strategy: 'lookup', defaultLocale: 'en-US' })[0]
 
-	return getCurrentLangKey(supportedLanguages, 'en', location.pathname)
+	return getCurrentLangKey(supportedLanguages, fallbackLocale, location.pathname)
 }

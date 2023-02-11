@@ -216,7 +216,7 @@ register-personal-info-last-name =
   .placeholder = Mustermann
 
 register-personal-info-full-name-permission =
-  .label = Ich stimme der Verwendung meines vollen Namens in Eurofurence-bezogenen Veröffentlichungen zu,
+  .label = Ich stimme der Verwendung meines vollen Namens in Eurofurence-bezogenen Veröffentlichungen zu.
 
 register-personal-info-date-of-birth =
   .label = Geburtstag

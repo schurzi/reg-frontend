@@ -2,7 +2,7 @@ import { LocalizationProvider } from '@fluent/react'
 import { load } from 'cheerio'
 import { getCurrentLangKey } from 'ptz-i18n'
 import { createLocalization, useCurrentLocale, supportedLanguages } from '~/localization'
-import * as localizationFiles from '~/localizations'
+import localizationFiles from '~/localizations'
 import wrapWithLibraries from './wrap-with-libraries'
 
 const parseMarkup = (str) => {

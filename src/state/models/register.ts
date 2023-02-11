@@ -1,4 +1,5 @@
 import config from '~/config'
+import { Locale } from '~/localization'
 import { ReadonlyDate } from '~/util/readonly-types'
 
 type TicketLevelConfig = typeof config.ticketLevels
@@ -67,6 +68,7 @@ export interface PersonalInfo {
 
 export interface RegistrationInfo {
 	readonly id?: number
+	readonly preferredLocale: Locale
 	readonly ticketType: TicketType
 	readonly ticketLevel: TicketLevel
 	readonly contactInfo: ContactInfo

@@ -2,7 +2,7 @@ import { RegistrationInfo, TicketLevel, TicketType } from '~/state/models/regist
 import { AnyAppAction, GetAction } from '~/state/actions'
 import type { DeepNonNullable } from 'ts-essentials'
 import { SubmitForm, SubmitFormActionBundle } from '~/state/actions/forms'
-import { LoadRegistrationState } from '~/state/actions/register'
+import { LoadRegistrationState, SetLocale } from '~/state/actions/register'
 import { LoadAutosave } from '~/state/actions/autosave'
 import config from '~/config'
 
@@ -59,6 +59,8 @@ const registrationInfoReducer = (state: Partial<RegistrationInfo>, action: GetAc
 			return { ...state, optionalInfo: action.payload as DeepNonNullable<typeof action.payload> }
 		case SubmitForm('register-personal-info').type:
 			return { ...state, personalInfo: transformPersonalInfo(action.payload) }
+		case SetLocale.type:
+			return { ...state, preferredLocale: action.payload }
 		default:
 			return state
 	}

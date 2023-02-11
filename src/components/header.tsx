@@ -13,6 +13,9 @@ import { ReadonlyDate } from '~/util/readonly-types'
 import { supportedLanguages } from '~/localization'
 import langmap from 'langmap'
 import { Link } from 'gatsby'
+import { groupBy } from 'ramda'
+import { useAppDispatch } from '~/hooks/redux'
+import { SetLocale } from '~/state/actions/register'
 
 const CLOCK_UPDATE_DELAY = 1000
 
@@ -60,11 +63,20 @@ const BrandImage = styled.img`
 	height: 1.1ch;
 `
 
+const friendlyLocales = Object.entries(groupBy(locale => locale.split('-')[0], supportedLanguages))
+	.flatMap(([primary, locales]) =>
+		locales.length === 1
+			? [{ name: langmap[primary].nativeName, locale: locales[0] }]
+			: locales.map(locale => ({ name: langmap[locale].nativeName, locale })),
+	)
+
 export interface HeaderProps {
 	readonly deadline?: ReadonlyDate
 }
 
 const Header = ({ deadline }: HeaderProps) => {
+	const dispatch = useAppDispatch()
+
 	return <NavBar>
 		<NavBarTitle>
 			<BrandLink to="/register">
@@ -79,7 +91,9 @@ const Header = ({ deadline }: HeaderProps) => {
 			<Localized id="header-menu-item-my-account" attrs={{ label: true }}><NavBarMenuItem icon={user} label="My account" href="https://identity.eurofurence.org/dashboard"/></Localized>
 			<Localized id="header-menu-item-language" attrs={{ label: true }}>
 				<NavBarSubMenu icon={globe} label="Language">
-					{supportedLanguages.map(locale => <NavBarMenuItem key={locale} label={langmap[locale].nativeName}/>)}
+					{friendlyLocales.map(({ name, locale }) =>
+						<NavBarMenuItem key={locale} label={name} onClick={() => dispatch(SetLocale.create(locale))}/>,
+					)}
 				</NavBarSubMenu>
 			</Localized>
 		</NavBarMenu>
