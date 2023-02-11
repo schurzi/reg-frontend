@@ -17,12 +17,17 @@ header-clock-component-seconds =
 
 
 # Footer
-footer-links-privacy-policy = Datenschutzrichtlinie
-footer-links-legal-info = Rechtliche informationen
+footer-links-privacy-policy = Datenschutz
+footer-links-legal-info = Impressum
 footer-links-policies = Regelungen
 footer-links-contact = Kontakt
 
-footer-last-saved = Deine Daten wurden zuletzt am {DATETIME($lastSaved, weekday: "long", month: "long", day: "numeric", year: "numeric")} um {DATETIME($lastSaved, hour: "numeric", minute: "numeric")} gespeichert.
+footer-last-saved = Deine Informationen wurden zuletzt am {DATETIME($lastSaved, weekday: "long", month: "long", day: "numeric", year: "numeric")} um {DATETIME($lastSaved, hour: "numeric", minute: "numeric")} gespeichert.
+
+
+# Auth
+auth-unverified-title = Du hast deine Emailadresse noch nicht verifiziert.
+auth-unverified-message = Bitte klicke den Link in der Email an, bevor du dich registrierst!
 
 
 
