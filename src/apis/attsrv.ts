@@ -147,20 +147,24 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
 		'day-mon': registrationInfo.ticketType.type === 'day' && isMonday(registrationInfo.ticketType.day),
 		'day-tue': registrationInfo.ticketType.type === 'day' && isTuesday(registrationInfo.ticketType.day),
 		'day-wed': registrationInfo.ticketType.type === 'day' && isWednesday(registrationInfo.ticketType.day),
-		'stage': registrationInfo.ticketLevel.addons['stage-pass'].selected,
 		'sponsor': registrationInfo.ticketLevel.level === 'sponsor',
 		'sponsor2': registrationInfo.ticketLevel.level === 'super-sponsor',
-		'tshirt': false, // TODO only set to true if tshirt is selected and is not included (type = normal)
+		'stage': (config.ticketLevels[registrationInfo.ticketLevel.level].includes?.includes('stage-pass') ?? false)
+			|| registrationInfo.ticketLevel.addons['stage-pass'].selected,
+		'tshirt': (config.ticketLevels[registrationInfo.ticketLevel.level].includes?.includes('tshirt') ?? false)
+			|| registrationInfo.ticketLevel.addons.tshirt.selected,
 	}),
 	user_comments: registrationInfo.optionalInfo.comments,
 })
 
+// eslint-disable-next-line complexity
 const registrationInfoFromAttendeeDto = (attendeeDto: AttendeeDto): RegistrationInfo => {
 	const packages = new Set(attendeeDto.packages.split(','))
 	const flags = new Set(attendeeDto.flags.split(','))
 	const options = new Set(attendeeDto.options.split(','))
 
 	const days = eachDayOfInterval({ start: config.eventStartDate, end: config.eventEndDate })
+	const level = packages.has('sponsor2') ? 'super-sponsor' : packages.has('sponsor') ? 'sponsor' : 'standard'
 
 	return {
 		id: attendeeDto.id!,
@@ -177,14 +181,14 @@ const registrationInfoFromAttendeeDto = (attendeeDto: AttendeeDto): Registration
 			},
 		/* eslint-enable @typescript-eslint/indent */
 		ticketLevel: {
-			level: packages.has('sponsor2') ? 'super-sponsor' : packages.has('sponsor') ? 'sponsor' : 'standard',
+			level,
 			addons: {
 				'stage-pass': {
-					selected: packages.has('stage'),
+					selected: (config.ticketLevels[level].includes?.includes('stage-pass') ?? false) || packages.has('stage'),
 					options: {},
 				},
 				tshirt: {
-					selected: true,
+					selected: (config.ticketLevels[level].includes?.includes('tshirt') ?? false) || packages.has('tshirt'),
 					options: {
 						size: tshirtFromApi(attendeeDto.tshirt_size) as RegistrationInfo['ticketLevel']['addons']['tshirt']['options']['size'],
 					},
