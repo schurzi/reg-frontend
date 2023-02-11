@@ -17,7 +17,7 @@ type DeepDateToString<T> =
 
 export interface SaveData {
 	readonly userInfo?: UserInfo
-	readonly registrationInfo: Partial<RegistrationInfo>
+	readonly registrationInfo: Partial<Omit<RegistrationInfo, 'id'>>
 }
 
 type SerializedSaveData = DeepDateToString<SaveData>
