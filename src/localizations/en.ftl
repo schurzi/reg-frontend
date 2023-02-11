@@ -30,6 +30,7 @@ footer-last-saved = Your information was last saved on {DATETIME($lastSaved, wee
 # Auth
 auth-unverified-title = You have not verified your email address.
 auth-unverified-message = Please click the verification link in the email you received before registering!
+auth-unverified-retry = Retry
 
 
 
