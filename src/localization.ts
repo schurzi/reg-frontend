@@ -48,7 +48,7 @@ export const loadLanguage = async (locale: Locale): Promise<ReactLocalization> =
  * 3. Browser preference
  * 4. Fallback to en-US
  */
-export const useCurrentLocale = (queryBrowserLocale: boolean) => {
+export const useCurrentLocale = (queryBrowserLocale?: boolean) => {
 	const location = useLocation()
 	const preferredLocale = useAppSelector(getPreferredLocale())
 	const fallbackLocale = useMemo(() =>
