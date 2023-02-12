@@ -296,6 +296,7 @@ register-contact-info-country =
 register-contact-info-validation-errors-email-required = Bitte gib eine Email-Adresse an.
 register-contact-info-validation-errors-email-max-length = Deine Email-Adresse kann maximal {$limit} Zeichen lang sein.
 register-contact-info-validation-errors-email-pattern = Deine Email-Adresse muß auch wie eine Email-Adresse aussehen.
+register-contact-info-validation-errors-email-validate-is-verified = Du kannst entweder deine bestätigte Emailadresse verwenden oder bei der aktuellen bleiben.
 register-contact-info-validation-errors-phone-number-required = Bitte gib eine Telefonnummer an.
 register-contact-info-validation-errors-phone-number-max-length = Deine Telefonnummer kann maximal {$limit} Zeichen lang sein.
 register-contact-info-validation-errors-telegram-username-max-length = Dein Telegram-Username kann maximal {$limit} Zeichen lang sein.
@@ -329,6 +330,12 @@ register-optional-info-notifications-music =
 register-optional-info-notifications-fursuiting =
   .label = { -notification-type(type: "fursuiting") }
 
+register-optional-info-conbook =
+  .legend = Conbook
+
+register-optional-info-conbook-digital-only =
+  .label = Ich brauche kein gedrucktes Conbook, nur die digitale Version.
+
 register-optional-info-comments =
   .label = Kommentare
   .placeholder = Ich möchte mehr erfahren über...
@@ -359,9 +366,10 @@ register-summary-section-contact-property-postal-code-name = Postleitzahl
 register-summary-section-contact-property-state-or-province-name = Bundesland
 register-summary-section-contact-property-country-name = Staat
 register-summary-section-optional-property-notifications-name = Ich möchte weitere Informationen und Ankündigungen erhalten über
+register-summary-section-optional-property-digital-conbook-name = Digitale Version des Conbooks
 register-summary-section-optional-property-comments-name = Kommentare
 
-register-summary-section-personal-property-wheelchair-accomodation-value = { $value ->
+register-summary-boolean-value = { $value ->
   [true] Ja
  *[false] Nein
 }

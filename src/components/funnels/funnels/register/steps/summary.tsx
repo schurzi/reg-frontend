@@ -120,7 +120,7 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 			{ id: 'full-name', value: `${personalInfo.firstName} ${personalInfo.lastName}` },
 			{ id: 'pronouns', value: personalInfo.pronouns === null ? '' : l10n.getString('pronouns', { pronouns: personalInfo.pronouns }, personalInfo.pronouns) },
 			{ id: 'date-of-birth', value: new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(personalInfo.dateOfBirth) },
-			{ id: 'wheelchair-accomodation', value: l10n.getString('register-summary-section-personal-property-wheelchair-accomodation-value', { value: personalInfo.wheelchair.toString() }) },
+			{ id: 'wheelchair-accomodation', value: l10n.getString('register-summary-boolean-value', { value: personalInfo.wheelchair.toString() }) },
 			{ id: 'spoken-languages', wide: true, value: personalInfo.spokenLanguages.map(locale => langmap[locale].nativeName).join(', ') },
 		]}/>
 		<Section id="contact" editLink="/register/contact-info" properties={[
@@ -134,6 +134,7 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 		]}/>
 		<Section id="optional" editLink="/register/optional-info" properties={[
 			{ id: 'notifications', wide: true, value: notificationNames },
+			{ id: 'digital-conbook', wide: true, value: l10n.getString('register-summary-boolean-value', { value: optionalInfo.digitalConbook.toString() }) },
 			{ id: 'comments', wide: true, value: optionalInfo.comments ?? '' },
 		]}/>
 
