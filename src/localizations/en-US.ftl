@@ -330,6 +330,12 @@ register-optional-info-notifications-music =
 register-optional-info-notifications-fursuiting =
   .label = { -notification-type(type: "fursuiting") }
 
+register-optional-info-conbook =
+  .legend = Conbook
+
+register-optional-info-conbook-digital-only =
+  .label = I only want to receive a digital version of the convention booklet.
+
 register-optional-info-comments =
   .label = Comments
   .placeholder = I would like to know more about...
@@ -360,9 +366,10 @@ register-summary-section-contact-property-postal-code-name = Postal code
 register-summary-section-contact-property-state-or-province-name = State / Province
 register-summary-section-contact-property-country-name = Country
 register-summary-section-optional-property-notifications-name = I would like to receive event information and announcements about
+register-summary-section-optional-property-digital-conbook-name = Digital conbook only
 register-summary-section-optional-property-comments-name = Comments
 
-register-summary-section-personal-property-wheelchair-accomodation-value = { $value ->
+register-summary-boolean-value = { $value ->
   [true] Yes
  *[false] No
 }

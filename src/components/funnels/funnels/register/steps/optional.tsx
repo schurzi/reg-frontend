@@ -27,6 +27,13 @@ const Optional = (_: ReadonlyRouteComponentProps) => {
 					</Localized>
 				</FieldSet>
 			</Localized>
+			<Localized id="register-optional-info-conbook" attrs={{ legend: true }}>
+				<FieldSet legend="Conbook">
+					<Localized id="register-optional-info-conbook-digital-only" attrs={{ label: true }}>
+						<Checkbox label="I only want to receive a digital version of the convention booklet." {...register('digitalConbook')}/>
+					</Localized>
+				</FieldSet>
+			</Localized>
 			<Localized id="register-optional-info-comments" attrs={{ label: true, placeholder: true }}>
 				<TextArea label="Comments" placeholder="I would like to know more about..." {...register('comments')}/>
 			</Localized>

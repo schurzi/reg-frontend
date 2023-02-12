@@ -57,6 +57,7 @@ export const getDefaultFormValues = ((id: FormIds) => (s: AppState): FormValuesT
 					music: false,
 					fursuiting: false,
 				},
+				digitalConbook: false,
 				comments: null,
 			}
 		case 'register-summary':

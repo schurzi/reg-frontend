@@ -133,6 +133,7 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
 	flags: optionsToFlags({
 		hc: registrationInfo.personalInfo.wheelchair,
 		anon: !registrationInfo.personalInfo.fullNamePermission,
+		'digi-book': registrationInfo.optionalInfo.digitalConbook,
 		'terms-accepted': true,
 	}),
 	options: optionsToFlags({
@@ -219,6 +220,7 @@ const registrationInfoFromAttendeeDto = (attendeeDto: AttendeeDto): Registration
 		},
 		optionalInfo: {
 			comments: attendeeDto.user_comments,
+			digitalConbook: flags.has('digi-book'),
 			notifications: {
 				animation: options.has('anim'),
 				art: options.has('art'),

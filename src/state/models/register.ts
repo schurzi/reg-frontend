@@ -52,6 +52,7 @@ export interface OptionalInfo {
 		readonly music: boolean
 		readonly fursuiting: boolean
 	}
+	readonly digitalConbook: boolean
 	readonly comments: string | null
 }
 
