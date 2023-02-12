@@ -68,7 +68,7 @@ export interface PersonalInfo {
 
 export interface RegistrationInfo {
 	readonly id?: number
-	readonly preferredLocale: Locale
+	readonly preferredLocale?: Locale
 	readonly ticketType: TicketType
 	readonly ticketLevel: TicketLevel
 	readonly contactInfo: ContactInfo

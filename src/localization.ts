@@ -14,6 +14,11 @@ export type Locale = (typeof supportedLanguages)[number]
 
 const defaultLocale = 'en-US'
 
+export const getDefaultLocale = (queryBrowserLocale: boolean = true) =>
+	queryBrowserLocale
+		? negotiateLanguages(navigator.languages, supportedLanguages, { strategy: 'lookup', defaultLocale })[0]
+		: defaultLocale
+
 export const createLocalization = (locale: Locale, ftl: string, parseMarkup?: MarkupParser | null | undefined) => {
 	const resource = new FluentResource(ftl)
 
@@ -43,15 +48,13 @@ export const loadLanguage = async (locale: Locale): Promise<ReactLocalization> =
  * 3. Browser preference
  * 4. Fallback to en-US
  */
-export const useCurrentLocale = (queryBrowserLocale: boolean = true) => {
+export const useCurrentLocale = (queryBrowserLocale: boolean) => {
 	const location = useLocation()
 	const preferredLocale = useAppSelector(getPreferredLocale())
 	const fallbackLocale = useMemo(() =>
 		preferredLocale !== undefined
 			? preferredLocale
-			: queryBrowserLocale
-				? negotiateLanguages(navigator.languages, supportedLanguages, { strategy: 'lookup', defaultLocale })[0]
-				: defaultLocale
+			: getDefaultLocale(queryBrowserLocale)
 	, [queryBrowserLocale, preferredLocale])
 
 	return useMemo(() =>

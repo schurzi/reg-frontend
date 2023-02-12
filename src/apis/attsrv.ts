@@ -9,7 +9,7 @@ import { ErrorDto as CommonErrorDto, handleStandardApiErrors } from './common'
 import { of } from 'rxjs'
 import { AppError } from '~/state/models/errors'
 import type { Replace } from 'type-fest'
-import { Locale } from '~/localization'
+import { getDefaultLocale, Locale } from '~/localization'
 
 export interface AttendeeDto {
 	readonly id: number | null
@@ -120,7 +120,7 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
 	city: registrationInfo.contactInfo.city,
 	country: registrationInfo.contactInfo.country,
 	spoken_languages: registrationInfo.personalInfo.spokenLanguages.join(','),
-	registration_language: registrationInfo.preferredLocale,
+	registration_language: registrationInfo.preferredLocale ?? getDefaultLocale(),
 	email: registrationInfo.contactInfo.email,
 	phone: registrationInfo.contactInfo.phoneNumber,
 	telegram: registrationInfo.contactInfo.telegramUsername,
