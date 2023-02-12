@@ -232,7 +232,9 @@ const registrationInfoFromAttendeeDto = (attendeeDto: AttendeeDto): Registration
 export class AttSrvAppError extends AppError<Replace<ErrorMessage, '.', '-', { all: true }>> {
 	// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 	constructor(err: AjaxError) {
-		super('attsrv', (err.response as ErrorDto).message.replaceAll('.', '-'), 'API error')
+		const errDto = err.response as ErrorDto
+
+		super('attsrv', errDto.message.replaceAll('.', '-'), `Attendee API Error: ${JSON.stringify(errDto, undefined, 2)}`)
 	}
 }
 

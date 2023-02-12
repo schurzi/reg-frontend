@@ -63,7 +63,9 @@ export interface TransactionResponseDto {
 export class PaySrvAppError extends AppError<StatusCodes> {
 	// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 	constructor(err: AjaxError) {
-		super('paysrv', err.status, 'API error')
+		const errDto = err.response as ErrorDto
+
+		super('paysrv', err.status, `Payment API error: ${JSON.stringify(errDto, undefined, 2)}`)
 	}
 }
 
