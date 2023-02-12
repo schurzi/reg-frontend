@@ -7,8 +7,9 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
-    "@eurofurence/reg-component-library": "^0.0.16",
+    "@eurofurence/reg-component-library": "^0.0.21",
     "@fluent/bundle": "^0.17.1",
+    "@fluent/langneg": "^0.6.2",
     "@fluent/react": "^0.14.1",
     "axios": "^1.2.2",
     "change-case": "^4.1.2",
@@ -74,8 +75,9 @@
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "lint": "eslint ./src",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
     "tsc": "tsc",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+    "gatsby": "gatsby"
   },
   "repository": {
     "type": "git",

@@ -7,8 +7,8 @@ import { mapObjIndexed } from 'ramda'
 import { paramCase } from 'change-case'
 import { useAppDispatch, useAppSelector } from '~/hooks/redux'
 import { SubmitForm } from '~/state/actions/forms'
-import { FormIds, forms, FormValuesType } from '~/state/forms'
-import { getSubmittedFormValues } from '~/state/selectors/forms'
+import { FormIds, FormValuesType } from '~/state/forms'
+import { getDefaultFormValues, getSubmittedFormValues } from '~/state/selectors/forms'
 import { FluentVariable } from '@fluent/bundle'
 import { useRefFn } from '~/hooks/use-ref-fn'
 import { UpdateLastSavedTime } from '~/state/actions/autosave'
@@ -56,6 +56,20 @@ const localizeValidations = <TFieldValues extends FieldValues, TFieldName extend
 	}
 }
 
+type FormCache = { [K in FormIds]: FormValuesType<K> }
+
+export const clearFormCache = () =>
+	save('funnel-form', {})
+
+const loadCache = <F extends FormIds>(id: F) =>
+	load<FormCache>('funnel-form')?.[id]
+
+const saveCache = <F extends FormIds>(id: F, values: FormValuesType<F>) => {
+	const cache = load<FormCache>('funnel-form')
+
+	save('funnel-form', { ...cache, [id]: values })
+}
+
 /*
  * Wrapper around react-hook-form's `useForm` that dispatches page-specific `ChangeAction`s
  * when an input changes and `SubmitAction`s when the form is submitted to, so that this
@@ -63,15 +77,16 @@ const localizeValidations = <TFieldValues extends FieldValues, TFieldName extend
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const useFunnelForm = <F extends FormIds>(id: F) => {
-	const autosaveValues = useRefFn(() => load<FormValuesType<F>>(`form:${id}`))
+	const autosaveValues = useRefFn(() => loadCache<F>(id))
+	const defaultValues = useAppSelector(getDefaultFormValues(id))
 	const submittedValues = useAppSelector(getSubmittedFormValues(id))
-	const { handleSubmit, watch, register, ...methods } = useForm<FormValuesType<F>>({ defaultValues: (submittedValues ?? autosaveValues.current ?? forms[id].defaultValues) as never })
+	const { handleSubmit, watch, register, ...methods } = useForm<FormValuesType<F>>({ defaultValues: (submittedValues ?? autosaveValues.current ?? defaultValues) as never })
 	const dispatch = useAppDispatch()
 	const { l10n } = useLocalization()
 
 	useEffect(() => {
 		const subscription = watch(formData => {
-			save(`form:${id}`, formData)
+			saveCache(id, formData as FormValuesType<F>)
 			dispatch(UpdateLastSavedTime.create(new Date()))
 		})
 

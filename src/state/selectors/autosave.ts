@@ -1,10 +1,17 @@
-import { AppState } from '..'
+import { AppState } from '~/state'
+import { SaveData } from '~/state/models/autosave'
 
-import { getSaveData as getRegisterSaveData } from './register'
-import { getSaveData as getHotelBookingSaveData } from './hotel-booking'
+import { getUserInfo } from './auth'
+import { getRegistrationInfo } from './register'
 
 export const getLastSaved = () => (s: AppState) => s.autosave.lastSaved
-export const getSaveData = () => (s: AppState) => ({
-	register: getRegisterSaveData()(s),
-	hotelBooking: getHotelBookingSaveData()(s),
-})
+
+export const getSaveData = () => (s: AppState): SaveData => {
+	// Don't save ID. It shouldn't cause problems in real situations but it prevents debugging.
+	const { id, ...registrationInfo } = getRegistrationInfo()(s)
+
+	return {
+		userInfo: getUserInfo()(s),
+		registrationInfo,
+	}
+}

@@ -1,24 +1,21 @@
 import { RegistrationInfo, TicketLevel, TicketType } from '~/state/models/register'
 import { AnyAppAction, GetAction } from '~/state/actions'
 import type { DeepNonNullable } from 'ts-essentials'
-import { SubmitForm, SubmitFormActionBundle } from '../actions/forms'
-import { LoadRegistrationState } from '../actions/register'
-import autosaveData from '~/state/autosave'
+import { SubmitForm, SubmitFormActionBundle } from '~/state/actions/forms'
+import { LoadRegistrationState, SetLocale } from '~/state/actions/register'
+import { LoadAutosave } from '~/state/actions/autosave'
 import config from '~/config'
 
 export interface RegisterState {
 	readonly registrationInfo: Partial<RegistrationInfo>
+	readonly due?: number
+	readonly paid?: number
+	readonly unprocessedPayments?: boolean
 	readonly isOpen: boolean | null
 }
 
 const defaultState: RegisterState = {
-	registrationInfo: autosaveData?.register === undefined ? {} : {
-		...autosaveData.register,
-		personalInfo: autosaveData.register.personalInfo === undefined ? undefined : {
-			...autosaveData.register.personalInfo,
-			dateOfBirth: new Date(autosaveData.register.personalInfo.dateOfBirth),
-		},
-	},
+	registrationInfo: {},
 	isOpen: null,
 }
 
@@ -37,7 +34,15 @@ const transformTicketLevel = (ticketType: TicketType, payload: GetAction<SubmitF
 const transformPersonalInfo = (payload: GetAction<SubmitFormActionBundle<'register-personal-info'>>['payload']) => {
 	const { pronounsSelection, pronounsOther, dateOfBirth, ...rest } = payload as DeepNonNullable<typeof payload>
 
-	return { pronouns: pronounsSelection === 'other' ? pronounsOther : pronounsSelection, dateOfBirth: new Date(dateOfBirth), ...rest }
+	return {
+		pronouns: pronounsSelection === 'prefer-not-to-say'
+			? null
+			: pronounsSelection === 'other'
+				? pronounsOther
+				: pronounsSelection,
+		dateOfBirth: new Date(dateOfBirth),
+		...rest,
+	}
 }
 
 const registrationInfoReducer = (state: Partial<RegistrationInfo>, action: GetAction<AnyAppAction>): Partial<RegistrationInfo> => {
@@ -54,6 +59,8 @@ const registrationInfoReducer = (state: Partial<RegistrationInfo>, action: GetAc
 			return { ...state, optionalInfo: action.payload as DeepNonNullable<typeof action.payload> }
 		case SubmitForm('register-personal-info').type:
 			return { ...state, personalInfo: transformPersonalInfo(action.payload) }
+		case SetLocale.type:
+			return { ...state, preferredLocale: action.payload }
 		default:
 			return state
 	}
@@ -61,16 +68,11 @@ const registrationInfoReducer = (state: Partial<RegistrationInfo>, action: GetAc
 
 export default (state: RegisterState = defaultState, action: GetAction<AnyAppAction>): RegisterState => {
 	switch (action.type) {
+		case LoadAutosave.type:
+			return { ...state, registrationInfo: action.payload.registrationInfo }
 		case LoadRegistrationState.type:
-			return {
-				...state,
-				registrationInfo: action.payload.registration ?? state.registrationInfo,
-				isOpen: action.payload.isOpen,
-			}
+			return { ...state, ...action.payload }
 		default:
-			return {
-				...state,
-				registrationInfo: registrationInfoReducer(state.registrationInfo, action),
-			}
+			return { ...state, registrationInfo: registrationInfoReducer(state.registrationInfo, action) }
 	}
 }

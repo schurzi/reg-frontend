@@ -5,15 +5,20 @@
  */
 
 import styled from '@emotion/styled'
-import { Button, Page } from '@eurofurence/reg-component-library'
+import { Button, MediaQueries, Page } from '@eurofurence/reg-component-library'
 import { Localized } from '@fluent/react'
 import { navigate } from 'gatsby'
 import { useAppSelector } from '~/hooks/redux'
 import { isEditMode } from '~/state/selectors/register'
 import type { ReadonlyReactNode } from '~/util/readonly-types'
 
+const Header = styled.header`
+	margin-bottom: 3em;
+`
+
 const Footer = styled.footer`
-	height: 100px;
+	margin-top: 3.5em;
+	margin-bottom: 1em;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -21,8 +26,17 @@ const Footer = styled.footer`
 
 const Nav = styled.nav`
 	display: flex;
-	align-items: center;
-	column-gap: 22px;
+	gap: 1em;
+
+	@media not all and ${MediaQueries.phone} {
+		align-items: center;
+	}
+
+	@media ${MediaQueries.phone} {
+		width: 100%;
+		flex-direction: column;
+		align-items: stretch;
+	}
 `
 
 export interface StepFunnelLayoutProps {
@@ -38,20 +52,20 @@ const StepFunnelLayout = ({ children, header: headerContent, isFirstPage = false
 	const isEdit = useAppSelector(isEditMode())
 
 	return <Page>
-		<header>
+		<Header>
 			{headerContent}
-		</header>
+		</Header>
 		{children}
-		<Footer>
+		{isEdit && isLastPage ? null : <Footer>
 			<Nav>
-				{isEdit && isLastPage ? null : <Localized id={isEdit ? 'register-navigation-update' : isLastPage ? 'register-navigation-finish' : 'register-navigation-next'}>
+				<Localized id={isEdit ? 'register-navigation-update' : isLastPage ? 'register-navigation-finish' : 'register-navigation-next'}>
 					<Button onClick={onNext}>Continue</Button>
-				</Localized>}
-				{isEdit && isLastPage || isFirstPage && !showBack ? null : <Localized id="register-navigation-back">
-					<a onClick={() => navigate(-1)}>Go back</a>
+				</Localized>
+				{isFirstPage && !showBack ? null : <Localized id="register-navigation-back">
+					<Button variant="inverted" onClick={() => navigate(-1)}>Go back</Button>
 				</Localized>}
 			</Nav>
-		</Footer>
+		</Footer>}
 	</Page>
 }
 

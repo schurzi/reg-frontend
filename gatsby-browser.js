@@ -2,12 +2,12 @@ import { LocalizationProvider, ReactLocalization } from '@fluent/react'
 import { useObservable, useObservableState } from 'observable-hooks'
 import { from } from 'rxjs'
 import { concatMap } from 'rxjs/operators'
-import { loadLanguage, useCurrentLangKey } from '~/localization'
+import { loadLanguage, useCurrentLocale } from '~/localization'
 import wrapWithLibraries from './wrap-with-libraries'
 
 const PageWrapper = ({ children }) => {
-	const langKey = useCurrentLangKey()
-	const l10n$ = useObservable(langKey$ => langKey$.pipe(concatMap(([l]) => from(loadLanguage(l)))), [langKey])
+	const locale = useCurrentLocale()
+	const l10n$ = useObservable(locale$ => locale$.pipe(concatMap(([l]) => from(loadLanguage(l)))), [locale])
 	const l10n = useObservableState(l10n$, new ReactLocalization([]))
 
 	return <LocalizationProvider l10n={l10n}>

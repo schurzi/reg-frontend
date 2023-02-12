@@ -2,26 +2,24 @@ import { createSelector } from 'reselect'
 import config from '~/config'
 import { AppState } from '..'
 import { buildInvoice, UncalculatedInvoiceItem } from '../models/invoice'
+import { getUserInfo } from './auth'
 
 export const isRegistrationOpen = () => (s: AppState) => s.register.isOpen
 export const isEditMode = () => (s: AppState) => s.register.registrationInfo.id !== undefined
 
+export const getPaidAmount = () => (s: AppState) => s.register.paid
+export const getDueAmount = () => (s: AppState) => s.register.due
+
 export const getRegistrationInfo = () => (s: AppState) => s.register.registrationInfo
+export const getRegistrationId = () => (s: AppState) => s.register.registrationInfo.id
+export const getPreferredLocale = () => (s: AppState) => s.register.registrationInfo.preferredLocale
 export const getTicketType = () => (s: AppState) => s.register.registrationInfo.ticketType
 export const getTicketLevel = () => (s: AppState) => s.register.registrationInfo.ticketLevel
 export const getPersonalInfo = () => (s: AppState) => s.register.registrationInfo.personalInfo
 export const getContactInfo = () => (s: AppState) => s.register.registrationInfo.contactInfo
 export const getOptionalInfo = () => (s: AppState) => s.register.registrationInfo.optionalInfo
 
-export const getSaveData = () => (s: AppState) => ({
-	...s.register.registrationInfo,
-	personalInfo: s.register.registrationInfo.personalInfo === undefined ? undefined : {
-		...s.register.registrationInfo.personalInfo,
-		dateOfBirth: s.register.registrationInfo.personalInfo.dateOfBirth.toISOString(),
-	},
-})
-
-export const getInvoice = createSelector(getTicketType(), getTicketLevel(), (ticketType, ticketLevel) => {
+export const getInvoice = createSelector(getTicketType(), getTicketLevel(), getPaidAmount(), getDueAmount(), (ticketType, ticketLevel, paid, due) => {
 	if (ticketLevel === undefined || ticketType === undefined) {
 		return undefined
 	}
@@ -51,5 +49,12 @@ export const getInvoice = createSelector(getTicketType(), getTicketLevel(), (tic
 			options: addon.options,
 		}))
 
-	return buildInvoice([ticketLine, ...addonLines])
+	return buildInvoice([ticketLine, ...addonLines], { paid, due })
 })
+
+export const getVerifiedEmails = () => (s: AppState) => {
+	const editMode = isEditMode()(s)
+	const userEmail = getUserInfo()(s)!.email
+
+	return editMode ? [getContactInfo()(s)!.email, userEmail] : [userEmail]
+}

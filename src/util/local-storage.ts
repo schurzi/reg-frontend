@@ -9,3 +9,9 @@ export const save = (id: string, saveData: unknown) => {
 		localStorage.setItem(id, JSON.stringify(saveData))
 	}
 }
+
+export const remove = (id: string) => {
+	if ('localStorage' in globalThis) {
+		localStorage.removeItem(id)
+	}
+}

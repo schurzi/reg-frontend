@@ -1,13 +1,15 @@
-import { eachDayOfInterval, isFriday, isSaturday, isThursday } from 'date-fns'
+/* eslint-disable camelcase */
+import { eachDayOfInterval, formatISO, isSunday, isMonday, isTuesday, isWednesday } from 'date-fns'
 import { head, last } from 'ramda'
 import { catchError, concatMap, map } from 'rxjs/operators'
-import { ajax, AjaxError } from 'rxjs/ajax'
+import { ajax, AjaxConfig, AjaxError } from 'rxjs/ajax'
 import config from '~/config'
-/* eslint-disable camelcase */
-import { RegistrationInfo } from '~/state/models/register'
-import type { ErrorDto as CommonErrorDto } from './common'
+import type { RegistrationInfo } from '~/state/models/register'
+import { ErrorDto as CommonErrorDto, handleStandardApiErrors } from './common'
 import { of } from 'rxjs'
-import { StatusCodes } from 'http-status-codes'
+import { AppError } from '~/state/models/errors'
+import type { Replace } from 'type-fest'
+import { Locale } from '~/localization'
 
 export interface AttendeeDto {
 	readonly id: number | null
@@ -19,7 +21,7 @@ export interface AttendeeDto {
 	readonly city: string
 	readonly country: string // DE
 	readonly spoken_languages: string
-	readonly registration_language: string
+	readonly registration_language: Locale
 	readonly state: string | null
 	readonly email: string
 	readonly phone: string
@@ -86,6 +88,26 @@ export interface CountdownDto {
 	readonly targetTime: string
 }
 
+const tshirtFromApi = (apiValue: string | null) => {
+	if (apiValue === '3XL') {
+		return 'm3XL'
+	} else if (apiValue === '4XL') {
+		return 'm4XL'
+	} else {
+		return apiValue
+	}
+}
+
+const tshirtToApi = (frontendValue: string | null) => {
+	if (frontendValue === 'm3XL') {
+		return '3XL'
+	} else if (frontendValue === 'm4XL') {
+		return '4XL'
+	} else {
+		return frontendValue
+	}
+}
+
 const optionsToFlags = (options: Readonly<Record<string, boolean>>) => Object.entries(options).filter(last).map(head).join(',')
 
 const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): AttendeeDto => ({
@@ -98,19 +120,20 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
 	city: registrationInfo.contactInfo.city,
 	country: registrationInfo.contactInfo.country,
 	spoken_languages: registrationInfo.personalInfo.spokenLanguages.join(','),
-	registration_language: 'en-US',
+	registration_language: registrationInfo.preferredLocale,
 	email: registrationInfo.contactInfo.email,
 	phone: registrationInfo.contactInfo.phoneNumber,
 	telegram: registrationInfo.contactInfo.telegramUsername,
 	partner: null, // unused by EF
 	state: registrationInfo.contactInfo.stateOrProvince, // optional, may be null
-	birthday: '1995-02-15',
+	birthday: formatISO(registrationInfo.personalInfo.dateOfBirth, { representation: 'date' }),
 	gender: 'notprovided',
 	pronouns: registrationInfo.personalInfo.pronouns,
-	tshirt_size: registrationInfo.ticketLevel.addons.tshirt.options.size,
+	tshirt_size: tshirtToApi(registrationInfo.ticketLevel.addons.tshirt.options.size),
 	flags: optionsToFlags({
 		hc: registrationInfo.personalInfo.wheelchair,
 		anon: !registrationInfo.personalInfo.fullNamePermission,
+		'terms-accepted': true,
 	}),
 	options: optionsToFlags({
 		anim: registrationInfo.optionalInfo.notifications.animation,
@@ -121,47 +144,55 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
 	packages: optionsToFlags({
 		'room-none': true,
 		'attendance': registrationInfo.ticketType.type === 'full',
-		'day-thu': registrationInfo.ticketType.type === 'day' && isThursday(registrationInfo.ticketType.day),
-		'day-fri': registrationInfo.ticketType.type === 'day' && isFriday(registrationInfo.ticketType.day),
-		'day-sat': registrationInfo.ticketType.type === 'day' && isSaturday(registrationInfo.ticketType.day),
-		'stage': registrationInfo.ticketLevel.addons['stage-pass'].selected,
+		'day-sun': registrationInfo.ticketType.type === 'day' && isSunday(registrationInfo.ticketType.day),
+		'day-mon': registrationInfo.ticketType.type === 'day' && isMonday(registrationInfo.ticketType.day),
+		'day-tue': registrationInfo.ticketType.type === 'day' && isTuesday(registrationInfo.ticketType.day),
+		'day-wed': registrationInfo.ticketType.type === 'day' && isWednesday(registrationInfo.ticketType.day),
 		'sponsor': registrationInfo.ticketLevel.level === 'sponsor',
 		'sponsor2': registrationInfo.ticketLevel.level === 'super-sponsor',
+		'stage': !(config.ticketLevels[registrationInfo.ticketLevel.level].includes?.includes('stage-pass') ?? false)
+			&& registrationInfo.ticketLevel.addons['stage-pass'].selected,
+		'tshirt': !(config.ticketLevels[registrationInfo.ticketLevel.level].includes?.includes('tshirt') ?? false)
+			&& registrationInfo.ticketLevel.addons.tshirt.selected,
 	}),
 	user_comments: registrationInfo.optionalInfo.comments,
 })
 
+// eslint-disable-next-line complexity
 const registrationInfoFromAttendeeDto = (attendeeDto: AttendeeDto): RegistrationInfo => {
 	const packages = new Set(attendeeDto.packages.split(','))
 	const flags = new Set(attendeeDto.flags.split(','))
 	const options = new Set(attendeeDto.options.split(','))
 
 	const days = eachDayOfInterval({ start: config.eventStartDate, end: config.eventEndDate })
+	const level = packages.has('sponsor2') ? 'super-sponsor' : packages.has('sponsor') ? 'sponsor' : 'standard'
 
 	return {
 		id: attendeeDto.id!,
+		preferredLocale: attendeeDto.registration_language,
 		/* eslint-disable @typescript-eslint/indent */
 		ticketType: packages.has('attendance')
 			? { type: 'full' }
 			: {
 				type: 'day',
-				day: packages.has('day-thu') ? days.find(isThursday)!
-					: packages.has('day-fri') ? days.find(isFriday)!
-					: packages.has('day-sat') ? days.find(isSaturday)!
-					: days.find(isThursday)!, // FIXME: Cough
+				day: packages.has('day-sun') ? days.find(isSunday)!
+					: packages.has('day-mon') ? days.find(isMonday)!
+					: packages.has('day-tue') ? days.find(isTuesday)!
+					: packages.has('day-wed') ? days.find(isWednesday)!
+					: days.find(isWednesday)!, // FIXME: Cough
 			},
 		/* eslint-enable @typescript-eslint/indent */
 		ticketLevel: {
-			level: packages.has('sponsor2') ? 'super-sponsor' : packages.has('sponsor') ? 'sponsor' : 'standard',
+			level,
 			addons: {
 				'stage-pass': {
-					selected: packages.has('stage'),
+					selected: (config.ticketLevels[level].includes?.includes('stage-pass') ?? false) || packages.has('stage'),
 					options: {},
 				},
 				tshirt: {
-					selected: true,
+					selected: (config.ticketLevels[level].includes?.includes('tshirt') ?? false) || packages.has('tshirt'),
 					options: {
-						size: attendeeDto.tshirt_size as RegistrationInfo['ticketLevel']['addons']['tshirt']['options']['size'],
+						size: tshirtFromApi(attendeeDto.tshirt_size) as RegistrationInfo['ticketLevel']['addons']['tshirt']['options']['size'],
 					},
 				},
 			},
@@ -172,7 +203,7 @@ const registrationInfoFromAttendeeDto = (attendeeDto: AttendeeDto): Registration
 			lastName: attendeeDto.last_name,
 			dateOfBirth: new Date(attendeeDto.birthday),
 			spokenLanguages: attendeeDto.spoken_languages.split(','),
-			pronouns: attendeeDto.pronouns,
+			pronouns: attendeeDto.pronouns === '' ? null : attendeeDto.pronouns,
 			wheelchair: flags.has('hc'),
 			fullNamePermission: !flags.has('anon'),
 		},
@@ -198,6 +229,25 @@ const registrationInfoFromAttendeeDto = (attendeeDto: AttendeeDto): Registration
 	}
 }
 
+export class AttSrvAppError extends AppError<Replace<ErrorMessage, '.', '-', { all: true }>> {
+	// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
+	constructor(err: AjaxError) {
+		const errDto = err.response as ErrorDto
+
+		super('attsrv', errDto.message.replaceAll('.', '-'), `Attendee API Error: ${JSON.stringify(errDto, undefined, 2)}`)
+	}
+}
+
+// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
+const apiCall = <T>({ path, ...cfg }: Omit<AjaxConfig, 'url'> & { path: string }) => ajax<T>({
+	url: `${config.apis.attsrv.url}${path}`,
+	crossDomain: true,
+	withCredentials: true,
+	...cfg,
+}).pipe(
+	catchError(handleStandardApiErrors(AttSrvAppError)),
+)
+
 /*
  * GET /countdown checks if registration is open, or when it will open, checking that the user is logged in in the process.
  *
@@ -214,11 +264,9 @@ const registrationInfoFromAttendeeDto = (attendeeDto: AttendeeDto): Registration
  *
  * This endpoint is optimized in the backend for high traffic, so it is safe to call during initial reg.
  */
-export const registrationCountdownCheck = () => ajax<CountdownDto>({
-	url: `${config.apis.attsrv.url}/countdown`,
+export const registrationCountdownCheck = () => apiCall<CountdownDto>({
+	path: '/countdown',
 	method: 'GET',
-	crossDomain: true,
-	withCredentials: true,
 })
 
 /*
@@ -240,11 +288,9 @@ export const registrationCountdownCheck = () => ajax<CountdownDto>({
  *
  * This endpoint is optimized in the backend for high traffic, so it is safe to call during initial reg.
  */
-export const submitRegistration = (registrationInfo: RegistrationInfo) => ajax({
-	url: `${config.apis.attsrv.url}/attendees`,
+export const submitRegistration = (registrationInfo: RegistrationInfo) => apiCall({
+	path: '/attendees',
 	method: 'POST',
-	crossDomain: true,
-	withCredentials: true,
 	body: attendeeDtoFromRegistrationInfo(registrationInfo),
 })
 
@@ -259,11 +305,9 @@ export const submitRegistration = (registrationInfo: RegistrationInfo) => ajax({
  *
  * This endpoint should be avoided during initial reg, as it entails a database select.
  */
-export const findMyRegistrations = () => ajax<AttendeeIdListDto>({
-	url: `${config.apis.attsrv.url}/attendees`,
+export const findMyRegistrations = () => apiCall<AttendeeIdListDto>({
+	path: '/attendees',
 	method: 'GET',
-	crossDomain: true,
-	withCredentials: true,
 })
 
 /*
@@ -276,11 +320,9 @@ export const findMyRegistrations = () => ajax<AttendeeIdListDto>({
  * 401: The user's token has expired, and you need to redirect them to the auth start to refresh it.
  * 500: It is important to communicate the ErrorDto's requestid field to the user, so they can give it to us, so we can look in the logs.
  */
-export const loadRegistration = (id: number) => ajax<AttendeeDto>({
-	url: `${config.apis.attsrv.url}/attendees/${id}`,
+export const loadRegistration = (id: number) => apiCall<AttendeeDto>({
+	path: `/attendees/${id}`,
 	method: 'GET',
-	crossDomain: true,
-	withCredentials: true,
 })
 
 /*
@@ -299,11 +341,9 @@ export const loadRegistration = (id: number) => ajax<AttendeeDto>({
  *
  * 500: It is important to communicate the ErrorDto's requestid field to the user, so they can give it to us, so we can look in the logs.
  */
-export const updateRegistration = (registrationInfo: RegistrationInfo) => ajax({
-	url: `${config.apis.attsrv.url}/attendees/${registrationInfo.id}`,
+export const updateRegistration = (registrationInfo: RegistrationInfo) => apiCall({
+	path: `/attendees/${registrationInfo.id}`,
 	method: 'PUT',
-	crossDomain: true,
-	withCredentials: true,
 	body: attendeeDtoFromRegistrationInfo(registrationInfo),
 })
 
@@ -313,7 +353,7 @@ export const findExistingRegistration = () => findMyRegistrations().pipe(
 		loadRegistration(result.response.ids[0]).pipe(map(r => registrationInfoFromAttendeeDto(r.response))),
 	),
 	catchError(err => {
-		if (err instanceof AjaxError && err.status === StatusCodes.NOT_FOUND) {
+		if (err instanceof AttSrvAppError && err.code === 'attendee-owned-notfound') {
 			return of(undefined)
 		} else {
 			throw err

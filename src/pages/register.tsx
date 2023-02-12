@@ -3,7 +3,6 @@ import Layout from '~/components/layout'
 import SEO from '~/components/seo'
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 import NotOpenYet from '~/components/funnels/funnels/register/not-open-yet'
-import FunnelErrorGuard from '~/components/funnels/error-guard'
 import { useAppDispatch, useAppSelector } from '~/hooks/redux'
 import { isRegistrationOpen } from '~/state/selectors/register'
 import { useEffect } from 'react'
@@ -13,6 +12,11 @@ export const Head = () => <SEO title="Register" />
 
 const Content = () => {
 	const isOpen = useAppSelector(isRegistrationOpen())
+	const dispatch = useAppDispatch()
+
+	useEffect(() => {
+		dispatch(CheckCountdown.create(undefined))
+	}, [])
 
 	switch (isOpen) {
 		case true: return <RegisterRouter/>
@@ -21,18 +25,8 @@ const Content = () => {
 	}
 }
 
-const RegisterPage = (_: ReadonlyRouteComponentProps) => {
-	const dispatch = useAppDispatch()
-
-	useEffect(() => {
-		dispatch(CheckCountdown.create(undefined))
-	}, [])
-
-	return <Layout>
-		<FunnelErrorGuard>
-			<Content/>
-		</FunnelErrorGuard>
-	</Layout>
-}
+const RegisterPage = (_: ReadonlyRouteComponentProps) => <Layout>
+	<Content/>
+</Layout>
 
 export default RegisterPage

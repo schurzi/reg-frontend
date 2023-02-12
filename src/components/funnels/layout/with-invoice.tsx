@@ -3,6 +3,7 @@
  */
 
 import styled from '@emotion/styled'
+import { MediaQueries } from '@eurofurence/reg-component-library'
 import InvoiceComponent from '~/components/funnels/invoice/invoice'
 import { Invoice } from '~/state/models/invoice'
 import type { ReadonlyReactNode } from '~/util/readonly-types'
@@ -17,25 +18,30 @@ export interface WithInvoiceFunnelLayoutProps {
 	readonly invoiceEditLink?: string
 	readonly invoice: Invoice
 	readonly onNext: () => void
+	readonly onPay?: () => void
 }
 
 const Grid = styled.div`
 	display: grid;
-	grid-template-columns: repeat(12, 1fr);
-	gap: 24px;
+
+	@media ${MediaQueries.phone}, ${MediaQueries.tablet} {
+		grid-template-columns: 1fr;
+		gap: 5em;
+	}
+
+	@media ${MediaQueries.laptop}, ${MediaQueries.desktop} {
+		grid-template-columns: auto max-content;
+		gap: 111px;
+	}
 `
 
-const GridConformer = styled.div`
-	grid-column: span 8;
-`
-
-const WithInvoiceFunnelLayout = ({ children, onNext, invoiceTitle, invoiceEditLink, invoice, ...passthroughProps }: WithInvoiceFunnelLayoutProps) =>
-	<StepFunnelLayout {...passthroughProps} onNext={onNext}>
+const WithInvoiceFunnelLayout = ({ children, onNext, invoiceTitle, invoiceEditLink, invoice, onPay, isLastPage, ...passthroughProps }: WithInvoiceFunnelLayoutProps) =>
+	<StepFunnelLayout {...passthroughProps} onNext={onNext} isLastPage={isLastPage}>
 		<Grid>
-			<GridConformer>
+			<div>
 				{children}
-			</GridConformer>
-			<InvoiceComponent title={invoiceTitle} editLink={invoiceEditLink} invoice={invoice}/>
+			</div>
+			<InvoiceComponent title={invoiceTitle} editLink={invoiceEditLink} invoice={invoice} showOnMobile={isLastPage} onPay={onPay}/>
 		</Grid>
 	</StepFunnelLayout>
 

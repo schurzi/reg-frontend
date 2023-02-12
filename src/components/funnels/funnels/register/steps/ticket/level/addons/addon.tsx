@@ -4,6 +4,7 @@ import { useFunnelForm } from '~/hooks/funnels/form'
 import TicketLevelAddonControl from './control'
 import TicketLevelAddonOption, { AugmentedOption } from './options/option'
 import { useEffect } from 'react'
+import { TicketLevel } from '~/state/models/register'
 
 export type AugmentedAddon = {
 	[K in keyof typeof config.addons]: (typeof config.addons)[K] & {
@@ -18,22 +19,27 @@ export interface TicketLevelAddonProps {
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 const TicketLevelAddon = ({ addon, formContext }: TicketLevelAddonProps) => {
-	const { watch, register, setValue } = formContext
+	const isIncluded = (lvl: TicketLevel['level'] | null) => lvl !== null && (config.ticketLevels[lvl].includes?.includes(addon.id) ?? false)
 
+	const { watch, register, setValue } = formContext
 	const level = watch('level')
 
-	const isIncluded = level !== null && (config.ticketLevels[level].includes?.includes(addon.id) ?? false)
-
 	useEffect(() => {
-		setValue(`addons.${addon.id}.selected`, isIncluded ? true : addon.default)
-	}, [level])
+		const subscription = watch((value, { name, type }) => {
+			if (name === 'level' && type === 'change') {
+				setValue(`addons.${addon.id}.selected`, isIncluded(value.level as Exclude<typeof value.level, undefined>) || addon.default)
+			}
+		})
 
-	return <Localized id={`register-ticket-level-addons-item-${addon.id}`} attrs={{ label: true, description: true, price: true }}>
+		return () => subscription.unsubscribe()
+	}, [watch])
+
+	return <Localized id={`register-ticket-level-addons-item-${addon.id}`} attrs={{ label: true, description: true }}>
 		<TicketLevelAddonControl
 			label={addon.id}
 			description={addon.id}
-			price={isIncluded ? 0 : addon.price}
-			disabled={isIncluded}
+			price={isIncluded(level) ? 0 : addon.price}
+			disabled={isIncluded(level)}
 			{...register(`addons.${addon.id}.selected`)}
 		>
 			{Object.entries(addon.options).map(([id, option]) =>
