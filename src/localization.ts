@@ -3,15 +3,21 @@ import { FluentBundle, FluentResource } from '@fluent/bundle'
 import { useLocation } from '@reach/router'
 import { getCurrentLangKey } from 'ptz-i18n'
 import { DATETIME_RANGE, NUMBER_RANGE } from 'fluent-ranges'
+import { useAppSelector } from './hooks/redux'
+import { getPreferredLocale } from './state/selectors/register'
+import { negotiateLanguages } from '@fluent/langneg'
+import { useMemo } from 'react'
 
-export const supportedLanguages = ['en', 'de'] as const
+export const supportedLanguages = ['en-US', 'de-DE'] as const
 
-export type LanguageKey = (typeof supportedLanguages)[number]
+export type Locale = (typeof supportedLanguages)[number]
 
-export const createLocalization = (langKey: LanguageKey, ftl: string, parseMarkup?: MarkupParser | null | undefined) => {
+const defaultLocale = 'en-US'
+
+export const createLocalization = (locale: Locale, ftl: string, parseMarkup?: MarkupParser | null | undefined) => {
 	const resource = new FluentResource(ftl)
 
-	const bundle = new FluentBundle([langKey], {
+	const bundle = new FluentBundle([locale], {
 		functions: {
 			DATETIME_RANGE,
 			NUMBER_RANGE,
@@ -23,14 +29,32 @@ export const createLocalization = (langKey: LanguageKey, ftl: string, parseMarku
 	return new ReactLocalization([bundle], parseMarkup)
 }
 
-export const loadLanguage = async (langKey: LanguageKey): Promise<ReactLocalization> => {
-	const { default: ftl } = await import(`raw-loader!~/localizations/${langKey}.ftl`) as { default: string }
+export const loadLanguage = async (locale: Locale): Promise<ReactLocalization> => {
+	const { default: ftl } = await import(`raw-loader!~/localizations/${locale}.ftl`) as { default: string }
 
-	return createLocalization(langKey, ftl)
+	return createLocalization(locale, ftl)
 }
 
-export const useCurrentLangKey = () => {
+/*
+ * Returns the current locale, using multiple strategies with a prioritization
+ *
+ * 1. URL based locale
+ * 2. Locale saved for the user when submitting a registration
+ * 3. Browser preference
+ * 4. Fallback to en-US
+ */
+export const useCurrentLocale = (queryBrowserLocale: boolean = true) => {
 	const location = useLocation()
+	const preferredLocale = useAppSelector(getPreferredLocale())
+	const fallbackLocale = useMemo(() =>
+		preferredLocale !== undefined
+			? preferredLocale
+			: queryBrowserLocale
+				? negotiateLanguages(navigator.languages, supportedLanguages, { strategy: 'lookup', defaultLocale })[0]
+				: defaultLocale
+	, [queryBrowserLocale, preferredLocale])
 
-	return getCurrentLangKey<LanguageKey>(['en', 'de'], 'en', location.pathname)
+	return useMemo(() =>
+		getCurrentLangKey(supportedLanguages, fallbackLocale, location.pathname)
+	, [location, fallbackLocale])
 }

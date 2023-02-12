@@ -526,6 +526,8 @@ funnel-error-report-operation = {$operation ->
   [registration-submission]       We couldn't submit your registration.
   [registration-update]           We couldn't update your registration.
   [registration-initiate-payment] We couldn't initiate your payment.
+  [registration-set-locale]       We couldn't save your language preference.
+  [user-info-lookup]              We couldn't retrieve your login information.
  *[unknown]                       There was an error handling your request.
 }
 

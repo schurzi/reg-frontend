@@ -1,11 +1,11 @@
-import { concatMap, withLatestFrom, map } from 'rxjs/operators'
+import { concatMap, withLatestFrom, map, filter, ignoreElements } from 'rxjs/operators'
 import { combineEpics, Epic, ofType } from 'redux-observable'
 import { AnyAppAction, GetAction } from '~/state/actions'
 import { always } from 'ramda'
 import { AppState } from '~/state'
 import { nextPage } from './generators/next-page'
 import { SubmitForm } from '~/state/actions/forms'
-import { CheckCountdown, InitiatePayment, LoadRegistrationState } from '~/state/actions/register'
+import { CheckCountdown, InitiatePayment, LoadRegistrationState, SetLocale } from '~/state/actions/register'
 import { findExistingRegistration, registrationCountdownCheck, submitRegistration, updateRegistration } from '~/apis/attsrv'
 import { navigate } from 'gatsby'
 import { getRegistrationId, getRegistrationInfo, isEditMode } from '~/state/selectors/register'
@@ -94,5 +94,15 @@ export default combineEpics<GetAction<AnyAppAction>, GetAction<AnyAppAction>, Ap
 			}),
 		)),
 		catchAppError('registration-initiate-payment'),
+	),
+
+	(action$, state$) => action$.pipe(
+		ofType(SetLocale.type),
+		withLatestFrom(state$),
+		filter(([, state]) => isEditMode()(state)),
+		concatMap(([, state]) => updateRegistration(getRegistrationInfo()(state) as RegistrationInfo).pipe(
+			ignoreElements(),
+			catchAppError('registration-set-locale'),
+		)),
 	),
 )

@@ -7,7 +7,7 @@ import { getContactInfo, getOptionalInfo, getPersonalInfo, isEditMode } from '~/
 import langmap from 'langmap'
 import { Link } from 'gatsby'
 import { css } from '@emotion/react'
-import { useCurrentLangKey } from '~/localization'
+import { useCurrentLocale } from '~/localization'
 import { useFunnelForm } from '~/hooks/funnels/form'
 import { Checkbox, ErrorMessage, Form } from '@eurofurence/reg-component-library'
 import config from '~/config'
@@ -102,7 +102,7 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 	const contactInfo = useAppSelector(getContactInfo())!
 	const optionalInfo = useAppSelector(getOptionalInfo())!
 	const isEdit = useAppSelector(isEditMode())
-	const langKey = useCurrentLangKey()
+	const locale = useCurrentLocale()
 	const { l10n } = useLocalization()
 	const { handleSubmit, register, formState: { errors } } = useFunnelForm('register-summary')
 
@@ -119,9 +119,9 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 			{ id: 'nickname', value: personalInfo.nickname },
 			{ id: 'full-name', value: `${personalInfo.firstName} ${personalInfo.lastName}` },
 			{ id: 'pronouns', value: personalInfo.pronouns === null ? '' : l10n.getString('pronouns', { pronouns: personalInfo.pronouns }, personalInfo.pronouns) },
-			{ id: 'date-of-birth', value: new Intl.DateTimeFormat(langKey, { dateStyle: 'long' }).format(personalInfo.dateOfBirth) },
+			{ id: 'date-of-birth', value: new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(personalInfo.dateOfBirth) },
 			{ id: 'wheelchair-accomodation', value: l10n.getString('register-summary-section-personal-property-wheelchair-accomodation-value', { value: personalInfo.wheelchair.toString() }) },
-			{ id: 'spoken-languages', wide: true, value: personalInfo.spokenLanguages.map(langKey => langmap[langKey].nativeName).join(', ') },
+			{ id: 'spoken-languages', wide: true, value: personalInfo.spokenLanguages.map(locale => langmap[locale].nativeName).join(', ') },
 		]}/>
 		<Section id="contact" editLink="/register/contact-info" properties={[
 			{ id: 'email', wide: true, value: contactInfo.email },

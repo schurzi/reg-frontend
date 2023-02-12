@@ -1,4 +1,9 @@
 /* eslint-disable */
 
-export { default as en } from 'raw-loader!./en.ftl'
-export { default as de } from 'raw-loader!./de.ftl'
+import enUS from 'raw-loader!./en-US.ftl'
+import deDE from 'raw-loader!./de-DE.ftl'
+
+export default {
+	'en-US': enUS,
+	'de-DE': deDE,
+}

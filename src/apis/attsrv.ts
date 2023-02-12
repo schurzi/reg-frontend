@@ -9,6 +9,7 @@ import { ErrorDto as CommonErrorDto, handleStandardApiErrors } from './common'
 import { of } from 'rxjs'
 import { AppError } from '~/state/models/errors'
 import type { Replace } from 'type-fest'
+import { Locale } from '~/localization'
 
 export interface AttendeeDto {
 	readonly id: number | null
@@ -20,7 +21,7 @@ export interface AttendeeDto {
 	readonly city: string
 	readonly country: string // DE
 	readonly spoken_languages: string
-	readonly registration_language: string
+	readonly registration_language: Locale
 	readonly state: string | null
 	readonly email: string
 	readonly phone: string
@@ -119,7 +120,7 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
 	city: registrationInfo.contactInfo.city,
 	country: registrationInfo.contactInfo.country,
 	spoken_languages: registrationInfo.personalInfo.spokenLanguages.join(','),
-	registration_language: 'en-US',
+	registration_language: registrationInfo.preferredLocale,
 	email: registrationInfo.contactInfo.email,
 	phone: registrationInfo.contactInfo.phoneNumber,
 	telegram: registrationInfo.contactInfo.telegramUsername,
@@ -168,6 +169,7 @@ const registrationInfoFromAttendeeDto = (attendeeDto: AttendeeDto): Registration
 
 	return {
 		id: attendeeDto.id!,
+		preferredLocale: attendeeDto.registration_language,
 		/* eslint-disable @typescript-eslint/indent */
 		ticketType: packages.has('attendance')
 			? { type: 'full' }
