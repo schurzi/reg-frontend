@@ -1,5 +1,5 @@
 import { combineEpics, ofType } from 'redux-observable'
-import { concatMap, ignoreElements, tap } from 'rxjs/operators'
+import { concatMap } from 'rxjs/operators'
 import { getUserInfo } from '~/apis/authsrv'
 import config from '~/config'
 import { AppState } from '~/state'
@@ -10,15 +10,15 @@ import { from, of } from 'rxjs'
 import { LoadAutosave } from '~/state/actions/autosave'
 import { loadAutosave, removeAutosave } from '~/state/models/autosave'
 import { clearFormCache } from '~/hooks/funnels/form'
+import { justDo } from './operators/just-do'
 
 export default combineEpics<GetAction<AnyAppAction>, GetAction<AnyAppAction>, AppState>(
 	action$ => action$.pipe(
 		ofType(InitiateLogin.type),
-		tap(() => {
+		justDo(() => {
 			// eslint-disable-next-line no-process-env
 			location.href = `${config.apis.authsrv.url}/auth?app_name=${config.apis.authsrv.appName}${process.env.NODE_ENV === 'development' ? '' : `&dropoff_url=${location.href}`}`
 		}),
-		ignoreElements(),
 	),
 
 	action$ => action$.pipe(
@@ -39,7 +39,7 @@ export default combineEpics<GetAction<AnyAppAction>, GetAction<AnyAppAction>, Ap
 					])
 				}
 			}),
+			catchAppError('user-info-lookup'),
 		)),
-		catchAppError('user-info-lookup'),
 	),
 )
