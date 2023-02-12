@@ -150,10 +150,10 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
 		'day-wed': registrationInfo.ticketType.type === 'day' && isWednesday(registrationInfo.ticketType.day),
 		'sponsor': registrationInfo.ticketLevel.level === 'sponsor',
 		'sponsor2': registrationInfo.ticketLevel.level === 'super-sponsor',
-		'stage': (config.ticketLevels[registrationInfo.ticketLevel.level].includes?.includes('stage-pass') ?? false)
-			|| registrationInfo.ticketLevel.addons['stage-pass'].selected,
-		'tshirt': (config.ticketLevels[registrationInfo.ticketLevel.level].includes?.includes('tshirt') ?? false)
-			|| registrationInfo.ticketLevel.addons.tshirt.selected,
+		'stage': !(config.ticketLevels[registrationInfo.ticketLevel.level].includes?.includes('stage-pass') ?? false)
+			&& registrationInfo.ticketLevel.addons['stage-pass'].selected,
+		'tshirt': !(config.ticketLevels[registrationInfo.ticketLevel.level].includes?.includes('tshirt') ?? false)
+			&& registrationInfo.ticketLevel.addons.tshirt.selected,
 	}),
 	user_comments: registrationInfo.optionalInfo.comments,
 })
