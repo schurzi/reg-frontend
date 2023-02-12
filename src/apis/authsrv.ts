@@ -26,7 +26,9 @@ export type ErrorDto = CommonErrorDto<ErrorMessage>
 export class AuthSrvAppError extends AppError<Replace<ErrorMessage, '.', '-', { all: true }>> {
 	// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 	constructor(err: AjaxError) {
-		super('authsrv', (err.response as ErrorDto).message.replaceAll('.', '-'), 'API error')
+		const errDto = err.response as ErrorDto
+
+		super('authsrv', errDto.message.replaceAll('.', '-'), `Authentication API Error: ${JSON.stringify(errDto, undefined, 2)}`)
 	}
 }
 

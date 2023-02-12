@@ -1,7 +1,8 @@
 import styled from '@emotion/styled'
-import { Button } from '@eurofurence/reg-component-library'
+import { Button, TextArea } from '@eurofurence/reg-component-library'
 import { Localized } from '@fluent/react'
 import { StaticImage } from 'gatsby-plugin-image'
+import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { AppError, ErrorReport, FrontendAppError } from '~/state/models/errors'
 import SplashFunnelLayout from './layout/splash'
@@ -10,13 +11,30 @@ const BackButton = styled(Button)`
 	margin-top: 2em;
 `
 
+const DetailsLink = styled.a`
+	display: block;
+`
+
+const DetailsContainer = styled.div`
+	font-size: 1.2rem;
+`
+
 export interface FunnelErrorReportProps {
 	readonly report: ErrorReport
 	readonly onBack: () => void
 }
 
+const Details = ({ details }: { readonly details: string }) => {
+	const [detailsOpen, setDetailsOpen] = useState(false)
+
+	return <DetailsContainer>
+		<Localized id="funnel-error-report-details"><DetailsLink onClick={() => setDetailsOpen(!detailsOpen)}>Show details</DetailsLink></Localized>
+		{!detailsOpen ? undefined : <TextArea name="details" placeholder="" readOnly value={details}/>}
+	</DetailsContainer>
+}
+
 const FunnelErrorReport = ({ report: { operation, error }, onBack }: FunnelErrorReportProps) => {
-	const { category, code } = error instanceof AppError
+	const { category, code, detailedMessage } = error instanceof AppError
 		? error as AppError
 		: error instanceof Error
 			? new FrontendAppError('unknown', error.message)
@@ -32,6 +50,7 @@ const FunnelErrorReport = ({ report: { operation, error }, onBack }: FunnelError
 				If that doesn&apos;t resolve the problem, contact support.
 			</ReactMarkdown>
 		</Localized>
+		<Details details={detailedMessage}/>
 		<Localized id="funnel-error-report-back">
 			<BackButton onClick={onBack}>Go back</BackButton>
 		</Localized>

@@ -20,9 +20,13 @@ const InvoiceCard = styled(Card)`
 	}
 `
 
-const EditLink = styled(Link)`
+const EditLink = styled.p`
 	color: var(--color-brand-2-100);
 	font-size: 1.4rem;
+
+	:not(:first-child) {
+		margin-top: 0em;
+	}
 `
 
 const PayButton = styled(Button)`
@@ -41,9 +45,11 @@ const Invoice = ({ title, invoice, editLink, onPay }: InvoiceProps) =>
 	<InvoiceCard inverted={true}>
 		<header>
 			<h1>{title}</h1>
-			{editLink === undefined ? undefined : <Localized id="invoice-edit-selection">
-				<EditLink to={editLink}>Edit selection</EditLink>
-			</Localized>}
+			{editLink === undefined ? undefined : <EditLink>
+				<Localized id="invoice-edit-selection">
+					<Link to={editLink}>Edit selection</Link>
+				</Localized>
+			</EditLink>}
 		</header>
 		<section>
 			<ul>
