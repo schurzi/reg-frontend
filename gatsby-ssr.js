@@ -21,7 +21,7 @@ const parseMarkup = (str) => {
 const localizations = Object.fromEntries(Object.entries(localizationFiles).map(([locale, ftl]) => [locale, createLocalization(locale, ftl, parseMarkup)]))
 
 const PageWrapper = ({ children }) => {
-	const locale = useCurrentLocale()
+	const locale = useCurrentLocale(false)
 
 	return <LocalizationProvider l10n={localizations[locale]}>
 		{children}

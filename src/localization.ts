@@ -6,10 +6,13 @@ import { DATETIME_RANGE, NUMBER_RANGE } from 'fluent-ranges'
 import { useAppSelector } from './hooks/redux'
 import { getPreferredLocale } from './state/selectors/register'
 import { negotiateLanguages } from '@fluent/langneg'
+import { useMemo } from 'react'
 
 export const supportedLanguages = ['en-US', 'de-DE'] as const
 
 export type Locale = (typeof supportedLanguages)[number]
+
+const defaultLocale = 'en-US'
 
 export const createLocalization = (locale: Locale, ftl: string, parseMarkup?: MarkupParser | null | undefined) => {
 	const resource = new FluentResource(ftl)
@@ -40,12 +43,18 @@ export const loadLanguage = async (locale: Locale): Promise<ReactLocalization> =
  * 3. Browser preference
  * 4. Fallback to en-US
  */
-export const useCurrentLocale = () => {
+export const useCurrentLocale = (queryBrowserLocale: boolean = true) => {
 	const location = useLocation()
 	const preferredLocale = useAppSelector(getPreferredLocale())
-	const fallbackLocale = preferredLocale !== undefined
-		? preferredLocale
-		: negotiateLanguages(navigator.languages, supportedLanguages, { strategy: 'lookup', defaultLocale: 'en-US' })[0]
+	const fallbackLocale = useMemo(() =>
+		preferredLocale !== undefined
+			? preferredLocale
+			: queryBrowserLocale
+				? negotiateLanguages(navigator.languages, supportedLanguages, { strategy: 'lookup', defaultLocale })[0]
+				: defaultLocale
+	, [queryBrowserLocale, preferredLocale])
 
-	return getCurrentLangKey(supportedLanguages, fallbackLocale, location.pathname)
+	return useMemo(() =>
+		getCurrentLangKey(supportedLanguages, fallbackLocale, location.pathname)
+	, [location, fallbackLocale])
 }
