@@ -11,11 +11,7 @@ const BackButton = styled(Button)`
 	margin-top: 2em;
 `
 
-const DetailsLink = styled.a`
-	display: block;
-`
-
-const DetailsContainer = styled.div`
+const DetailsContainer = styled.section`
 	font-size: 1.2rem;
 `
 
@@ -28,7 +24,7 @@ const Details = ({ details }: { readonly details: string }) => {
 	const [detailsOpen, setDetailsOpen] = useState(false)
 
 	return <DetailsContainer>
-		<Localized id="funnel-error-report-details"><DetailsLink onClick={() => setDetailsOpen(!detailsOpen)}>Show details</DetailsLink></Localized>
+		<Localized id="funnel-error-report-details"><a onClick={() => setDetailsOpen(!detailsOpen)}>Show details</a></Localized>
 		{!detailsOpen ? undefined : <TextArea name="details" placeholder="" readOnly value={details}/>}
 	</DetailsContainer>
 }
