@@ -1,11 +1,10 @@
 import styled from '@emotion/styled'
-import { Button, TextArea } from '@eurofurence/reg-component-library'
+import { Button, Splash, TextArea } from '@eurofurence/reg-component-library'
 import { Localized } from '@fluent/react'
 import { StaticImage } from 'gatsby-plugin-image'
 import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
-import { AppError, ErrorReport, FrontendAppError } from '~/state/models/errors'
-import SplashFunnelLayout from './layout/splash'
+import { AppError, ErrorReport as ErrorReportModel, FrontendAppError } from '~/state/models/errors'
 
 const BackButton = styled(Button)`
 	margin-top: 2em;
@@ -15,8 +14,8 @@ const DetailsContainer = styled.section`
 	font-size: 1.2rem;
 `
 
-export interface FunnelErrorReportProps {
-	readonly report: ErrorReport
+export interface ErrorReportProps {
+	readonly report: ErrorReportModel
 	readonly onBack: () => void
 }
 
@@ -29,14 +28,14 @@ const Details = ({ details }: { readonly details: string }) => {
 	</DetailsContainer>
 }
 
-const FunnelErrorReport = ({ report: { operation, error }, onBack }: FunnelErrorReportProps) => {
+const ErrorReport = ({ report: { operation, error }, onBack }: ErrorReportProps) => {
 	const { category, code, detailedMessage } = error instanceof AppError
 		? error as AppError
 		: error instanceof Error
 			? new FrontendAppError('unknown', error.message)
 			: new FrontendAppError('unknown', String(error))
 
-	return <SplashFunnelLayout image={<StaticImage src="../../images/con-cats/ticket-types/day.png" alt=""/>}>
+	return <Splash image={<StaticImage src="../images/con-cats/ticket-types/day.png" alt=""/>}>
 		<Localized id="funnel-error-report-title"><h1>Oh no...</h1></Localized>
 		<Localized id="funnel-error-report-operation" vars={{ operation }}><h2>We encountered an error trying to handle your request.</h2></Localized>
 		<Localized id="funnel-error-report-message" vars={{ category, code }}>
@@ -50,7 +49,7 @@ const FunnelErrorReport = ({ report: { operation, error }, onBack }: FunnelError
 		<Localized id="funnel-error-report-back">
 			<BackButton onClick={onBack}>Go back</BackButton>
 		</Localized>
-	</SplashFunnelLayout>
+	</Splash>
 }
 
-export default FunnelErrorReport
+export default ErrorReport

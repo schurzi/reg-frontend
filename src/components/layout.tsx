@@ -10,6 +10,7 @@ import { InitiateLogin, LookupUserInfo } from '~/state/actions/auth'
 import { Button, Splash } from '@eurofurence/reg-component-library'
 import { StaticImage } from 'gatsby-plugin-image'
 import { Localized } from '@fluent/react'
+import ErrorGuard from './error-guard'
 
 export interface LayoutProps {
 	readonly deadline?: ReadonlyDate
@@ -45,7 +46,11 @@ const LoginGuard = ({ children }: { readonly children: ReadonlyReactNode }) => {
 
 const Layout = ({ deadline, children }: LayoutProps) => <>
 	<Header deadline={deadline}/>
-	<LoginGuard>{children}</LoginGuard>
+	<ErrorGuard>
+		<LoginGuard>
+			{children}
+		</LoginGuard>
+	</ErrorGuard>
 	<Footer/>
 </>
 
