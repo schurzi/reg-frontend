@@ -3,7 +3,6 @@ import Layout from '~/components/layout'
 import SEO from '~/components/seo'
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 import NotOpenYet from '~/components/funnels/funnels/register/not-open-yet'
-import FunnelErrorGuard from '~/components/funnels/error-guard'
 import { useAppDispatch, useAppSelector } from '~/hooks/redux'
 import { isRegistrationOpen } from '~/state/selectors/register'
 import { useEffect } from 'react'
@@ -27,9 +26,7 @@ const Content = () => {
 }
 
 const RegisterPage = (_: ReadonlyRouteComponentProps) => <Layout>
-	<FunnelErrorGuard>
-		<Content/>
-	</FunnelErrorGuard>
+	<Content/>
 </Layout>
 
 export default RegisterPage
