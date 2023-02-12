@@ -51,8 +51,8 @@ export default combineEpics<GetAction<AnyAppAction>, GetAction<AnyAppAction>, Ap
 		withLatestFrom(state$),
 		concatMap(([, state]) => submitRegistration(getRegistrationInfo()(state) as RegistrationInfo).pipe(
 			justDo(() => navigate('/register/thank-you')),
+			catchAppError('registration-submission'),
 		)),
-		catchAppError('registration-submission'),
 	),
 
 	// Check if registrations are open and if and existing registration exists
@@ -81,8 +81,8 @@ export default combineEpics<GetAction<AnyAppAction>, GetAction<AnyAppAction>, Ap
 					)
 				}
 			}),
+			catchAppError('registration-open-check'),
 		)),
-		catchAppError('registration-open-check'),
 	),
 
 	(action$, state$) => action$.pipe(
@@ -92,8 +92,8 @@ export default combineEpics<GetAction<AnyAppAction>, GetAction<AnyAppAction>, Ap
 			justDo(transaction => {
 				location.href = transaction.payment_start_url
 			}),
+			catchAppError('registration-initiate-payment'),
 		)),
-		catchAppError('registration-initiate-payment'),
 	),
 
 	(action$, state$) => action$.pipe(

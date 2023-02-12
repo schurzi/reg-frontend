@@ -1,5 +1,5 @@
 import { combineEpics, ofType } from 'redux-observable'
-import { concatMap, ignoreElements, tap } from 'rxjs/operators'
+import { concatMap } from 'rxjs/operators'
 import { getUserInfo } from '~/apis/authsrv'
 import config from '~/config'
 import { AppState } from '~/state'
@@ -39,7 +39,7 @@ export default combineEpics<GetAction<AnyAppAction>, GetAction<AnyAppAction>, Ap
 					])
 				}
 			}),
+			catchAppError('user-info-lookup'),
 		)),
-		catchAppError('user-info-lookup'),
 	),
 )
