@@ -22,20 +22,26 @@ export interface WithInvoiceFunnelLayoutProps {
 }
 
 const Grid = styled.div`
+	display: grid;
+
+	@media ${MediaQueries.phone}, ${MediaQueries.tablet} {
+		grid-template-columns: 1fr;
+		gap: 5em;
+	}
+
 	@media ${MediaQueries.laptop}, ${MediaQueries.desktop} {
-		display: grid;
 		grid-template-columns: auto max-content;
 		gap: 111px;
 	}
 `
 
-const WithInvoiceFunnelLayout = ({ children, onNext, invoiceTitle, invoiceEditLink, invoice, onPay, ...passthroughProps }: WithInvoiceFunnelLayoutProps) =>
-	<StepFunnelLayout {...passthroughProps} onNext={onNext}>
+const WithInvoiceFunnelLayout = ({ children, onNext, invoiceTitle, invoiceEditLink, invoice, onPay, isLastPage, ...passthroughProps }: WithInvoiceFunnelLayoutProps) =>
+	<StepFunnelLayout {...passthroughProps} onNext={onNext} isLastPage={isLastPage}>
 		<Grid>
 			<div>
 				{children}
 			</div>
-			<InvoiceComponent title={invoiceTitle} editLink={invoiceEditLink} invoice={invoice} onPay={onPay}/>
+			<InvoiceComponent title={invoiceTitle} editLink={invoiceEditLink} invoice={invoice} showOnMobile={isLastPage} onPay={onPay}/>
 		</Grid>
 	</StepFunnelLayout>
 

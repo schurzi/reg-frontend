@@ -11,12 +11,14 @@ import { Localized } from '@fluent/react'
 import { Invoice as InvoiceModel } from '~/state/models/invoice'
 import { Link } from 'gatsby'
 
-const InvoiceCard = styled(Card)`
-	width: 254px;
-	align-self: start;
+const InvoiceCard = styled(Card)<{ readonly showOnMobile?: boolean }>`
+	@media ${MediaQueries.laptop}, ${MediaQueries.desktop} {
+		width: 254px;
+		align-self: start;
+	}
 
 	@media ${MediaQueries.phone}, ${MediaQueries.tablet} {
-		display: none;
+		display: ${({ showOnMobile = false }) => showOnMobile ? 'unset' : 'none'};
 	}
 `
 
@@ -37,12 +39,13 @@ const PayButton = styled(Button)`
 export interface InvoiceProps {
 	readonly title: string
 	readonly invoice: InvoiceModel
+	readonly showOnMobile?: boolean
 	readonly editLink?: string
 	readonly onPay?: () => void
 }
 
-const Invoice = ({ title, invoice, editLink, onPay }: InvoiceProps) =>
-	<InvoiceCard inverted={true}>
+const Invoice = ({ title, invoice, showOnMobile, editLink, onPay }: InvoiceProps) =>
+	<InvoiceCard inverted={true} showOnMobile={showOnMobile}>
 		<header>
 			<h1>{title}</h1>
 			{editLink === undefined ? undefined : <EditLink>

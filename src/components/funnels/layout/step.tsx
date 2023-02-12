@@ -18,7 +18,7 @@ const Header = styled.header`
 
 const Footer = styled.footer`
 	margin-top: 3.5em;
-	height: 100px;
+	margin-bottom: 1em;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -56,16 +56,16 @@ const StepFunnelLayout = ({ children, header: headerContent, isFirstPage = false
 			{headerContent}
 		</Header>
 		{children}
-		<Footer>
+		{isEdit && isLastPage ? null : <Footer>
 			<Nav>
-				{isEdit && isLastPage ? null : <Localized id={isEdit ? 'register-navigation-update' : isLastPage ? 'register-navigation-finish' : 'register-navigation-next'}>
+				<Localized id={isEdit ? 'register-navigation-update' : isLastPage ? 'register-navigation-finish' : 'register-navigation-next'}>
 					<Button onClick={onNext}>Continue</Button>
-				</Localized>}
-				{isEdit && isLastPage || isFirstPage && !showBack ? null : <Localized id="register-navigation-back">
+				</Localized>
+				{isFirstPage && !showBack ? null : <Localized id="register-navigation-back">
 					<Button variant="inverted" onClick={() => navigate(-1)}>Go back</Button>
 				</Localized>}
 			</Nav>
-		</Footer>
+		</Footer>}
 	</Page>
 }
 
