@@ -30,10 +30,11 @@ const Personal = (_: ReadonlyRouteComponentProps) => {
 	return <WithInvoiceRegisterFunnelLayout onNext={handleSubmit} currentStep={2}>
 		<Localized id="register-personal-info-title"><h3>Personal information</h3></Localized>
 
-		<Form onSubmit={handleSubmit}>
+		<Form aria-label="Personal information" onSubmit={handleSubmit}>
 			<Localized id="register-personal-info-nickname" attrs={{ label: true, placeholder: true }}>
 				<TextField
 					label="Nickname"
+					autoComplete="nickname"
 					placeholder="Johnny_The_Sergal"
 					error={errors.nickname?.message}
 					{...register('nickname', {
@@ -48,16 +49,16 @@ const Personal = (_: ReadonlyRouteComponentProps) => {
 				/>
 			</Localized>
 			<Localized id="register-personal-info-first-name" attrs={{ label: true, placeholder: true }}>
-				<TextField label="First name" placeholder="John" gridSpan={5} error={errors.firstName?.message} {...register('firstName', { required: true, maxLength: 80 })}/>
+				<TextField label="First name" autoComplete="given-name" placeholder="John" gridSpan={5} error={errors.firstName?.message} {...register('firstName', { required: true, maxLength: 80 })}/>
 			</Localized>
 			<Localized id="register-personal-info-last-name" attrs={{ label: true, placeholder: true }}>
-				<TextField label="Last name" placeholder="Doe" gridSpan={5} error={errors.lastName?.message} {...register('lastName', { required: true, maxLength: 80 })}/>
+				<TextField label="Last name" autoComplete="family-name" placeholder="Doe" gridSpan={5} error={errors.lastName?.message} {...register('lastName', { required: true, maxLength: 80 })}/>
 			</Localized>
 			<Localized id="register-personal-info-full-name-permission" attrs={{ label: true }}>
 				<Checkbox label="I grant permission to use my full name in Eurofurence related media." {...register('fullNamePermission')}/>
 			</Localized>
 			<Localized id="register-personal-info-date-of-birth" attrs={{ label: true }}>
-				<TextField label="Date of birth" placeholder="1995-06-30" type="date" error={errors.dateOfBirth?.message} {...register('dateOfBirth', {
+				<TextField label="Date of birth" autoComplete="bday" placeholder="1995-06-30" type="date" error={errors.dateOfBirth?.message} {...register('dateOfBirth', {
 					required: true,
 					validate: {
 						minimumAge: v => new Date(v!) <= sub(config.eventStartDate, { years: config.minimumAge }),
@@ -87,9 +88,17 @@ const Personal = (_: ReadonlyRouteComponentProps) => {
 					<RadioItem label="She/Her" value="She/Her" {...register('pronounsSelection', { required: true })}/>
 					<RadioItem label="They/Them" value="They/Them" {...register('pronounsSelection', { required: true })}/>
 					<Localized id="register-personal-info-pronouns-other" attrs={{ label: true }}>
-						<RadioItem label="Other:" value="other" {...register('pronounsSelection', { required: true })}>
-							<TextField placeholder="Xe/Xem" error={errors.pronounsOther?.message} {...register('pronounsOther', { required: pronounsSelection === 'other' })}/>
-							{errors.pronounsOther?.message === undefined ? undefined : <ErrorMessage>{errors.pronounsOther.message}</ErrorMessage>}
+						<RadioItem label="Other:" aria-description="Fill in custom pronouns in the next field" value="other" {...register('pronounsSelection', { required: true })}>
+							<TextField
+								aria-label="Custom pronouns"
+								placeholder="Xe/Xem"
+								disabled={pronounsSelection !== 'other'}
+								error={errors.pronounsOther?.message}
+								aria-invalid={errors.pronounsOther?.message !== undefined}
+								aria-errormessage="pronouns-other-textbox-error-message"
+								{...register('pronounsOther', { required: pronounsSelection === 'other' })}
+							/>
+							<ErrorMessage id="pronouns-other-textbox-error-message">{errors.pronounsOther?.message}</ErrorMessage>
 						</RadioItem>
 					</Localized>
 				</RadioSet>

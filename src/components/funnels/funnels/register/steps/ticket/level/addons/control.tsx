@@ -64,11 +64,11 @@ const OptionsContainer = styled.div`
 `
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
-const TicketLevelAddonControl = forwardRef(({ children, price, description, ...rest }: TicketLevelAddonControlProps, ref: ForwardedRef<HTMLInputElement>) =>
+const TicketLevelAddonControl = forwardRef(({ id, children, price, description, ...rest }: TicketLevelAddonControlProps, ref: ForwardedRef<HTMLInputElement>) =>
 	<Container>
-		<CheckboxContainer><Checkbox ref={ref} {...rest}/></CheckboxContainer>
-		<Description><ReactMarkdown>{description}</ReactMarkdown></Description>
-		<PriceContainer><Price price={price}/></PriceContainer>
+		<CheckboxContainer><Checkbox ref={ref} aria-describedby={`${id}-description ${id}-price`} {...rest}/></CheckboxContainer>
+		<Description id={`${id}-description`}><ReactMarkdown>{description}</ReactMarkdown></Description>
+		<PriceContainer id={`${id}-price`}><Price price={price}/></PriceContainer>
 		<OptionsContainer>
 			{children}
 		</OptionsContainer>

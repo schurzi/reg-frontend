@@ -49,12 +49,12 @@ const Footer = () => {
 
 	return <CLFooter>
 		<Grid>
-			<SaveTime>
+			<SaveTime role="status">
 				{lastSaved === undefined ? undefined : <Localized id="footer-last-saved" vars={{ lastSaved }}>
 					<p>Your information was last saved on {lastSaved.toString()}.</p>
 				</Localized>}
 			</SaveTime>
-			<Links>
+			<Links aria-label="Links">
 				<Localized id="footer-links-privacy-policy"><a href={config.websiteLinks.privacyStatement}>Privacy policy</a></Localized>
 				<Localized id="footer-links-legal-info"><a href={config.websiteLinks.imprint}>Legal info</a></Localized>
 				<Localized id="footer-links-policies"><a href={config.websiteLinks.policies}>Policies</a></Localized>

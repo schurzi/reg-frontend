@@ -79,7 +79,7 @@ const Header = ({ deadline }: HeaderProps) => {
 
 	return <NavBar>
 		<NavBarTitle>
-			<BrandLink to="/register">
+			<BrandLink aria-label="Home" to="/register">
 				<BrandImage src={brandImg}/>
 				{config.eventName}
 			</BrandLink>

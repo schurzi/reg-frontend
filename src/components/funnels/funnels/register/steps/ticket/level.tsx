@@ -38,8 +38,8 @@ const TicketLevel = (_: ReadonlyRouteComponentProps) => {
 	const { register, handleSubmit } = formContext
 
 	return <FullWidthRegisterFunnelLayout onNext={handleSubmit} currentStep={1}>
-		<form onSubmit={handleSubmit}>
-			<section>
+		<form aria-label="Ticket selection" onSubmit={handleSubmit}>
+			<section aria-label="Sponsor level selection">
 				<Localized id="register-ticket-level-title"><h3>Select your ticket</h3></Localized>
 				<TicketLevelGrid>
 					<RadioGroup name="level">
@@ -67,7 +67,7 @@ const TicketLevel = (_: ReadonlyRouteComponentProps) => {
 					</RadioGroup>
 				</TicketLevelGrid>
 			</section>
-			<AddonsSection>
+			<AddonsSection aria-label="Addon selection">
 				<Localized id="register-ticket-level-addons-title"><h3>Select add-ons</h3></Localized>
 				<AddonsContainer>
 					{Object.entries(config.addons).filter(([, addon]) => !(addon.unavailableFor?.type?.includes(ticketType.type) ?? false)).map(([id, addon]) =>

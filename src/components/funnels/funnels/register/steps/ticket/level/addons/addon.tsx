@@ -36,6 +36,7 @@ const TicketLevelAddon = ({ addon, formContext }: TicketLevelAddonProps) => {
 
 	return <Localized id={`register-ticket-level-addons-item-${addon.id}`} attrs={{ label: true, description: true }}>
 		<TicketLevelAddonControl
+			id={addon.id}
 			label={addon.id}
 			description={addon.id}
 			price={isIncluded(level) ? 0 : addon.price}

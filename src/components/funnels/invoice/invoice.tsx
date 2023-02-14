@@ -45,7 +45,7 @@ export interface InvoiceProps {
 }
 
 const Invoice = ({ title, invoice, showOnMobile, editLink, onPay }: InvoiceProps) =>
-	<InvoiceCard inverted={true} showOnMobile={showOnMobile}>
+	<InvoiceCard inverted={true} showOnMobile={showOnMobile} aria-label="Invoice">
 		<header>
 			<h1>{title}</h1>
 			{editLink === undefined ? undefined : <EditLink>

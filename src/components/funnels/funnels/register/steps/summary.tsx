@@ -88,7 +88,9 @@ const TermsForm = styled(Form)`
 
 const Section = ({ id: sectionId, editLink, properties }: SectionProps) => <SectionContainer>
 	<Localized id={`register-summary-section-${sectionId}-title`}><SectionTitle>{sectionId}</SectionTitle></Localized>
-	<Localized id="register-summary-edit"><Link css={editButtonStyle} to={editLink}>Edit information</Link></Localized>
+	<Localized id={`register-summary-section-${sectionId}-edit`} attrs={{ 'aria-label': true }}>
+		<Link css={editButtonStyle} to={editLink} aria-label="Edit information">Edit information</Link>
+	</Localized>
 	<PropertyList>
 		{properties.map(({ id, value, wide = false }) => <Property key={id} wide={wide}>
 			<Localized id={`register-summary-section-${sectionId}-property-${id}-name`}><PropertyName>{id}</PropertyName></Localized>

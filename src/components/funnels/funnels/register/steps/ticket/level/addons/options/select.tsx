@@ -35,6 +35,7 @@ const TicketLevelSelectAddonOption = ({ option, formContext: { control, watch, f
 					label={option.id}
 					isSearchable={false}
 					options={items}
+					isDisabled={!selected}
 					onChange={item => onChange(item?.value)}
 					value={value === null ? null : itemsByValue.get(value)}
 					error={errors.addons?.[option.addonId]?.options?.[option.id]?.message}

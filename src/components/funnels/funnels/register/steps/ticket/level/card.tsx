@@ -50,11 +50,11 @@ const PriceLabel = styled.p`
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 const TicketLevelCard = forwardRef(({ id, price, priceLabel, children, ...rest }: TicketLevelCardProps, ref: ForwardedRef<HTMLInputElement>) =>
-	<RadioCard value={id} ref={ref} {...rest}>
-		<Description>
+	<RadioCard value={id} ref={ref} aria-describedby={`ticket-level-${id}-description`} aria-details={`ticket-level-${id}-details`} {...rest}>
+		<Description id={`ticket-level-${id}-details`}>
 			<ReactMarkdown>{children}</ReactMarkdown>
 		</Description>
-		<Footer>
+		<Footer id={`ticket-level-${id}-description`}>
 			<PriceLabelContainer>
 				<PriceLabel>{priceLabel}</PriceLabel>
 			</PriceLabelContainer>

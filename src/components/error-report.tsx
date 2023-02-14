@@ -35,19 +35,27 @@ const ErrorReport = ({ report: { operation, error }, onBack }: ErrorReportProps)
 			? new FrontendAppError('unknown', error.message)
 			: new FrontendAppError('unknown', String(error))
 
-	return <Splash image={<StaticImage src="../images/con-cats/ticket-types/day.png" alt=""/>}>
+	return <Splash
+		role="alertdialog"
+		aria-modal="true"
+		aria-labelledby="funnel-error-report-operation"
+		aria-describedby="funnel-error-report-message"
+		image={<StaticImage src="../images/con-cats/ticket-types/day.png" alt=""/>}
+	>
 		<Localized id="funnel-error-report-title"><h1>Oh no...</h1></Localized>
-		<Localized id="funnel-error-report-operation" vars={{ operation }}><h2>We encountered an error trying to handle your request.</h2></Localized>
-		<Localized id="funnel-error-report-message" vars={{ category, code }}>
-			<ReactMarkdown>
-				An error occurred when we tried to handle your request.
-				Please try again later. If this problem persists, try clearing your browser&apos;s cache and refreshing the page.
-				If that doesn&apos;t resolve the problem, contact support.
-			</ReactMarkdown>
-		</Localized>
+		<Localized id="funnel-error-report-operation" vars={{ operation }}><h2 id="funnel-error-report-operation">We encountered an error trying to handle your request.</h2></Localized>
+		<div id="funnel-error-report-message">
+			<Localized id="funnel-error-report-message" vars={{ category, code }}>
+				<ReactMarkdown>
+					An error occurred when we tried to handle your request.
+					Please try again later. If this problem persists, try clearing your browser&apos;s cache and refreshing the page.
+					If that doesn&apos;t resolve the problem, contact support.
+				</ReactMarkdown>
+			</Localized>
+		</div>
 		<Details details={detailedMessage}/>
 		<Localized id="funnel-error-report-back">
-			<BackButton onClick={onBack}>Go back</BackButton>
+			<BackButton autoFocus onClick={onBack}>Go back</BackButton>
 		</Localized>
 	</Splash>
 }

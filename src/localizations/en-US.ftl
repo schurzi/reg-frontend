@@ -347,10 +347,17 @@ register-summary-title-edit = Registration
 
 
 register-summary-section-personal-title = Personal information
-register-summary-section-contact-title = Contact information
-register-summary-section-optional-title = Optional information
+register-summary-section-personal-edit = Edit information
+  .aria-label = Edit personal information
 
-register-summary-edit = Edit information
+register-summary-section-contact-title = Contact information
+register-summary-section-contact-edit = Edit information
+  .aria-label = Edit contact information
+
+register-summary-section-optional-title = Optional information
+register-summary-section-optional-edit = Edit information
+  .aria-label = Edit optional information
+
 
 register-summary-section-personal-property-nickname-name = Nickname
 register-summary-section-personal-property-full-name-name = Full name
