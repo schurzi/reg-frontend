@@ -141,10 +141,10 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 		{isEdit ? undefined : <TermsForm onSubmit={handleSubmit}>
 			<Checkbox gridSpan={10} {...register('rulesAndConditionsAccepted', { required: true })}>
 				<Localized id="register-summary-rules-and-conditions-accepted" elems={{
-					rules: <a href={config.websiteLinks.rules}/>,
-					conditions: <a href={config.websiteLinks.terms}/>,
+					rules: <a target="_blank" rel="noreferrer noopener" href={config.websiteLinks.rules}/>,
+					conditions: <a target="_blank" rel="noreferrer noopener" href={config.websiteLinks.terms}/>,
 				}}>
-					<span>I accept the <a>rules</a> and <a>conditions</a>.</span>
+					<span>I accept the <a target="_blank" rel="noreferrer noopener" href={config.websiteLinks.rules}>rules</a> and <a target="_blank" rel="noreferrer noopener" href={config.websiteLinks.terms}>conditions</a>.</span>
 				</Localized>
 			</Checkbox>
 			{errors.rulesAndConditionsAccepted?.message === undefined ? undefined : <ErrorMessage>{errors.rulesAndConditionsAccepted.message}</ErrorMessage>}
