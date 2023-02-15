@@ -189,7 +189,7 @@ register-ticket-level-addons-item-tshirt-option-size-value = { $value ->
   [XXL]   XX-Large (Regular Cut)
   [wXXL]  XX-Large (Narrow Cut)
   [m3XL]  3X-Large (Regular Cut)
-  [wXL]   3X-Large (Narrow Cut)
+  [w3XL]  3X-Large (Narrow Cut)
   [m4XL]  4X-Large (Regular Cut)
   [w4XL]  4X-Large (Narrow Cut)
 }
