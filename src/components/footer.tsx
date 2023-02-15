@@ -55,10 +55,10 @@ const Footer = () => {
 				</Localized>}
 			</SaveTime>
 			<Links>
-				<Localized id="footer-links-privacy-policy"><a href={config.websiteLinks.privacyStatement}>Privacy policy</a></Localized>
-				<Localized id="footer-links-legal-info"><a href={config.websiteLinks.imprint}>Legal info</a></Localized>
-				<Localized id="footer-links-policies"><a href={config.websiteLinks.policies}>Policies</a></Localized>
-				<Localized id="footer-links-contact"><a href={config.websiteLinks.contact}>Contact Eurofurence</a></Localized>
+				<Localized id="footer-links-privacy-policy"><a target="_blank" rel="noreferrer noopener" href={config.websiteLinks.privacyStatement}>Privacy policy</a></Localized>
+				<Localized id="footer-links-legal-info"><a target="_blank" rel="noreferrer noopener" href={config.websiteLinks.imprint}>Legal info</a></Localized>
+				<Localized id="footer-links-policies"><a target="_blank" rel="noreferrer noopener" href={config.websiteLinks.policies}>Policies</a></Localized>
+				<Localized id="footer-links-contact"><a target="_blank" rel="noreferrer noopener" href={config.websiteLinks.contact}>Contact Eurofurence</a></Localized>
 			</Links>
 		</Grid>
 	</CLFooter>
