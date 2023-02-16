@@ -350,7 +350,7 @@ register-summary-registration-status-edit =
   Bitte schaue ab und zu in Deine Mailbox!
 
 register-summary-registration-status-initial =
-  Deine Anmeldung ist noch nicht abgeschickt.
+  Bitte überprüfe Deine Informationen noch einmal und klicke dann ganz unten auf "Abschließen".
 
 register-summary-section-personal-title = Deine Daten
 register-summary-section-contact-title = Kontaktdaten

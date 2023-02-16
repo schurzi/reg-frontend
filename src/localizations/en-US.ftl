@@ -350,7 +350,7 @@ register-summary-registration-status-edit =
   Keep an eye on your mailbox!
 
 register-summary-registration-status-initial =
-  Your registration has not been sent yet.
+  Please double check your information below and click "Finish" to submit it.
 
 register-summary-section-personal-title = Personal information
 register-summary-section-contact-title = Contact information
