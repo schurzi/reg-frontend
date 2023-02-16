@@ -1,19 +1,13 @@
-import { Localized } from '@fluent/react'
+import { Localized, useLocalization } from '@fluent/react'
 import { Checkbox, FieldSet, TextField, RadioSet, RadioItem, Select, Form, ErrorMessage } from '@eurofurence/reg-component-library'
 import WithInvoiceRegisterFunnelLayout from '~/components/funnels/funnels/register/layout/form/with-invoice'
 import langMap from 'langmap'
-import { pluck } from 'ramda'
+import { pluck, prop, sortBy } from 'ramda'
 import { useFunnelForm } from '~/hooks/funnels/form'
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 import { sub } from 'date-fns'
 import config from '~/config'
-
-const languageOptions = Object.entries(langMap)
-	.filter(([key]) => !(key as string).includes('-') && !(key as string).includes('@'))
-	.map(([value, names]) => ({ label: names.nativeName, value }))
-
-// Don't understand why react-select makes me do this manually but ok
-const languageOptionsByValue = new Map(languageOptions.map(l => [l.value, l]))
+import { useMemo } from 'react'
 
 const reAlphaNum = /[\p{Letter}\p{Number}]/ug
 const alphaNumCount = (s: string) => s.match(reAlphaNum)?.length ?? 0
@@ -24,8 +18,20 @@ const spaceCount = (s: string) => s.match(reSpaceNum)?.length ?? 0
 
 const Personal = (_: ReadonlyRouteComponentProps) => {
 	const { register, handleSubmit, control, watch, formState: { errors }, FunnelController } = useFunnelForm('register-personal-info')
+	const { l10n } = useLocalization()
 
 	const pronounsSelection = watch('pronounsSelection')
+
+	const { languageOptions, languageOptionsByValue } = useMemo(() => {
+		const languageOptions = sortBy(
+			prop('label'),
+			Object.entries(langMap)
+				.filter(([key]) => !(key as string).includes('-') && !(key as string).includes('@'))
+				.map(([value, names]) => ({ label: `${l10n.getString('language-name', { languageCode: value }, names.englishName)}`, value })),
+		)
+
+		return { languageOptions, languageOptionsByValue: new Map(languageOptions.map(l => [l.value, l])) }
+	}, [l10n])
 
 	return <WithInvoiceRegisterFunnelLayout onNext={handleSubmit} currentStep={2}>
 		<Localized id="register-personal-info-title"><h3>Personal information</h3></Localized>

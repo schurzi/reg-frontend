@@ -842,3 +842,88 @@ country-name = { $countryCode ->
   [ZM] Zambia
   [ZW] Zimbabwe
 }
+
+language-name = { $languageCode ->
+  [ach] Acholi
+  [ady] Adyghe
+  [af]  Afrikaans
+  [ak]  Akan
+  [ar]  Arabic
+  [az]  Azerbaijani
+  [bg]  Bulgarian
+  [bn]  Bengali
+  [ca]  Catalan
+  [cak] Kaqchikel
+  [cs]  Czech
+  [cy]  Welsh
+  [da]  Danish
+  [de]  German
+  [dsb] Lower Sorbian
+  [el]  Greek
+ *[en]  English
+  [eo]  Esperanto
+  [es]  Spanish
+  [et]  Estonian
+  [eu]  Basque
+  [fa]  Persian
+  [ff]  Fulah
+  [fi]  Finnish
+  [fr]  French
+  [ga]  Irish
+  [gl]  Galician
+  [he]  Hebrew
+  [hi]  Hindi
+  [hr]  Croatian
+  [hsb] Upper Sorbian
+  [ht]  Haitian Creole
+  [hu]  Hungarian
+  [id]  Indonesian
+  [is]  Icelandic
+  [it]  Italian
+  [ja]  Japanese
+  [km]  Khmer
+  [kab] Kabyle
+  [kn]  Kannada
+  [ko]  Korean
+  [la]  Latin
+  [lb]  Luxembourgish
+  [lt]  Lithuanian
+  [lv]  Latvian
+  [mai] Maithili
+  [mk]  Macedonian
+  [ml]  Malayalam
+  [mr]  Marathi
+  [ms]  Malay
+  [mt]  Maltese
+  [my]  Burmese
+  [no]  Norwegian
+  [nb]  Norwegian (bokmal)
+  [ne]  Nepali
+  [nl]  Dutch
+  [oc]  Occitan
+  [pa]  Punjabi
+  [pl]  Polish
+  [pt]  Portuguese
+  [ro]  Romanian
+  [ru]  Russian
+  [sk]  Slovak
+  [sl]  Slovenian
+  [sq]  Albanian
+  [sr]  Serbian
+  [su]  Sundanese
+  [sv]  Swedish
+  [sw]  Swahili
+  [ta]  Tamil
+  [te]  Telugu
+  [tg]  Tajik
+  [th]  Thai
+  [tl]  Filipino
+  [tlh] Klingon
+  [tr]  Turkish
+  [uk]  Ukrainian
+  [ur]  Urdu
+  [uz]  Uzbek
+  [vi]  Vietnamese
+  [yi]  Yiddish
+  [zh]  Chinese
+}
