@@ -57,7 +57,7 @@ const OptionsContainer = styled.div`
 
 	@media ${MediaQueries.laptop}, ${MediaQueries.desktop} {
 		justify-self: end;
-		width: 22rem;
+		width: 25rem;
 	}
 
 	font-family: Manrope;
