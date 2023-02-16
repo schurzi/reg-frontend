@@ -50,7 +50,7 @@ const TicketDay = (_: ReadonlyRouteComponentProps) => {
 		<form onSubmit={handleSubmit}>
 			<RadioGroup name="day">
 				<Grid>
-					{eachDayOfInterval({ start: config.eventStartDate, end: config.eventEndDate }).map(date =>
+					{eachDayOfInterval({ start: config.dayTicketStartDate, end: config.dayTicketEndDate }).map(date =>
 						<Localized id="register-ticket-day-card" key={formatISOWithOptions({ representation: 'date' }, date)} attrs={{ label: true }} vars={{ date }}>
 							<RadioCard label={date.toString()} value={formatISOWithOptions({ representation: 'date' }, date)} {...register('day', { required: true })}>
 								<ConCat>{conCats[getDay(date)]!}</ConCat>
