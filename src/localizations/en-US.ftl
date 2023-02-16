@@ -177,21 +177,21 @@ register-ticket-level-addons-item-tshirt-option-size =
 
 register-ticket-level-addons-item-tshirt-option-size-value = { $value ->
   [XS]    X-Small (Regular Cut)
-  [wXS]   X-Small (Narrow Cut)
+  [wXS]   X-Small (Contoured Cut)
  *[S]     Small (Regular Cut)
-  [wS]    Small (Narrow Cut)
+  [wS]    Small (Contoured Cut)
   [M]     Medium (Regular Cut)
-  [wM]    Medium (Narrow Cut)
+  [wM]    Medium (Contoured Cut)
   [L]     Large (Regular Cut)
-  [wL]    Large (Narrow Cut)
+  [wL]    Large (Contoured Cut)
   [XL]    X-Large (Regular Cut)
-  [wXL]   X-Large (Narrow Cut)
+  [wXL]   X-Large (Contoured Cut)
   [XXL]   XX-Large (Regular Cut)
-  [wXXL]  XX-Large (Narrow Cut)
+  [wXXL]  XX-Large (Contoured Cut)
   [m3XL]  3X-Large (Regular Cut)
-  [w3XL]  3X-Large (Narrow Cut)
+  [w3XL]  3X-Large (Contoured Cut)
   [m4XL]  4X-Large (Regular Cut)
-  [w4XL]  4X-Large (Narrow Cut)
+  [w4XL]  4X-Large (Contoured Cut)
 }
 
 register-ticket-level-validation-errors-level-required = Please select a ticket level.

@@ -176,22 +176,22 @@ register-ticket-level-addons-item-tshirt-option-size =
   .label = T-Shirt-Größe
 
 register-ticket-level-addons-item-tshirt-option-size-value = { $value ->
-  [XS]   X-Small (weit geschnitten)
-  [wXS]  X-Small (schmal geschnitten)
- *[S]    Small (weit geschnitten)
-  [wS]   Small (schmal geschnitten)
-  [M]    Medium (weit geschnitten)
-  [wM]   Medium (schmal geschnitten)
-  [L]    Large (weit geschnitten)
-  [wL]   Large (schmal geschnitten)
-  [XL]   X-Large (weit geschnitten)
-  [wXL]  X-Large (schmal geschnitten)
-  [XXL]  XX-Large (weit geschnitten)
-  [wXXL] XX-Large (schmal geschnitten)
-  [m3XL] 3X-Large (weit geschnitten)
-  [w3XL] 3X-Large (schmal geschnitten)
-  [m4XL] 4X-Large (weit geschnitten)
-  [w4XL] 4X-Large (schmal geschnitten)
+  [XS]   X-Small (Standard)
+  [wXS]  X-Small (Tailliert)
+ *[S]    Small (Standard)
+  [wS]   Small (Tailliert)
+  [M]    Medium (Standard)
+  [wM]   Medium (Tailliert)
+  [L]    Large (Standard)
+  [wL]   Large (Tailliert)
+  [XL]   X-Large (Standard)
+  [wXL]  X-Large (Tailliert)
+  [XXL]  XX-Large (Standard)
+  [wXXL] XX-Large (Tailliert)
+  [m3XL] 3X-Large (Standard)
+  [w3XL] 3X-Large (Tailliert)
+  [m4XL] 4X-Large (Standard)
+  [w4XL] 4X-Large (Tailliert)
 }
 
 register-ticket-level-validation-errors-level-required = Bitte wähle eine Ticketart aus.
