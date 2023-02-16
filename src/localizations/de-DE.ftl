@@ -345,9 +345,12 @@ register-optional-info-comments =
 register-summary-title-initial = Bestätigung
 register-summary-title-edit = Deine Registrierung
 
-register-summary-registration-status =
+register-summary-registration-status-edit =
   Wir haben Deine Anmeldung erhalten und werden sie freigeben, wenn alles so weit ist.
   Bitte schaue ab und zu in Deine Mailbox!
+
+register-summary-registration-status-initial =
+  Deine Anmeldung ist noch nicht abgeschickt.
 
 register-summary-section-personal-title = Deine Daten
 register-summary-section-contact-title = Kontaktdaten
