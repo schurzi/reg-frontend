@@ -73,7 +73,7 @@ invoice-pay-button-credit-card = 💳 Mit KK zahlen
 register-header-title = Willkommen zur Eurofurence 2023!
 register-header-description =
   Wir freuen uns auf Dich!
-  Mach dich bereit für eine tolle Zeit mit Gleichgesinnten, und genieße das reiche Angebot an Attraktionen und Events.
+  Mach Dich bereit für eine tolle Zeit mit Gleichgesinnten, und genieße das reiche Angebot an Attraktionen und Events.
 
 register-navigation-back = Zurück
 register-navigation-next = Weiter
@@ -127,7 +127,7 @@ register-ticket-level-card-standard =
                 }
 
 register-ticket-level-card-sponsor =
-  Als Dankeschön für Deine Unterstützung der Eurofurence durch Deine Spende erhälst Du
+  Als Dankeschön für Deine Unterstützung der Eurofurence durch Deine Spende erhältst Du
 
   + Sponsor-Badge
   + Programmheft mit Danksagung
@@ -144,7 +144,7 @@ register-ticket-level-card-sponsor =
                 }
 
 register-ticket-level-card-super-sponsor =
-  Mit dieser noch großzügigeren Spende verdienst Du ein Super-Sponsor-Ticket. Daher erhälst Du
+  Mit dieser noch großzügigeren Spende verdienst Du ein Super-Sponsor-Ticket. Daher erhältst Du
 
   + Super-Sponsor-Badge
   + Programmheft mit Danksagung
@@ -238,10 +238,10 @@ register-personal-info-accessibility =
   .legend = Barrierefreiheit
 
 register-personal-info-accessibility-wheelchair =
-  .label = Bitte bringt meinen Rollstuhl (und mich) unter.
+  .label = Bitte berücksichtigt, dass ich im Rollstuhl sitze.
 
 register-personal-info-validation-errors-nickname-required = Bitte gib einen Nickname an.
-register-personal-info-validation-errors-nickname-max-length = Dein Nickname muß mindestens {$limit} Zeichen lang sein.
+register-personal-info-validation-errors-nickname-max-length = Dein Nickname darf höchstens {$limit} Zeichen lang sein.
 register-personal-info-validation-errors-nickname-validate-no-leading-or-trailing-whitespace = Bitte vermeide Leerzeichen am Anfang und am Ende.
 register-personal-info-validation-errors-nickname-validate-min-one-alphanumeric-char = Dein Nickname muß mindestens einen Buchstaben oder eine Zahl enthalten.
 register-personal-info-validation-errors-nickname-validate-max-two-non-alphanumeric-chars = Dein Nickname kann nur maximal zwei Sonderzeichen enthalten.
@@ -290,7 +290,7 @@ register-contact-info-state-or-province =
   .placeholder = Fur Valley
 
 register-contact-info-country =
-  .label = Staat
+  .label = Land
   .placeholder = Germany
 
 register-contact-info-validation-errors-email-required = Bitte gib eine Email-Adresse an.
@@ -308,8 +308,8 @@ register-contact-info-validation-errors-city-max-length = Deine Stadt kann maxim
 register-contact-info-validation-errors-postal-code-required = Bitte gib eine Postleitzahl an.
 register-contact-info-validation-errors-postal-code-max-length = Deine Postleitzahl kann maximal {$limit} Zeichen lang sein.
 register-contact-info-validation-errors-state-or-province-max-length = Der Name des Bundelands kann maximal {$limit} Zeichen lang sein.
-register-contact-info-validation-errors-country-required = Bitte gib einen Staat an.
-register-contact-info-validation-errors-country-max-length = Der Name des Staates kann maximal {$limit} Zeichen lang sein.
+register-contact-info-validation-errors-country-required = Bitte gib ein Land an.
+register-contact-info-validation-errors-country-max-length = Der Name des Landes kann maximal {$limit} Zeichen lang sein.
 
 
 # Register optional info page
@@ -389,7 +389,7 @@ register-thank-you-title = Danke für Deine Anmeldung
 register-thank-you-subtitle = Nächste Schritte
 register-thank-you-content =
   Wir werden Deine Anmeldung prüfen und Dir in wenigen Wochen eine Antwort senden.
-  Du erhälst eine Benachrichtigung per Email nachdem wir Deine Anmeldung bearbeitet haben.
+  Du erhältst eine Benachrichtigung per Email nachdem wir Deine Anmeldung bearbeitet haben.
 
 
 
