@@ -38,6 +38,8 @@ type Config<TicketLevel extends string, AddonConfigs extends Readonly<Record<str
 	readonly hotelBookingLaunch: ReadonlyDate
 	readonly eventStartDate: ReadonlyDate
 	readonly eventEndDate: ReadonlyDate
+	readonly dayTicketStartDate: ReadonlyDate
+	readonly dayTicketEndDate: ReadonlyDate
 	readonly earliestBirthDate: ReadonlyDate
 	readonly minimumAge: number
 	readonly allowedCountries: readonly (

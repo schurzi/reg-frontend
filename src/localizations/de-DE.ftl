@@ -73,7 +73,7 @@ invoice-pay-button-credit-card = 💳 Mit KK zahlen
 register-header-title = Willkommen zur Eurofurence 2023!
 register-header-description =
   Wir freuen uns auf Dich!
-  Mach dich bereit für eine tolle Zeit mit Gleichgesinnten, und genieße das reiche Angebot an Attraktionen und Events.
+  Mach Dich bereit für eine tolle Zeit mit Gleichgesinnten, und genieße das reiche Angebot an Attraktionen und Events.
 
 register-navigation-back = Zurück
 register-navigation-next = Weiter
@@ -127,7 +127,7 @@ register-ticket-level-card-standard =
                 }
 
 register-ticket-level-card-sponsor =
-  Als Dankeschön für Deine Unterstützung der Eurofurence durch Deine Spende erhälst Du
+  Als Dankeschön für Deine Unterstützung der Eurofurence durch Deine Spende erhältst Du
 
   + Sponsor-Badge
   + Programmheft mit Danksagung
@@ -144,7 +144,7 @@ register-ticket-level-card-sponsor =
                 }
 
 register-ticket-level-card-super-sponsor =
-  Mit dieser noch großzügigeren Spende verdienst Du ein Super-Sponsor-Ticket. Daher erhälst Du
+  Mit dieser noch großzügigeren Spende verdienst Du ein Super-Sponsor-Ticket. Daher erhältst Du
 
   + Super-Sponsor-Badge
   + Programmheft mit Danksagung
@@ -176,22 +176,22 @@ register-ticket-level-addons-item-tshirt-option-size =
   .label = T-Shirt-Größe
 
 register-ticket-level-addons-item-tshirt-option-size-value = { $value ->
-  [XS]   X-Small (weit geschnitten)
-  [wXS]  X-Small (schmal geschnitten)
- *[S]    Small (weit geschnitten)
-  [wS]   Small (schmal geschnitten)
-  [M]    Medium (weit geschnitten)
-  [wM]   Medium (schmal geschnitten)
-  [L]    Large (weit geschnitten)
-  [wL]   Large (schmal geschnitten)
-  [XL]   X-Large (weit geschnitten)
-  [wXL]  X-Large (schmal geschnitten)
-  [XXL]  XX-Large (weit geschnitten)
-  [wXXL] XX-Large (schmal geschnitten)
-  [m3XL] 3X-Large (weit geschnitten)
-  [w3XL] 3X-Large (schmal geschnitten)
-  [m4XL] 4X-Large (weit geschnitten)
-  [w4XL] 4X-Large (schmal geschnitten)
+  [XS]   X-Small (Standard)
+  [wXS]  X-Small (Tailliert)
+ *[S]    Small (Standard)
+  [wS]   Small (Tailliert)
+  [M]    Medium (Standard)
+  [wM]   Medium (Tailliert)
+  [L]    Large (Standard)
+  [wL]   Large (Tailliert)
+  [XL]   X-Large (Standard)
+  [wXL]  X-Large (Tailliert)
+  [XXL]  XX-Large (Standard)
+  [wXXL] XX-Large (Tailliert)
+  [m3XL] 3X-Large (Standard)
+  [w3XL] 3X-Large (Tailliert)
+  [m4XL] 4X-Large (Standard)
+  [w4XL] 4X-Large (Tailliert)
 }
 
 register-ticket-level-validation-errors-level-required = Bitte wähle eine Ticketart aus.
@@ -238,10 +238,10 @@ register-personal-info-accessibility =
   .legend = Barrierefreiheit
 
 register-personal-info-accessibility-wheelchair =
-  .label = Bitte bringt meinen Rollstuhl (und mich) unter.
+  .label = Bitte berücksichtigt, dass ich im Rollstuhl sitze.
 
 register-personal-info-validation-errors-nickname-required = Bitte gib einen Nickname an.
-register-personal-info-validation-errors-nickname-max-length = Dein Nickname muß mindestens {$limit} Zeichen lang sein.
+register-personal-info-validation-errors-nickname-max-length = Dein Nickname darf höchstens {$limit} Zeichen lang sein.
 register-personal-info-validation-errors-nickname-validate-no-leading-or-trailing-whitespace = Bitte vermeide Leerzeichen am Anfang und am Ende.
 register-personal-info-validation-errors-nickname-validate-min-one-alphanumeric-char = Dein Nickname muß mindestens einen Buchstaben oder eine Zahl enthalten.
 register-personal-info-validation-errors-nickname-validate-max-two-non-alphanumeric-chars = Dein Nickname kann nur maximal zwei Sonderzeichen enthalten.
@@ -290,7 +290,7 @@ register-contact-info-state-or-province =
   .placeholder = Fur Valley
 
 register-contact-info-country =
-  .label = Staat
+  .label = Land
   .placeholder = Germany
 
 register-contact-info-validation-errors-email-required = Bitte gib eine Email-Adresse an.
@@ -308,8 +308,8 @@ register-contact-info-validation-errors-city-max-length = Deine Stadt kann maxim
 register-contact-info-validation-errors-postal-code-required = Bitte gib eine Postleitzahl an.
 register-contact-info-validation-errors-postal-code-max-length = Deine Postleitzahl kann maximal {$limit} Zeichen lang sein.
 register-contact-info-validation-errors-state-or-province-max-length = Der Name des Bundelands kann maximal {$limit} Zeichen lang sein.
-register-contact-info-validation-errors-country-required = Bitte gib einen Staat an.
-register-contact-info-validation-errors-country-max-length = Der Name des Staates kann maximal {$limit} Zeichen lang sein.
+register-contact-info-validation-errors-country-required = Bitte gib ein Land an.
+register-contact-info-validation-errors-country-max-length = Der Name des Landes kann maximal {$limit} Zeichen lang sein.
 
 
 # Register optional info page
@@ -345,9 +345,12 @@ register-optional-info-comments =
 register-summary-title-initial = Bestätigung
 register-summary-title-edit = Deine Registrierung
 
-register-summary-registration-status =
+register-summary-registration-status-edit =
   Wir haben Deine Anmeldung erhalten und werden sie freigeben, wenn alles so weit ist.
   Bitte schaue ab und zu in Deine Mailbox!
+
+register-summary-registration-status-initial =
+  Bitte überprüfe Deine Informationen noch einmal und klicke dann ganz unten auf "Abschließen".
 
 register-summary-section-personal-title = Deine Daten
 register-summary-section-contact-title = Kontaktdaten
@@ -389,7 +392,7 @@ register-thank-you-title = Danke für Deine Anmeldung
 register-thank-you-subtitle = Nächste Schritte
 register-thank-you-content =
   Wir werden Deine Anmeldung prüfen und Dir in wenigen Wochen eine Antwort senden.
-  Du erhälst eine Benachrichtigung per Email nachdem wir Deine Anmeldung bearbeitet haben.
+  Du erhältst eine Benachrichtigung per Email nachdem wir Deine Anmeldung bearbeitet haben.
 
 
 

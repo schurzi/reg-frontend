@@ -114,7 +114,7 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 	return <WithInvoiceRegisterFunnelLayout onNext={handleSubmit} currentStep={5}>
 		<Localized id={`register-summary-title-${isEdit ? 'edit' : 'initial'}`}><h3>Your registration</h3></Localized>
 
-		<Localized id="register-summary-registration-status" vars={{ status: 'submitted' }}>
+		<Localized id={`register-summary-registration-status-${isEdit ? 'edit' : 'initial'}`} vars={{ status: 'submitted' }}>
 			<ReactMarkdown>
 				We have received your registration request and it is currently in review.
 				Keep an eye on your mailbox, we will notify you when your registration has been confirmed!

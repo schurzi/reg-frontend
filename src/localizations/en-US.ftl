@@ -177,21 +177,21 @@ register-ticket-level-addons-item-tshirt-option-size =
 
 register-ticket-level-addons-item-tshirt-option-size-value = { $value ->
   [XS]    X-Small (Regular Cut)
-  [wXS]   X-Small (Narrow Cut)
+  [wXS]   X-Small (Contoured Cut)
  *[S]     Small (Regular Cut)
-  [wS]    Small (Narrow Cut)
+  [wS]    Small (Contoured Cut)
   [M]     Medium (Regular Cut)
-  [wM]    Medium (Narrow Cut)
+  [wM]    Medium (Contoured Cut)
   [L]     Large (Regular Cut)
-  [wL]    Large (Narrow Cut)
+  [wL]    Large (Contoured Cut)
   [XL]    X-Large (Regular Cut)
-  [wXL]   X-Large (Narrow Cut)
+  [wXL]   X-Large (Contoured Cut)
   [XXL]   XX-Large (Regular Cut)
-  [wXXL]  XX-Large (Narrow Cut)
+  [wXXL]  XX-Large (Contoured Cut)
   [m3XL]  3X-Large (Regular Cut)
-  [w3XL]  3X-Large (Narrow Cut)
+  [w3XL]  3X-Large (Contoured Cut)
   [m4XL]  4X-Large (Regular Cut)
-  [w4XL]  4X-Large (Narrow Cut)
+  [w4XL]  4X-Large (Contoured Cut)
 }
 
 register-ticket-level-validation-errors-level-required = Please select a ticket level.
@@ -345,9 +345,12 @@ register-optional-info-comments =
 register-summary-title-initial = Confirmation
 register-summary-title-edit = Your registration
 
-register-summary-registration-status =
+register-summary-registration-status-edit =
   We have received your registration and will confirm it when things are ready.
   Keep an eye on your mailbox!
+
+register-summary-registration-status-initial =
+  Please double check your information below and click "Finish" to submit it.
 
 register-summary-section-personal-title = Personal information
 register-summary-section-contact-title = Contact information

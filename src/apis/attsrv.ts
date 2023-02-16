@@ -165,7 +165,7 @@ const registrationInfoFromAttendeeDto = (attendeeDto: AttendeeDto): Registration
 	const flags = new Set(attendeeDto.flags.split(','))
 	const options = new Set(attendeeDto.options.split(','))
 
-	const days = eachDayOfInterval({ start: config.eventStartDate, end: config.eventEndDate })
+	const days = eachDayOfInterval({ start: config.dayTicketStartDate, end: config.dayTicketEndDate })
 	const level = packages.has('sponsor2') ? 'super-sponsor' : packages.has('sponsor') ? 'sponsor' : 'standard'
 
 	return {
