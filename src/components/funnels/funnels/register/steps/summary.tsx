@@ -11,6 +11,7 @@ import { useCurrentLocale } from '~/localization'
 import { useFunnelForm } from '~/hooks/funnels/form'
 import { Checkbox, ErrorMessage, Form } from '@eurofurence/reg-component-library'
 import config from '~/config'
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
 
 interface PropertyDefinition {
 	readonly id: string
@@ -46,9 +47,7 @@ const SectionContainer = styled.section`
 		padding-bottom: 2em;
 	}
 
-	&:not(:first-of-type) {
-		padding-top: 2em;
-	}
+	padding-top: 2em;
 `
 
 const SectionTitle = styled.h4`
@@ -113,7 +112,14 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 		.join(', ')
 
 	return <WithInvoiceRegisterFunnelLayout onNext={handleSubmit} currentStep={5}>
-		<Localized id={`register-summary-title-${isEdit ? 'edit' : 'initial'}`}><h3>Registration</h3></Localized>
+		<Localized id={`register-summary-title-${isEdit ? 'edit' : 'initial'}`}><h3>Your registration</h3></Localized>
+
+		<Localized id="register-summary-registration-status" vars={{ status: 'submitted' }}>
+			<ReactMarkdown>
+				We have received your registration request and it is currently in review.
+				Keep an eye on your mailbox, we will notify you when your registration has been confirmed!
+			</ReactMarkdown>
+		</Localized>
 
 		<Section id="personal" editLink="/register/personal-info" properties={[
 			{ id: 'nickname', value: personalInfo.nickname },
