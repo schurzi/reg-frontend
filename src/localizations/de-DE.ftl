@@ -343,7 +343,7 @@ register-optional-info-comments =
 
 # Register summary page
 register-summary-title-initial = Bestätigung
-register-summary-title-edit = Registrierung
+register-summary-title-edit = Deine Registrierung
 
 
 register-summary-section-personal-title = Deine Daten

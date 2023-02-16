@@ -343,8 +343,11 @@ register-optional-info-comments =
 
 # Register summary page
 register-summary-title-initial = Confirmation
-register-summary-title-edit = Registration
+register-summary-title-edit = Your registration
 
+register-summary-registration-status =
+  We have received your registration request and it is currently in review.
+  Keep an eye on your mailbox, we will notify you when your registration has been confirmed!
 
 register-summary-section-personal-title = Personal information
 register-summary-section-contact-title = Contact information
