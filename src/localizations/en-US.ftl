@@ -238,7 +238,7 @@ register-personal-info-accessibility =
   .legend = Accessibility
 
 register-personal-info-accessibility-wheelchair =
-  .label = Please accomodate my wheelchair (and me).
+  .label = Please accommodate my wheelchair (and me).
 
 register-personal-info-validation-errors-nickname-required = Please provide a nickname.
 register-personal-info-validation-errors-nickname-max-length = Your nickname may be at most {$limit} characters long.
@@ -852,6 +852,7 @@ language-name = { $languageCode ->
   [az]  Azerbaijani
   [bg]  Bulgarian
   [bn]  Bengali
+  [br]  Breton
   [ca]  Catalan
   [cak] Kaqchikel
   [cs]  Czech
@@ -868,23 +869,30 @@ language-name = { $languageCode ->
   [fa]  Persian
   [ff]  Fulah
   [fi]  Finnish
+  [fil] Filipino
+  [fo]  Faroese
   [fr]  French
   [ga]  Irish
+  [gd]  Gaelic
   [gl]  Galician
+  [gv]  Manx
   [he]  Hebrew
   [hi]  Hindi
   [hr]  Croatian
   [hsb] Upper Sorbian
   [ht]  Haitian Creole
   [hu]  Hungarian
+  [hy]  Armenian
   [id]  Indonesian
   [is]  Icelandic
   [it]  Italian
   [ja]  Japanese
   [km]  Khmer
+  [kl]  Greenlandic
   [kab] Kabyle
   [kn]  Kannada
   [ko]  Korean
+  [kw]  Cornish
   [la]  Latin
   [lb]  Luxembourgish
   [lt]  Lithuanian
@@ -906,6 +914,7 @@ language-name = { $languageCode ->
   [pt]  Portuguese
   [ro]  Romanian
   [ru]  Russian
+  [sh]  Serbo-Croatian
   [sk]  Slovak
   [sl]  Slovenian
   [sq]  Albanian

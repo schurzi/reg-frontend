@@ -850,6 +850,7 @@ language-name = { $languageCode ->
   [az]  Aserbaidschanisch
   [bg]  Bulgarisch
   [bn]  Bengalisch
+  [br]  Bretonisch
   [ca]  Katalanisch
   [cak] Kaqchikel
   [cs]  Tschechisch
@@ -866,23 +867,30 @@ language-name = { $languageCode ->
   [fa]  Persisch
   [ff]  Fulfulde
   [fi]  Finnisch
+  [fil] Filipino
+  [fo]  Färöisch
   [fr]  Französisch
   [ga]  Irisch
+  [gd]  Gälisch
   [gl]  Galizisch
+  [gv]  Manx
   [he]  Hebräisch
   [hi]  Hindi
   [hr]  Kroatisch
   [hsb] Obersorbisch
-  [ht]  Haitianisches Kreolisch
+  [ht]  Haitianisch
   [hu]  Ungarisch
+  [hy]  Armenisch
   [id]  Indonesisch
   [is]  Isländisch
   [it]  Italienisch
   [ja]  Japanisch
   [km]  Khmer
+  [kl]  Grönländisch
   [kab] Kabylisch
   [kn]  Kannada
   [ko]  Koreanisch
+  [kw]  Kornisch
   [la]  Latein
   [lb]  Luxemburgisch
   [lt]  Litauisch
@@ -904,6 +912,7 @@ language-name = { $languageCode ->
   [pt]  Portugiesisch
   [ro]  Rumänisch
   [ru]  Russisch
+  [sh]  Serbo-Croatian
   [sk]  Slowakisch
   [sl]  Slowenisch
   [sq]  Albanisch
