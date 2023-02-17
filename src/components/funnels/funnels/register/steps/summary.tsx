@@ -127,7 +127,11 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 			{ id: 'pronouns', value: personalInfo.pronouns === null ? '' : l10n.getString('pronouns', { pronouns: personalInfo.pronouns }, personalInfo.pronouns) },
 			{ id: 'date-of-birth', value: new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(personalInfo.dateOfBirth) },
 			{ id: 'wheelchair-accomodation', value: l10n.getString('register-summary-boolean-value', { value: personalInfo.wheelchair.toString() }) },
-			{ id: 'spoken-languages', wide: true, value: personalInfo.spokenLanguages.map(locale => langmap[locale].nativeName).join(', ') },
+			{
+				id: 'spoken-languages',
+				wide: true,
+				value: personalInfo.spokenLanguages.map(languageCode => l10n.getString('language-name', { languageCode }, langmap[languageCode].englishName)).join(', '),
+			},
 		]}/>
 		<Section id="contact" editLink="/register/contact-info" properties={[
 			{ id: 'email', wide: true, value: contactInfo.email },
@@ -136,7 +140,7 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 			{ id: 'city', value: contactInfo.city },
 			{ id: 'postal-code', value: contactInfo.postalCode },
 			{ id: 'state-or-province', value: contactInfo.stateOrProvince ?? '' },
-			{ id: 'country', value: contactInfo.country },
+			{ id: 'country', value: l10n.getString('country-name', { countryCode: contactInfo.country }, contactInfo.country) },
 		]}/>
 		<Section id="optional" editLink="/register/optional-info" properties={[
 			{ id: 'notifications', wide: true, value: notificationNames },
