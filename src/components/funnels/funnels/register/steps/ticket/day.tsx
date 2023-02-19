@@ -36,6 +36,7 @@ const TicketDay = (_: ReadonlyRouteComponentProps) => {
 
 	/* eslint-disable react/jsx-key */
 	const conCats = [
+		null,
 		<StaticImage src="../../../../../../images/con-cats/days/monday.png" alt=""/>,
 		<StaticImage src="../../../../../../images/con-cats/days/tuesday.png" alt=""/>,
 		<StaticImage src="../../../../../../images/con-cats/days/wednesday.png" alt=""/>,
