@@ -125,7 +125,7 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 			{ id: 'nickname', value: personalInfo.nickname },
 			{ id: 'full-name', value: `${personalInfo.firstName} ${personalInfo.lastName}` },
 			{ id: 'pronouns', value: personalInfo.pronouns === null ? '' : l10n.getString('pronouns', { pronouns: personalInfo.pronouns }, personalInfo.pronouns) },
-			{ id: 'date-of-birth', value: new Intl.DateTimeFormat(locale, { dateStyle: 'long', timeZone: 'UTC' }).format(personalInfo.dateOfBirth) },
+			{ id: 'date-of-birth', value: personalInfo.dateOfBirth.setLocale(locale).toLocaleString({ dateStyle: 'long' }) },
 			{ id: 'wheelchair-accomodation', value: l10n.getString('register-summary-boolean-value', { value: personalInfo.wheelchair.toString() }) },
 			{
 				id: 'spoken-languages',

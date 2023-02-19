@@ -1,9 +1,10 @@
+import { FluentVariable } from '@fluent/bundle'
 import { sum, pluck } from 'ramda'
-import { ReadonlyDate } from '~/util/readonly-types'
+import { DeepReadonly } from 'utility-types'
 
 export interface UncalculatedInvoiceItem {
 	readonly id: string
-	readonly options?: Readonly<Record<string, string | number | ReadonlyDate>>
+	readonly options?: DeepReadonly<Record<string, FluentVariable>>
 	readonly amount: number
 	readonly unitPrice: number
 }

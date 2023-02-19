@@ -1,12 +1,11 @@
-import { formatISO } from 'date-fns'
+import { DateTime } from 'luxon'
 import { load, remove, save } from '~/util/local-storage'
-import { ReadonlyDate } from '~/util/readonly-types'
 import { UserInfo } from './auth'
 import { RegistrationInfo } from './register'
 
 /* eslint-disable @typescript-eslint/indent */
 type DeepDateToString<T> =
-	T extends Date | ReadonlyDate
+	T extends DateTime
 	? string
 	: T extends object
 	? { [K in keyof T]: DeepDateToString<T[K]> }
@@ -30,11 +29,11 @@ const serialize = (saveData: SaveData): SerializedSaveData => ({
 			? saveData.registrationInfo.ticketType
 			: {
 				...saveData.registrationInfo.ticketType,
-				day: formatISO(saveData.registrationInfo.ticketType.day, { representation: 'date' }),
+				day: saveData.registrationInfo.ticketType.day.toISODate(),
 			},
 		personalInfo: saveData.registrationInfo.personalInfo === undefined ? undefined : {
 			...saveData.registrationInfo.personalInfo,
-			dateOfBirth: formatISO(saveData.registrationInfo.personalInfo.dateOfBirth, { representation: 'date' }),
+			dateOfBirth: saveData.registrationInfo.personalInfo.dateOfBirth.toISODate(),
 		},
 	},
 })
@@ -47,11 +46,11 @@ const deserialize = (saveData: SerializedSaveData): SaveData => ({
 			? saveData.registrationInfo.ticketType
 			: {
 				...saveData.registrationInfo.ticketType,
-				day: new Date(saveData.registrationInfo.ticketType.day),
+				day: DateTime.fromISO(saveData.registrationInfo.ticketType.day, { zone: 'Europe/Berlin' }),
 			},
 		personalInfo: saveData.registrationInfo.personalInfo === undefined ? undefined : {
 			...saveData.registrationInfo.personalInfo,
-			dateOfBirth: new Date(saveData.registrationInfo.personalInfo.dateOfBirth),
+			dateOfBirth: DateTime.fromISO(saveData.registrationInfo.personalInfo.dateOfBirth),
 		},
 	},
 })

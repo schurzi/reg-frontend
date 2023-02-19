@@ -1,6 +1,6 @@
 import config from '~/config'
 import { Locale } from '~/localization'
-import { ReadonlyDate } from '~/util/readonly-types'
+import { ReadonlyDateTime } from '~/util/readonly-types'
 
 type TicketLevelConfig = typeof config.ticketLevels
 type TicketAddonsConfig = typeof config.addons
@@ -13,7 +13,7 @@ type ParseAddonOption<T> =
 
 export type TicketType
 	= { readonly type: 'full' }
-	| { readonly type: 'day', readonly day: ReadonlyDate }
+	| { readonly type: 'day', readonly day: ReadonlyDateTime }
 
 export type TicketLevel = {
 	readonly level: keyof TicketLevelConfig
@@ -60,7 +60,7 @@ export interface PersonalInfo {
 	readonly nickname: string
 	readonly firstName: string
 	readonly lastName: string
-	readonly dateOfBirth: ReadonlyDate
+	readonly dateOfBirth: ReadonlyDateTime
 	readonly fullNamePermission: boolean
 	readonly spokenLanguages: readonly string[]
 	readonly pronouns: string | null

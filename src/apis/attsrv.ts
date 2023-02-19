@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-import { eachDayOfInterval, formatISO, isSunday, isMonday, isTuesday, isWednesday } from 'date-fns'
 import { head, last } from 'ramda'
 import { catchError, concatMap, map } from 'rxjs/operators'
 import { ajax, AjaxConfig, AjaxError } from 'rxjs/ajax'
@@ -10,6 +9,8 @@ import { of } from 'rxjs'
 import { AppError } from '~/state/models/errors'
 import type { Replace } from 'type-fest'
 import { getDefaultLocale, Locale } from '~/localization'
+import { eachDayOfInterval } from '~/util/dates'
+import { DateTime, Interval } from 'luxon'
 
 export interface AttendeeDto {
 	readonly id: number | null
@@ -126,7 +127,7 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
 	telegram: registrationInfo.contactInfo.telegramUsername,
 	partner: null, // unused by EF
 	state: registrationInfo.contactInfo.stateOrProvince, // optional, may be null
-	birthday: formatISO(registrationInfo.personalInfo.dateOfBirth, { representation: 'date' }),
+	birthday: registrationInfo.personalInfo.dateOfBirth.toISODate(),
 	gender: 'notprovided',
 	pronouns: registrationInfo.personalInfo.pronouns,
 	tshirt_size: tshirtToApi(registrationInfo.ticketLevel.addons.tshirt.options.size),
@@ -145,10 +146,10 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
 	packages: optionsToFlags({
 		'room-none': true,
 		'attendance': registrationInfo.ticketType.type === 'full',
-		'day-sun': registrationInfo.ticketType.type === 'day' && isSunday(registrationInfo.ticketType.day),
-		'day-mon': registrationInfo.ticketType.type === 'day' && isMonday(registrationInfo.ticketType.day),
-		'day-tue': registrationInfo.ticketType.type === 'day' && isTuesday(registrationInfo.ticketType.day),
-		'day-wed': registrationInfo.ticketType.type === 'day' && isWednesday(registrationInfo.ticketType.day),
+		'day-sun': registrationInfo.ticketType.type === 'day' && registrationInfo.ticketType.day.weekday === 7,
+		'day-mon': registrationInfo.ticketType.type === 'day' && registrationInfo.ticketType.day.weekday === 1,
+		'day-tue': registrationInfo.ticketType.type === 'day' && registrationInfo.ticketType.day.weekday === 2,
+		'day-wed': registrationInfo.ticketType.type === 'day' && registrationInfo.ticketType.day.weekday === 3,
 		'sponsor': registrationInfo.ticketLevel.level === 'sponsor',
 		'sponsor2': registrationInfo.ticketLevel.level === 'super-sponsor',
 		'stage': !(config.ticketLevels[registrationInfo.ticketLevel.level].includes?.includes('stage-pass') ?? false)
@@ -165,7 +166,7 @@ const registrationInfoFromAttendeeDto = (attendeeDto: AttendeeDto): Registration
 	const flags = new Set(attendeeDto.flags.split(','))
 	const options = new Set(attendeeDto.options.split(','))
 
-	const days = eachDayOfInterval({ start: config.dayTicketStartDate, end: config.dayTicketEndDate })
+	const days = eachDayOfInterval(Interval.fromDateTimes(config.dayTicketStartDate, config.dayTicketEndDate))
 	const level = packages.has('sponsor2') ? 'super-sponsor' : packages.has('sponsor') ? 'sponsor' : 'standard'
 
 	return {
@@ -176,11 +177,11 @@ const registrationInfoFromAttendeeDto = (attendeeDto: AttendeeDto): Registration
 			? { type: 'full' }
 			: {
 				type: 'day',
-				day: packages.has('day-sun') ? days.find(isSunday)!
-					: packages.has('day-mon') ? days.find(isMonday)!
-					: packages.has('day-tue') ? days.find(isTuesday)!
-					: packages.has('day-wed') ? days.find(isWednesday)!
-					: days.find(isWednesday)!, // FIXME: Cough
+				day: packages.has('day-sun') ? days.find(d => d.weekday === 7)!
+					: packages.has('day-mon') ? days.find(d => d.weekday === 1)!
+					: packages.has('day-tue') ? days.find(d => d.weekday === 2)!
+					: packages.has('day-wed') ? days.find(d => d.weekday === 3)!
+					: days.find(d => d.weekday === 3)!, // FIXME: Cough
 			},
 		/* eslint-enable @typescript-eslint/indent */
 		ticketLevel: {
@@ -202,7 +203,7 @@ const registrationInfoFromAttendeeDto = (attendeeDto: AttendeeDto): Registration
 			nickname: attendeeDto.nickname,
 			firstName: attendeeDto.first_name,
 			lastName: attendeeDto.last_name,
-			dateOfBirth: new Date(attendeeDto.birthday),
+			dateOfBirth: DateTime.fromISO(attendeeDto.birthday),
 			spokenLanguages: attendeeDto.spoken_languages.split(','),
 			pronouns: attendeeDto.pronouns === '' ? null : attendeeDto.pronouns,
 			wheelchair: flags.has('hc'),

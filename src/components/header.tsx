@@ -3,13 +3,12 @@ import { Localized } from '@fluent/react'
 import { interval } from 'rxjs'
 import * as O from 'rxjs/operators'
 import { useObservableState, useObservable } from 'observable-hooks'
-import { intervalToDuration } from 'date-fns/fp'
 import brandImg from '~/images/brand.svg'
 import globe from '~/images/globe.svg'
 import user from '~/images/user.svg'
 import { NavBar, Display, NavBarTitle, NavBarCenter, NavBarMenu, NavBarMenuItem, NavBarSubMenu } from '@eurofurence/reg-component-library'
 import config from '~/config'
-import { ReadonlyDate } from '~/util/readonly-types'
+import { ReadonlyDateTime } from '~/util/readonly-types'
 import { supportedLanguages } from '~/localization'
 import langmap from 'langmap'
 import { Link } from 'gatsby'
@@ -25,11 +24,11 @@ const ClockContainer = styled.section`
 `
 
 interface ClockProps {
-	readonly deadline: ReadonlyDate
+	readonly deadline: ReadonlyDateTime
 }
 
 const Clock = ({ deadline }: ClockProps) => {
-	const getTimeRemaining = () => intervalToDuration({ start: new Date(), end: deadline })
+	const getTimeRemaining = () => deadline.diffNow(['months', 'days', 'hours', 'minutes', 'seconds']).toObject()
 
 	const tick$ = useObservable(() => interval(CLOCK_UPDATE_DELAY).pipe(O.map(getTimeRemaining)), [])
 	const timeRemaining = useObservableState(tick$, getTimeRemaining())
@@ -71,7 +70,7 @@ const friendlyLocales = Object.entries(groupBy(locale => locale.split('-')[0], s
 	)
 
 export interface HeaderProps {
-	readonly deadline?: ReadonlyDate
+	readonly deadline?: ReadonlyDateTime
 }
 
 const Header = ({ deadline }: HeaderProps) => {

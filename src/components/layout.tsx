@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import Header from './header'
 import Footer from './footer'
 import '@eurofurence/reg-component-library/dist/index.css'
-import { ReadonlyDate, ReadonlyReactNode } from '~/util/readonly-types'
+import { ReadonlyDateTime, ReadonlyReactNode } from '~/util/readonly-types'
 import { useAppDispatch, useAppSelector } from '~/hooks/redux'
 import { getUserInfo } from '~/state/selectors/auth'
 import { InitiateLogin, LookupUserInfo } from '~/state/actions/auth'
@@ -13,7 +13,7 @@ import { Localized } from '@fluent/react'
 import ErrorGuard from './error-guard'
 
 export interface LayoutProps {
-	readonly deadline?: ReadonlyDate
+	readonly deadline?: ReadonlyDateTime
 	readonly children: ReadonlyReactNode
 }
 
