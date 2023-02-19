@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect'
 import config from '~/config'
+import { createLuxonFluentDateTime } from '~/util/fluent-values'
 import { AppState } from '..'
 import { buildInvoice, UncalculatedInvoiceItem } from '../models/invoice'
 import { getUserInfo } from './auth'
@@ -30,13 +31,13 @@ export const getInvoice = createSelector(getTicketType(), getTicketLevel(), getP
 		? {
 			id: 'register-ticket-type-day',
 			amount: 1,
-			options: { day: new Date(ticketType.day) },
+			options: { day: createLuxonFluentDateTime(ticketType.day) },
 			unitPrice: ticketLevelConfig.prices.day,
 		}
 		: {
 			id: 'register-ticket-type-full',
 			amount: 1,
-			options: { start: new Date(config.eventStartDate), end: new Date(config.eventEndDate) },
+			options: { start: createLuxonFluentDateTime(config.eventStartDate), end: createLuxonFluentDateTime(config.eventEndDate) },
 			unitPrice: ticketLevelConfig.prices.full,
 		}
 

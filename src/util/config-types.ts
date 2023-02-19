@@ -1,5 +1,5 @@
+import { DateTime } from 'luxon'
 import { ComponentType } from 'react'
-import { ReadonlyDate } from './readonly-types'
 
 type TicketLevelConfig<Addon extends string> = {
 	readonly prices: {
@@ -32,15 +32,15 @@ type RoomConfig = {
 
 type Config<TicketLevel extends string, AddonConfigs extends Readonly<Record<string, unknown>>> = {
 	readonly eventName: string
-	readonly registrationLaunch: ReadonlyDate
-	readonly registrationExpirationDate: ReadonlyDate
+	readonly registrationLaunch: DateTime
+	readonly registrationExpirationDate: DateTime
 	readonly hoursBeforeEditAvailable: number
-	readonly hotelBookingLaunch: ReadonlyDate
-	readonly eventStartDate: ReadonlyDate
-	readonly eventEndDate: ReadonlyDate
-	readonly dayTicketStartDate: ReadonlyDate
-	readonly dayTicketEndDate: ReadonlyDate
-	readonly earliestBirthDate: ReadonlyDate
+	readonly hotelBookingLaunch: DateTime
+	readonly eventStartDate: DateTime
+	readonly eventEndDate: DateTime
+	readonly dayTicketStartDate: DateTime
+	readonly dayTicketEndDate: DateTime
+	readonly earliestBirthDate: DateTime
 	readonly minimumAge: number
 	readonly allowedCountries: readonly (
 		| 'AF' | 'AX' | 'AL' | 'DZ' | 'AS' | 'AD' | 'AO' | 'AI' | 'AQ' | 'AG' | 'AR' | 'AM' | 'AW' | 'AC' | 'AU' | 'AT' | 'AZ' | 'BS' | 'BH' | 'BD'

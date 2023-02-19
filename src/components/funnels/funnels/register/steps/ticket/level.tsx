@@ -9,6 +9,7 @@ import { useFunnelForm } from '~/hooks/funnels/form'
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 import { useAppSelector } from '~/hooks/redux'
 import { getTicketType } from '~/state/selectors/register'
+import { createLuxonFluentDateTime } from '~/util/fluent-values'
 
 const TicketLevelGrid = styled.section`
 	display: grid;
@@ -49,8 +50,11 @@ const TicketLevel = (_: ReadonlyRouteComponentProps) => {
 								id={`register-ticket-level-card-${id}`}
 								attrs={{ label: true, priceLabel: true }}
 								vars={{
-									...ticketType,
-									...ticketType.type !== 'day' ? {} : { dow: ticketType.day.getDay() },
+									type: ticketType.type,
+									...ticketType.type !== 'day' ? {} : {
+										day: createLuxonFluentDateTime(ticketType.day),
+										dow: ticketType.day.weekday,
+									},
 								}}
 							>
 								<TicketLevelCard

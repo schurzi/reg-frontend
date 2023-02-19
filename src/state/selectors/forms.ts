@@ -1,4 +1,3 @@
-import { formatISO } from 'date-fns'
 import { includes } from '~/util/includes'
 import { AppState } from '..'
 import { FormIds, FormValuesType } from '../forms'
@@ -90,7 +89,7 @@ export const getSubmittedFormValues = ((id: FormIds) => (s: AppState): FormValue
 		case 'register-ticket-day':
 			return s.register.registrationInfo.ticketType === undefined || s.register.registrationInfo.ticketType.type !== 'day'
 				? undefined
-				: { day:	formatISO(s.register.registrationInfo.ticketType.day, { representation: 'date' }) }
+				: { day:	s.register.registrationInfo.ticketType.day.toISODate() }
 		case 'register-ticket-level':
 			return s.register.registrationInfo.ticketLevel
 
@@ -103,7 +102,7 @@ export const getSubmittedFormValues = ((id: FormIds) => (s: AppState): FormValue
 
 			return {
 				...personalInfo,
-				dateOfBirth: formatISO(dateOfBirth, { representation: 'date' }),
+				dateOfBirth: dateOfBirth.toISODate(),
 				...pronouns === null
 					? { pronounsSelection: 'prefer-not-to-say', pronounsOther: null }
 					: includes(['He/Him', 'She/Her', 'They/Them'] as const, pronouns)

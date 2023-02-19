@@ -5,8 +5,10 @@ import config from '~/config'
 import { useFunnelForm } from '~/hooks/funnels/form'
 import FullWidthRegisterFunnelLayout from '~/components/funnels/funnels/register/layout/form/full-width'
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
-import { formatISOWithOptions, eachDayOfInterval, getDay } from 'date-fns/fp'
 import { StaticImage } from 'gatsby-plugin-image'
+import { eachDayOfInterval } from '~/util/dates'
+import { Interval } from 'luxon'
+import { createLuxonFluentDateTime } from '~/util/fluent-values'
 
 const Grid = styled.div`
 	display: grid;
@@ -34,13 +36,14 @@ const TicketDay = (_: ReadonlyRouteComponentProps) => {
 
 	/* eslint-disable react/jsx-key */
 	const conCats = [
-		<StaticImage src="../../../../../../images/con-cats/days/sunday.png" alt=""/>,
+		null,
 		<StaticImage src="../../../../../../images/con-cats/days/monday.png" alt=""/>,
 		<StaticImage src="../../../../../../images/con-cats/days/tuesday.png" alt=""/>,
 		<StaticImage src="../../../../../../images/con-cats/days/wednesday.png" alt=""/>,
 		<StaticImage src="../../../../../../images/con-cats/days/thursday.png" alt=""/>,
 		<StaticImage src="../../../../../../images/con-cats/days/friday.png" alt=""/>,
 		<StaticImage src="../../../../../../images/con-cats/days/saturday.png" alt=""/>,
+		<StaticImage src="../../../../../../images/con-cats/days/sunday.png" alt=""/>,
 	]
 	/* eslint-enable react/jsx-key */
 
@@ -50,10 +53,10 @@ const TicketDay = (_: ReadonlyRouteComponentProps) => {
 		<form onSubmit={handleSubmit}>
 			<RadioGroup name="day">
 				<Grid>
-					{eachDayOfInterval({ start: config.dayTicketStartDate, end: config.dayTicketEndDate }).map(date =>
-						<Localized id="register-ticket-day-card" key={formatISOWithOptions({ representation: 'date' }, date)} attrs={{ label: true }} vars={{ date }}>
-							<RadioCard label={date.toString()} value={formatISOWithOptions({ representation: 'date' }, date)} {...register('day', { required: true })}>
-								<ConCat>{conCats[getDay(date)]!}</ConCat>
+					{eachDayOfInterval(Interval.fromDateTimes(config.dayTicketStartDate, config.dayTicketEndDate)).map(date =>
+						<Localized id="register-ticket-day-card" key={date.toISODate()} attrs={{ label: true }} vars={{ date: createLuxonFluentDateTime(date) }}>
+							<RadioCard label={date.toString()} value={date.toISODate()} {...register('day', { required: true })}>
+								<ConCat>{conCats[date.weekday]!}</ConCat>
 							</RadioCard>
 						</Localized>,
 					)}

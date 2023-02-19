@@ -5,6 +5,7 @@ import { SubmitForm, SubmitFormActionBundle } from '~/state/actions/forms'
 import { LoadRegistrationState, SetLocale } from '~/state/actions/register'
 import { LoadAutosave } from '~/state/actions/autosave'
 import config from '~/config'
+import { DateTime } from 'luxon'
 
 export interface RegisterState {
 	readonly registrationInfo: Partial<RegistrationInfo>
@@ -40,7 +41,7 @@ const transformPersonalInfo = (payload: GetAction<SubmitFormActionBundle<'regist
 			: pronounsSelection === 'other'
 				? pronounsOther
 				: pronounsSelection,
-		dateOfBirth: new Date(dateOfBirth),
+		dateOfBirth: DateTime.fromISO(dateOfBirth),
 		...rest,
 	}
 }
@@ -50,7 +51,7 @@ const registrationInfoReducer = (state: Partial<RegistrationInfo>, action: GetAc
 		case SubmitForm('register-ticket-type').type:
 			return action.payload.type === 'day' ? state : { ...state, ticketType: { type: action.payload.type! } }
 		case SubmitForm('register-ticket-day').type:
-			return { ...state, ticketType: { type: 'day', day: new Date(action.payload.day!) } }
+			return { ...state, ticketType: { type: 'day', day: DateTime.fromISO(action.payload.day!, { zone: 'Europe/Berlin' }) } }
 		case SubmitForm('register-ticket-level').type:
 			return { ...state, ticketLevel: transformTicketLevel(state.ticketType!, action.payload) }
 		case SubmitForm('register-contact-info').type:
