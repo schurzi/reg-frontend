@@ -66,7 +66,7 @@ const Personal = (_: ReadonlyRouteComponentProps) => {
 				<TextField label="Date of birth" placeholder="1995-06-30" type="date" error={errors.dateOfBirth?.message} {...register('dateOfBirth', {
 					required: true,
 					validate: {
-						minimumAge: v => DateTime.fromISO(v!) <= config.eventStartDate.minus({ years: config.minimumAge }),
+						minimumAge: v => DateTime.fromISO(v!, { zone: 'Europe/Berlin' }) <= config.eventStartDate.minus({ years: config.minimumAge }),
 						maximumAge: v => DateTime.fromISO(v!) >= config.earliestBirthDate,
 					},
 				})}/>
