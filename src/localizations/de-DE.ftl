@@ -132,7 +132,7 @@ register-ticket-level-card-sponsor =
   + Sponsor-Badge
   + Programmheft mit Danksagung
   + Teilnahme an den regulären Events
-  + früher Zugang zum Dealers' Den (nur Montag)
+  + früher Zugang zum Dealers' Den (Montag und Dienstag)
   + Prioritäts-Warteschlange bei bestimmten Events
   + Sponsor-Paket
   + kostenloses T-Shirt
