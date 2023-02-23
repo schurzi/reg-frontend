@@ -6,7 +6,7 @@ header-menu-item-language =
   .label = Language
 
 header-clock-component-months =
-  .caption = Month
+  .caption = Months
 header-clock-component-days =
   .caption = Days
 header-clock-component-hours =
