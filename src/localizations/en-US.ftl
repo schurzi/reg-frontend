@@ -132,7 +132,7 @@ register-ticket-level-card-sponsor =
   + Sponsor convention badge
   + program book + honorable mention
   + participation in scheduled events
-  + early access to the Dealers' Den (Monday only)
+  + early access to the Dealers' Den (Monday and Tuesday)
   + priority queueing for certain events
   + Sponsor pack
   + free T-shirt
@@ -149,7 +149,7 @@ register-ticket-level-card-super-sponsor =
   + Super Sponsor convention badge
   + program book + honorable mention
   + participation in scheduled events
-  + super-early access to the Dealers' Den (Monday only)
+  + super-early access to the Dealers' Den (Monday and Tuesday)
   + priority queueing for certain events
   + Super Sponsor pack
   + free T-shirt
