@@ -345,12 +345,15 @@ register-optional-info-comments =
 register-summary-title-initial = Confirmation
 register-summary-title-edit = Your registration
 
-register-summary-registration-status-edit =
-  We have received your registration and will confirm it when things are ready.
-  Keep an eye on your mailbox!
-
-register-summary-registration-status-initial =
-  Please double check your information below and click "Finish" to submit it.
+register-summary-registration-status-edit = { $status ->
+ *[unsubmitted] Please double check your information below and click "Finish" to submit it.
+  [new] We have received your registration and will confirm it when things are ready. Keep an eye on your mailbox!
+  [approved] Your registration has been approved, if you pay now, you'll be all set!
+  [partially-paid] We have received partial payment, if you pay what's left, you'll be all set!
+  [paid] You're all set. See you at the convention!
+  [checked-in] What are you doing looking at the registration system? Go have fun at the convention!
+  [cancelled] Uh oh, your registration has been cancelled. You should have received an email explaining why. If you believe this is an error on our part, reply to that email.
+}
 
 register-summary-section-personal-title = Personal information
 register-summary-section-contact-title = Contact information
