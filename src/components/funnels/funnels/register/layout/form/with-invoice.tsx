@@ -30,7 +30,7 @@ const WithInvoiceRegisterFunnelLayout = ({ children, currentStep, onNext }: With
 			isLastPage={currentStep === TOTAL_STEPS - 1}
 			onNext={onNext}
 			invoiceTitle="Your registration"
-			invoiceEditLink={isEdit ? '/register/ticket/level' : undefined}
+			invoiceEditLink={isEdit && currentStep === TOTAL_STEPS - 1 ? '/register/ticket/level' : undefined}
 			invoice={invoice ?? buildInvoice([])}
 			onPay={() => dispatch(InitiatePayment.create(undefined))}
 		>
