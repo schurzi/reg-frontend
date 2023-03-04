@@ -345,7 +345,7 @@ register-optional-info-comments =
 register-summary-title-initial = Confirmation
 register-summary-title-edit = Your registration
 
-register-summary-registration-status-edit = { $status ->
+register-summary-registration-status = { $status ->
  *[unsubmitted] Please double check your information below and click "Finish" to submit it.
   [new] We have received your registration and will confirm it when things are ready. Keep an eye on your mailbox!
   [approved] Your registration has been approved, if you pay now, you'll be all set!
