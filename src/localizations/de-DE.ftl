@@ -355,13 +355,6 @@ register-summary-registration-status = { $status ->
   [cancelled] Oh nein, deine Anmeldung wurde storniert. Du solltest eine Mail erhalten haben, warum das so ist. Wenn Du denkst, dass es sich um einen Fehler handelt, dann antworte einfach auf die Mail.
 }
 
-register-summary-registration-status-edit =
-  Wir haben Deine Anmeldung erhalten und werden sie freigeben, wenn alles so weit ist.
-  Bitte schaue ab und zu in Deine Mailbox!
-
-register-summary-registration-status-initial =
-  Bitte überprüfe Deine Informationen noch einmal und klicke dann ganz unten auf "Abschließen".
-
 register-summary-section-personal-title = Deine Daten
 register-summary-section-contact-title = Kontaktdaten
 register-summary-section-optional-title = Optionale Informationen
