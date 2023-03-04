@@ -346,13 +346,13 @@ register-summary-title-initial = Bestätigung
 register-summary-title-edit = Deine Registrierung
 
 register-summary-registration-status = { $status ->
- *[unsubmitted] Please double check your information below and click "Finish" to submit it.
-  [new] We have received your registration and will confirm it when things are ready. Keep an eye on your mailbox!
-  [approved] Your registration has been approved, if you pay now, you'll be all set!
-  [partially-paid] We have received partial payment, if you pay what's left, you'll be all set!
-  [paid] You're all set. See you at the convention!
-  [checked-in] What are you doing looking at the registration system? Go have fun at the convention!
-  [cancelled] Uh oh, your registration has been cancelled. You should have received an email explaining why. If you believe this is an error on our part, reply to that email.
+ *[unsubmitted] Bitte überprüfe Deine Informationen noch einmal und klicke dann ganz unten auf "Abschließen".
+  [new] Wir haben Deine Anmeldung erhalten und werden sie freigeben, wenn alles so weit ist. Bitte schaue ab und zu in Deine Mailbox!
+  [approved] Wir haben deine Anmeldung akzeptiert. Du musst nur noch bezahlen!
+  [partially-paid] Du hast Deine Teilnahmegebühr noch nicht komplett bezahlt. Zahle einfach den Rest, dann kann die Convention kommen!
+  [paid] Du hast bezahlt. Wir sehen uns auf der Convention!
+  [checked-in] Du bist auf der Convention angekommen. Wir wünschen Dir viel Spaß!
+  [cancelled] Oh nein, deine Anmeldung wurde storniert. Du solltest eine Mail erhalten haben, warum das so ist. Wenn Du denkst, dass es sich um einen Fehler handelt, dann antworte einfach auf die Mail.
 }
 
 register-summary-registration-status-edit =
