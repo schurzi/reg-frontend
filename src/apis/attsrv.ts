@@ -5,7 +5,7 @@ import { ajax, AjaxConfig, AjaxError } from 'rxjs/ajax'
 import config from '~/config'
 import type { RegistrationInfo } from '~/state/models/register'
 import { ErrorDto as CommonErrorDto, handleStandardApiErrors } from './common'
-import { of } from 'rxjs'
+import { combineLatest, of } from 'rxjs'
 import { AppError } from '~/state/models/errors'
 import type { Replace } from 'type-fest'
 import { getDefaultLocale, Locale } from '~/localization'
@@ -89,6 +89,18 @@ export interface CountdownDto {
 	readonly targetTime: string
 }
 
+export type RegistrationStatus =
+	| 'new'
+	| 'approved'
+	| 'partially paid'
+	| 'paid'
+	| 'checked in'
+	| 'cancelled'
+
+export interface AttendeeStatusDto {
+	readonly status: RegistrationStatus
+}
+
 const tshirtFromApi = (apiValue: string | null) => {
 	if (apiValue === '3XL') {
 		return 'm3XL'
@@ -161,7 +173,7 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
 })
 
 // eslint-disable-next-line complexity
-const registrationInfoFromAttendeeDto = (attendeeDto: AttendeeDto): RegistrationInfo => {
+const registrationInfoFromAttendeeDto = (attendeeDto: AttendeeDto, attendeeStatusDto: AttendeeStatusDto): RegistrationInfo => {
 	const packages = new Set(attendeeDto.packages.split(','))
 	const flags = new Set(attendeeDto.flags.split(','))
 	const options = new Set(attendeeDto.options.split(','))
@@ -172,6 +184,7 @@ const registrationInfoFromAttendeeDto = (attendeeDto: AttendeeDto): Registration
 	return {
 		id: attendeeDto.id!,
 		preferredLocale: attendeeDto.registration_language,
+		status: attendeeStatusDto.status.replaceAll(' ', '-'),
 		/* eslint-disable @typescript-eslint/indent */
 		ticketType: packages.has('attendance')
 			? { type: 'full' }
@@ -329,6 +342,21 @@ export const loadRegistration = (id: number) => apiCall<AttendeeDto>({
 })
 
 /*
+ * GET /attendees/{id}/status obtains the status for an attendee.
+ *
+ * id should come from the list returned by findMyRegistrations. Then a 400, 403, 404 should not occur.
+ *
+ * Returns AttendeeDto and status 200, or ErrorDto and an error status.
+ *
+ * 401: The user's token has expired, and you need to redirect them to the auth start to refresh it.
+ * 500: It is important to communicate the ErrorDto's requestid field to the user, so they can give it to us, so we can look in the logs.
+ */
+export const loadRegistrationStatus = (id: number) => apiCall<AttendeeStatusDto>({
+	path: `/attendees/${id}/status`,
+	method: 'GET',
+})
+
+/*
  * PUT /attendees/{id} overwrites the data for an attendee. Used during edit mode.
  *
  * id should come from the list returned by findMyRegistration. Then a 403, 404 should not occur.
@@ -353,7 +381,12 @@ export const updateRegistration = (registrationInfo: RegistrationInfo) => apiCal
 
 export const findExistingRegistration = () => findMyRegistrations().pipe(
 	concatMap(result =>
-		loadRegistration(result.response.ids[0]).pipe(map(r => registrationInfoFromAttendeeDto(r.response))),
+		combineLatest([
+			loadRegistration(result.response.ids[0]),
+			loadRegistrationStatus(result.response.ids[0]),
+		]).pipe(
+			map(([attendee, attendeeStatus]) => registrationInfoFromAttendeeDto(attendee.response, attendeeStatus.response)),
+		),
 	),
 	catchError(err => {
 		if (err instanceof AttSrvAppError && err.code === 'attendee-owned-notfound') {

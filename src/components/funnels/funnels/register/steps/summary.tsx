@@ -3,7 +3,7 @@ import WithInvoiceRegisterFunnelLayout from '~/components/funnels/funnels/regist
 import type { ReadonlyRouteComponentProps } from '~/util/readonly-types'
 import styled from '@emotion/styled'
 import { useAppSelector } from '~/hooks/redux'
-import { getContactInfo, getOptionalInfo, getPersonalInfo, isEditMode } from '~/state/selectors/register'
+import { getContactInfo, getOptionalInfo, getPersonalInfo, getStatus, isEditMode } from '~/state/selectors/register'
 import langmap from 'langmap'
 import { Link } from 'gatsby'
 import { css } from '@emotion/react'
@@ -101,6 +101,7 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 	const contactInfo = useAppSelector(getContactInfo())!
 	const optionalInfo = useAppSelector(getOptionalInfo())!
 	const isEdit = useAppSelector(isEditMode())
+	const status = useAppSelector(getStatus())
 	const locale = useCurrentLocale()
 	const { l10n } = useLocalization()
 	const { handleSubmit, register, formState: { errors } } = useFunnelForm('register-summary')
@@ -114,7 +115,7 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 	return <WithInvoiceRegisterFunnelLayout onNext={handleSubmit} currentStep={5}>
 		<Localized id={`register-summary-title-${isEdit ? 'edit' : 'initial'}`}><h3>Your registration</h3></Localized>
 
-		<Localized id={`register-summary-registration-status-${isEdit ? 'edit' : 'initial'}`} vars={{ status: 'submitted' }}>
+		<Localized id="register-summary-registration-status" vars={{ status }}>
 			<ReactMarkdown>
 				We have received your registration request and it is currently in review.
 				Keep an eye on your mailbox, we will notify you when your registration has been confirmed!

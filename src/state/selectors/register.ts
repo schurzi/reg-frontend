@@ -13,6 +13,7 @@ export const getDueAmount = () => (s: AppState) => s.register.due
 
 export const getRegistrationInfo = () => (s: AppState) => s.register.registrationInfo
 export const getRegistrationId = () => (s: AppState) => s.register.registrationInfo.id
+export const getStatus = () => (s: AppState) => isEditMode()(s) ? s.register.registrationInfo.status! : 'unsubmitted'
 export const getPreferredLocale = () => (s: AppState) => s.register.registrationInfo.preferredLocale
 export const getTicketType = () => (s: AppState) => s.register.registrationInfo.ticketType
 export const getTicketLevel = () => (s: AppState) => s.register.registrationInfo.ticketLevel

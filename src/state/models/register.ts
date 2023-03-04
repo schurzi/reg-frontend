@@ -11,6 +11,14 @@ type ParseAddonOption<T> =
 	: never
 /* eslint-enable @typescript-eslint/indent */
 
+export type RegistrationStatus =
+	| 'new'
+	| 'approved'
+	| 'partially-paid'
+	| 'paid'
+	| 'checked-in'
+	| 'cancelled'
+
 export type TicketType
 	= { readonly type: 'full' }
 	| { readonly type: 'day', readonly day: ReadonlyDateTime }
@@ -70,6 +78,7 @@ export interface PersonalInfo {
 export interface RegistrationInfo {
 	readonly id?: number
 	readonly preferredLocale?: Locale
+	readonly status?: RegistrationStatus
 	readonly ticketType: TicketType
 	readonly ticketLevel: TicketLevel
 	readonly contactInfo: ContactInfo
