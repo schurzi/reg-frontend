@@ -6,8 +6,7 @@ import { AppState } from '~/state'
 import { AnyAppAction, GetAction } from '~/state/actions'
 import { InitiateLogin, LoadUserInfo, LookupUserInfo } from '~/state/actions/auth'
 import { catchAppError } from './operators/catch-app-error'
-import { from, of } from 'rxjs'
-import { LoadAutosave } from '~/state/actions/autosave'
+import { of } from 'rxjs'
 import { loadAutosave, removeAutosave } from '~/state/models/autosave'
 import { clearFormCache } from '~/hooks/funnels/form'
 import { justDo } from './operators/just-do'
@@ -30,14 +29,9 @@ export default combineEpics<GetAction<AnyAppAction>, GetAction<AnyAppAction>, Ap
 				if (saveData === null || saveData.userInfo === undefined || saveData.userInfo.subject !== userInfo.subject) {
 					removeAutosave()
 					clearFormCache()
-
-					return of(LoadUserInfo.create(userInfo))
-				} else {
-					return from([
-						LoadAutosave.create(saveData),
-						LoadUserInfo.create(userInfo),
-					])
 				}
+
+				return of(LoadUserInfo.create(userInfo))
 			}),
 			catchAppError('user-info-lookup'),
 		)),

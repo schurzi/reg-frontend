@@ -3,23 +3,25 @@ import config from '~/config'
 import { createLuxonFluentDateTime } from '~/util/fluent-values'
 import { AppState } from '..'
 import { buildInvoice, UncalculatedInvoiceItem } from '../models/invoice'
+import { isOpen } from '~/state/reducers/register'
 import { getUserInfo } from './auth'
+import { isApproved, isUnsubmitted } from '../models/register'
 
 export const isRegistrationOpen = () => (s: AppState) => s.register.isOpen
-export const isEditMode = () => (s: AppState) => s.register.registrationInfo.id !== undefined
+export const isEditMode = () => (s: AppState) => isOpen(s.register) && !isUnsubmitted(s.register.registration)
 
-export const getPaidAmount = () => (s: AppState) => s.register.paid
-export const getDueAmount = () => (s: AppState) => s.register.due
+export const getPaidAmount = () => (s: AppState) => isOpen(s.register) && isApproved(s.register.registration) ? s.register.registration.paymentInfo.paid : undefined
+export const getDueAmount = () => (s: AppState) => isOpen(s.register) && isApproved(s.register.registration) ? s.register.registration.paymentInfo.due : undefined
 
-export const getRegistrationInfo = () => (s: AppState) => s.register.registrationInfo
-export const getRegistrationId = () => (s: AppState) => s.register.registrationInfo.id
-export const getStatus = () => (s: AppState) => isEditMode()(s) ? s.register.registrationInfo.status! : 'unsubmitted'
-export const getPreferredLocale = () => (s: AppState) => s.register.registrationInfo.preferredLocale
-export const getTicketType = () => (s: AppState) => s.register.registrationInfo.ticketType
-export const getTicketLevel = () => (s: AppState) => s.register.registrationInfo.ticketLevel
-export const getPersonalInfo = () => (s: AppState) => s.register.registrationInfo.personalInfo
-export const getContactInfo = () => (s: AppState) => s.register.registrationInfo.contactInfo
-export const getOptionalInfo = () => (s: AppState) => s.register.registrationInfo.optionalInfo
+export const getRegistrationInfo = () => (s: AppState) => isOpen(s.register) ? s.register.registration.registrationInfo : undefined
+export const getRegistrationId = () => (s: AppState) => isOpen(s.register) && !isUnsubmitted(s.register.registration) ? s.register.registration.id : undefined
+export const getStatus = () => (s: AppState) => isOpen(s.register) ? s.register.registration.status : undefined
+export const getPreferredLocale = () => (s: AppState) => isOpen(s.register) ? s.register.registration.registrationInfo.preferredLocale : undefined
+export const getTicketType = () => (s: AppState) => isOpen(s.register) ? s.register.registration.registrationInfo.ticketType : undefined
+export const getTicketLevel = () => (s: AppState) => isOpen(s.register) ? s.register.registration.registrationInfo.ticketLevel : undefined
+export const getPersonalInfo = () => (s: AppState) => isOpen(s.register) ? s.register.registration.registrationInfo.personalInfo : undefined
+export const getContactInfo = () => (s: AppState) => isOpen(s.register) ? s.register.registration.registrationInfo.contactInfo : undefined
+export const getOptionalInfo = () => (s: AppState) => isOpen(s.register) ? s.register.registration.registrationInfo.optionalInfo : undefined
 
 export const getInvoice = createSelector(getTicketType(), getTicketLevel(), getPaidAmount(), getDueAmount(), (ticketType, ticketLevel, paid, due) => {
 	if (ticketLevel === undefined || ticketType === undefined) {

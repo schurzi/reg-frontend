@@ -8,7 +8,7 @@ import { ErrorDto as CommonErrorDto, handleStandardApiErrors } from './common'
 import { combineLatest, of } from 'rxjs'
 import { AppError } from '~/state/models/errors'
 import type { Replace } from 'type-fest'
-import { getDefaultLocale, Locale } from '~/localization'
+import { Locale } from '~/localization'
 import { eachDayOfInterval } from '~/util/dates'
 import { DateTime, Interval } from 'luxon'
 
@@ -96,6 +96,7 @@ export type RegistrationStatus =
 	| 'paid'
 	| 'checked in'
 	| 'cancelled'
+	| 'waiting'
 
 export interface AttendeeStatusDto {
 	readonly status: RegistrationStatus
@@ -133,7 +134,7 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
 	city: registrationInfo.contactInfo.city,
 	country: registrationInfo.contactInfo.country,
 	spoken_languages: registrationInfo.personalInfo.spokenLanguages.join(','),
-	registration_language: registrationInfo.preferredLocale ?? getDefaultLocale(),
+	registration_language: registrationInfo.preferredLocale,
 	email: registrationInfo.contactInfo.email,
 	phone: registrationInfo.contactInfo.phoneNumber,
 	telegram: registrationInfo.contactInfo.telegramUsername,
@@ -173,7 +174,7 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
 })
 
 // eslint-disable-next-line complexity
-const registrationInfoFromAttendeeDto = (attendeeDto: AttendeeDto, attendeeStatusDto: AttendeeStatusDto): RegistrationInfo => {
+const registrationInfoFromAttendeeDto = (attendeeDto: AttendeeDto): RegistrationInfo => {
 	const packages = new Set(attendeeDto.packages.split(','))
 	const flags = new Set(attendeeDto.flags.split(','))
 	const options = new Set(attendeeDto.options.split(','))
@@ -182,9 +183,7 @@ const registrationInfoFromAttendeeDto = (attendeeDto: AttendeeDto, attendeeStatu
 	const level = packages.has('sponsor2') ? 'super-sponsor' : packages.has('sponsor') ? 'sponsor' : 'standard'
 
 	return {
-		id: attendeeDto.id!,
 		preferredLocale: attendeeDto.registration_language,
-		status: attendeeStatusDto.status.replaceAll(' ', '-'),
 		/* eslint-disable @typescript-eslint/indent */
 		ticketType: packages.has('attendance')
 			? { type: 'full' }
@@ -372,8 +371,8 @@ export const loadRegistrationStatus = (id: number) => apiCall<AttendeeStatusDto>
  *
  * 500: It is important to communicate the ErrorDto's requestid field to the user, so they can give it to us, so we can look in the logs.
  */
-export const updateRegistration = (registrationInfo: RegistrationInfo) => apiCall({
-	path: `/attendees/${registrationInfo.id}`,
+export const updateRegistration = (id: number, registrationInfo: RegistrationInfo) => apiCall({
+	path: `/attendees/${id}`,
 	method: 'PUT',
 	body: attendeeDtoFromRegistrationInfo(registrationInfo),
 })
@@ -385,7 +384,11 @@ export const findExistingRegistration = () => findMyRegistrations().pipe(
 			loadRegistration(result.response.ids[0]),
 			loadRegistrationStatus(result.response.ids[0]),
 		]).pipe(
-			map(([attendee, attendeeStatus]) => registrationInfoFromAttendeeDto(attendee.response, attendeeStatus.response)),
+			map(([attendee, attendeeStatus]) => ({
+				id: result.response.ids[0],
+				status: attendeeStatus.response.status.replaceAll(' ', '-'),
+				registrationInfo: registrationInfoFromAttendeeDto(attendee.response),
+			})),
 		),
 	),
 	catchError(err => {
