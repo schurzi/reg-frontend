@@ -56,6 +56,9 @@ invoice-item-definition-register-ticket-addons-tshirt =
   .name = T-shirt
   .extra = {$size}
 
+invoice-item-definition-other =
+  .name = Other fees
+
 invoice-total =
   .name = Total
   .extra = Taxes included
