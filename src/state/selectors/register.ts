@@ -12,6 +12,7 @@ export const isEditMode = () => (s: AppState) => isOpen(s.register) && !isUnsubm
 
 export const getPaidAmount = () => (s: AppState) => isOpen(s.register) && isApproved(s.register.registration) ? s.register.registration.paymentInfo.paid : undefined
 export const getDueAmount = () => (s: AppState) => isOpen(s.register) && isApproved(s.register.registration) ? s.register.registration.paymentInfo.due : undefined
+export const hasUnprocessedPayments = () => (s: AppState) => isOpen(s.register) && isApproved(s.register.registration) ? s.register.registration.paymentInfo.unprocessedPayments : undefined
 
 export const getRegistrationInfo = () => (s: AppState) => isOpen(s.register) ? s.register.registration.registrationInfo : undefined
 export const getRegistrationId = () => (s: AppState) => isOpen(s.register) && !isUnsubmitted(s.register.registration) ? s.register.registration.id : undefined

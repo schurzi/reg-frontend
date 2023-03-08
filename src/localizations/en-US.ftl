@@ -71,6 +71,8 @@ invoice-due =
 
 invoice-pay-button-credit-card = 💳 Pay with CC
 
+invoice-unprocessed-payments = Your payment is being processed.
+
 
 # Common register messages
 register-header-title = Welcome to Eurofurence 2023!

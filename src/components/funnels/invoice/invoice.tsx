@@ -36,15 +36,21 @@ const PayButton = styled(Button)`
 	width: 100%;
 `
 
+const UnprocessedPayments = styled.p`
+	text-align: center;
+`
+
 export interface InvoiceProps {
 	readonly title: string
 	readonly invoice: InvoiceModel
 	readonly showOnMobile?: boolean
 	readonly editLink?: string
 	readonly onPay?: () => void
+	readonly unprocessedPayments?: boolean
 }
 
-const Invoice = ({ title, invoice, showOnMobile, editLink, onPay }: InvoiceProps) =>
+// eslint-disable-next-line complexity
+const Invoice = ({ title, invoice, showOnMobile, editLink, onPay, unprocessedPayments = false }: InvoiceProps) =>
 	<InvoiceCard inverted={true} showOnMobile={showOnMobile}>
 		<header>
 			<h1>{title}</h1>
@@ -75,9 +81,13 @@ const Invoice = ({ title, invoice, showOnMobile, editLink, onPay }: InvoiceProps
 					<InvoiceTotalItem type="due" name="Due" warn={true} value={invoice.due}/>
 				</Localized>}
 			</ul>
-			{invoice.due === undefined || invoice.due === 0 ? undefined : <Localized id="invoice-pay-button-credit-card">
-				<PayButton variant="inverted-card" onClick={onPay}>Pay with CC</PayButton>
-			</Localized>}
+			{invoice.due === undefined || invoice.due === 0 ? undefined : unprocessedPayments
+				? <Localized id="invoice-unprocessed-payments">
+					<UnprocessedPayments>Your payment is being processed.</UnprocessedPayments>
+				</Localized>
+				: <Localized id="invoice-pay-button-credit-card">
+					<PayButton variant="inverted-card" onClick={onPay}>Pay with CC</PayButton>
+				</Localized>}
 		</section>
 	</InvoiceCard>
 

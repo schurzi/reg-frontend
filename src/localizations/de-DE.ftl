@@ -71,6 +71,8 @@ invoice-due =
 
 invoice-pay-button-credit-card = 💳 Mit KK zahlen
 
+invoice-unprocessed-payments = Your payment is being processed.
+
 
 # Common register messages
 register-header-title = Willkommen zur Eurofurence 2023!
