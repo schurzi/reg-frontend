@@ -1,5 +1,6 @@
 import config from '~/config'
 import { Locale } from '~/localization'
+import { includes } from '~/util/includes'
 import { ReadonlyDateTime } from '~/util/readonly-types'
 
 type TicketLevelConfig = typeof config.ticketLevels
@@ -120,7 +121,7 @@ export const isSubmitted = (r: Registration): r is SubmittedRegistration =>
 	r.status !== 'unsubmitted'
 
 export const isPending = (r: Registration): r is PendingRegistration =>
-	['new', 'waiting'].includes(r.status)
+	includes(['new', 'waiting'] as const, r.status)
 
 export const isApproved = (r: Registration): r is ApprovedRegistration =>
-	['approved', 'partially paid', 'paid', 'checked in', 'cancelled'].includes(r.status)
+	includes(['approved', 'partially-paid', 'paid', 'checked-in', 'cancelled'] as const, r.status)
