@@ -83,6 +83,8 @@ export interface RegistrationInfo {
 	readonly contactInfo: ContactInfo
 	readonly optionalInfo: OptionalInfo
 	readonly personalInfo: PersonalInfo
+	readonly unknownFlags?: string
+	readonly unknownPackages?: string
 }
 
 export interface PaymentInfo {
