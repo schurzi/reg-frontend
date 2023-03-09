@@ -18,6 +18,7 @@ export type RegistrationStatus =
 	| 'paid'
 	| 'checked-in'
 	| 'cancelled'
+	| 'waiting'
 
 export type TicketType
 	= { readonly type: 'full' }
@@ -76,12 +77,50 @@ export interface PersonalInfo {
 }
 
 export interface RegistrationInfo {
-	readonly id?: number
-	readonly preferredLocale?: Locale
-	readonly status?: RegistrationStatus
+	readonly preferredLocale: Locale
 	readonly ticketType: TicketType
 	readonly ticketLevel: TicketLevel
 	readonly contactInfo: ContactInfo
 	readonly optionalInfo: OptionalInfo
 	readonly personalInfo: PersonalInfo
 }
+
+export interface PaymentInfo {
+	readonly paid: number
+	readonly due: number
+	readonly unprocessedPayments: boolean
+}
+
+export interface UnsubmittedRegistration {
+	readonly status: 'unsubmitted'
+	readonly registrationInfo: Partial<RegistrationInfo>
+}
+
+export interface PendingRegistration {
+	readonly id: number
+	readonly status: 'new' | 'waiting'
+	readonly registrationInfo: RegistrationInfo
+}
+
+export interface ApprovedRegistration {
+	readonly id: number
+	readonly status: 'approved' | 'partially-paid' | 'paid' | 'checked-in' | 'cancelled'
+	readonly registrationInfo: RegistrationInfo
+	readonly paymentInfo: PaymentInfo
+}
+
+export type SubmittedRegistration = PendingRegistration | ApprovedRegistration
+
+export type Registration = UnsubmittedRegistration | SubmittedRegistration
+
+export const isUnsubmitted = (r: Registration): r is UnsubmittedRegistration =>
+	r.status === 'unsubmitted'
+
+export const isSubmitted = (r: Registration): r is SubmittedRegistration =>
+	r.status !== 'unsubmitted'
+
+export const isPending = (r: Registration): r is PendingRegistration =>
+	['new', 'waiting'].includes(r.status)
+
+export const isApproved = (r: Registration): r is ApprovedRegistration =>
+	['approved', 'partially paid', 'paid', 'checked in', 'cancelled'].includes(r.status)

@@ -26,11 +26,18 @@ const augmentInvoiceItem = (item: UncalculatedInvoiceItem) => {
 
 export const buildInvoice = (items: readonly UncalculatedInvoiceItem[], { paid, due }: Pick<Invoice, 'paid' | 'due'> = {}) => {
 	const augmentedItems = items.map(augmentInvoiceItem)
+	const totalPrice = sum(pluck('totalPrice', augmentedItems))
 
-	return {
-		items: augmentedItems,
-		totalPrice: sum(pluck('totalPrice', augmentedItems)),
-		paid,
-		due,
+	if (paid === undefined && due === undefined) {
+		return { items: augmentedItems, totalPrice }
+	} else {
+		const other = (paid ?? 0) + (due ?? 0) - totalPrice
+
+		return {
+			items: [...augmentedItems, { id: 'other', amount: 1, unitPrice: other, totalPrice: other }],
+			totalPrice: totalPrice + other,
+			paid,
+			due,
+		}
 	}
 }

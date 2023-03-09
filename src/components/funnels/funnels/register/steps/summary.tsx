@@ -101,7 +101,7 @@ const Summary = (_: ReadonlyRouteComponentProps) => {
 	const contactInfo = useAppSelector(getContactInfo())!
 	const optionalInfo = useAppSelector(getOptionalInfo())!
 	const isEdit = useAppSelector(isEditMode())
-	const status = useAppSelector(getStatus())
+	const status = useAppSelector(getStatus())!
 	const locale = useCurrentLocale()
 	const { l10n } = useLocalization()
 	const { handleSubmit, register, formState: { errors } } = useFunnelForm('register-summary')

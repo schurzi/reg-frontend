@@ -56,6 +56,9 @@ invoice-item-definition-register-ticket-addons-tshirt =
   .name = T-shirt
   .extra = {$size}
 
+invoice-item-definition-other =
+  .name = Other fees
+
 invoice-total =
   .name = Total
   .extra = Taxes included
@@ -67,6 +70,8 @@ invoice-due =
   .name = Due
 
 invoice-pay-button-credit-card = 💳 Pay with CC
+
+invoice-unprocessed-payments = Your payment is being processed.
 
 
 # Common register messages

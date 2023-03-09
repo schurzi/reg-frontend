@@ -1,5 +1,5 @@
 import { ajax, AjaxConfig, AjaxError } from 'rxjs/ajax'
-import { catchError, map } from 'rxjs/operators'
+import { catchError, concatMap, map } from 'rxjs/operators'
 import config from '~/config'
 /* eslint-disable camelcase */
 import { sum } from 'ramda'
@@ -58,6 +58,10 @@ export interface TransactionDto {
 
 export interface TransactionResponseDto {
 	readonly payload: readonly TransactionDto[]
+}
+
+export interface InitiatePaymentResponseDto {
+	readonly transaction: TransactionDto
 }
 
 export class PaySrvAppError extends AppError<StatusCodes> {
@@ -152,27 +156,23 @@ export const findTransactionsForBadgeNumber = (badgeNumber: number) => apiCall<T
  * 409: This debitor already has an open payment link, please use that one.
  * 500: It is important to communicate the ErrorDto's requestid field to the user, so they can give it to us, so we can look in the logs.
  */
-export const initiateCreditCardPayment = (badgeNumber: number) => apiCall<TransactionDto>({
+export const initiateCreditCardPayment = (badgeNumber: number) => apiCall<InitiatePaymentResponseDto>({
 	path: '/transactions/initiate-payment',
 	method: 'POST',
 	body: {
 		debitor_id: badgeNumber,
 	},
 }).pipe(
-	map(result => result.response),
+	map(result => result.response.transaction),
 )
 
 export const initiateCreditCardPaymentOrUseExisting = (badgeNumber: number) =>
-	initiateCreditCardPayment(badgeNumber).pipe(
-		catchError(err => {
-			if (err instanceof PaySrvAppError && err.code === StatusCodes.CONFLICT) {
-				return findTransactionsForBadgeNumber(badgeNumber).pipe(
-					// TODO check for undefined (though this shouldn't happen, but, you know, race conditions)
-					// Could also call back to self, but this could become infinite...
-					map(transactions => transactions.find(t => t.transaction_type === 'payment' && t.method === 'credit' && t.status === 'tentative')!),
-				)
-			} else {
-				throw err
-			}
+	findTransactionsForBadgeNumber(badgeNumber).pipe(
+		concatMap(transactions => {
+			const tentativeTransaction = transactions.find(t => t.transaction_type === 'payment' && t.method === 'credit' && t.status === 'tentative')
+
+			return tentativeTransaction !== undefined
+				? of(tentativeTransaction)
+				: initiateCreditCardPayment(badgeNumber)
 		}),
 	)

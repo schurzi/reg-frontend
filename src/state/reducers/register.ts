@@ -1,22 +1,25 @@
-import { RegistrationInfo, TicketLevel, TicketType } from '~/state/models/register'
+import { Registration, RegistrationInfo, TicketLevel, TicketType } from '~/state/models/register'
 import { AnyAppAction, GetAction } from '~/state/actions'
 import type { DeepNonNullable } from 'ts-essentials'
 import { SubmitForm, SubmitFormActionBundle } from '~/state/actions/forms'
 import { LoadRegistrationState, SetLocale } from '~/state/actions/register'
-import { LoadAutosave } from '~/state/actions/autosave'
 import config from '~/config'
 import { DateTime } from 'luxon'
 
-export interface RegisterState {
-	readonly registrationInfo: Partial<RegistrationInfo>
-	readonly due?: number
-	readonly paid?: number
-	readonly unprocessedPayments?: boolean
-	readonly isOpen: boolean | null
+export interface ClosedRegisterState {
+	readonly isOpen: false | null
 }
 
+export interface OpenRegisterState {
+	readonly isOpen: true
+	readonly registration: Registration
+}
+
+export type RegisterState = ClosedRegisterState | OpenRegisterState
+
+export const isOpen = (s: RegisterState): s is OpenRegisterState => s.isOpen ?? false
+
 const defaultState: RegisterState = {
-	registrationInfo: {},
 	isOpen: null,
 }
 
@@ -67,13 +70,18 @@ const registrationInfoReducer = (state: Partial<RegistrationInfo>, action: GetAc
 	}
 }
 
+const registrationReducer = (state: Registration, action: GetAction<AnyAppAction>): Registration => {
+	switch (action.type) {
+		default:
+			return { ...state, registrationInfo: registrationInfoReducer(state.registrationInfo, action) as RegistrationInfo }
+	}
+}
+
 export default (state: RegisterState = defaultState, action: GetAction<AnyAppAction>): RegisterState => {
 	switch (action.type) {
-		case LoadAutosave.type:
-			return { ...state, registrationInfo: action.payload.registrationInfo }
 		case LoadRegistrationState.type:
 			return { ...state, ...action.payload }
 		default:
-			return { ...state, registrationInfo: registrationInfoReducer(state.registrationInfo, action) }
+			return isOpen(state) ? { ...state, registration: registrationReducer(state.registration, action) } : state
 	}
 }
