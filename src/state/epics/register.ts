@@ -16,6 +16,9 @@ import { addHours, isBefore } from 'date-fns'
 import config from '~/config'
 import { calculateOutstandingDues, calculateTotalPaid, findTransactionsForBadgeNumber, hasUnprocessedPayments, initiateCreditCardPaymentOrUseExisting } from '~/apis/paysrv'
 import { catchAppError } from './operators/catch-app-error'
+import { includes } from '~/util/includes'
+import { loadAutosave } from '../models/autosave'
+import { getDefaultLocale } from '~/localization'
 
 const nextPageOrSave = <T extends AnyAppAction>(actionBundle: T, pathProvider: (action: GetAction<T>) => string): Epic<GetAction<AnyAppAction>, GetAction<AnyAppAction>, AppState> =>
 	(action$, state$) => action$.pipe(
@@ -23,7 +26,7 @@ const nextPageOrSave = <T extends AnyAppAction>(actionBundle: T, pathProvider: (
 		withLatestFrom(state$),
 		concatMap(([action, state]) => {
 			if (isEditMode()(state)) {
-				return updateRegistration(getRegistrationInfo()(state) as RegistrationInfo).pipe(
+				return updateRegistration(getRegistrationId()(state)!, getRegistrationInfo()(state)! as RegistrationInfo).pipe(
 					justDo(() => navigate('/register/summary')),
 					catchAppError('registration-update'),
 				)
@@ -49,10 +52,17 @@ export default combineEpics<GetAction<AnyAppAction>, GetAction<AnyAppAction>, Ap
 	(action$, state$) => action$.pipe(
 		ofType(SubmitForm('register-summary').type),
 		withLatestFrom(state$),
-		concatMap(([, state]) => submitRegistration(getRegistrationInfo()(state) as RegistrationInfo).pipe(
-			justDo(() => navigate('/register/thank-you')),
-			catchAppError('registration-submission'),
-		)),
+		concatMap(([, state]) => {
+			const registrationInfo = getRegistrationInfo()(state)!
+
+			// I'm loading the default locale here instead of in the getPreferredLocale selector because if I were to put it there
+			// then I can't selectively enable/disable browser negotiation for SSR...
+			// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+			return submitRegistration({ ...registrationInfo, preferredLocale: registrationInfo.preferredLocale ?? getDefaultLocale() } as RegistrationInfo).pipe(
+				justDo(() => navigate('/register/thank-you')),
+				catchAppError('registration-submission'),
+			)
+		}),
 	),
 
 	// Check if registrations are open and if and existing registration exists
@@ -60,24 +70,37 @@ export default combineEpics<GetAction<AnyAppAction>, GetAction<AnyAppAction>, Ap
 		ofType(CheckCountdown.type),
 		concatMap(() => registrationCountdownCheck().pipe(
 			concatMap(result => {
+				const saveData = loadAutosave()
+
 				if (result.response.countdown > 0) {
 					return of(LoadRegistrationState.create({ isOpen: false }))
 				} else if (isBefore(new Date(result.response.currentTime), addHours(new Date(result.response.targetTime), config.hoursBeforeEditAvailable))) {
-					return of(LoadRegistrationState.create({ isOpen: true }))
+					return of(LoadRegistrationState.create({ isOpen: true, registration: { status: 'unsubmitted', registrationInfo: saveData?.registrationInfo ?? { } } }))
 				} else {
 					return findExistingRegistration().pipe(
-						concatMap(registrationInfo => registrationInfo === undefined
-							? of(LoadRegistrationState.create({ isOpen: true }))
-							: findTransactionsForBadgeNumber(registrationInfo.id!).pipe(
-								map(transactions => LoadRegistrationState.create({
-									isOpen: true,
-									registrationInfo,
-									paid: calculateTotalPaid(transactions) / 100,
-									due: calculateOutstandingDues(transactions) / 100, // TODO: Use big.js
-									unprocessedPayments: hasUnprocessedPayments(transactions),
-								})),
-							),
-						),
+						concatMap(reg => {
+							if (reg === undefined) {
+								return of(LoadRegistrationState.create({ isOpen: true, registration: { status: 'unsubmitted', registrationInfo: saveData?.registrationInfo ?? { } } }))
+							} else if (includes(['new', 'waiting'] as const, reg.status)) {
+								return of(LoadRegistrationState.create({ isOpen: true, registration: { id: reg.id, status: reg.status, registrationInfo: reg.registrationInfo } }))
+							} else {
+								return findTransactionsForBadgeNumber(reg.id).pipe(
+									map(transactions => LoadRegistrationState.create({
+										isOpen: true,
+										registration: {
+											id: reg.id,
+											status: reg.status,
+											registrationInfo: reg.registrationInfo,
+											paymentInfo: {
+												paid: calculateTotalPaid(transactions) / 100,
+												due: calculateOutstandingDues(transactions) / 100, // TODO: Use big.js
+												unprocessedPayments: hasUnprocessedPayments(transactions),
+											},
+										},
+									})),
+								)
+							}
+						}),
 					)
 				}
 			}),
@@ -100,7 +123,7 @@ export default combineEpics<GetAction<AnyAppAction>, GetAction<AnyAppAction>, Ap
 		ofType(SetLocale.type),
 		withLatestFrom(state$),
 		filter(([, state]) => isEditMode()(state)),
-		concatMap(([, state]) => updateRegistration(getRegistrationInfo()(state) as RegistrationInfo).pipe(
+		concatMap(([, state]) => updateRegistration(getRegistrationId()(state)!, getRegistrationInfo()(state)! as RegistrationInfo).pipe(
 			ignoreElements(),
 			catchAppError('registration-set-locale'),
 		)),

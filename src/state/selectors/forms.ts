@@ -3,6 +3,7 @@ import { AppState } from '..'
 import { FormIds, FormValuesType } from '../forms'
 import config from '~/config'
 import { map } from 'ramda'
+import { getContactInfo, getOptionalInfo, getPersonalInfo, getTicketLevel, getTicketType, isEditMode } from './register'
 
 type GetDefaultFormValuesFn = <F extends FormIds>(id: F) => (s: AppState) => FormValuesType<F>
 
@@ -84,21 +85,29 @@ type GetSubmittedFormValuesFn = <F extends FormIds>(id: F) => (s: AppState) => F
 // eslint-disable-next-line complexity
 export const getSubmittedFormValues = ((id: FormIds) => (s: AppState): FormValuesType<FormIds> | undefined => {
 	switch (id) {
-		case 'register-ticket-type':
-			return s.register.registrationInfo.ticketType === undefined ? undefined : { type: s.register.registrationInfo.ticketType.type }
-		case 'register-ticket-day':
-			return s.register.registrationInfo.ticketType === undefined || s.register.registrationInfo.ticketType.type !== 'day'
-				? undefined
-				: { day:	s.register.registrationInfo.ticketType.day.toISODate() }
+		case 'register-ticket-type': {
+			const ticketType = getTicketType()(s)
+
+			return ticketType === undefined ? undefined : { type: ticketType.type }
+		}
+
+		case 'register-ticket-day': {
+			const ticketType = getTicketType()(s)
+
+			return ticketType === undefined || ticketType.type !== 'day' ? undefined : { day: ticketType.day.toISODate() }
+		}
+
 		case 'register-ticket-level':
-			return s.register.registrationInfo.ticketLevel
+			return getTicketLevel()(s)
 
 		case 'register-personal-info': {
-			if (s.register.registrationInfo.personalInfo === undefined) {
+			const pInfo = getPersonalInfo()(s)
+
+			if (pInfo === undefined) {
 				return undefined
 			}
 
-			const { pronouns, dateOfBirth, ...personalInfo } = s.register.registrationInfo.personalInfo
+			const { pronouns, dateOfBirth, ...personalInfo } = pInfo
 
 			return {
 				...personalInfo,
@@ -112,11 +121,11 @@ export const getSubmittedFormValues = ((id: FormIds) => (s: AppState): FormValue
 		}
 
 		case 'register-contact-info':
-			return s.register.registrationInfo.contactInfo
+			return getContactInfo()(s)
 		case 'register-optional-info':
-			return s.register.registrationInfo.optionalInfo
+			return getOptionalInfo()(s)
 		case 'register-summary':
-			return s.register.registrationInfo.id === undefined ? undefined : { rulesAndConditionsAccepted: true }
+			return isEditMode()(s) ? { rulesAndConditionsAccepted: true } : undefined
 
 		case 'hotel-booking-room':
 		case 'hotel-booking-guests':

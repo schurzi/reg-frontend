@@ -8,7 +8,7 @@ export const getLastSaved = () => (s: AppState) => s.autosave.lastSaved
 
 export const getSaveData = () => (s: AppState): SaveData => {
 	// Don't save ID. It shouldn't cause problems in real situations but it prevents debugging.
-	const { id, ...registrationInfo } = getRegistrationInfo()(s)
+	const registrationInfo = getRegistrationInfo()(s)
 
 	return {
 		userInfo: getUserInfo()(s),

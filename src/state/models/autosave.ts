@@ -16,14 +16,14 @@ type DeepDateToString<T> =
 
 export interface SaveData {
 	readonly userInfo?: UserInfo
-	readonly registrationInfo: Partial<Omit<RegistrationInfo, 'id'>>
+	readonly registrationInfo?: Partial<RegistrationInfo>
 }
 
 type SerializedSaveData = DeepDateToString<SaveData>
 
 const serialize = (saveData: SaveData): SerializedSaveData => ({
 	...saveData,
-	registrationInfo: {
+	registrationInfo: saveData.registrationInfo === undefined ? undefined : {
 		...saveData.registrationInfo,
 		ticketType: saveData.registrationInfo.ticketType === undefined ? undefined : saveData.registrationInfo.ticketType.type !== 'day'
 			? saveData.registrationInfo.ticketType
@@ -40,7 +40,7 @@ const serialize = (saveData: SaveData): SerializedSaveData => ({
 
 const deserialize = (saveData: SerializedSaveData): SaveData => ({
 	...saveData,
-	registrationInfo: {
+	registrationInfo: saveData.registrationInfo === undefined ? undefined : {
 		...saveData.registrationInfo,
 		ticketType: saveData.registrationInfo.ticketType === undefined ? undefined : saveData.registrationInfo.ticketType.type !== 'day'
 			? saveData.registrationInfo.ticketType

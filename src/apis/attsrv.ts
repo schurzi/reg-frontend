@@ -5,10 +5,10 @@ import { ajax, AjaxConfig, AjaxError } from 'rxjs/ajax'
 import config from '~/config'
 import type { RegistrationInfo } from '~/state/models/register'
 import { ErrorDto as CommonErrorDto, handleStandardApiErrors } from './common'
-import { of } from 'rxjs'
+import { combineLatest, of } from 'rxjs'
 import { AppError } from '~/state/models/errors'
 import type { Replace } from 'type-fest'
-import { getDefaultLocale, Locale } from '~/localization'
+import { Locale } from '~/localization'
 import { eachDayOfInterval } from '~/util/dates'
 import { DateTime, Interval } from 'luxon'
 
@@ -89,6 +89,19 @@ export interface CountdownDto {
 	readonly targetTime: string
 }
 
+export type RegistrationStatus =
+	| 'new'
+	| 'approved'
+	| 'partially paid'
+	| 'paid'
+	| 'checked in'
+	| 'cancelled'
+	| 'waiting'
+
+export interface AttendeeStatusDto {
+	readonly status: RegistrationStatus
+}
+
 const tshirtFromApi = (apiValue: string | null) => {
 	if (apiValue === '3XL') {
 		return 'm3XL'
@@ -110,7 +123,9 @@ const tshirtToApi = (frontendValue: string | null) => {
 }
 
 const optionsToFlags = (options: Readonly<Record<string, boolean>>) => Object.entries(options).filter(last).map(head).join(',')
+const flagsToOptions = (flags: string) => Object.fromEntries(flags.split(',').map(k => [k, true] as const))
 
+// eslint-disable-next-line complexity
 const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): AttendeeDto => ({
 	id: null, // not used when submitting attendee data, contains badge number when reading them
 	nickname: registrationInfo.personalInfo.nickname,
@@ -121,7 +136,7 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
 	city: registrationInfo.contactInfo.city,
 	country: registrationInfo.contactInfo.country,
 	spoken_languages: registrationInfo.personalInfo.spokenLanguages.join(','),
-	registration_language: registrationInfo.preferredLocale ?? getDefaultLocale(),
+	registration_language: registrationInfo.preferredLocale,
 	email: registrationInfo.contactInfo.email,
 	phone: registrationInfo.contactInfo.phoneNumber,
 	telegram: registrationInfo.contactInfo.telegramUsername,
@@ -132,6 +147,7 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
 	pronouns: registrationInfo.personalInfo.pronouns,
 	tshirt_size: tshirtToApi(registrationInfo.ticketLevel.addons.tshirt.options.size),
 	flags: optionsToFlags({
+		...flagsToOptions(registrationInfo.unknownFlags ?? ''),
 		hc: registrationInfo.personalInfo.wheelchair,
 		anon: !registrationInfo.personalInfo.fullNamePermission,
 		'digi-book': registrationInfo.optionalInfo.digitalConbook,
@@ -144,6 +160,7 @@ const attendeeDtoFromRegistrationInfo = (registrationInfo: RegistrationInfo): At
 		suit: registrationInfo.optionalInfo.notifications.fursuiting,
 	}),
 	packages: optionsToFlags({
+		...flagsToOptions(registrationInfo.unknownPackages ?? ''),
 		'room-none': true,
 		'attendance': registrationInfo.ticketType.type === 'full',
 		'day-sun': registrationInfo.ticketType.type === 'day' && registrationInfo.ticketType.day.weekday === 7,
@@ -170,7 +187,6 @@ const registrationInfoFromAttendeeDto = (attendeeDto: AttendeeDto): Registration
 	const level = packages.has('sponsor2') ? 'super-sponsor' : packages.has('sponsor') ? 'sponsor' : 'standard'
 
 	return {
-		id: attendeeDto.id!,
 		preferredLocale: attendeeDto.registration_language,
 		/* eslint-disable @typescript-eslint/indent */
 		ticketType: packages.has('attendance')
@@ -229,6 +245,8 @@ const registrationInfoFromAttendeeDto = (attendeeDto: AttendeeDto): Registration
 				music: options.has('music'),
 			},
 		},
+		unknownFlags: attendeeDto.flags,
+		unknownPackages: attendeeDto.packages,
 	}
 }
 
@@ -329,6 +347,21 @@ export const loadRegistration = (id: number) => apiCall<AttendeeDto>({
 })
 
 /*
+ * GET /attendees/{id}/status obtains the status for an attendee.
+ *
+ * id should come from the list returned by findMyRegistrations. Then a 400, 403, 404 should not occur.
+ *
+ * Returns AttendeeDto and status 200, or ErrorDto and an error status.
+ *
+ * 401: The user's token has expired, and you need to redirect them to the auth start to refresh it.
+ * 500: It is important to communicate the ErrorDto's requestid field to the user, so they can give it to us, so we can look in the logs.
+ */
+export const loadRegistrationStatus = (id: number) => apiCall<AttendeeStatusDto>({
+	path: `/attendees/${id}/status`,
+	method: 'GET',
+})
+
+/*
  * PUT /attendees/{id} overwrites the data for an attendee. Used during edit mode.
  *
  * id should come from the list returned by findMyRegistration. Then a 403, 404 should not occur.
@@ -344,8 +377,8 @@ export const loadRegistration = (id: number) => apiCall<AttendeeDto>({
  *
  * 500: It is important to communicate the ErrorDto's requestid field to the user, so they can give it to us, so we can look in the logs.
  */
-export const updateRegistration = (registrationInfo: RegistrationInfo) => apiCall({
-	path: `/attendees/${registrationInfo.id}`,
+export const updateRegistration = (id: number, registrationInfo: RegistrationInfo) => apiCall({
+	path: `/attendees/${id}`,
 	method: 'PUT',
 	body: attendeeDtoFromRegistrationInfo(registrationInfo),
 })
@@ -353,7 +386,16 @@ export const updateRegistration = (registrationInfo: RegistrationInfo) => apiCal
 
 export const findExistingRegistration = () => findMyRegistrations().pipe(
 	concatMap(result =>
-		loadRegistration(result.response.ids[0]).pipe(map(r => registrationInfoFromAttendeeDto(r.response))),
+		combineLatest([
+			loadRegistration(result.response.ids[0]),
+			loadRegistrationStatus(result.response.ids[0]),
+		]).pipe(
+			map(([attendee, attendeeStatus]) => ({
+				id: result.response.ids[0],
+				status: attendeeStatus.response.status.replaceAll(' ', '-'),
+				registrationInfo: registrationInfoFromAttendeeDto(attendee.response),
+			})),
+		),
 	),
 	catchError(err => {
 		if (err instanceof AttSrvAppError && err.code === 'attendee-owned-notfound') {

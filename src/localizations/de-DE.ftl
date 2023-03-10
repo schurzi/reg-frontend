@@ -56,6 +56,9 @@ invoice-item-definition-register-ticket-addons-tshirt =
   .name = T-Shirt
   .extra = {$size}
 
+invoice-item-definition-other =
+  .name = Other fees
+
 invoice-total =
   .name = Summe
   .extra = inkl. Steuern
@@ -67,6 +70,8 @@ invoice-due =
   .name = Ausstehend
 
 invoice-pay-button-credit-card = 💳 Mit KK zahlen
+
+invoice-unprocessed-payments = Your payment is being processed.
 
 
 # Common register messages
@@ -345,12 +350,15 @@ register-optional-info-comments =
 register-summary-title-initial = Bestätigung
 register-summary-title-edit = Deine Registrierung
 
-register-summary-registration-status-edit =
-  Wir haben Deine Anmeldung erhalten und werden sie freigeben, wenn alles so weit ist.
-  Bitte schaue ab und zu in Deine Mailbox!
-
-register-summary-registration-status-initial =
-  Bitte überprüfe Deine Informationen noch einmal und klicke dann ganz unten auf "Abschließen".
+register-summary-registration-status = { $status ->
+ *[unsubmitted] Bitte überprüfe Deine Informationen noch einmal und klicke dann ganz unten auf "Abschließen".
+  [new] Wir haben Deine Anmeldung erhalten und werden sie freigeben, wenn alles so weit ist. Bitte schaue ab und zu in Deine Mailbox!
+  [approved] Wir haben deine Anmeldung akzeptiert. Du musst nur noch bezahlen!
+  [partially-paid] Du hast Deine Teilnahmegebühr noch nicht komplett bezahlt. Zahle einfach den Rest, dann kann die Convention kommen!
+  [paid] Du hast bezahlt. Wir sehen uns auf der Convention!
+  [checked-in] Du bist auf der Convention angekommen. Wir wünschen Dir viel Spaß!
+  [cancelled] Oh nein, deine Anmeldung wurde storniert. Du solltest eine Mail erhalten haben, warum das so ist. Wenn Du denkst, dass es sich um einen Fehler handelt, dann antworte einfach auf die Mail.
+}
 
 register-summary-section-personal-title = Deine Daten
 register-summary-section-contact-title = Kontaktdaten

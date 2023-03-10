@@ -17,6 +17,7 @@ export interface WithInvoiceFunnelLayoutProps {
 	readonly invoiceTitle: string
 	readonly invoiceEditLink?: string
 	readonly invoice: Invoice
+	readonly unprocessedPayments?: boolean
 	readonly onNext: () => void
 	readonly onPay?: () => void
 }
@@ -35,13 +36,13 @@ const Grid = styled.div`
 	}
 `
 
-const WithInvoiceFunnelLayout = ({ children, onNext, invoiceTitle, invoiceEditLink, invoice, onPay, isLastPage, ...passthroughProps }: WithInvoiceFunnelLayoutProps) =>
+const WithInvoiceFunnelLayout = ({ children, onNext, invoiceTitle, invoiceEditLink, invoice, onPay, unprocessedPayments, isLastPage, ...passthroughProps }: WithInvoiceFunnelLayoutProps) =>
 	<StepFunnelLayout {...passthroughProps} onNext={onNext} isLastPage={isLastPage}>
 		<Grid>
 			<div>
 				{children}
 			</div>
-			<InvoiceComponent title={invoiceTitle} editLink={invoiceEditLink} invoice={invoice} showOnMobile={isLastPage} onPay={onPay}/>
+			<InvoiceComponent title={invoiceTitle} editLink={invoiceEditLink} invoice={invoice} showOnMobile={isLastPage} onPay={onPay} unprocessedPayments={unprocessedPayments}/>
 		</Grid>
 	</StepFunnelLayout>
 
